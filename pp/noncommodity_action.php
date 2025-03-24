@@ -1,0 +1,69 @@
+<?php
+	session_start();
+	include "../connection.php";
+	//Validasi role
+	if($_SESSION['role']='admin'||$_SESSION['role']='super_admin'){
+		if($_SESSION['username']!=''){
+			$admin = $_SESSION['username'];
+		}else{
+			header("Location:../login.html");
+		}
+	}else{
+		header("Location:../login.html");
+	}
+	
+	$task	= $_GET['task'];
+	// Input 
+	if ($task == 'insert'){
+		$insert = mysql_query("INSERT INTO `noncommodity` (`noncommodity_id`, `noncommodity_name`, 
+		`noncommodity_weight`) VALUES ('', '".$_POST['name']."', '".$_POST['weight']."')");
+		
+		if($insert){
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Menambahkan NonKomoditi Berhasil";
+			echo "<script>window.location=('noncommodity.php')</script>";
+		}
+		else{
+			echo "<script>window.alert('Data Gagal');
+			window.history.back()";
+		}
+	}
+
+	// Update
+	elseif ($task == 'update'){
+		$id		= $_GET['id'];
+		$update = mysql_query("update noncommodity set noncommodity_name 	= '".$_POST['name']."',
+													noncommodity_weight		= '".$_POST['weight']."'
+													where noncommodity_id 	= '".$id."'");
+		if($update){
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Mengedit NonKomoditi Berhasil";
+			echo "<script>window.location=('noncommodity.php')</script>";
+		}
+		else{
+			echo "<script>window.alert('Data Gagal Diperbarui');
+			window.history.back()</script>";
+		}
+	}
+	
+	elseif ($task == 'delete'){
+		$id		= $_GET['id'];
+		$delete = mysql_query("delete from noncommodity where noncommodity_id = '".$id."'");
+		if($delete){
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Menghapus NonKomoditi Berhasil";
+			//Writes the photo to the server 
+			echo "<script>window.location=('noncommodity.php')</script>";
+		}
+		else{
+			echo "<script>window.alert('Delete Failled');
+			window.location=('noncommodity.php')</script>";
+		}
+	}
+?>
