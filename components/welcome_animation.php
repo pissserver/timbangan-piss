@@ -96,7 +96,7 @@
 
         // Redirect ke halaman baru setelah animasi selesai
         setTimeout(() => {
-            window.location.href = "index.php";
+            window.location.href = "dashboard.php";
         }, 2000); // Waktu sinkron dengan durasi animasi lingkaran
     }, 3000); // Waktu tunggu sebelum animasi fade-out mulai
 </script>
