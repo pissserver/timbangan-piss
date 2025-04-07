@@ -40,7 +40,26 @@
 		?>
 		<tr>
 			<td style="vertical-align: middle; text-align:center;"><?php echo $no; ?></td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo $data['weighing_id']; ?></td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php 
+					$wid 	= sprintf("%07d", $data['weighing_id']);
+					$status = executeScalar("select weighing_sts from weighing where weighing_id = '".$data['weighing_id']."'");
+					if($status=='Masuk'||$status=='Batal'){ 
+						//$year = executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$data['cashier_target']."'"); ?>
+						
+						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+							<?php echo 'TB'.$wid; ?>
+						</div>
+				<?php }
+					elseif($status=='Keluar'||$status=='Lunas'){
+						//$year = executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$data['cashier_target']."'"); ?>
+						
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+							<?php echo 'TG'.$wid; ?>
+						</div>
+					<?php } 
+				?>
+			</td>
 			<td style="vertical-align: middle; text-align: center;"><?php echo $data['nopol']; ?></td>
 			<td style="vertical-align: middle;"><?php echo $merchant; ?></td>
 			<td style="vertical-align: middle; text-align: center;"><?php echo $goods; ?></td>
