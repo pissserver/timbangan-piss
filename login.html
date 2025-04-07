@@ -153,10 +153,21 @@
                                     Ingat saya
                                 </label>
                             </div>
-                            <!-- 
+
                             <div>
-                                <a href="#" class="txt1"> Lupa Password? </a>
-                            </div> -->
+                                <a
+                                    href="#"
+                                    class="txt1"
+                                    data-toggle="modal"
+                                    data-target="#modalForgetPassword"
+                                    style="
+                                        color: #428bca;
+                                        text-decoration: none;
+                                    "
+                                >
+                                    Lupa Password?
+                                </a>
+                            </div>
                         </div>
 
                         <div class="container-login100-form-btn">
@@ -212,6 +223,20 @@
             </div>
         </div>
 
+        <!-- Modal Forget Password -->
+        <div
+            id="modalForgetPassword"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Meload modal "forget_password.php" file -->
+                </div>
+            </div>
+        </div>
+
         <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendor/animsition/js/animsition.min.js"></script>
         <script src="vendor/bootstrap/js/popper.js"></script>
@@ -242,6 +267,13 @@
                         icon.classList.remove("fa-eye-slash");
                     }
                 });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#modalForgetPassword").on("show.bs.modal", function () {
+                    $(this).find(".modal-content").load("forget_password.php");
+                });
+            });
         </script>
     </body>
 </html>
