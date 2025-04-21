@@ -19,7 +19,7 @@
 	}
 	$lapak 	= "".$string;
 ?>
-<page backtop="15mm" backbottom="10mm" backleft="5mm" backright="5mm">
+<page backtop="15mm" backbottom="10mm" backleft="0mm" backright="0mm">
 	<page_header>
         <!--<table style="width:95%; border:0px; margin-top:10px; margin-left:5px; margin-right:5px; font-size:8pt;">
             <tr>
@@ -33,6 +33,7 @@
 			<br>PASAR INDUK SURABAYA SIDOTOPO (PISS)
 		</div>
     </page_header>
+	<br><br>
 	<table style="margin-bottom: 5px;font-size:10pt; width:450px;" >
 		<tr>
 			<td style="width: 25%;">Nama</td>
@@ -60,8 +61,8 @@
 			<th style="text-align: center;width: 7%; border: solid 1px black;">TGL KELUAR</th>
 			<th style="text-align: center;width: 9%;border: solid 1px black;">NOTA TIMBANG</th>
 			<th style="text-align: center;width: 9%;border: solid 1px black;">NOTA TAGIHAN</th>
-			<th style="text-align: left;width: 7%;border: solid 1px black;">NOPOL</th>
-			<th style="text-align: left;width: 8%;border: solid 1px black;">KOMODITI</th>
+			<th style="text-align: center;width: 7%;border: solid 1px black;">NOPOL</th>
+			<th style="text-align: center;width: 8%;border: solid 1px black;">KOMODITI</th>
 			<th style="text-align: center;width: 6%;border: solid 1px black;">STATUS MITRA</th>
 			<th style="text-align: center;width: 6%;border: solid 1px black;">STATUS NOTA</th>
 			<th style="text-align: center;width: 8%;border: solid 1px black;">BERAT MASUK (KG)</th>
@@ -69,6 +70,7 @@
 			<th style="text-align: center;width: 8%;border: solid 1px black;">NONKOMODITI (KG)</th>
 			<th style="text-align: center;width: 8%;border: solid 1px black;">RAFAKSI (KG)</th>
 			<th style="text-align: center;width: 8%;border: solid 1px black;">TONASE (KG)</th>
+			<th style="text-align: center;width: 8%;border: solid 1px black;">TOTAL (RP)</th>
 		</tr>
 		<?php
 			//query date out
@@ -92,6 +94,7 @@
 			$noncommodity = 0;
 			$rafaksi	= 0;
 			$netto 	= 0;
+			$total 	= 0;
 			while($r= mysql_fetch_array($query)){
 				$goods	= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
 				//$wid 	= sprintf("%07d", $r['weighing_id']);
@@ -101,16 +104,16 @@
 		?>
 		<tr>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_out'])); ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php 
+			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_out'])); ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php 
 			if($r['reffer']=='null'||$r['reffer']==''){
 				echo 'TB'.$r['weighing_id'];
 			}else{
 				echo 'TB'.$r['reffer'];
 			} ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo $goods; ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php echo $goods; ?></td>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $r['laborer_sts']; ?></td>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $r['weighing_sts2']; ?></td>
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['weight_in']); ?> </td>
@@ -118,6 +121,7 @@
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['noncommodity']); ?> </td>
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['rafaksi']); ?> </td>
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['netto']); ?> </td>
+			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['cost_tonase']); ?> </td>
 		</tr>
 		<?php 
 			$no++;
@@ -126,6 +130,7 @@
 			$noncommodity = $noncommodity+$r['noncommodity'];
 			$rafaksi = $rafaksi+$r['rafaksi'];
 			$netto 	= $netto+$r['netto'];
+			$total = $total+$r['cost_tonase'];
 			} 
 		?>
 		<tr>
@@ -135,6 +140,7 @@
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($noncommodity); ?> </td>
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($rafaksi); ?> </td>
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($netto); ?> </td>
+			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($total); ?> </td>
 		</tr>
 	</table>
     <page_footer>
