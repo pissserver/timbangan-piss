@@ -102,7 +102,7 @@
 <!-- Tombol untuk memunculkan offcanvas -->
 <button class="btn btn-canvas btn-primary" onclick="toggleOffcanvas()">
     <i class="fa fa-bell"></i>
-    <!-- <div class="notification">1</div> -->
+    <div class="notification">1</div>
 </button>
 
 <!-- Offcanvas -->
@@ -113,18 +113,18 @@
     </div>
     <div class="offcanvas-body">
         <!-- Jika tidak ada pembaruan sistem -->
-        <div class="box-update">
+        <!-- <div class="box-update">
             <img src="img/update.png" alt="Update Illustration" width="210px">
             <h3 class="text-primary text-uppercase"><b>Tidak ada pembaruan sistem</b></h3>
-        </div>
+        </div> -->
 
         <!-- Jika ada pembaruan sistem -->
-        <!-- <table>
+        <table>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Sekarang untuk membuat revisi bisa dilakukan pada sistem di menu developer</td>
+                <td>Sekarang bisa beralih akun dengan cepat tanpa keluar akun terlebih dahulu. Caranya klik akun, lalu beralih akun, pilih akun yang sesuai dengan kebutuhan, masukkan password dan klik submit.</td>
             </tr>
-        </table> -->
+        </table>
     </div>
 </div>
 

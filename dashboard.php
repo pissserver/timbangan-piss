@@ -192,7 +192,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <div class="panel" style="background-color:rgb(179, 177, 41); color: #fff;">
                             <div class="panel-heading">
@@ -215,7 +215,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <br>
                 <div class="row">

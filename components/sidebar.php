@@ -23,6 +23,10 @@
 	}
 
 	$greetingMessage = greeting();
+
+	$checkerCode = mysql_real_escape_string($_SESSION['checker']);
+	$allUser = mysql_query("SELECT * FROM checker WHERE checker_role = 'cashier' AND status_aktif = 1 AND checker_code != '$checkerCode' ORDER BY checker_name ASC");
+
 ?>
 
 <style>
@@ -82,6 +86,20 @@
 				</li>
 				<li class="divider"></li>
 				<li>
+					<a data-toggle="modal" data-target="#modalAccount" href="#" 
+					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
+					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
+					onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffffff';">
+						<div class="name" style="display: inline-block; padding-right: 45px; padding-left: 10px;">
+							Beralih Akun 
+						</div>
+						<div class="icon" style="display: inline-block;">
+							<i class="fa fa-exchange fa-fw" style="color: #ffffff; font-size: 15px;"></i>
+						</div>
+					</a>
+				</li>
+				<li class="divider"></li>
+				<li>
 					<a data-toggle="modal" data-target="#modalLogout" href="#" 
 					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
 					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
@@ -114,6 +132,87 @@
 							</div>
 							<input type="hidden" id="value_id" />
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal Account -->
+			<div class="modal fade" id="modalAccount" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header bg-primary text-white" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
+							<h4 id="header_password"><i class="fa fa-users fa-fw"></i>&nbsp;&nbsp;Pilih Akun</h4>
+							<button style="margin-top: -35px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div id="data_account" style="margin-bottom: 0px;">
+							<?php while ($row = mysql_fetch_array($allUser)) { ?>
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div class="row" style="align-items: center;">
+											<div class="col-xs-1 text-center">
+												<i class="fa fa-user fa-3x text-primary"></i>
+											</div>
+											<div class="col-xs-8">
+												<h4 class="media-heading" style="margin-top: 5px;"><?php echo $row['checker_name'] ?></h4>
+												<p style="margin-bottom: 0;">Kode Kasir | <?php echo $row['checker_code'] ?></p>
+											</div>
+											<div class="col-xs-3 text-right">
+												<a href="javascript:void(0)" 
+													class="btn btn-primary btn-sm pilih-akun" 
+													style="padding: 10px 20px; font-size: 14px; margin-top:5px;"
+													data-id="<?php echo $row['checker_id'] ?>"
+													data-nama="<?php echo htmlspecialchars($row['checker_name']) ?>"
+													data-kode="<?php echo htmlspecialchars($row['checker_code']) ?>">
+													Pilih
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal account confirmation -->
+			<div class="modal fade" id="modalLoginConfirm" tabindex="-1" role="dialog" aria-labelledby="modalLoginConfirmLabel">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					<div class="modal-header bg-primary text-white">
+						<h4 class="modal-title" id="modalLoginConfirmLabel"><i class="fa fa-lock"></i>&nbsp; Konfirmasi Akun</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -30px;">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="row" style="align-items: center;">
+									<div class="col-xs-1 text-center">
+										<i class="fa fa-user fa-3x text-primary"></i>
+									</div>
+									<input type="hidden" id="modal_id_user" value="">
+									<div class="col-xs-5">
+										<h4 class="media-heading" style="margin-top: 5px;"> <span id="modal_nama"></span></h4>
+										<p style="margin-bottom: 0;">Kode Kasir |  <span id="modal_kode"></span></p>
+									</div>
+									<div class="col-xs-6 text-right" style="margin-top: 10px;">
+										<input type="password" class="form-control" id="modal_password" placeholder="Password" style="padding-right: 40px;" autofocus>
+										<i class="fa fa-eye" id="togglePassword" style="position: absolute; top: 50%; right: 25px; transform: translateY(-50%); cursor: pointer;"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						<button type="button" class="btn btn-primary" onclick="submitPassword()">Submit</button>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -366,5 +465,53 @@
 			$("#dropdownIcon").removeClass("fa-angle-up").addClass("fa-angle-down");
 		});
 	});
+
+	$(document).on('click', '.pilih-akun', function () {
+		var id = $(this).data('id');
+		var nama = $(this).data('nama');
+		var kode = $(this).data('kode');
+
+		$('#modal_nama').text(nama);
+		$('#modal_kode').text(kode);
+		$('#modal_id_user').val(id);
+		$('#modal_password').val('');
+
+		$('#modalLoginConfirm').modal('show');
+	});
+
+	$(document).on('click', '#togglePassword', function () {
+		const input = $('#modal_password');
+		const type = input.attr('type') === 'password' ? 'text' : 'password';
+		input.attr('type', type);
+
+		// Toggle class ikon
+		$(this).toggleClass('fa-eye fa-eye-slash');
+	});
+
+	function submitPassword() {
+		var id = $('#modal_id_user').val();
+		var password = $('#modal_password').val();
+
+		if (password === '') {
+			alert('Password tidak boleh kosong.');
+			return;
+		}
+
+		$.post('switch_account_action.php', { id: id, password: password }, function (res) {
+			console.log('Response:', res);
+
+			if (res == 'ok') {
+				$.get('components/welcome_animation.php', function (animationHtml) {
+					$('body').html(animationHtml);
+
+					setTimeout(function() {
+						window.location.href = 'dashboard.php';
+					}, 3250);
+				});
+			} else if (res == 'wrong-password') {
+				alert('Password salah.');
+			}
+		});
+	}
 </script>
 

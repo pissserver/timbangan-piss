@@ -1,9 +1,15 @@
 
 <?php
-    $checker 	= executeScalar("select checker_name from checker where checker_code = '".$_SESSION['checker']."'");
+    session_start();
+    include "../connection.php";
+
+    $code = mysql_real_escape_string($_SESSION['checker']);
+    $result = mysql_query("SELECT checker_name FROM checker WHERE checker_code = '$code'");
+    $row = mysql_fetch_array($result);
+    $checker = $row['checker_name'];
 ?>
 
-<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; overflow: hidden;">
+<div class="animation-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; overflow: hidden;">
     <div id="title" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
         <h1 id="typedText"  style="color: white; font-size: 50px; font-family: Arial, sans-serif; text-transform: capitalize;"></h1>
     </div>
