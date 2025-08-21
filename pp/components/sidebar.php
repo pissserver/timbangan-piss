@@ -51,7 +51,6 @@
 	.notification-revision {
         display: block;
         position: absolute;
-        top: 0px;
         right: 10px;
         background-color: red;
         color: white;
@@ -383,7 +382,7 @@
 											echo '<span class="notification-revision-hidden"></span>';
 										}
 									?>
-									<i class="fa fa-code fa-fw"></i> Developer <span style="margin-left: 100px;"><img src="../img/crown.png" alt="Crown Icon" width="23px;"></span>
+									<i class="fa fa-pencil fa-fw"></i> Revisi <span style="margin-left: 100px;"></span>
 								</a>
 							</li>
 						</li>
