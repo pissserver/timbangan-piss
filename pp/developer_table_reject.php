@@ -15,16 +15,16 @@
 <table id="developerViewReject" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th style="text-align: center; width:5%;">NO</th>
-			<th style="text-align: center; width:15%;">NAMA PEMOHON</th>
-			<th style="text-align: center; width:10%;">NO NOTA</th>
-			<th style="text-align: center; width:10%;">TGL PENGAJUAN</th>
-			<th style="text-align: center; width:10%;">JAM PENGAJUAN</th>
-			<th style="text-align: center; width:10%;">STATUS</th>
-			<th style="text-align: center; width:10%;">APPROVER</th>
-			<th style="text-align: center; width:10%;">TGL DITOLAK</th>
-			<th style="text-align: center; width:10%;">JAM DITOLAK</th>
-			<th style="text-align: center; width:10%;">AKSI</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">NO</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">NAMA PEMOHON</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">NO NOTA</th>
+			<th style="vertical-align: middle; text-align: center; width:20%;">URAIAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:20%;">ALASAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">TGL & JAM PENGAJUAN</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">STATUS</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DITOLAK</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">AKSI</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -52,8 +52,12 @@
 					<?php } 
 				?>
 			</td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('d M Y', strtotime($data['date'])); ?></td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('H : i', strtotime($data['time'])); ?></td>
+			<td style="vertical-align: middle; text-align:left;"><?php echo $data['description']; ?></td>
+			<td style="vertical-align: middle; text-align:left;"><?php echo $data['reason']; ?></td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php echo date('d M Y', strtotime($data['date'])); ?><br>
+				<?php echo date('H : i', strtotime($data['time'])); ?>
+			</td>
 			<td style="vertical-align: middle; text-align:center;">
 				<div style="vertical-align: middle; background-color: red; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-close fa-fw"></i>&nbsp;<?php echo $data['status1']; ?>
@@ -64,8 +68,10 @@
 					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo $data['approver']; ?>
 				</div>
 			</td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('d M Y', strtotime($data['approver_date'])); ?></td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('H : i', strtotime($data['approver_time'])); ?></td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php echo date('d M Y', strtotime($data['approver_date'])); ?><br>
+				<?php echo date('H : i', strtotime($data['approver_time'])); ?>
+			</td>
 			<td style="text-align: center; vertical-align: middle;">
 				<a href="developer_action.php?task=accept&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-xs btn-outline btn-success btn-block action-btn">
 					<i class="fa fa-check"></i>&nbsp;Setujui

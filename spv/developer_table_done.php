@@ -15,16 +15,16 @@
 <table id="developerViewDone" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th style="text-align: center; width:5%;">NO</th>
-			<th style="text-align: center; width:10%;">NAMA PEMOHON</th>
-			<th style="text-align: center; width:5%;">NO NOTA</th>
-			<th style="text-align: center; width:15%;">URAIAN REVISI</th>
-			<th style="text-align: center; width:15%;">ALASAN REVISI</th>
-			<th style="text-align: center; width:10%;">TGL PENGAJUAN</th>
-			<th style="text-align: center; width:10%;">STATUS</th>
-			<th style="text-align: center; width:10%;">APPROVER</th>
-			<th style="text-align: center; width:10%;">TGL DISETUJUI</th>
-			<th style="text-align: center; width:10%;">PENGERJAAN</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">NO</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">NAMA PEMOHON</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">NO NOTA</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">URAIAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">ALASAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">STATUS</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DISETUJUI</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">PENGERJAAN</th>
 		</tr>
 	</thead>
 	<tbody>

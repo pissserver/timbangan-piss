@@ -15,14 +15,13 @@
 <table id="developerView" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th style="text-align: center; width:5%;">NO</th>
-			<th style="text-align: center; width:15%;">NAMA PEMOHON</th>
-			<th style="text-align: center; width:10%;">NO NOTA</th>
-			<th style="text-align: center; width:20%;">URAIAN REVISI</th>
-			<th style="text-align: center; width:20%;">ALASAN REVISI</th>
-			<th style="text-align: center; width:10%;">TGL PENGAJUAN</th>
-			<th style="text-align: center; width:10%;">JAM PENGAJUAN</th>
-			<th style="text-align: center; width:10%;">STATUS</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">NO</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">NAMA PEMOHON</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">NO NOTA</th>
+			<th style="vertical-align: middle; text-align: center; width:25%;">URAIAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:25%;">ALASAN REVISI</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">STATUS</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -52,8 +51,10 @@
 			</td>
 			<td style="vertical-align: middle; text-align:left;"><?php echo $data['description']; ?></td>
 			<td style="vertical-align: middle; text-align:left;"><?php echo $data['reason']; ?></td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('d M Y', strtotime($data['date'])); ?></td>
-			<td style="vertical-align: middle; text-align:center;"><?php echo date('H : i', strtotime($data['time'])); ?></td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php echo date('d M Y', strtotime($data['date'])); ?><br>
+				<?php echo date('H : i', strtotime($data['time'])); ?>
+			</td>
 			<td style="vertical-align: middle; text-align:center;">
 				<div style="vertical-align: middle; background-color: #EB8317; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-spinner fa-fw"></i>&nbsp;<?php echo $data['status1'] == NULL ? 'Menunggu Acc' : ''; ?>
