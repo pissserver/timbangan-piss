@@ -34,8 +34,13 @@
 	// Update
 	elseif ($task == 'update'){
 		$id		= $_GET['id'];
+		$oldPay = executeScalar("select pay_total from payment where pay_name = '".$_POST['name']."'");
+		$date_change = date("Y-m-d");
+		
 		$update = mysql_query("update payment set pay_name 	= '".$_POST['name']."',
-												pay_total	= '".$_POST['pay']."'
+												pay_total	= '".$_POST['pay']."',
+												changes     = '".$oldPay." -> ".$_POST['pay']."',
+												date_change = '".$date_change."'
 											where pay_id 	= '".$id."'");
 		if($update){
 			// Alert Information

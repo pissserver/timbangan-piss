@@ -16,9 +16,11 @@
 	<thead>
 		<tr>
 			<th style="vertical-align: middle; text-align: center; width:10%;">NO</th>
-			<th style="vertical-align: middle; text-align: center; width:50%;">JENIS TARIF</th>
+			<th style="vertical-align: middle; text-align: center; width:30%;">JENIS TARIF</th>
 			<th style="vertical-align: middle; text-align: center; width:20%;">NOMINAL TARIF</th>
-			<th style="vertical-align: middle; text-align: center; width:20%;">AKSI</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">PERUBAHAN TARIF</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">TGL PERUBAHAN</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">AKSI</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,6 +34,16 @@
 			<td style="vertical-align: middle; text-align:center;"><?php echo $no; ?></td>
 			<td style="vertical-align: middle; text-align: center;"><?php echo $data['pay_name']; ?></td>
 			<td style="vertical-align: middle; text-align:center;"><?php echo format_rupiah($data['pay_total']); ?></td>
+			<td style="vertical-align: middle; text-align:center;"><?php echo $data['changes'] != '' ? $data['changes'] : '-'; ?></td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php
+				if ($data['date_change'] == '0000-00-00') {
+					echo "-";
+				} else {
+					echo date("j F Y", strtotime($data['date_change']));
+				}
+				?>
+			</td>
 			<td style="vertical-align: middle; text-align: center;">
 				<a class="btn btn-xs btn-outline btn-primary btn-block modalEditPayment" data-toggle="modal" data-target="#modalEditPayment" data-id="<?php echo $data['pay_id']; ?>">
 					<i class="fa fa-edit"></i>&nbsp;Edit
