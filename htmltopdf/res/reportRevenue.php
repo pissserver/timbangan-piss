@@ -76,7 +76,8 @@
 								cost
 						from weighing 
 						where weighing_sts = 'Lunas' and 
-						(date_pay between '".$date1."' and '".$date2."')";
+						(date_pay between '".$date1."' and '".$date2."')
+						ORDER BY date_pay ASC";
 			}else{
 				$sql = "select 	w.weighing_id, 
 								w.merchant_id, 
@@ -93,7 +94,8 @@
 						where 	w.merchant_id = m.merchant_id and 
 								weighing_sts = 'Lunas' and 
 								m.merchant_type = '".$commodity."' and
-								(w.date_pay between '".$date1."' and '".$date2."')";
+								(w.date_pay between '".$date1."' and '".$date2."')
+								ORDER BY date_pay ASC";
 			}
 			$query 		= mysql_query($sql);
 			$no 		= 1;
