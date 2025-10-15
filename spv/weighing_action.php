@@ -14,8 +14,9 @@
 	}
 	$task		= $_GET['task'];
 	// $checker	= -1;
-	$id			= $_GET['id'];
-	$checker    = executeScalar("select checker_id from weighing where weighing_id = '".$id."'");
+	// $id			= $_GET['id'];
+	// $checker    = executeScalar("select checker_id from weighing where weighing_id = '".$id."'");
+	$checker	= $_POST['checker'];
 
 	//Spv Masuk
 	if($task=='in'){

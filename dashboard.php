@@ -17,7 +17,7 @@
     $endDate            = date("Y-m-d");
 
     $merchant 	        = executeScalar("SELECT COUNT(merchant_id) FROM merchant WHERE merchant_status = 'Aktif'");
-    $weighing 	        = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_check BETWEEN '$startDate' AND '$endDate'");
+    $weighing 	        = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE DATE(date_check) BETWEEN '$startDate' AND '$endDate'");
     $paymentDone 	    = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE weighing_sts = 'Lunas' AND date_pay BETWEEN '$startDate' AND '$endDate'");
     $paymentMitraDone 	= executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE weighing_sts = 'Lunas' AND date_pay BETWEEN '$startDate' AND '$endDate'");
     $cashierStaff       = executeScalar("select count(checker_id) from checker where checker_role = 'Cashier' and status_aktif = 1 and checker_name != 'Musdalifah'");
