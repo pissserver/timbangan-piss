@@ -126,6 +126,9 @@
             </tr>
         </table> -->
     </div>
+    <div class="offcanvas-footer">
+        <p class="text-primary text-uppercase text-center"><b>Version 1.2.0</b></p>
+    </div>
 </div>
 
 <script>

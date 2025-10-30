@@ -474,8 +474,8 @@
 													}
 													//Jika Belum Diprint Dan Belum Dicheck
 													elseif($c==NULL){
-														echo '<button type="button" class="btn btn-block btn-outline btn-primary" data-toggle="modal" data-target="#confirmationModal">
-															Simpan
+														echo '<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#confirmationModal">
+															<i class="fa fa-floppy-o fa-fw"></i>&nbsp;Simpan
 														</button> ';
 													}
 												?> 
@@ -989,7 +989,7 @@
 							</fieldset>
 							<br />
 							<div class="col-md-12">
-								<button style="" type="submit" class="btn btn-block btn-outline btn-primary">Simpan</button>
+								<button style="" type="submit" class="btn btn-block btn-primary"><i class="fa fa-floppy-o fa-fw"></i>&nbsp;Simpan</button>
 							</div>
 						</form>
 					</div>
@@ -1415,7 +1415,7 @@
 					?>
 					
 					<br />
-					<button onclick="submitMerge()" class="btn btn-block btn-outline btn-primary">Gabungkan</button>
+					<button onclick="submitMerge()" class="btn btn-block btn-primary"><i class="fa fa-object-group"></i>&nbsp;Gabungkan</button>
 				</div>
 				<div class="modal-footer">
 				</div>
@@ -1427,8 +1427,8 @@
 	<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header" >
-					<h5 class="modal-title" id="confirmationModalLabel"><b>KONFIRMASI !</b></h5>
+				<div class="modal-header bg-primary" >
+					<h5 class="modal-title" id="confirmationModalLabel"><b>KONFIRMASI SIMPAN</b></h5>
 					<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>

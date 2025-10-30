@@ -60,8 +60,8 @@
 			<td style="text-align:center; vertical-align: middle;"><?php echo $data['netto']; ?> Kg</td>
 			<td style="text-align:right; vertical-align: middle;"><?php echo format_rupiah($data['cost_tonase']); ?></td>
 			<td style="text-align:center; vertical-align: middle;">
-				<a href="pay_action.php?task=cancel&type=ko&id=<?php echo $data['weighing_id']; ?>">
-					<button class="btn btn-outline btn-block btn-primary btn-xs">Batal</button>
+				<a href="pay_action.php?task=cancel&type=ko&id=<?php echo $data['weighing_id']; ?>" style="text-decoration:none;" >
+					<button class="btn btn-outline btn-block btn-primary btn-xs"><i class="fa fa-times"></i>&nbsp;Batal</button>
 				</a>
 			</td>
 		</tr>

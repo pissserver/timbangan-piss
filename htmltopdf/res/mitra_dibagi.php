@@ -4,7 +4,7 @@
 <page backtop="5mm" backbottom="5mm" backleft="5mm" backright="5mm">
     <?php
 		$year 		= date("y");
-		$date_now 		= date("Y-m-d");
+		$date_now 		= date("d M Y");
 		$date		= $_GET['date'];
 		$work_date	= $_GET['date'];	
 		
@@ -71,14 +71,14 @@
 		<tr>
 			<td style="text-align: left; width: 50%">PISS</td>
 			<td style="text-align: center; width: 5%"></td>
-			<td style="text-align: right; width: 45%"><?php echo date("d-m-Y", strtotime($date_now)); ?></td>
+			<td style="text-align: right; width: 45%"><?php echo date("d M Y", strtotime($date_now)); ?></td>
 		</tr>
 	</table><br/>
-    <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px; margin-bottom:5px;">
+    <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px; margin-bottom:20px;">
 		PENGEMBALIAN UPAH MITRA
 	</div>
 	<table style="margin-bottom: 5px;font-size:10pt;" id="tableCheckout">
-		<tr><td>Tanggal Kerja	</td><td> : <?php echo date("d-m-Y", strtotime($work_date)); ?> </td></tr>
+		<tr><td>Tanggal Kerja	</td><td> : <?php echo date("d M Y", strtotime($work_date)); ?> </td></tr>
 		<tr><td>Total Uang		</td><td> : <b><?php echo format_rupiah($total_share); ?></b> </td></tr>
 	</table>
     <br/><br>

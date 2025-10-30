@@ -22,7 +22,7 @@
     <meta name="author" content="">
 	<link rel="icon" href="img/icon.png">
     <link rel="shortcut icon" href="img/icon.png" />
-    <title>Developer | PISS</title>
+    <title>Revisi | PISS</title>
 	<?php echo headScript(); ?>
 </head>
 <body>
@@ -86,7 +86,7 @@
 										</div>
 										<div class="col-md-12">
 											<div class="form-group" style="padding:10px 15px; margin-bottom:-10px;">
-												<center><button type="submit" class="btn btn-primary btn-block">Pengajuan <i class="fa fa-angle-double-right fa-lg"></i></button></center>
+												<center><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-paper-plane "></i>&nbsp;&nbsp;Pengajuan</button></center>
 											</div>
 										</div>
 									</fieldset>
@@ -160,7 +160,7 @@
 											<i class="fa fa-check-square fa-fw"></i> Data Revisi Disetujui
 										</div>
 										<div class="panel-body">
-											<div class="row">
+											<div class="row" style=" overflow-x: auto;">
 												<div class="col-md-12">
 													<?php 
 														$query 	= mysql_query("SELECT * FROM revision WHERE status1 = 'Disetujui' ORDER BY revision_id DESC");
@@ -235,6 +235,15 @@
 		</div>
 	</div>
 
+	<!-- Modal Edit -->
+	<div id="modalEditRevision" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Meload modal "developer_modal.php" file -->
+            </div>
+        </div>
+    </div>
+
 	<!-- Modal Password -->
 	<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 		<div class="modal-dialog">
@@ -254,6 +263,7 @@
 			</div>
 		</div>
 	</div>
+
 	<script>
 		$(document).ready(function(){
 			$("#notifArea").html(alertLoadProcess);

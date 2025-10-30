@@ -22,6 +22,8 @@
 			<th style="vertical-align: middle; text-align: center; width:25%;">ALASAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">STATUS</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">AKSI</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">CONTACT</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -60,6 +62,47 @@
 					<i class="fa fa-spinner fa-fw"></i>&nbsp;<?php echo $data['status1'] == NULL ? 'Menunggu Acc' : ''; ?>
 				</div>
 			</td>
+			<td style="vertical-align: middle; text-align:center;">
+				<a class="btn btn-warning btn-xs btn-outline modalEditRevision" style="width:80px;" data-toggle="modal" data-target="#modalEditRevision" data-id="<?php echo $data['revision_id']; ?>">
+					<i class="fa fa-edit"></i>&nbsp;Edit
+				</a>
+				<a href="developer_action.php?task=delete&id=<?php echo $data['revision_id']; ?>" class="btn btn-danger btn-xs btn-outline" style="width:80px; margin-top:5px;">
+					<i class="fa fa-times"></i>&nbsp;Batal
+				</a>
+			</td>
+			<td style="vertical-align: middle; text-align:center;">
+				<?php
+				// Data dasar pesan
+				$message = "*REVISI TIMBANGAN* %0A%0A" .
+					"Nama Pemohon : " . $checkerName . "%0A" .
+					"No Nota : " . $data['type'] . $data['nota'] . "%0A" .
+					"Uraian Revisi : " . $data['description'] . "%0A" .
+					"Alasan Revisi : " . $data['reason'] . "%0A%0A" .
+					"Mohon tindak lanjutnya. Terima kasih.%0A%0A" .
+					"https://96910fa995d4.ngrok-free.app/timbangan-piss/developer.php".
+					"%0A%0A%0A".
+					"~ Ini adalah pesan otomatis dari sistem Timbangan PISS ~";
+
+				// Daftar kontak WhatsApp
+				$contacts = [
+					['number' => '6282335326373', 'name' => 'P. Aam'],
+					['number' => '6283854444753', 'name' => 'M. Ajeng'], // ganti dengan nomor sebenarnya
+				];
+
+				// Loop buat tombol
+				foreach ($contacts as $c) {
+					$waLink = "https://wa.me/{$c['number']}?text={$message}";
+					echo '
+					<a href="' . $waLink . '" target="_blank" 
+					class="btn btn-success btn-sm" 
+					style="display:block; width:80px; margin:4px auto; padding:5px 8px; text-align:center;">
+						<i class="fa fa-whatsapp"></i> ' . $c['name'] . '
+					</a>';
+				}
+
+				?>
+
+			</td>
 		</tr>
 		<?php
 			$no++;
@@ -67,4 +110,22 @@
 		?>
 	</tbody>
 </table>
+
+<script>
+		$(document).ready(function() {
+		$('body').on('click', '.modalEditRevision', function() {
+			var goodsID = $(this).data('id'); 
+
+			$.ajax({
+				url: 'developer_modal.php',
+				type: 'GET',
+				data: { id: goodsID }, 
+				success: function(response) {
+					$('#modalEditRevision .modal-content').html(response);
+					$('#modalEditRevision').modal('show');
+				}
+			});
+		});
+	});
+</script>
 <!--</div>-->

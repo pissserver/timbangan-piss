@@ -131,7 +131,9 @@
 						</div>
 						<div class="modal-body">
 							<div id="data_password" style="margin-bottom: 0px;">
-								<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
+								<div class="alert alert-info" onclick="clearNotif()">
+									<h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3>
+								</div>
 							</div>
 							<input type="hidden" id="value_id" />
 						</div>

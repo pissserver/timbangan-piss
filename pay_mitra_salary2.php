@@ -682,7 +682,7 @@
 
 										</div>
 										<div class="form-group" style="padding:10px; margin-left:20px; margin-right:20px; margin-top:-10px; margin-bottom:0px;">
-											<button type="submit" class="btn btn-block btn-outline btn-primary">Simpan</button>
+											<button type="submit" class="btn btn-block btn-primary"><i class="fa fa-floppy-o"></i>&nbsp;Simpan</button>
 										</div>
 									</fieldset>
 								</form>
