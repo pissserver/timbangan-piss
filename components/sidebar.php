@@ -503,6 +503,7 @@
 			console.log('Response:', res);
 
 			if (res == 'ok') {
+				localStorage.removeItem('notificationHidden');
 				$.get('components/welcome_animation.php', function (animationHtml) {
 					$('body').html(animationHtml);
 
