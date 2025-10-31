@@ -148,6 +148,10 @@
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
                 <td>Penambahan fitur jam disamping nama akun</td>
             </tr>
+            <tr>
+                <td style="font-size:28px; padding-right: 20px;"> • </td>
+                <td>Fixing bug notification pada icon "bell" disamping nama akun pada saat ada pembaruan sistem</td>
+            </tr>
         </table>
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">

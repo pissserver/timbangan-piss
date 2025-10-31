@@ -94,6 +94,7 @@
 													<li>🎊 Sedikit perubahan button (Tombol Aksi) pada fitur 'Pembayaran & Setoran'</li>
 													<li>🎈 Penambahan fitur log update (changelog)</li>
 													<li>⏰ Penambahan fitur jam disamping nama akun</li>
+													<li>🙌 Fixing bug notification pada icon "bell" disamping nama akun pada saat ada pembaruan sistem</li>
 												</ul>
 											</div>
 										</div>
