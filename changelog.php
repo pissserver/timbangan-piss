@@ -79,19 +79,19 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">
 												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver120">
-													<i class="fa fa-plus"></i> Version 1.2.0 - 29 Oktober 2025
+													<i class="fa fa-plus"></i> Version 1.2.0 - 31 Oktober 2025
 												</a>
 											</h4>
 										</div>
 										<div id="ver120" class="panel-collapse collapse in">
 											<div class="panel-body">
-												<h5># Penambahan Fitur & Optimalisasi Data</h5>
+												<h5># Penambahan & Optimalisasi Fitur</h5>
 												<ul>
-													<li>✨ Sistem versioning lapak 1.2.0</li>
-													<li>🐞 Fixing query data block, lapak & pedagang</li>
-													<li>⚙️ Penggantian nama fitur, dari 'Pendaftaran Lapak Baru' menjadi 'Pendaftaran Pedagang'</li>
-													<li>🦴 Sekarang pada permohonan 'Pendaftaran Pedagang' maupun 'Tambah Lapak' bisa dibatalkan jika tidak jadi melakukan permohonan</li>
-													<li>🎊 Perubahan cara nonaktifkan lapak, dan pedagang</li>
+													<li>✨ Sistem versioning timbangan 1.2.0</li>
+													<li>🐞 Sedikit perubahan tampilan pada nota timbang, tagihan, mitra, dan hasil timbang</li>
+													<li>⚙️ Optimalisasi pada fitur 'Data Belum Dicek' & 'Data Sudah Dicek'</li>
+													<li>🦴 Fixing bug pada fitur 'Listing Data'</li>
+													<li>🎊 Sedikit perubahan button (Tombol Aksi) pada fitur 'Pembayaran & Setoran'</li>
 													<li>🎈 Penambahan fitur log update (changelog)</li>
 													<li>⏰ Penambahan fitur jam disamping nama akun</li>
 												</ul>

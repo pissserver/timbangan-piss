@@ -32,11 +32,11 @@
         <div id="page-wrapper">
 			<div class="row">
 				<br /><br><br><br>
-				<div style="margin: 0px 15px;" class="alert alert-danger" role="alert">
-					<i class="fa fa-warning" style="display: inline-block;"></i>&nbsp;
-					<p style="font-size: 14px; display: inline-block">
-						Halaman ini hanya dipergunakan untuk melakukan revisi data timbangan salah. Tolong jangan disalah gunakan, Terima kasih!
-					</p>
+				<div class="alert alert-warning d-flex align-items-center" role="alert" style="margin: 0 15px;">
+					<i class="fa fa-warning me-2" style="font-size: 18px;"></i>
+					<span style="font-size: 14px;">
+						Jika melakukan pengajuan revisi tolong pada pengisian <b>"Uraian Revisi"</b> dan <b>"Alasan Revisi"</b> diisi dengan jelas dan lengkap agar proses revisi dapat berjalan dengan lancar. Terima kasih.
+					</span>
 				</div>
 			</div>
 			<br>

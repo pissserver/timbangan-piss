@@ -18,6 +18,8 @@ if (mysql_num_rows($login) == 1) {
     $r = mysql_fetch_array($login);
     $_SESSION['checker'] = $r['checker_code'];
     $_SESSION['role'] = $r['checker_role'];
+    $_SESSION['show_welcome_modal'] = true;
+
     include "components/welcome_animation.php";
     echo "<script>setTimeout(function() { window.location.href = 'dashboard.php'; }, 3250);</script>";
     exit();

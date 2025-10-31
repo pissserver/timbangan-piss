@@ -16,6 +16,7 @@
 
 			$_SESSION['checker'] = $user['checker_code'];
 			$_SESSION['role'] = $user['checker_role'];
+			$_SESSION['show_welcome_modal'] = true;
 			echo 'ok';
 			exit();
 		} else {

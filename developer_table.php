@@ -63,10 +63,10 @@
 				</div>
 			</td>
 			<td style="vertical-align: middle; text-align:center;">
-				<a class="btn btn-warning btn-xs btn-outline modalEditRevision" style="width:80px;" data-toggle="modal" data-target="#modalEditRevision" data-id="<?php echo $data['revision_id']; ?>">
+				<a class="btn btn-warning btn-sm btn-outline modalEditRevision" style="width:80px;" data-toggle="modal" data-target="#modalEditRevision" data-id="<?php echo $data['revision_id']; ?>">
 					<i class="fa fa-edit"></i>&nbsp;Edit
 				</a>
-				<a href="developer_action.php?task=delete&id=<?php echo $data['revision_id']; ?>" class="btn btn-danger btn-xs btn-outline" style="width:80px; margin-top:5px;">
+				<a href="developer_action.php?task=delete&id=<?php echo $data['revision_id']; ?>" class="btn btn-danger btn-sm btn-outline" style="width:80px; margin-top:5px;">
 					<i class="fa fa-times"></i>&nbsp;Batal
 				</a>
 			</td>
@@ -85,8 +85,8 @@
 
 				// Daftar kontak WhatsApp
 				$contacts = [
-					['number' => '6282335326373', 'name' => 'P. Aam'],
-					['number' => '6283854444753', 'name' => 'M. Ajeng'], // ganti dengan nomor sebenarnya
+					['number' => '6282335326373', 'name' => 'PP - Aam'],
+					['number' => '6283854444753', 'name' => 'PP - Ajeng'], // ganti dengan nomor sebenarnya
 				];
 
 				// Loop buat tombol
@@ -95,7 +95,7 @@
 					echo '
 					<a href="' . $waLink . '" target="_blank" 
 					class="btn btn-success btn-sm" 
-					style="display:block; width:80px; margin:4px auto; padding:5px 8px; text-align:center;">
+					style="display:block; width:90px; margin:4px auto; padding:5px 8px; text-align:center;">
 						<i class="fa fa-whatsapp"></i> ' . $c['name'] . '
 					</a>';
 				}
