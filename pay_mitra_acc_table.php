@@ -88,8 +88,8 @@
 			<!-- <td style="text-align:right;"><?php echo format_rupiah($data['cost']); ?></td> -->
 			<!-- <td style="text-align:center;"><?php echo $data['weighing_sts']; ?></td> -->
 			<td style="text-align:center; vertical-align: middle;">
-				<a href="pay_action.php?task=cancel_mitra&type=ko&id=<?php echo $data['weighing_id']; ?>">
-					<button class="btn btn-outline btn-block btn-success btn-xs">Batal</button>
+				<a href="pay_action.php?task=cancel_mitra&type=ko&id=<?php echo $data['weighing_id']; ?>" style="text-decoration:none;" >
+					<button class="btn btn-outline btn-block btn-success btn-xs"><i class="fa fa-times"></i>&nbsp;Batal</button>
 				</a>
 			</td>
 		</tr>

@@ -18,7 +18,7 @@
 ?>
 <page backtop="-2mm" backbottom="0mm" backleft="5mm" backright="5mm">
     <?php
-		$date 			= date("d-m-Y");
+		$date 			= date("d M Y");
 		$jam 			= date("H:i");
 		$dt_now			= date("Y-m-d H:i:s");
 		$id				= $_GET['id'];
@@ -36,6 +36,7 @@
 			$name		= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 			$nick		= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
 			$checker	= executeScalar("select checker_code from checker where checker_id = '".$r['checker_id']."'");
+			$checkerName= executeScalar("select checker_name from checker where checker_id = '".$r['checker_id']."'");
 			$lapak 		= executeScalar("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
 			r.merchant_id = '".$r['merchant_id']."' and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') limit 1");
 			$goods		= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
@@ -143,20 +144,21 @@
 	<page_header>
         
     </page_header>
-	<table style="width:100%; border:0px; margin-top:0px; font-size:9pt;">
+	<table style="width:100%; border:0px; margin-top:8px; font-size:9pt;">
 		<tr>
 			<td style="text-align: left; width: 50%">No Nota: TG<?php echo $idq; ?></td>
-			<td style="text-align: center; width: 5%"></td>
-			<td style="text-align: right; width: 45%"><?php echo $date.' ('.$jam.') <b>('.$checker.')</b>'; ?></td>
+			<td style="text-align: center; width: 1%"></td>
+			<td style="text-align: right; width: 45%"><?php echo $date.' ('.$jam.') '; ?></td>
 		</tr>
 	</table>
 	<br />
     <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px;">
 		NOTA TAGIHAN MITRA
 	</div>
+	<p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<br/>
 	<!-- <div style="font-size: 12px; font-weight: bold;">Data timbangan akhir adalah sebagai berikut:</div> -->
-	<table style="width: 100%; margin-bottom: 5px;font-size:11px;" id="tableCheckout">
+	<table style="width: 100%; margin-bottom: 5px;margin-top: -5px;font-size:11px;" id="tableCheckout">
 		<tr>
 			<td>Nama / Alias / Kode </td>
 			<td> : </td>
@@ -223,7 +225,7 @@
 		<tr>
 			<td>Berat NonKomoditi	</td>
 			<td> : </td>
-			<td><?php echo $nc_weight; ?> Kg</td>
+			<td><?php echo $nc_weight != '0' ? $nc_weight : '0'; ?> Kg</td>
 		</tr>
 		<!-- <tr><td>Rafaksi (Potongan) 	</td><td> : <?php echo $r['rafaksi']; ?></td></tr> -->
 		<tr>
@@ -401,15 +403,15 @@
                 <th style="text-align: center;width: 33%;">Mandor</th>
             </tr>
             <tr>
-                <td style="text-align: center;width: 33%;"><br><br>&nbsp;( ................ )</td>
-                <td style="text-align: center;width: 34%;"><br><br>&nbsp;( ................ )</td>
-                <td style="text-align: center;width: 33%;"><br><br>&nbsp;( ................ )</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>&nbsp;( <?php echo $checkerName ?> )</td>
+                <td style="text-align: center;width: 34%;"><br><br><br>&nbsp;( ................ )</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>&nbsp;( ................ )</td>
             </tr>
         </table>
         <br><br>
-        <div style="font-size: 9px; font-weight: bold; text-align: center;">
+        <!-- <div style="font-size: 9px; font-weight: bold; text-align: center;">
             == PASAR INDUK SURABAYA SIDOTOPO ==
-        </div>
+        </div> -->
 	</page_footer>
 	<?php 
 		//simpan data siapa yg ngeprint

@@ -39,6 +39,7 @@
 				$name		= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 				$nick		= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
 				$checker	= executeScalar("select checker_code from checker where checker_id = '".$r['checker_id']."'");
+				$checkerName= executeScalar("select checker_name from checker where checker_id = '".$r['checker_id']."'");
 				$lapak 		= executeScalar("select l.lapak_name from rent r, lapak l 
 				where r.lapak_id = l.lapak_id and r.merchant_id = '".$r['merchant_id']."' 
 				and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') limit 1");
@@ -52,19 +53,20 @@
 	<table style="width:100%; border:0px; margin-top:0px; margin-right:5px; font-size:9pt;">
 		<tr>
 			<td style="text-align: left; width: 50%">No Nota: TB<?php echo $idq; ?></td>
-			<td style="text-align: center; width: 5%"></td>
-			<td style="text-align: right; width: 45%"><?php echo date("d M Y", strtotime($date)).' ('.$jam.') <b>('.$checker.')</b>'; ?></td>
+			<td style="text-align: center; width: 1%"></td>
+			<td style="text-align: right; width: 45%"><?php echo date("d M Y", strtotime($date)).' ('.$jam.')'; ?></td>
 		</tr>
 	</table>
 	<br />
-    <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:-5px; margin-bottom:5px;">
+    <div style="font-size: 12px; font-weight: bold; text-align: center;">
 		NOTA TIMBANG
 	</div>
-	<table style="font-size:9pt; width:100%;" id="tableCheckout" >
+	<p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
+	<table style="font-size:9pt; width:100%; margin-top: 10px;" id="tableCheckout" >
 		<tr>
 			<td>Nama / Alias / Kode	</td>
 			<td> : </td>
-			<td style="width: 70%;"><?php echo $name.' / '.$nick. ' / '.$r['merchant_id']; ?> </td>
+			<td style="width: 70%;"><?php echo $name.' / '. ($nick != '' ? $nick : '-') . ' / '.$r['merchant_id']; ?> </td>
 		</tr>
 		<tr>
 			<td>Lapak</td>
@@ -77,9 +79,9 @@
 			<td><?php echo $r['nopol']; ?></td>
 		</tr>
 		<tr>
-			<td>Berat Masuk</td>
+			<td>Berat Masuk / Barang</td>
 			<td> : </td>
-			<td><b><?php echo format_no($r['weight_in']); ?></b> Kg <span style="margin-left: 5px;">Barang : <?php echo $goods; ?></span></td>
+			<td><b><?php echo format_no($r['weight_in']); ?></b> Kg / <?php echo $goods; ?></td>
     	</tr>
 	</table>
     <br/>
@@ -162,7 +164,7 @@
             <th style="text-align: center;width: 33%;">Checker</th>
         </tr>
         <tr>
-            <td style="text-align: center;width: 50%;"><br><br>&nbsp;( ................... )</td>
+            <td style="text-align: center;width: 50%;"><br><br>&nbsp;( <?php echo $checkerName ?> )</td>
 			<td></td>
             <td style="text-align: center;width: 50%;"><br><br>&nbsp;( ................... )</td>
         </tr>

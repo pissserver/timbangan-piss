@@ -33,12 +33,12 @@
 		?>
 		<tr>
 			<td style="text-align:center;"><?php echo $data['ko_id']; ?></td>
-			<td style="text-align:center;"><?php echo date("d-m-Y", strtotime($data['ko_date'])); ?></td>
+			<td style="text-align:center;"><?php echo date("d M Y", strtotime($data['ko_date'])); ?></td>
 			<td style="text-align:left;"><?php echo $cashier; ?></td>
 			<td style="text-align:right;"><?php echo format_rupiah($data['ko_total']); ?></td>
 			<td style="text-align:center;"><?php echo $data['ko_status']; ?></td>
-			<td><a href="pay_action2.php?task=cancel_mitra&type=km&id=<?php echo $data['ko_id']; ?>">
-					<button class="btn btn-outline btn-block btn-success btn-xs">Batal</button>
+			<td><a href="pay_action2.php?task=cancel_mitra&type=km&id=<?php echo $data['ko_id']; ?>" style="text-decoration:none;">
+					<button class="btn btn-outline btn-block btn-success btn-xs"><i class="fa fa-times"></i>&nbsp;Batal</button>
 				</a>
 			</td>
 		</tr>

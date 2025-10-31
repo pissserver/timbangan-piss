@@ -39,6 +39,7 @@
             $name			= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
             $nick			= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
             $checker		= executeScalar("select checker_code from checker where checker_id = '".$r['checker_id']."'");
+            $checkerName	= executeScalar("select checker_name from checker where checker_id = '".$r['checker_id']."'");
             $lapak 			= executeScalar("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
 											r.merchant_id = '".$r['merchant_id']."' and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') limit 1");
             $goods			= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
@@ -215,14 +216,15 @@
 	<table style="width:100%; border:0px; margin-top:0px; font-size:9pt;">
 		<tr>
 			<td style="text-align: left; width: 50%">No Nota: TG<?php echo $idq; ?></td>
-			<td style="text-align: center; width: 5%"></td>
-			<td style="text-align: right; width: 45%"><?php echo $date.' ('.$jam.') <b>('.$checker.')</b>'; ?></td>
+			<td style="text-align: center; width: 1%"></td>
+			<td style="text-align: right; width: 45%"><?php echo $date.' ('.$jam.')'; ?></td>
 		</tr>
 	</table>
 	<br />
-	<div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:-5px;">
+	<div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px;">
 		NOTA TAGIHAN TONASE
 	</div>
+    <p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<br />
 	<!-- <div style="font-size: 12px; font-weight: bold; margin-top: -5px;">Data timbangan akhir adalah sebagai berikut:</div> -->
 	<table style="width: 100%; border:0px; margin-top: -5px; margin-bottom: 5px; font-size:11px;" id="tableCheckout;">
@@ -230,7 +232,7 @@
 			<td>Nama / Alias / Kode</td>
             <td>:</td>
 			<td style="width: 70%;">
-				<?php echo $name. ' / ' .$nick. ' / ' . $r['merchant_id']; ?>
+				<?php echo $name. ' / ' .($nick != '' ? $nick : '-'). ' / ' . $r['merchant_id']; ?>
 			</td>
 
             <td></td>
@@ -301,10 +303,10 @@
             } ?></td>
 		</tr>
 		<tr>
-			<td>Berat Masuk </td>
+			<td>Berat Masuk / Keluar</td>
             <td>:</td>
 			<td>
-				<b><?php echo format_no($r['weight_in']);?></b> Kg <span style='margin-left: 20px;'>Berat Keluar : <b><?php echo format_no($r['weight_out']);?></b> Kg</span>
+				<b><?php echo format_no($r['weight_in']);?></b> Kg / <b><?php echo format_no($r['weight_out']);?></b> Kg
 			</td>
         </tr>
 		<tr>
@@ -347,13 +349,14 @@
                 echo "<td>:</td>";
                 echo "<td><b style=' font-weight: bold;'>" . format_no($netto_mitra) . "</b> Kg</td>";
                 echo "</tr>";
-            } elseif ($jenis == 'B') {
-                echo "<tr>";
-                echo "<td>Berat Bersih Bongkar</td>";
-                echo "<td>:</td>";
-                echo "<td><b style='font-weight: bold;'>" . format_no($r['netto'] + $r['rafaksi']) . "</b> Kg</td>";
-                echo "</tr>";
-            }
+            } 
+            // elseif ($jenis == 'B' && $r['laborer_sts'] == "Ya") {
+            //     echo "<tr>";
+            //     echo "<td>Berat Bersih Bongkar</td>";
+            //     echo "<td>:</td>";
+            //     echo "<td><b style='font-weight: bold;'>" . format_no($r['netto'] + $r['rafaksi']) . "</b> Kg</td>";
+            //     echo "</tr>";
+            // }
         ?>
 		<tr>
 			<td>
@@ -480,7 +483,7 @@
             <?php } elseif ($r['weighing_sts2'] == 'Gabungan') { ?>
                 <tr>
                     <td style="vertical-align: top;">
-                        Nota Referensi
+                        Nota Referensi (Mitra)
                     </td>
                     <td style="vertical-align: top;">
                         :
@@ -521,15 +524,15 @@
                 <th style="text-align: center;width: 33%;">Checker</th>
             </tr>
             <tr>
-                <td style="text-align: center;width: 33%;"><br><br>&nbsp;( ................ )</td>
-                <td style="text-align: center;width: 34%;"><br><br>&nbsp;( ................ )</td>
-                <td style="text-align: center;width: 33%;"><br><br>&nbsp;( ................ )</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>&nbsp;( <?php echo $checkerName ?> )</td>
+                <td style="text-align: center;width: 34%;"><br><br><br>&nbsp;( ................ )</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>&nbsp;( ................ )</td>
             </tr>
         </table>
         <br><br>
-        <div style="font-size: 9px; font-weight: bold; text-align: center;">
+        <!-- <div style="font-size: 9px; font-weight: bold; text-align: center;">
             == PASAR INDUK SURABAYA SIDOTOPO ==
-        </div>
+        </div> -->
 	</page_footer>
 
 	<?php 

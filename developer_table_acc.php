@@ -21,8 +21,7 @@
 			<th style="vertical-align: middle; text-align: center; width:20%;">URAIAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:20%;">ALASAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
-			<th style="vertical-align: middle; text-align: center; width:5%;">STATUS</th>
-			<th style="vertical-align: middle; text-align: center; width:5%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:5%;">STATUS <br>& <br>APPROVER</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DISETUJUI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">PENGERJAAN</th>
 		</tr>
@@ -59,12 +58,10 @@
 				<?php echo date('H : i', strtotime($data['time'])); ?>
 			</td>
 			<td style="vertical-align: middle; text-align:center;">
-				<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
+				<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto;">		
 					<i class="fa fa-check fa-fw"></i>&nbsp;<?php echo $data['status1']; ?>
 				</div>
-			</td>
-			<td style="vertical-align: middle; text-align:center;">
-				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
+				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto;">		
 					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo $data['approver']; ?>
 				</div>
 			</td>
@@ -75,12 +72,12 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 					if($data['status2']==NULL){ ?>
-						<div style="vertical-align: middle; background-color: #EB8317; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 100px;">		
+						<div style="vertical-align: middle; background-color: #EB8317; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto;">		
 							<i class="fa fa-gear fa-fw"></i>&nbsp;Dikerjakan
 						</div>
 				<?php }
 					elseif($data['status2']=='Selesai'){ ?>
-						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto;">		
 							<i class="fa fa-check fa-fw"></i>&nbsp;<?php echo $data['status2']; ?>
 						</div>
 					<?php } 

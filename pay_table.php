@@ -65,8 +65,8 @@
 			<td style="vertical-align: middle;">
 				<?php 
 					if($data['weighing_sts']!='Lunas'||$data['weighing_sts3']!='Pending'){
-						echo '<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'">
-							<button class="btn btn-outline btn-block btn-primary btn-xs">Bayar</button>
+						echo '<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;" >
+							<button class="btn btn-block btn-outline btn-primary btn-xs"><i class="fa fa-money"></i>&nbsp;Bayar</button>
 						</a>';
 					}
 				?>

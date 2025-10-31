@@ -35,4 +35,38 @@
 			exit();
 		}
 	}
+
+	if ($task == 'update') {
+		$revision_id = $_GET['id'];
+		$type = $_POST['type'];
+		$nota = $_POST['nota'];
+		$description = $_POST['description'];
+		$reason = $_POST['reason'];
+
+		$update = mysql_query("UPDATE revision SET type = '".$type."', nota = '".$nota."', description = '".$description."', reason = '".$reason."' WHERE revision_id = '".$revision_id."'");
+
+		if($update){
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Mengedit Data Revisi";
+			HEADER("location: developer.php");
+			exit();
+		}
+	}
+
+	if ($task == 'delete') {
+		$revision_id = $_GET['id'];
+
+		$delete = mysql_query("DELETE FROM revision WHERE revision_id = '".$revision_id."'");
+
+		if($delete){
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Menghapus Data Revisi";
+			HEADER("location: developer.php");
+			exit();
+		}
+	}
 ?>

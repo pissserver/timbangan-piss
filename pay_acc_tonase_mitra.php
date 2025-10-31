@@ -132,7 +132,7 @@
 								<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
 									<?php 
 										if($check>=1){
-											echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block">Batalkan Semua <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
+											echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua</button></center>';
 										}
 									?>
 								</div>
@@ -159,7 +159,7 @@
 									<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
 										<?php 
 											if($check_mitra>=1){
-												echo'<center><button type="submit" class="btn btn-outline btn-success btn-block">Batalkan Semua <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
+												echo'<center><button type="submit" class="btn btn-outline btn-success btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua </button></center>';
 											}
 										?>
 									</div>
@@ -230,7 +230,7 @@
 										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
 											<?php 
 												if($check>=1){
-													echo'<center><button type="button" id="btn-acc" class="btn btn-outline btn-primary btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModal">ACC <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
+													echo'<center><button type="button" id="btn-acc" class="btn btn-outline btn-primary btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModal"><i class="fa fa-check"></i>&nbsp;ACC</button></center>';
 												}
 											?>
 
@@ -238,7 +238,7 @@
 											<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
 													<div class="modal-dialog text-left" role="document">
 														<div class="modal-content">
-														<div class="modal-header" >
+														<div class="modal-header bg-primary" >
 															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
 															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
 															<span aria-hidden="true">&times;</span>
@@ -304,7 +304,7 @@
 										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
 											<?php 
 												if($check_mitra>=1){
-													echo'<center><button type="button" id="btn-acc-mitra" class="btn btn-outline btn-success btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModalMitra">ACC <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
+													echo'<center><button type="button" id="btn-acc-mitra" class="btn btn-outline btn-success btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModalMitra"><i class="fa fa-check"></i>&nbsp;ACC</button></center>';
 												}
 											?>
 
@@ -312,7 +312,7 @@
 											<div class="modal fade" id="confirmationModalMitra" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
 													<div class="modal-dialog text-left" role="document">
 														<div class="modal-content">
-														<div class="modal-header" >
+														<div class="modal-header" style="background: green; color: #fff;">
 															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
 															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
 															<span aria-hidden="true">&times;</span>

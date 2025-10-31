@@ -2,7 +2,7 @@
 	session_start();
 	include "../connection.php";
 	$km			= $_GET['km'];
-	$date2 		= date("d-m-Y");
+	$date2 		= date("d M Y");
 	$cashier_id	= executeScalar("select cashier_id from ko_mitra where km_id = '".$km."' limit 1");
 	$cashier	= executeScalar("select checker_name from checker where checker_id = '".$cashier_id."'");
 	$km_date	= executeScalar("select km_date from km_mitra where km_id = '".$km."'");
@@ -33,6 +33,7 @@
     </page_footer>
     <div style="font-size: 14px; font-weight: bold; text-align: center; margin-top:0px; margin-right:65px;">
 		SETORAN KO MITRA ke KM MITRA PISS
+		<br>PASAR INDUK SURABAYA SIDOTOPO (PISS)
 	</div>
     <br/>
 	<table style="margin-bottom: 5px;font-size:11pt; width:400px;" >
@@ -46,7 +47,7 @@
 		</tr>
 		<tr>
 			<td>Tanggal Setoran KM</td>
-			<td>: <?php echo date("d-m-Y", strtotime($km_date)); ?></td>
+			<td>: <?php echo date("d M Y", strtotime($km_date)); ?></td>
 		</tr>
 		<tr>
 			<td>Uang Yang Diterima</td>
@@ -75,7 +76,7 @@
 		<tr>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
 			<td style="text-align: center;border: solid 1px black;"><?php echo 'KOM'.$r['ko_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo date("d-m-Y", strtotime($r['ko_date'])); ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['ko_date'])); ?></td>
 			<td style="text-align: left;border: solid 1px black;"><?php echo $checker; ?></td>
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['ko_total']); ?></td>
 		</tr>

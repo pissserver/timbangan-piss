@@ -12,17 +12,16 @@
 	});
 </script>
 <!--<div class="table-responsive">-->
-<table id="developerViewReject" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="developerViewReject" class="table table-striped table-bordered table-hover" cellspacing="0" style="width:100%; table-layout: fixed;">
 	<thead>
 		<tr>
-			<th style="vertical-align: middle; text-align: center; width:5%;">NO</th>
+			<th style="vertical-align: middle; text-align: center; width:2%;">NO</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">NAMA PEMOHON</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">NO NOTA</th>
 			<th style="vertical-align: middle; text-align: center; width:25%;">URAIAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:25%;">ALASAN REVISI</th>
-			<th style="vertical-align: middle; text-align: center; width:5%;">TGL & JAM PENGAJUAN</th>
-			<th style="vertical-align: middle; text-align: center; width:5%;">STATUS</th>
-			<th style="vertical-align: middle; text-align: center; width:5%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
+			<th style="vertical-align: middle; text-align: center; width:13%;">STATUS <br>& <br> APPROVER</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DITOLAK</th>
 		</tr>
 	</thead>
@@ -58,12 +57,10 @@
 				<?php echo date('H : i', strtotime($data['time'])); ?>
 			</td>
 			<td style="vertical-align: middle; text-align:center;">
-				<div style="vertical-align: middle; background-color: red; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
+				<div style="vertical-align: middle; background-color: red; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; ">		
 					<i class="fa fa-close fa-fw"></i>&nbsp;<?php echo $data['status1']; ?>
 				</div>
-			</td>
-			<td style="vertical-align: middle; text-align:center;">
-				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
+				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto;">		
 					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo $data['approver']; ?>
 				</div>
 			</td>

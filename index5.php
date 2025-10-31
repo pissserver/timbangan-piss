@@ -48,7 +48,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group" style="padding:10px; margin-top:15px; margin-right:0px;">
-											<center><button type="submit" class="btn btn-primary btn-block">Cari <i class="fa fa-angle-double-right fa-lg"></i></button></center>
+											<center><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i>&nbsp;Cari </button></center>
 										</div>
 									</div>
 								</fieldset>

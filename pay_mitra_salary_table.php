@@ -242,7 +242,7 @@
 		?>
 		<tr>
 			<td style="text-align:center; vertical-align: middle;"><?php echo $no; ?>.</td>
-			<td style="text-align:center; vertical-align: middle;"><?php echo date("d-m-Y", strtotime($r['dt'])); ?></td>
+			<td style="text-align:center; vertical-align: middle;"><?php echo date(" d M Y", strtotime($r['dt'])); ?></td>
 			<td style="vertical-align: middle; text-align:center;">
 				<div style="display: inline-block; vertical-align: middle; background-color: #FF0000; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 120px;">		
 					<?php echo format_rupiah($total1); ?>

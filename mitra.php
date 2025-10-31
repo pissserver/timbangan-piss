@@ -98,7 +98,7 @@
 						if($c!=''||$c!=null||$p2!=null){
 							// echo '<button type="submit" class="btn btn-primary btn-block">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>';
 						}else{
-							echo '<button type="submit" class="btn btn-primary btn-block">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>';
+							echo '<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-floppy-o fa-fw"></i>&nbsp;Simpan</button>';
 						}
 					?>
 				</div>
