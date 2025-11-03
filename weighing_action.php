@@ -2335,6 +2335,7 @@
 			$n8			= $_POST['n8'];
 			$n9			= $_POST['n9'];
 			$n10		= $_POST['n10'];
+			$id_merchant= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 			$merchant	= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 			
 			//Cek pecah nota harus minimal 2 pedagang
@@ -3193,7 +3194,7 @@
 							$_SESSION['success'] = true;
 							$_SESSION['title'] = "Berhasil Pecah Data";
 							$_SESSION['message'] = "Anda bisa cek data yang telah dipecah";
-							echo "<script>window.location=('check.php')</script>";
+							echo "<script>window.location=('check2.php')</script>";
 							exit();
 						}else{
 							echo "<script>window.alert('Data Gagal');

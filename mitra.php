@@ -3,6 +3,33 @@
 	include "connection.php";
 	$id 	= $_GET['id'];
 	$ada 	= executeScalar("select count(weighing_id) from laborer_fee where weighing_id = '".$id."' ");
+	$merchantType = executeScalar("select m.merchant_type from merchant m join weighing w on m.merchant_id = w.merchant_id where weighing_id = '".$id."' ");
+	$type   = executeScalar("select m.merchant_type from merchant m join weighing w on m.merchant_id = w.merchant_id where weighing_id = '".$id."' ");
+	$statusCheck = executeScalar("select date_check from weighing where weighing_id = '".$id."'");
+
+	// Cek apakah ada mitra buah atau sayur yang sudah dichecklist
+	$mitraBuahChecked = executeScalar("
+		SELECT COUNT(*) 
+		FROM laborer_fee 
+		WHERE weighing_id = '".$id."' 
+		AND laborer_fee_sts != 'Batal'
+		AND (B001 > 0 OR B002 > 0 OR B003 > 0 OR B004 > 0 OR B005 > 0 OR B006 > 0)
+	");
+
+	$mitraSayurChecked = executeScalar("
+		SELECT COUNT(*) 
+		FROM laborer_fee 
+		WHERE weighing_id = '".$id."' 
+		AND laborer_fee_sts != 'Batal'
+		AND (S001 > 0 OR S002 > 0 OR S003 > 0 OR S004 > 0 OR S005 > 0 OR S006 > 0 OR S007 > 0 OR S008 > 0 OR S009 > 0 OR S010 > 0 OR S011 > 0 OR S012 > 0)
+	");
+
+	// Override type jika ditemukan mitra yang sudah dichecklist
+	if ($mitraBuahChecked > 0) {
+		$type = 'Buah';
+	} elseif ($mitraSayurChecked > 0) {
+		$type = 'Sayur';
+	}
 ?>
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -10,10 +37,74 @@
 		<i class="fa fa-group fa-fw"></i> Data Mitra
 	</div>
 	<div class="panel-body">
+		<div class="row">
+			<div style="margin: 0px 15px;" class="alert 
+				<?php if ($mitraBuahChecked > 0 && $mitraSayurChecked > 0 && $statusCheck == NULL) {
+					echo 'alert-warning';
+				}  elseif ($mitraBuahChecked > 0 && $mitraSayurChecked > 0 && $statusCheck != NULL) {
+					echo 'alert-danger';
+				} elseif ($mitraBuahChecked == 0 && $mitraSayurChecked == 0 && $statusCheck == NULL) {
+					echo 'alert-info';
+				} elseif ($merchantType == 'Buah' && $type == 'Buah' && $statusCheck == NULL) {
+					echo 'alert-info';
+				} elseif ($merchantType == 'Sayur' && $type == 'Sayur' && $statusCheck == NULL) {
+					echo 'alert-info';
+				} elseif ($merchantType == 'Buah' && $type == 'Sayur' && $statusCheck == NULL) {
+					echo 'alert-warning';
+				} elseif ($merchantType == 'Sayur' && $type == 'Buah' && $statusCheck == NULL)  {
+					echo 'alert-warning';
+				} elseif (($merchantType == 'Sayur' && $type == 'Buah') || ($merchantType == 'Buah' && $type == 'Sayur') && $statusCheck != NULL)  {
+					echo 'alert-danger';
+				} elseif (($merchantType == 'Sayur' && $type == 'Sayur') || ($merchantType == 'Buah' && $type == 'Buah') && $statusCheck != NULL)  {
+					echo 'alert-success';
+				} 
+				?>
+				" role="alert">
+				<table>
+					<tr>
+						<td style="font-size:20px; padding-right: 10px;">
+							<?php echo $statusCheck != NULL ? '<i class="fa fa-check"></i>' : '<i class="fa fa-exclamation-triangle"></i>'; ?>
+						</td>
+						<td>
+							<p style="font-size: 14px; padding-top:10px;">
+								<?php if ($mitraBuahChecked > 0 && $mitraSayurChecked > 0 && $statusCheck == NULL) {
+									echo 'Anda telah memilih mitra <b>Buah</b> dan <b>Sayur</b> (tidak boleh keduanya). Mohon cek kembali!';
+								} elseif ($mitraBuahChecked > 0 && $mitraSayurChecked > 0 && $statusCheck != NULL) {
+									echo 'Anda telah memilih mitra <b>Buah</b> dan <b>Sayur</b> (tidak boleh keduanya). Mohon lakukan revisi!';
+								} elseif ($mitraBuahChecked == 0 && $mitraSayurChecked == 0) {
+									echo 'Jenis pedagang adalah <b>' . $merchantType . '</b>. Tolong pilih mitra sesuai jenis pedagang jika data memakai mitra!';
+								} elseif ($merchantType == 'Buah' && $type == 'Buah' && $statusCheck == NULL) {
+									echo 'Jenis Pedagang <b>Buah</b> dan anda telah memilih mitra <b>Buah</b>. Sudah sesuai!';
+								} elseif ($merchantType == 'Sayur' && $type == 'Sayur' && $statusCheck == NULL) {
+									echo 'Jenis Pedagang <b>Sayur</b> dan anda telah memilih mitra <b>Sayur</b>. Sudah sesuai!';
+								} elseif ($merchantType == 'Buah' && $type == 'Sayur' && $statusCheck == NULL) {
+									echo 'Jenis Pedagang <b>Buah</b> tetapi anda telah memilih mitra <b>Sayur</b>. Mohon cek kembali!';
+								} elseif ($merchantType == 'Sayur' && $type == 'Buah' && $statusCheck == NULL)  {
+									echo 'Jenis Pedagang <b>Sayur</b> tetapi anda telah memilih mitra <b>Buah</b>. Mohon cek kembali!';
+								} elseif (($merchantType == 'Sayur' && $type == 'Buah') || ($merchantType == 'Buah' && $type == 'Sayur') && $statusCheck != NULL)  {
+									echo 'Jenis pedagang dan mitra yang anda pilih tidak sesuai. Mohon lakukan revisi!';
+								} elseif (($merchantType == 'Sayur' && $type == 'Sayur') || ($merchantType == 'Buah' && $type == 'Buah') && $statusCheck != NULL)  {
+									echo 'Jenis pedagang dan mitra yang anda pilih sudah sesuai!';
+								}
+								?>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-12" style="padding: 10px; margin-bottom: 10px;">
+				<select class="form-control" name="type" id="type" <?php echo ($statusCheck !='' || $statusCheck != null) ? 'disabled' : '';?>>
+					<option value="B" <?php echo $type == 'Buah' ? 'selected' : ''?>>Buah</option>
+					<option value="S" <?php echo $type == 'Sayur' ? 'selected' : ''?>>Sayur</option>
+				</select>
+			</div>
+		</div>
+
 		<div class="row" style="font-size: 13px;">
 			<form method="POST" action="weighing_action.php?task=Mitra&id=<?php echo $id; ?>" class="form-horizontal" id="formMitra" name="formMitra">
 			<fieldset>
-				<div class="col-md-4">
+				<div class="col-md-2"></div>
+				<div class="col-md-4" id="mitraBuah">
 					<div class="form-group" style="padding:10px; margin-top:-10px;">
 						<input type="checkbox" id="mitra[]" name="mitra[]" value="B001"  <?php if($ada>=1){
 							$x 	= executeScalar("select sum(B001) from laborer_fee where laborer_fee_sts != 'Batal' and weighing_id = '".$id."' ");
@@ -35,7 +126,7 @@
 							if($x>0){echo 'checked';}} ?>><label class="light">Sulaiman (B006)</label><br>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" id="mitraSayur">
 					<div class="form-group" style="padding:10px; margin-top:-10px;">
 						<input type="checkbox" id="mitra[]" name="mitra[]" value="S001" <?php if($ada>=1){
 							$x 	= executeScalar("select sum(S001) from laborer_fee where laborer_fee_sts != 'Batal' and weighing_id = '".$id."' ");
@@ -75,7 +166,7 @@
 							if($x>0){echo 'checked';}} ?>><label class="light">Sumiran (S012)</label><br>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-6" id="mandor">
 					<div class="form-group" style="padding:10px; margin-top:-10px;">
 						<input type="checkbox" id="mandor[]" name="mandor[]" value="M01"  <?php if($ada>=1){
 							$x 	= executeScalar("select sum(M01) from laborer_fee where laborer_fee_sts != 'Batal' and weighing_id = '".$id."' ");
@@ -111,9 +202,31 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-	/*$('#checkAll').click(function ()
-	{    
-    	$('input:checkbox').prop('checked', this.checked);*/
- 	}); // UPDATE DISINI
+
+
+<script>
+	$(document).ready(function() {
+
+		function toggleMitra() {
+			var val = $('#type').val();
+			if (val === 'B') {
+				$('#mitraBuah').show();
+				$('#mitraSayur').hide();
+				$('#mandor').show();
+			} else if (val === 'S') {
+				$('#mitraBuah').hide();
+				$('#mitraSayur').show();
+				$('#mandor').show();
+			}
+		}
+
+		// Jalankan pertama kali saat modal dibuka
+		toggleMitra();
+
+		// Jalankan setiap kali user ganti type
+		$('#type').on('change', function() {
+			toggleMitra();
+		});
+
+	});
 </script>
