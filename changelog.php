@@ -73,6 +73,27 @@
 							</div>
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog">
+
+									<!-- Versi 1.2.1 -->
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
+													<i class="fa fa-plus"></i> Version 1.2.1 - 04 November 2025
+												</a>
+											</h4>
+										</div>
+										<div id="ver121" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<h5># Bug Fixing</h5>
+												<ul>
+													<li>🐞 Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</li>
+													<li>⚙️ Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan </li>
+													<li>🛠️ Penambahaan alert informasi saat pertama login</li>
+												</ul>
+											</div>
+										</div>
+									</div>
 									
 									<!-- Versi 1.2.0 -->
 									<div class="panel panel-info">
@@ -83,7 +104,7 @@
 												</a>
 											</h4>
 										</div>
-										<div id="ver120" class="panel-collapse collapse in">
+										<div id="ver120" class="panel-collapse collapse">
 											<div class="panel-body">
 												<h5># Penambahan & Optimalisasi Fitur</h5>
 												<ul>
