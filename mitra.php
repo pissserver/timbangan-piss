@@ -92,7 +92,7 @@
 					</tr>
 				</table>
 			</div>
-			<div class="col-md-12" style="padding: 10px; margin-bottom: 10px;">
+			<div class="col-md-12" style="padding: 15px; margin-bottom: 10px;">
 				<select class="form-control" name="type" id="type" <?php echo ($statusCheck !='' || $statusCheck != null) ? 'disabled' : '';?>>
 					<option value="B" <?php echo $type == 'Buah' ? 'selected' : ''?>>Buah</option>
 					<option value="S" <?php echo $type == 'Sayur' ? 'selected' : ''?>>Sayur</option>

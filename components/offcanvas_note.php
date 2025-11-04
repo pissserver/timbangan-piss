@@ -102,7 +102,7 @@
 <!-- Tombol untuk memunculkan offcanvas -->
 <button class="btn btn-canvas btn-primary" onclick="toggleOffcanvas()">
     <i class="fa fa-bell"></i>
-    <div class="notification">7</div>
+    <div class="notification">3</div>
 </button>
 
 <!-- Offcanvas -->
@@ -122,40 +122,20 @@
         <table>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Sistem versioning timbangan 1.2.0</td>
+                <td>Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</td>
             </tr>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Sedikit perubahan tampilan pada nota timbang, tagihan, mitra, dan hasil timbang</td>
+                <td>Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan</td>
             </tr>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Optimalisasi pada fitur 'Data Belum Dicek' & 'Data Sudah Dicek</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Fixing bug pada fitur 'Listing Data'</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Sedikit perubahan button (Tombol Aksi) pada fitur 'Pembayaran & Setoran'</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Penambahan fitur log update (changelog)</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Penambahan fitur jam disamping nama akun</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Fixing bug notification pada icon "bell" disamping nama akun pada saat ada pembaruan sistem</td>
+                <td>Penambahaan alert informasi saat pertama login</td>
             </tr>
         </table>
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">
-        <p class="text-primary text-uppercase text-center"><b>Version 1.2.0</b></p>
+        <p class="text-primary text-uppercase text-center"><b>Version 1.2.1</b></p>
     </div>
 </div>
 
