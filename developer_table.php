@@ -73,25 +73,27 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 				// Data dasar pesan
-				$message = "*REVISI TIMBANGAN* %0A%0A" .
-					"Nama Pemohon : " . $checkerName . "%0A" .
-					"No Nota : " . $data['type'] . $data['nota'] . "%0A" .
-					"Uraian Revisi : " . $data['description'] . "%0A" .
-					"Alasan Revisi : " . $data['reason'] . "%0A%0A" .
-					"Mohon tindak lanjutnya. Terima kasih.%0A%0A" .
-					"https://96910fa995d4.ngrok-free.app/timbangan-piss/developer.php".
-					"%0A%0A%0A".
+				$url = "https://96910fa995d4.ngrok-free.app/timbangan-piss/login.html?redirect=pp/developer.php";
+				$message = "*REVISI TIMBANGAN*\n\n" .
+					"Nama Pemohon : $checkerName\n" .
+					"No Nota : {$data['type']}{$data['nota']}\n" .
+					"Uraian Revisi : {$data['description']}\n" .
+					"Alasan Revisi : {$data['reason']}\n\n" .
+					"Mohon tindak lanjutnya. Terima kasih.\n\n" .
+					"$url\n\n" .
 					"~ Ini adalah pesan otomatis dari sistem Timbangan PISS ~";
+
+				$encodedMessage = urlencode($message);
+
 
 				// Daftar kontak WhatsApp
 				$contacts = [
 					['number' => '6282335326373', 'name' => 'PP - Aam'],
-					['number' => '6283854444753', 'name' => 'PP - Ajeng'], // ganti dengan nomor sebenarnya
 				];
 
 				// Loop buat tombol
 				foreach ($contacts as $c) {
-					$waLink = "https://wa.me/{$c['number']}?text={$message}";
+					$waLink = "https://api.whatsapp.com/send?phone={$c['number']}&text={$encodedMessage}";
 					echo '
 					<a href="' . $waLink . '" target="_blank" 
 					class="btn btn-success btn-sm" 

@@ -173,6 +173,11 @@
                             </div>
                         </div>
 
+                        <input
+                            type="hidden"
+                            name="redirect"
+                            id="redirectInput"
+                        />
                         <div class="container-login100-form-btn">
                             <button class="login100-form-btn">
                                 Masuk
@@ -239,6 +244,17 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            // Baca parameter 'redirect' dari URL
+            const params = new URLSearchParams(window.location.search);
+            const redirectValue = params.get("redirect");
+
+            // Kalau ada redirect di URL, isi ke input hidden
+            if (redirectValue) {
+                document.getElementById("redirectInput").value = redirectValue;
+            }
+        </script>
 
         <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendor/animsition/js/animsition.min.js"></script>
