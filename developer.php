@@ -11,7 +11,32 @@
 		return $headScript;
 	}
 	
+
+	$countRevisionAcc = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 = 'Disetujui' AND status2 IS NULL");
+	$countRevisionReject = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 = 'Ditolak' AND status2 IS NULL");
 ?>
+
+<style>
+	.notification-wrapper {
+		position: relative;
+	}
+	
+	.notification-revision {
+        display: block;
+        position: absolute;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 5px;
+        font-size: 10px;
+    }
+
+	.notification-revision-hidden {
+		display: none;
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,15 +128,29 @@
                     <ul class="nav nav-tabs nav-justified">
                         <li class="active">
                             <a data-toggle="tab" href="#revisi"
-                                style="background-color: #428bca; color: #ffffff;">Pengajuan Revisi</a>
+                                style="background-color: #428bca; color: #ffffff;">Pengajuan Revisi </a>
                         </li>
                         <li>
+							<?php 
+								if ($countRevisionAcc != 0) {
+									echo '<span class="notification-revision">' . $countRevisionAcc . '</span>';
+								} else {
+									echo '<span class="notification-revision-hidden"></span>';
+								}
+							?>
                             <a data-toggle="tab" href="#accept"
-                                style="background-color: transparent; color: #428bca;">Revisi Disetujui</a>
+                                style="background-color: transparent; color: #428bca;">Revisi Disetujui <span></span></a>
                         </li>
                         <li>
+							<?php 
+								if ($countRevisionReject != 0) {
+									echo '<span class="notification-revision">' . $countRevisionReject . '</span>';
+								} else {
+									echo '<span class="notification-revision-hidden"></span>';
+								}
+							?>
                             <a data-toggle="tab" href="#reject"
-                                style="background-color: transparent; color: #428bca;">Revisi Ditolak</a>
+                                style="background-color: transparent; color: #428bca;">Revisi Ditolak <span></span></a>
                         </li>
                     </ul>
 
@@ -125,7 +164,7 @@
 											<i class="fa fa-spinner fa-fw"></i> Data Pengajuan Revisi
 										</div>
 										<div class="panel-body">
-											<div class="row">
+											<div class="row" style=" overflow-x: auto;">
 												<div class="col-md-12">
 													<?php 
 														$query 	= mysql_query("SELECT * FROM revision WHERE status1 IS NULL ORDER BY revision_id DESC");
@@ -195,7 +234,7 @@
 											<i class="fa fa-close fa-fw"></i> Data Revisi Ditolak
 										</div>
 										<div class="panel-body">
-											<div class="row">
+											<div class="row" style=" overflow-x: auto;">
 												<div class="col-md-12">
 													<?php 
 														$query 	= mysql_query("SELECT * FROM revision WHERE status1 = 'Ditolak' ORDER BY revision_id DESC");
