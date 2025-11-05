@@ -27,6 +27,7 @@
 	$checkerCode = mysql_real_escape_string($_SESSION['checker']);
 	$allUser = mysql_query("SELECT * FROM checker WHERE checker_role = 'cashier' AND status_aktif = 1 AND checker_code != '$checkerCode' ORDER BY checker_name ASC");
 
+	$countRevision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 IS NOT NULL AND status2 IS NULL");
 ?>
 
 <style>
@@ -45,6 +46,25 @@
         0% { background-position: 200% center; }
         100% { background-position: -200% center; }
     }
+
+	.notification-wrapper {
+		position: relative;
+	}
+	
+	.notification-revision {
+        display: block;
+        position: absolute;
+        right: 10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 5px;
+        font-size: 10px;
+    }
+
+	.notification-revision-hidden {
+		display: none;
+	}
 </style>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #428bca;">
@@ -413,7 +433,18 @@
 								</li>
 							</ul>
 
-							<li><a class="<?= isActive(['developer.php']); ?>" href="developer.php"><i class="fa fa-pencil fa-fw"></i> Revisi <span style="margin-left: 100px;"></span></a></li>
+							<li>
+								<a class="<?= isActive(['developer.php']); ?>" href="developer.php">
+									<?php 
+										if ($countRevision != 0) {
+											echo '<span class="notification-revision">' . $countRevision . '</span>';
+										} else {
+											echo '<span class="notification-revision-hidden"></span>';
+										}
+									?>
+									<i class="fa fa-pencil fa-fw"></i> Revisi <span style="margin-left: 100px;"></span>
+								</a>
+							</li>
 							<li><a class="<?= isActive(['changelog.php']); ?>" href="changelog.php"><i class="fa fa-history fa-fw"></i> Update Log <?php include "new_notification.php"; ?></a></li>
 						</li>
                     </ul>

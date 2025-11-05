@@ -108,7 +108,7 @@
 <!-- Offcanvas -->
 <div id="offcanvasTop" class="offcanvas">
     <div class="offcanvas-header">
-        <h5 id="offcanvas-title"></h5>
+        <h5 id="offcanvas-title">3</h5>
         <button class="close-btn" onclick="toggleOffcanvas()"><i class="fa fa-close"></i></button>
     </div>
     <div class="offcanvas-body">
