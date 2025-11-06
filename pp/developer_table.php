@@ -39,12 +39,12 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 					if($data['type']=='TB'){ ?>
-						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 				<?php }
 					elseif($data['type']=='TG'){ ?>
-						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 					<?php } 
@@ -62,12 +62,12 @@
 				</div>
 			</td>
 			<td style="text-align: center; vertical-align: middle;">
-				<a href="developer_action.php?task=accept&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-xs btn-outline btn-success btn-block action-btn">
+				<a href="developer_action.php?task=accept&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-sm btn-outline btn-success btn-block action-btn">
 					<i class="fa fa-check"></i>&nbsp;Setujui
 				</a>
-				<a href="developer_action.php?task=reject&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-xs btn-outline btn-danger btn-block action-btn">
+				<!-- <a href="developer_action.php?task=reject&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-xs btn-outline btn-danger btn-block action-btn">
 					<i class="fa fa-close"></i>&nbsp;Tolak
-				</a>
+				</a> -->
 			</td>
 		</tr>
 		<?php

@@ -39,12 +39,12 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 					if($data['type']=='TB'){ ?>
-						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 				<?php }
 					elseif($data['type']=='TG'){ ?>
-						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 					<?php } 

@@ -282,135 +282,135 @@
             </div>
         </div>
 
-    <!-- Lottie -->
-    <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <!-- Lottie -->
+        <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-    <style>
-        #welcomeModal .modal-dialog {
-            width: 600px;
-            max-width: 90%;
-        }
-        #welcomeModal .modal-content {
-            border-radius: 15px;
-            border: none;
-            text-align: center;
-            padding: 25px;
-        }
+        <style>
+            #welcomeModal .modal-dialog {
+                width: 600px;
+                max-width: 90%;
+            }
+            #welcomeModal .modal-content {
+                border-radius: 15px;
+                border: none;
+                text-align: center;
+                padding: 25px;
+            }
 
-        /* Ikon dekoratif kiri-kanan */
-        .float-icon {
-            position: absolute;
-            font-size: 90px;
-            opacity: 0.85;
-            animation: floaty 3s ease-in-out infinite;
-            z-index: 10;
-        }
-        .float-left {
-            top: -25px;
-            left: -50px;
-            transform: rotate(-15deg);
-        }
-        .float-right {
-            top: -25px;
-            right: -50px;
-            transform: rotate(15deg);
-        }
+            /* Ikon dekoratif kiri-kanan */
+            .float-icon {
+                position: absolute;
+                font-size: 90px;
+                opacity: 0.85;
+                animation: floaty 3s ease-in-out infinite;
+                z-index: 10;
+            }
+            .float-left {
+                top: -25px;
+                left: -50px;
+                transform: rotate(-15deg);
+            }
+            .float-right {
+                top: -25px;
+                right: -50px;
+                transform: rotate(15deg);
+            }
 
-        /* Animasi lembut naik-turun */
-        @keyframes floaty {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(3deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-    </style>
+            /* Animasi lembut naik-turun */
+            @keyframes floaty {
+                0% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-8px) rotate(3deg); }
+                100% { transform: translateY(0) rotate(0deg); }
+            }
+        </style>
 
-    <?php if ($showWelcome): ?>
-    <!-- Modal -->
-    <div id="welcomeModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Ikon float -->
-            <div id="floatLeft" class="float-icon float-left"></div>
-            <div id="floatRight" class="float-icon float-right"></div>
+        <?php if ($showWelcome): ?>
+        <!-- Modal -->
+        <div id="welcomeModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Ikon float -->
+                <div id="floatLeft" class="float-icon float-left"></div>
+                <div id="floatRight" class="float-icon float-right"></div>
 
-            <div style="display: flex; justify-content: center; align-items: center;">
-            <lottie-player 
-                src="https://assets2.lottiefiles.com/packages/lf20_xlmz9xwm.json" 
-                background="transparent" 
-                speed="1" 
-                style="width:150px;" 
-                loop 
-                autoplay>
-            </lottie-player>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                <lottie-player 
+                    src="https://assets2.lottiefiles.com/packages/lf20_xlmz9xwm.json" 
+                    background="transparent" 
+                    speed="1" 
+                    style="width:150px;" 
+                    loop 
+                    autoplay>
+                </lottie-player>
+                </div>
+                <h3>👋 Halo, <strong><?php echo htmlspecialchars($checker); ?></strong></h3>
+                <p id="welcomeMessage" class="text-muted"></p>
             </div>
-            <h3>👋 Halo, <strong><?php echo htmlspecialchars($checker); ?></strong></h3>
-            <p id="welcomeMessage" class="text-muted"></p>
         </div>
-    </div>
-    </div>
-    <?php endif; ?>
+        </div>
+        <?php endif; ?>
 
-    <script>
-    $(document).ready(function() {
-    <?php if ($showWelcome): ?>
+        <script>
+        $(document).ready(function() {
+        <?php if ($showWelcome): ?>
 
-        var today = new Date();
-        var m = today.getMonth() + 1;
-        var d = today.getDate();
-        var theme = "default";
-        var greeting = "Semoga harimu menyenangkan dan lancar bekerja! 😊";
-        let icon = "✨";
+            var today = new Date();
+            var m = today.getMonth() + 1;
+            var d = today.getDate();
+            var theme = "default";
+            var greeting = "Semoga harimu menyenangkan dan lancar bekerja! 😊";
+            let icon = "✨";
 
-        if (m === 12 && d === 25) {
-            theme = "christmas";
-            greeting = "🎄 Selamat Natal! Damai dan sukacita menyertaimu!";
-            icon = "🎄";
-        } else if (m === 1 && d === 1) {
-            theme = "newyear";
-            greeting = "🎉 Selamat Tahun Baru! Semoga penuh keberkahan!";
-            icon = "🎉";
-        } else if (m === 8 && d === 17) {
-            theme = "independence";
-            greeting = "🇮🇩 Dirgahayu Republik Indonesia! Merdeka!";
-            icon = "🇮🇩";
-        } else if (m === 10 && d === 31) {
-            theme = "halloween";
-            greeting = "🎃 Selamat Hari Halloween!";
-            icon = "🎃";
-        } else if (m === 6 && d === 17) {
-            theme = "iduladha";
-            greeting = "🐄 Selamat Hari Raya Idul Adha!";
-            icon = "🐄";
-        } else if (m === 4 && d === 10) {
-            theme = "idulfitri";
-            greeting = "🌙 Selamat Idul Fitri! Mohon maaf lahir dan batin!";
-            icon = "🌙";
-        } else if (m === 3) {
-            theme = "ramadhan";
-            greeting = "🌙 Ramadhan Kareem! Selamat menunaikan ibadah puasa!";
-            icon = "🌙";
-        }
+            if (m === 12 && d === 25) {
+                theme = "christmas";
+                greeting = "🎄 Selamat Natal! Damai dan sukacita menyertaimu!";
+                icon = "🎄";
+            } else if (m === 1 && d === 1) {
+                theme = "newyear";
+                greeting = "🎉 Selamat Tahun Baru! Semoga penuh keberkahan!";
+                icon = "🎉";
+            } else if (m === 8 && d === 17) {
+                theme = "independence";
+                greeting = "🇮🇩 Dirgahayu Republik Indonesia! Merdeka!";
+                icon = "🇮🇩";
+            } else if (m === 10 && d === 31) {
+                theme = "halloween";
+                greeting = "🎃 Selamat Hari Halloween!";
+                icon = "🎃";
+            } else if (m === 6 && d === 17) {
+                theme = "iduladha";
+                greeting = "🐄 Selamat Hari Raya Idul Adha!";
+                icon = "🐄";
+            } else if (m === 4 && d === 10) {
+                theme = "idulfitri";
+                greeting = "🌙 Selamat Idul Fitri! Mohon maaf lahir dan batin!";
+                icon = "🌙";
+            } else if (m === 3) {
+                theme = "ramadhan";
+                greeting = "🌙 Ramadhan Kareem! Selamat menunaikan ibadah puasa!";
+                icon = "🌙";
+            }
 
-        $('#welcomeModal').on('shown.bs.modal', function () {
-            // Bersihkan container dulu
-            $('#lottieContainer').html('');
-            $('#welcomeMessage').html(
-                `<span style="font-size:15px; line-height:1.6;">
-                    📢 <b>Update baru:</b> Mengoptimalkan sesi <b>Input Mitra</b> dari kesalahan input.<br>
-                    <span style="font-size:15px;">${greeting}</span>
-                </span>`
-            );
+            $('#welcomeModal').on('shown.bs.modal', function () {
+                // Bersihkan container dulu
+                $('#lottieContainer').html('');
+                $('#welcomeMessage').html(
+                    `<span style="font-size:15px; line-height:1.6;">
+                        📢 <b>Update baru:</b> Mengoptimalkan sesi <b>Input Mitra</b> dari kesalahan input.<br>
+                        <span style="font-size:15px;">${greeting}</span>
+                    </span>`
+                );
+            });
+
+            // Set ikon float kiri & kanan
+            document.getElementById("floatLeft").innerText = icon;
+            document.getElementById("floatRight").innerText = icon;
+
+            $('#welcomeModal').modal('show');
+        <?php endif; ?>
         });
-
-        // Set ikon float kiri & kanan
-        document.getElementById("floatLeft").innerText = icon;
-        document.getElementById("floatRight").innerText = icon;
-
-        $('#welcomeModal').modal('show');
-    <?php endif; ?>
-    });
-    </script>
+        </script>
 
         
         <!-- jQuery -->

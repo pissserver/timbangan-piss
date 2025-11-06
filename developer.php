@@ -13,7 +13,7 @@
 	
 
 	$countRevisionAcc = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 = 'Disetujui' AND status2 IS NULL");
-	$countRevisionReject = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 = 'Ditolak' AND status2 IS NULL");
+	// $countRevisionReject = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 = 'Ditolak' AND status2 IS NULL");
 ?>
 
 <style>
@@ -141,7 +141,7 @@
                             <a data-toggle="tab" href="#accept"
                                 style="background-color: transparent; color: #428bca;">Revisi Disetujui <span></span></a>
                         </li>
-                        <li>
+                        <!-- <li>
 							<?php 
 								if ($countRevisionReject != 0) {
 									echo '<span class="notification-revision">' . $countRevisionReject . '</span>';
@@ -151,7 +151,7 @@
 							?>
                             <a data-toggle="tab" href="#reject"
                                 style="background-color: transparent; color: #428bca;">Revisi Ditolak <span></span></a>
-                        </li>
+                        </li> -->
                     </ul>
 
                     <div class="tab-content">
