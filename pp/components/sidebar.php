@@ -76,6 +76,7 @@
     </div>
 
 	<ul class="nav navbar-top-links navbar-right">
+		<?php include 'components/clock.php'; ?>&nbsp;&nbsp;
 		<?php include 'components/offcanvas_note.php'; ?>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#" 
@@ -385,6 +386,8 @@
 									<i class="fa fa-pencil fa-fw"></i> Revisi <span style="margin-left: 100px;"></span>
 								</a>
 							</li>
+
+							<li><a class="<?= isActive(['changelog.php']); ?>" href="changelog.php"><i class="fa fa-history fa-fw"></i> Update Log <?php include "new_notification.php"; ?></a></li>
 						</li>
                     </ul>
                 </div>

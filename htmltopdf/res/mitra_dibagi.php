@@ -74,9 +74,10 @@
 			<td style="text-align: right; width: 45%"><?php echo date("d M Y", strtotime($date_now)); ?></td>
 		</tr>
 	</table><br/>
-    <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px; margin-bottom:20px;">
+    <div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px;">
 		PENGEMBALIAN UPAH MITRA
 	</div>
+	<p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px; margin-bottom:20px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<table style="margin-bottom: 5px;font-size:10pt;" id="tableCheckout">
 		<tr><td>Tanggal Kerja	</td><td> : <?php echo date("d M Y", strtotime($work_date)); ?> </td></tr>
 		<tr><td>Total Uang		</td><td> : <b><?php echo format_rupiah($total_share); ?></b> </td></tr>
@@ -112,11 +113,30 @@
 		</tr>
 	</table>
 
-	<table style="width: 95%;  border: 0px black; margin-top:150px; margin-left:25px; margin-right:25px; font-size:9pt;">
+	<!-- <table style="width: 95%;  border: 0px black; margin-top:150px; margin-left:25px; margin-right:25px; font-size:9pt;">
 		<tr>
 			<td style="text-align: left;width: 35%">Manajemen</td>
 			<td style="text-align: center;width: 15%"></td>
 			<td style="text-align: right;width: 35%">Security </td>
 		</tr>
-	</table>
+	</table> -->
+
+	<page_footer>
+        <table style="width: 100%; high: 50px; border: solid 0px black; border-collapse: collapse; margin-top:5px; font-size:9pt;">
+            <tr>
+                <th style="text-align: center;width: 33%;">Kasir</th>
+                <th style="text-align: center;width: 34%;"></th>
+                <th style="text-align: center;width: 33%;">Checker</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;width: 33%;"><br><br><br>Manajemen</td>
+                <td style="text-align: center;width: 34%;"></td>
+                <td style="text-align: center;width: 33%;"><br><br><br>Security</td>
+            </tr>
+        </table>
+        <br><br>
+        <!-- <div style="font-size: 9px; font-weight: bold; text-align: center;">
+            == PASAR INDUK SURABAYA SIDOTOPO ==
+        </div> -->
+	</page_footer>
 </page>

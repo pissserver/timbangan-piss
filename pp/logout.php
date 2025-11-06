@@ -5,6 +5,9 @@
 	unset ($_SESSION['username']);
 	unset ($_SESSION['role']);
 	session_regenerate_id();
-	header("Location: ../login.html");
+	echo '<script>
+	localStorage.removeItem("notificationHidden");
+	window.location.href = "login.html";
+	</script>';
 	exit();
 ?>

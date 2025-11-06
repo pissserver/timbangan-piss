@@ -45,6 +45,7 @@ if (mysql_num_rows($login2) == 1) {
     $_SESSION['id_admin'] = $role['id_admin'];
     $_SESSION['username'] = $role['username'];
     $_SESSION['role'] = $role['role'];
+    $_SESSION['show_welcome_modal'] = true;
 
     switch (strtolower($role['role'])) {
         case 'pp':
@@ -56,13 +57,15 @@ if (mysql_num_rows($login2) == 1) {
                 if (strpos($redirect, 'pp/') !== 0) {
                     $redirect = 'pp/' . $redirect;
                 }
+                include "pp/components/welcome_animation.php";
+                echo "<script>setTimeout(function() { window.location.href = 'pp/developer.php'; }, 3250);</script>";
+                exit();
             } else {
                 $redirect = 'pp/dashboard.php';
+                include "pp/components/welcome_animation.php";
+                echo "<script>setTimeout(function() { window.location.href = 'pp/dashboard.php'; }, 3250);</script>";
+                exit();
             }
-
-            // Kirim variabel $redirect ke file welcome
-            include "pp/components/welcome_animation.php";
-            exit(); // Hentikan eksekusi agar tidak lanjut ke bawah
         case 'keuangan':
             include "kk/components/welcome_animation.php";
             echo "<script>setTimeout(function() { window.location.href = 'kk/dashboard.php'; }, 3250);</script>";

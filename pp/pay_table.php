@@ -45,7 +45,7 @@
 				</div>
 			</td>
 			<td style="vertical-align: middle; text-align: center;">
-				<a href="pay_action.php?task=acc&type=ko&id=<?php echo $data['km_id']; ?>">
+				<a href="pay_action.php?task=acc&type=ko&id=<?php echo $data['km_id']; ?>" style="text-decoration: none;">
 					<button class="btn btn-outline btn-block btn-primary btn-xs"><i class="fa fa-check"></i>&nbsp;Acc</button>
 				</a>
 			</td>
