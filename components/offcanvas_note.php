@@ -102,24 +102,24 @@
 <!-- Tombol untuk memunculkan offcanvas -->
 <button class="btn btn-canvas btn-primary" onclick="toggleOffcanvas()">
     <i class="fa fa-bell"></i>
-    <div class="notification">3</div>
+    <!-- <div class="notification">3</div> -->
 </button>
 
 <!-- Offcanvas -->
 <div id="offcanvasTop" class="offcanvas">
     <div class="offcanvas-header">
-        <h5 id="offcanvas-title">3</h5>
+        <h5 id="offcanvas-title"></h5>
         <button class="close-btn" onclick="toggleOffcanvas()"><i class="fa fa-close"></i></button>
     </div>
     <div class="offcanvas-body">
         <!-- Jika tidak ada pembaruan sistem -->
-        <!-- <div class="box-update">
+        <div class="box-update">
             <img src="img/update.png" alt="Update Illustration" width="210px">
             <h3 class="text-primary text-uppercase"><b>Tidak ada pembaruan sistem</b></h3>
-        </div> -->
+        </div>
 
         <!-- Jika ada pembaruan sistem -->
-        <table>
+        <!-- <table>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
                 <td>Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</td>
@@ -132,7 +132,7 @@
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
                 <td>Penambahaan alert informasi saat pertama login</td>
             </tr>
-        </table>
+        </table> -->
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">
         <p class="text-primary text-uppercase text-center"><b>Version 1.2.1</b></p>

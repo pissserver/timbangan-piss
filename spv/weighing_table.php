@@ -93,13 +93,13 @@
 				</a>
 				<?php 
 					if($data['weighing_sts']=='Masuk'){
-						echo '<a href="index2.php?id='.$data['weighing_id'].'">
+						echo '<a href="index2.php?id='.$data['weighing_id'].'" style="text-decoration: none">
 							<button style="margin-top: 10px;" class="btn btn-outline btn-block btn-primary btn-xs"><i class="fa fa-arrow-circle-up"></i>&nbsp;Keluar</button>
 						</a>';
 					}
 					if($sama==1&&$data['weighing_sts']=='Masuk'){
 						echo '
-						<a href="index3.php?id='.$data['weighing_id'].'">
+						<a href="index3.php?id='.$data['weighing_id'].'" style="text-decoration: none">
 							<button style="margin-top: 10px;" class="btn btn-outline btn-block btn-primary btn-xs"><i class="fa fa-minus-circle"></i>&nbsp;Kurangi Kir</button>
 						</a>';
 					}

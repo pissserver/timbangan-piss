@@ -21,8 +21,7 @@
 			<th style="vertical-align: middle; text-align: center; width:15%;">URAIAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:15%;">ALASAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
-			<th style="vertical-align: middle; text-align: center; width:15%;">STATUS</th>
-			<th style="vertical-align: middle; text-align: center; width:10%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:15%;">STATUS <br>&<br>APPROVER</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DISETUJUI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">PENGERJAAN</th>
 		</tr>
@@ -41,12 +40,12 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 					if($data['type']=='TB'){ ?>
-						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 				<?php }
 					elseif($data['type']=='TG'){ ?>
-						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 					<?php } 
@@ -62,8 +61,7 @@
 				<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-check fa-fw"></i>&nbsp;<?php echo $data['status1']; ?>
 				</div>
-			</td>
-			<td style="vertical-align: middle; text-align:center;">
+				
 				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo $data['approver']; ?>
 				</div>
@@ -73,7 +71,7 @@
 				<?php echo date('H : i', strtotime($data['approver_time'])); ?>
 			</td>
 			<td style="text-align: center; vertical-align: middle;">
-				<a href="developer_action.php?task=done&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-xs btn-outline btn-success btn-block action-btn">
+				<a href="developer_action.php?task=done&revision_id=<?php echo $data['revision_id'] ?>" class="btn btn-md btn-outline btn-success btn-block action-btn">
 					<i class="fa fa-gear"></i>&nbsp;Selesaikan
 				</a>
 			</td>

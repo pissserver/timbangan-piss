@@ -44,6 +44,12 @@
             <div class="row">
                 <div class="col-lg-12">
 					<br /><br><br><br>
+					<div class="alert alert-info d-flex align-items-center" role="alert" style="margin: 0 0;">
+						<i class="fa fa-warning me-2" style="font-size: 18px;"></i>
+						<span style="font-size: 14px;">
+							Log history ini menampilkan data print yang dilakukan oleh SPV dalam <b>30 hari terakhir</b>.
+						</span>
+					</div><br>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel panel-primary">

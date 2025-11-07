@@ -29,10 +29,10 @@
         <div id="page-wrapper">
 			<div class="row">
 				<br /><br><br><br>
-				<div style="margin: 0px 15px;" class="alert alert-danger" role="alert">
+				<div style="margin: 0px 15px;" class="alert alert-warning" role="alert">
 					<i class="fa fa-warning" style="display: inline-block;"></i>&nbsp;
 					<p style="font-size: 14px; display: inline-block">
-						Halaman ini hanya dipergunakan untuk melakukan acc revisi data timbangan salah. Tolong jangan disalah gunakan, Terima kasih!
+						Setelah melakukan pembetulan revisi, tolong menghubungi pemohon revisi untuk konfirmasi kesalahan telah diperbaiki!
 					</p>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 											<i class="fa fa-check-square fa-fw"></i> Data Revisi Disetujui
 										</div>
 										<div class="panel-body">
-											<div class="row">
+											<div class="row" style=" overflow-x: auto;">
 												<div class="col-md-12">
 													<?php 
 														$query 	= mysql_query("SELECT * FROM revision WHERE status1 = 'Disetujui' AND status2 IS NULL ORDER BY revision_id DESC");
@@ -96,7 +96,7 @@
 											<i class="fa fa-check-square fa-fw"></i> Data Revisi Selesai
 										</div>
 										<div class="panel-body">
-											<div class="row">
+											<div class="row" style=" overflow-x: auto;">
 												<div class="col-md-12">
 													<?php 
 														$query 	= mysql_query("SELECT * FROM revision WHERE status2 = 'Selesai' ORDER BY revision_id DESC");

@@ -308,8 +308,8 @@
 											</div>
 										</div>
 										<div class="form-group" style="padding:10px; margin-left:5px; margin-right:5px; margin-top:-10px;">
-											<a href="javascript:history.back()"><button type="button"  class="btn btn-block btn-outline btn-primary">
-												Kembali
+											<a href="javascript:history.back()"><button type="button"  class="btn btn-block btn-primary">
+												<i class="fa fa-arrow-left"></i> &nbsp;Kembali
 											</button></a>
 										</div>
 									</div>
@@ -322,6 +322,26 @@
 			<?php } 
 		}?>
     </div>
+
+	<!-- Modal nonkomoditi -->
+	<div class="modal fade" id="modalNonkomoditi" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-primary text-white" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close"></i></button>
+					<h4 id="header_nonkomoditi"><i class="fa fa-archive fa-fw"></i>&nbsp;Data Barang NonKomoditi</h4>
+				</div>
+				<div class="modal-body">
+					<div id="data_nonkomoditi" style="margin-bottom: 0px;">
+						<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
+					</div>
+					<input type="hidden" id="value_id" />
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script>
 		$(document).ready(function(){

@@ -16,8 +16,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link rel="icon" href="img/logo.png">
-		<link rel="shortcut icon" href="img/logo.png" />
+		<link rel="icon" href="../img/logo.png">
+		<link rel="shortcut icon" href="../img/logo.png" />
 		<title>Update Log | PISS</title>
 
 		<?php echo headScript(); ?>
@@ -28,10 +28,10 @@
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<!-- input number -->
-		<link href="js/touchpin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
-		<script src="js/touchpin/jquery.bootstrap-touchspin.js"></script>
+		<link href="../js/touchpin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
+		<script src="../js/touchpin/jquery.bootstrap-touchspin.js"></script>
 		<script>
 			/* hide all elements & show preloader*/
 			document.documentElement.className += 'js';

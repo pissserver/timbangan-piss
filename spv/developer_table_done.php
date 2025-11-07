@@ -21,8 +21,7 @@
 			<th style="vertical-align: middle; text-align: center; width:15%;">URAIAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:15%;">ALASAN REVISI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM PENGAJUAN</th>
-			<th style="vertical-align: middle; text-align: center; width:10%;">STATUS</th>
-			<th style="vertical-align: middle; text-align: center; width:10%;">APPROVER</th>
+			<th style="vertical-align: middle; text-align: center; width:10%;">STATUS <br>& <br>APPROVER</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">TGL & JAM DISETUJUI</th>
 			<th style="vertical-align: middle; text-align: center; width:10%;">PENGERJAAN</th>
 		</tr>
@@ -41,12 +40,12 @@
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
 					if($data['type']=='TB'){ ?>
-						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 				<?php }
 					elseif($data['type']=='TG'){ ?>
-						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
+						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 							<?php echo $data['type'] . $data['nota']; ?>
 						</div>
 					<?php } 
@@ -62,8 +61,7 @@
 				<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-check fa-fw"></i>&nbsp;<?php echo $data['status1']; ?>
 				</div>
-			</td>
-			<td style="vertical-align: middle; text-align:center;">
+
 				<div style="vertical-align: middle; background-color: black; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
 					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo $data['approver']; ?>
 				</div>

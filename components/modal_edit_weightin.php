@@ -66,7 +66,7 @@
 									</select>
 								</div>
 								<div class="form-group" style="padding:10px;">
-									<button style="margin-right:10px; margin-top:10px; margin-left:0px;" type="submit" class="btn btn-block btn-primary">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>
+									<button style="margin-right:10px; margin-top:10px; margin-left:0px;" type="submit" class="btn btn-block btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&nbsp;&nbsp;Simpan</button>
 								</div>
 							</div>
 						</form>

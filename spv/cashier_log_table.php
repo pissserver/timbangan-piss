@@ -29,7 +29,7 @@
 	<tbody>
 		<?php
 			$no		= 1;
-			$date_plus 	= strtotime('-7 day', strtotime($date_now));
+			$date_plus 	= strtotime('-30 day', strtotime($date_now));
 			$yesterday	= date('Y-m-j' , $date_plus);
 			$query 	= mysql_query("select * from cashier_log where date(action_time) >= '".$yesterday."' order by action_time desc");
 			while($data=mysql_fetch_array($query)){

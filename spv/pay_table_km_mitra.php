@@ -44,7 +44,7 @@
 					<i class="fa fa-spinner fa-fw"></i>&nbsp;<?php echo $data['km_status'] == 'Diajukan' ? 'Menunggu Acc' : ''; ?>
 				</div>
 			</td>
-			<td style="vertical-align: middle; text-align: center;"><a href="pay_action.php?task=acc_mitra&id=<?php echo $data['km_id']; ?>">
+			<td style="vertical-align: middle; text-align: center;"><a href="pay_action.php?task=acc_mitra&id=<?php echo $data['km_id']; ?>" style="text-decoration: none;">
 					<button class="btn btn-outline btn-block btn-success btn-xs"><i class="fa fa-check"></i>&nbsp;Acc</button>
 				</a>
 			</td>

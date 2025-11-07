@@ -71,7 +71,7 @@
 								</div>
 							</div>
 							<div class="form-group" style="padding:10px; margin-right:0px; margin-top:10px; margin-left:0px;">
-								<button type="submit" class="btn btn-block btn-primary">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>
+								<button type="submit" class="btn btn-block btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&nbsp;&nbsp;Simpan </button>
 							</div>
 						</form>
 					</div>
