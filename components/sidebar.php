@@ -299,13 +299,6 @@
 							</ul>
 						</li>
 
-						<li class="<?= isParentActive(['laborer.php', 'transportation.php', 'transportation_edit.php']); ?>">
-							<a href="#"><i class="fa fa-database fa-fw"></i> Master<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<!-- <li><a class="<?= isActive('laborer.php'); ?>" href="laborer.php"><i class="fa fa-group fa-fw"></i> Mitra</a></li> -->
-								<li><a class="<?= isActive(['transportation.php', 'transportation_edit.php']); ?>" href="transportation.php"><i class="fa fa-truck fa-fw"></i> Kendaraan </a></li>
-							</ul>
-						</li>
 						<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php', 'report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php', 'report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php', 'report_mitra.php', 'report_kokm.php', 'report_kokm_mitra.php', 'report_outstanding_ko.php', 'report_outstanding_ko_mitra.php']); ?>">
 							<a href="#"><i class="fa fa-clipboard fa-fw"></i> Laporan<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
@@ -432,6 +425,14 @@
 									</ul>
 								</li>
 							</ul>
+
+						<li class="<?= isParentActive(['laborer.php', 'transportation.php', 'transportation_edit.php']); ?>">
+							<a href="#"><i class="fa fa-database fa-fw"></i> Master<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<!-- <li><a class="<?= isActive('laborer.php'); ?>" href="laborer.php"><i class="fa fa-group fa-fw"></i> Mitra</a></li> -->
+								<li><a class="<?= isActive(['transportation.php', 'transportation_edit.php']); ?>" href="transportation.php"><i class="fa fa-truck fa-fw"></i> Kendaraan </a></li>
+							</ul>
+						</li>
 
 							<li>
 								<a class="<?= isActive(['developer.php']); ?>" href="developer.php">

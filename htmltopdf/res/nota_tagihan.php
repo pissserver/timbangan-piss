@@ -41,7 +41,7 @@
             $checker		= executeScalar("select checker_code from checker where checker_id = '".$r['checker_id']."'");
             $checkerName	= executeScalar("select checker_name from checker where checker_id = '".$r['checker_id']."'");
             $lapak 			= executeScalar("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
-											r.merchant_id = '".$r['merchant_id']."' and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') limit 1");
+											r.merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')) limit 1");
             $goods			= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
             $nc				= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$r['noncommodity_id']."'");
             $time1			= executeScalar("select TIME_FORMAT(`time_in`, '%H:%i') from weighing where weighing_id = '".$r['weighing_id']."'");

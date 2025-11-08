@@ -30,8 +30,8 @@
     $name	= executeScalar("select merchant_name from merchant where merchant_id = '".$mid."'");
     $sql2 	= mysql_query("select l.lapak_name from rent r, lapak l
                             where r.lapak_id = l.lapak_id and 
-                            r.merchant_id = '".$mid."' and
-                            (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal')
+                            r.merchant_id = '".$mid."'
+                            and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))
                             order by l.lapak_name");
     $string	= "";
     $counter= 0;
@@ -66,7 +66,7 @@
           ->setCellValue("B4", ':')
           ->setCellValue("B5", ':')
           ->setCellValue("C3", $name.' ('.$mid.')' )
-          ->setCellValue("C4", $lapak)
+          ->setCellValue("C4", ($lapak != NULL ? $lapak : '-'))
           ->setCellValue("C5", date('d M Y', strtotime($date1)) . ' s/d ' . date('d M Y', strtotime($date2)));
 
     // Membuat text bold

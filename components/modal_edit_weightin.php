@@ -10,7 +10,7 @@
 		$nick	= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
 		$lpk 	= executeScalar("select l.lapak_name from rent r, lapak l 
 		where r.lapak_id = l.lapak_id and r.merchant_id = '".$r['merchant_id']."'
-		and r.rent_sts != 'Batal' and r.rent_sts2 != 'Pindah' limit 1");
+		and (r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) limit 1");
 		$goods 	= executeScalar("select goods_name from goods where goods_id='".$r['goods_id']."'");
 ?>
 	<!-- Modal Ubah -->
@@ -32,12 +32,12 @@
 									<input type="text" class="form-control" id="nopol" name="nopol" value="<?php echo $r['nopol']; ?>" autofocus="autofocus" required>
 									<br /><label>Pedagang</label>
 									<select class="form-control chzn-select" name="merchant" id="merchant">
-										<option value="<?php echo $r['merchant_id']; ?>" required><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.$lpk; ?></option>
+										<option value="<?php echo $r['merchant_id']; ?>" required><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.($lpk ? $lpk : 'Tidak Ada Lapak'); ?></option>
 										<?php 
 										$sql = mysql_query("select merchant_id, merchant_name, merchant_nick from merchant where merchant_status = 'Aktif' order by merchant_nick, merchant_name");
 										while($d1 = mysql_fetch_array($sql)){
 											$lpk 	= executeScalar("select l.lapak_name from rent r, lapak l 
-											where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' limit 1");
+											where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' and (r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) limit 1");
 											$nick	= $d1['merchant_nick'];
 											if($nick!=''){
 												$nick = $nick.' / ';
@@ -45,7 +45,14 @@
 												$nick = '';
 											}
 										?>
-										<option value="<?php echo $d1['merchant_id'];?>"><?php echo $nick.$d1['merchant_name'].' / '.$d1['merchant_id'].' / '.$lpk;?></option>
+										<option value="<?php echo $d1['merchant_id']; ?>">
+											<?php
+												echo $nick
+													. $d1['merchant_name']
+													. ' / ' . $d1['merchant_id']
+													. ' / ' . ($lpk ? $lpk : 'Tidak Ada Lapak');
+											?>
+										</option>
 									<?php } ?>
 									</select>
 								</div>

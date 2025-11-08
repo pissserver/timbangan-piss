@@ -22,7 +22,7 @@
 		$jenis			= mb_substr($r['merchant_id'], 0, 1, 'utf-8');
 		$merchant 		= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 		$nick	 		= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
-		$lid 			= executeScalar("select lapak_id from rent where merchant_id = '".$r['merchant_id']."'");
+		$lid 			= executeScalar("select lapak_id from rent where merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
 		$lpk 			= executeScalar("select lapak_name from lapak where lapak_id = '".$lid."'");
 		$goods 			= executeScalar("select goods_name from goods where goods_id='".$r['goods_id']."'");
 		$status 		= executeScalar("select weighing_sts from weighing where weighing_id = '".$id."'");
@@ -311,12 +311,12 @@
 													<?php }
 												?>
 												<select class="form-control <?php echo ($sameMerchant === $r['merchant_id'] || $c != NULL) ? '' : 'chzn-select'; ?> " name="merchant" id="merchant" <?php echo ($sameMerchant === $r['merchant_id'] || $c != NULL) ? 'disabled' : ''; ?>>
-													<option value="<?php echo $r['merchant_id']; ?>" required><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.$lpk; ?></option>
+													<option value="<?php echo $r['merchant_id']; ?>" required><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.($lpk ? $lpk : 'Tidak Ada Lapak'); ?></option>
 													<?php 
 													$sql = mysql_query("select merchant_id, merchant_name, merchant_nick from merchant where merchant_status = 'Aktif' order by merchant_nick, merchant_name");
 													while($d1 = mysql_fetch_array($sql)){
 														$lpk2 	= executeScalar("select l.lapak_name from rent r, lapak l 
-														where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' limit 1");
+														where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' and (r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) limit 1");
 														$nick2	= $d1['merchant_nick'];
 														if($nick2!=''){
 															$nick2 = $nick2.' / ';
@@ -324,7 +324,7 @@
 															$nick2 = '';
 														}
 													?>
-													<option value="<?php echo $d1['merchant_id'];?>"><?php echo $nick2.$d1['merchant_name'].' / '.$d1['merchant_id'].' / '.$lpk2;?></option>
+													<option value="<?php echo $d1['merchant_id'];?>"><?php echo $nick2.$d1['merchant_name'].' / '.$d1['merchant_id'].' / '.($lpk2 ? $lpk2 : 'Tidak Ada Lapak');?></option>
 												<?php } ?>
 												</select>
 

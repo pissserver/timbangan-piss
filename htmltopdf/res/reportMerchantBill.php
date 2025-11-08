@@ -8,7 +8,7 @@
 	$jenis	= executeScalar("select merchant_type from merchant where merchant_id = '".$mid."'");
 	$sql2 	= mysql_query("select l.lapak_name from rent r, lapak l
 			where r.lapak_id = l.lapak_id and r.merchant_id = '".$mid."'
-			and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') order by l.lapak_name");
+			and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')) order by l.lapak_name");
 	$string	= "";
 	$counter= 0;
 	while($row=mysql_fetch_array($sql2)){
@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td style="width: 25%;">Lapak</td>
-			<td style="width: 75%;">: <?php echo $lapak; ?></td>
+			<td style="width: 75%;">: <?php echo ($lapak ? $lapak : '-'); ?></td>
 		</tr>
 		<tr>
 			<td style="width: 25%;">Tanggal</td>

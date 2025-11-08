@@ -35,7 +35,7 @@
                             from 	rent r, lapak l
                             where 	r.lapak_id = l.lapak_id 
                             and r.merchant_id = '".$mid."' 
-                            and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal')
+                            and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))
                             order by l.lapak_name");
     $string	= "";
     $counter= 0;
@@ -76,7 +76,7 @@
           ->setCellValue("B6", ':')
           ->setCellValue("C3", $name.' ('.$mid.')' )
           ->setCellValue("C4", $jenis)
-          ->setCellValue("C5", $lapak)
+          ->setCellValue("C5", ($lapak != NULL ? $lapak : '-'))
           ->setCellValue("C6", date('d M Y', strtotime($date1)) . ' s/d ' . date('d M Y', strtotime($date2)));
 
     // Membuat text bold

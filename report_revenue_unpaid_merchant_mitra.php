@@ -61,7 +61,7 @@
 														$sql1 	= mysql_query("select merchant_id, merchant_name, merchant_nick from merchant order by merchant_name");
 														while($d1 = mysql_fetch_array($sql1)){
 															$lpk 	= executeScalar("select l.lapak_name from rent r, lapak l 
-															where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' limit 1");
+															where r.lapak_id = l.lapak_id and r.merchant_id = '".$d1['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')) limit 1");
 															$nick	= $d1['merchant_nick'];
 															if($nick!=''){
 																$nick = $nick.' / ';
@@ -69,7 +69,7 @@
 																$nick = '';
 															}
 													?>
-														<option value="<?php echo $d1['merchant_id'];?>"><?php echo $nick.$d1['merchant_name'].' / '.$d1['merchant_id'].' / '.$lpk;?></option>
+														<option value="<?php echo $d1['merchant_id'];?>"><?php echo $nick.$d1['merchant_name'].' / '.$d1['merchant_id'].' / '.($lpk != NULL ? $lpk : 'Tidak Ada Lapak');?></option>
 													<?php } ?>
 												</select>
 											</div>

@@ -74,7 +74,7 @@
 				$checker_name	= executeScalar("select checker_name from checker where checker_id = '".$checker_id."'");
 				$cashier_id = executeScalar("select cashier_id from ko where ko_id = '".$r['ko_id']."'");
 				$cashier	= executeScalar("select checker_name from checker where checker_id = '".$cashier_id."'");
-				$lid 		= executeScalar("select lapak_id from rent where merchant_id = '".$r['merchant_id']."'");
+				$lid 		= executeScalar("select lapak_id from rent where merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
 				$lpk 		= executeScalar("select lapak_name from lapak where lapak_id = '".$lid."'");
 				$goods 		= executeScalar("select goods_name from goods where goods_id='".$r['goods_id']."'");
 
@@ -130,7 +130,7 @@
 											<div class="form-group" style="margin-bottom:20px;">
 												<label>Pedagang</label>
 												<select class="form-control" name="merchant" id="merchant" disabled>
-													<option value="<?php echo $r['merchant_id']; ?>"><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.$lpk; ?></option>
+													<option value="<?php echo $r['merchant_id']; ?>"><?php echo $merchant.' / '.$nick.' / '.$r['merchant_id'].' / '.($lpk ? $lpk : '-'); ?></option>
 												</select>
 											</div>
 											<div class="form-group" style="margin-bottom:20px;">
