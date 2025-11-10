@@ -124,7 +124,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group" style="padding:10px;">
-                                    <center><button type="submit" class="btn btn-primary btn-block">Masuk <i class="fa fa-angle-double-right fa-lg"></i></button></center>
+                                    <center><button type="submit" class="btn btn-primary btn-block">Keluar <i class="fa fa-angle-double-right fa-lg"></i></button></center>
                                 </div>
                             </div>
                         </div>

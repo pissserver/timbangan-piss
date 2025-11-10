@@ -215,6 +215,24 @@
 					$tonase1 	= executeScalar("select pay_total from payment where pay_id = '2'");
 				}//ambil tarif miniman timbangan
 				$tarifmin 	= executeScalar("select pay_total from payment where pay_id = '1'");
+
+				$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
+				// $jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
+				// Pengecekan apabila pedagang merupakan pedagang trial di lapak
+				if ($kat_merchant == 'Trial Lapak') { 
+					$tonase1 = executeScalar("select pay_total from payment where pay_id = '15'");
+					// if ($jml_kehadiran_hari_ini > 1) {
+					// 	$total1 = 0;
+					// }
+				}
+
+				// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
+				if ($kat_merchant == 'Trial Lapak Jalan') { 
+					$tonase1 = executeScalar("select pay_total from payment where pay_id = '16'");
+					// if ($jml_kehadiran_hari_ini > 1) {
+					// 	$total1 = 0;
+					// }
+				}
 				
 				//jika berat masuk & keluar tidak valid bm <= 0 
 				if($in==0||$in=='0'||$out==0||$out=='0'){
@@ -231,7 +249,7 @@
 				$total2	= $netto*$tonase1;
 				
 				//Jika total bayar dibawah 10.000, maka akan dikenakan tarin min (Rp 10.000)
-				if($total1>$tarifmin){
+				if($total1>$tarifmin || $kat_merchant == 'Trial Lapak Jalan'){
 					$total1 = $total1;
 				}
 				else{
@@ -245,24 +263,6 @@
 					$_SESSION['message'] = "Berat Keluar Salah";
 					echo "<script>window.history.back()</script>";
 						exit();
-				}
-
-				$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
-				$jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
-				// Pengecekan apabila pedagang merupakan pedagang trial di lapak
-				if ($kat_merchant == 'Trial Lapak') { 
-					$total1 = executeScalar("select pay_total from payment where pay_id = '15'");
-					if ($jml_kehadiran_hari_ini > 1) {
-						$total1 = 0;
-					}
-				}
-
-				// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
-				if ($kat_merchant == 'Trial Lapak Jalan') { 
-					$total1 = executeScalar("select pay_total from payment where pay_id = '16'");
-					if ($jml_kehadiran_hari_ini > 1) {
-						$total1 = 0;
-					}
 				}
 
 				//update status = batal
@@ -515,6 +515,24 @@
 			$tonase1 	= executeScalar("select pay_total from payment where pay_id = '2'");
 			$tonase2 	= executeScalar("select pay_total from payment where pay_id = '3'");
 		}
+
+		$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
+		// $jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
+		// Pengecekan apabila pedagang merupakan pedagang trial di lapak
+		if ($kat_merchant == 'Trial Lapak') { 
+			$tonase1 = executeScalar("select pay_total from payment where pay_id = '15'");
+			// if ($jml_kehadiran_hari_ini > 1) {
+			// 	$total1 = 0;
+			// }
+		}
+
+		// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
+		if ($kat_merchant == 'Trial Lapak Jalan') { 
+			$tonase1 = executeScalar("select pay_total from payment where pay_id = '16'");
+			// if ($jml_kehadiran_hari_ini > 1) {
+			// 	$total1 = 0;
+			// }
+		}
 		
 		$tarifmin 	= executeScalar("select pay_total from payment where pay_id = '1'");
 		$tonase3 	= $tonase1+$tonase2;
@@ -536,7 +554,7 @@
 		$total2	= $netto*$tonase1;
 		
 		//Jika total bayar dibawah 10.000, maka akan dikenakan tarin min (Rp 10.000)
-		if($total1>$tarifmin){
+		if($total1>$tarifmin || $kat_merchant == 'Trial Lapak Jalan'){
 			$total1 = $total1;
 		}else{
 			$total1 = $tarifmin;
@@ -611,23 +629,6 @@
 			}
 		}
 
-		$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
-		$jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
-		// Pengecekan apabila pedagang merupakan pedagang trial di lapak
-		if ($kat_merchant == 'Trial Lapak') { 
-			$total1 = executeScalar("select pay_total from payment where pay_id = '15'");
-			if ($jml_kehadiran_hari_ini > 1) {
-				$total1 = 0;
-			}
-		}
-
-		// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
-		if ($kat_merchant == 'Trial Lapak Jalan') { 
-			$total1 = executeScalar("select pay_total from payment where pay_id = '16'");
-			if ($jml_kehadiran_hari_ini > 1) {
-				$total1 = 0;
-			}
-		}
 
 		//update weighing
 		$update1 = mysql_query("update weighing 
@@ -703,6 +704,25 @@
 		elseif($jenis=='L'){
 			$tonase1 	= executeScalar("select pay_total from payment where pay_id = '2'");
 		}
+
+		$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
+		// $jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
+		// Pengecekan apabila pedagang merupakan pedagang trial di lapak
+		if ($kat_merchant == 'Trial Lapak') { 
+			$tonase1 = executeScalar("select pay_total from payment where pay_id = '15'");
+			// if ($jml_kehadiran_hari_ini > 1) {
+			// 	$total1 = 0;
+			// }
+		}
+
+		// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
+		if ($kat_merchant == 'Trial Lapak Jalan') { 
+			$tonase1 = executeScalar("select pay_total from payment where pay_id = '16'");
+			// if ($jml_kehadiran_hari_ini > 1) {
+			// 	$total1 = 0;
+			// }
+		}
+
 		$tonase2 	= executeScalar("select pay_total from payment where pay_id = '3'");
 		$tarifmin 	= executeScalar("select pay_total from payment where pay_id = '1'");
 		$tonase3 	= $tonase1+$tonase2;
@@ -726,7 +746,7 @@
 	
 		//Jika total bayar dibawah 10.000, maka akan dikenakan tarin min (Rp 10.000)
 		//set total bayar
-		if($total1>$tarifmin){
+		if($total1>$tarifmin || $kat_merchant == 'Trial Lapak Jalan'){
 			$total1 = $total1;
 		}
 		else{
@@ -754,23 +774,7 @@
 				exit();
 			}
 		}
-		$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$_POST['merchant']."'");
-		$jml_kehadiran_hari_ini = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND date_in = '".date("Y-m-d")."' ");
-		// Pengecekan apabila pedagang merupakan pedagang trial di lapak
-		if ($kat_merchant == 'Trial Lapak') { 
-			$total1 = executeScalar("select pay_total from payment where pay_id = '15'");
-			if ($jml_kehadiran_hari_ini > 1) {
-				$total1 = 0;
-			}
-		}
 
-		// Pengecekan apabila pedagang merupakan pedagang trial di lapak di jalan
-		if ($kat_merchant == 'Trial Lapak Jalan') { 
-			$total1 = executeScalar("select pay_total from payment where pay_id = '16'");
-			if ($jml_kehadiran_hari_ini > 1) {
-				$total1 = 0;
-			}
-		}
 		$update1 = mysql_query("update weighing set nopol 		= '".$_POST['nopol']."',
 											weight_out			= '".$kir."',
 											netto				= '".$netto."',
