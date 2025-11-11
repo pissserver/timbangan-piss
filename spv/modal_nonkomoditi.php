@@ -285,7 +285,7 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-			<button type="submit" class="btn btn-primary btn-block">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>
+			<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Simpan</button>
 		</div>
 	</fieldset>
 	</form>

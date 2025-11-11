@@ -8,7 +8,7 @@
 	
 	//Cek session role user yg masuk
 	if($_SESSION['role']==''){//jika role kosong
-		echo "<script>window.alert('ANda Tidak Mempunyai Hak Akses');
+		echo "<script>window.alert('Anda Tidak Mempunyai Hak Akses');
 		window.history.back()</script>";
 		exit();
 	}
@@ -16,7 +16,7 @@
 	// $checker	= -1;
 	// $id			= $_GET['id'];
 	// $checker    = executeScalar("select checker_id from weighing where weighing_id = '".$id."'");
-	$checker	= $_POST['checker'];
+	$checker = isset($_POST['checker']) ? $_POST['checker'] : null;
 
 	//Spv Masuk
 	if($task=='in'){
@@ -1025,7 +1025,7 @@
 					$_SESSION['success'] = true;
 					$_SESSION['title'] = 'Berhasil';
 					$_SESSION['message'] = "Edit berat masuk kendaraan";
-					echo "<script><script>window.location=('edit1.php')</script>";
+					echo "<script>window.location=('edit1.php')</script>";
 					exit();
 				}else{
 					echo "<script>window.alert('Data log spv gagal Masuk, Silahkan dicoba lagi')</script>;
@@ -3255,7 +3255,7 @@
 							$_SESSION['success'] = true;
 							$_SESSION['title'] = "Berhasil";
 							$_SESSION['message'] = "Pecah data berhasil";
-							echo "<script>window.location=('check.php')</script>";
+							echo "<script>window.location=('check2.php')</script>";
 							exit();
 						}else{
 							echo "<script>window.alert('Data Gagal');
@@ -3402,6 +3402,7 @@
 			}
 		}
 		else{
+			
 			$laborer = 'Ya';
 			// Pengecekan pemilihan tarif berdasarkan jenis merchant
 			if($jenis == 'B'){
@@ -3603,14 +3604,13 @@
 				$cost_bayar 		= intval($cost_bagi_mitra) + intval($cost_simpan_mitra) + intval($cost_bagi_mandor) + intval($cost_simpan_mandor); // Hitung cost simpan mandor
 			}
 
-			
+			$datePayCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
 			$cek = executeScalar("select count(weighing_id) from laborer_fee where weighing_id = '".$id."'");
 			//$ketemu	= mysql_num_rows($ada);
-			if($cek > 0){
+			if($cek > 0 && $datePayCheck == NULL){
 				mysql_query("delete from weighing_mitra where weighing_id = '".$id."'");
-			}
 
-			$insert = mysql_query("INSERT INTO `weighing_mitra` ( 	`weighing_id`,
+				$insert = mysql_query("INSERT INTO `weighing_mitra` ( 	`weighing_id`,
 																	`merchant_id`,
 																	`checker_id`,
 																	`goods_id`,
@@ -3671,12 +3671,82 @@
 											'".$p1."',
 											'".$p2."')");
 					
-			if(!$insert){
-				//echo 'Data Gagal Masuk';
-				trigger_error("Data gagal Masuk, Silahkan dicoba lagi ".$id, E_USER_ERROR);
-				HEADER("location: index.php");
-				exit();
+				if(!$insert){
+					//echo 'Data Gagal Masuk';
+					trigger_error("Data gagal Masuk, Silahkan dicoba lagi ".$id, E_USER_ERROR);
+					HEADER("location: index.php");
+					exit();
+				}
+			} elseif ($cek == 0) {
+				$insert = mysql_query("INSERT INTO `weighing_mitra` ( 	`weighing_id`,
+																	`merchant_id`,
+																	`checker_id`,
+																	`goods_id`,
+																	`nopol`, 
+																	`weight_in`, 
+																	`weight_out`,  
+																	`noncommodity_id`,
+																	`noncommodity`,
+																	`netto`, 
+																	`date_in`, 
+																	`time_in`,
+																	`date_out`, 
+																	`time_out`,
+																	`laborer_sts`,
+																	`cost_permitra_bagi`,
+																	`cost_permitra_simpan`,
+																	`cost_permandor_bagi`,
+																	`cost_permandor_simpan`,
+																	`cost_bagi_mitra`,
+																	`cost_simpan_mitra`,
+																	`cost_bagi_mandor`,
+																	`cost_simpan_mandor`,
+																	`cost_bayar`,
+																	`cost`,
+																	`weighing_sts`, 
+																	`weighing_sts2`,
+																	`reffer`,
+																	`p1`,
+																	`p2`) 
+									VALUES ('".$id."', 
+											'".$merchant_id."', 
+											'".$checker."',
+											'".$goods_id."',
+											'".$nopol."',
+											'".$weight_in."',
+											'".$weight_out."', 
+											'".$noncommodity_id."',
+											'".$noncommodity."', 
+											'".$netto2."', 
+											'".$date_in."', 
+											'".$time_in."', 
+											'".$date_out."',
+											'".$time_out."',
+											'".$laborer."',
+											'".$k_dibagi."',
+											'".$k_disimpan."',
+											'".$m_dibagi."',
+											'".$m_disimpan."',
+											'".$cost_bagi_mitra."', 
+											'".$cost_simpan_mitra."', 
+											'".$cost_bagi_mandor."', 
+											'".$cost_simpan_mandor."', 
+											'".$cost_bayar."',
+											'".$cost."', 
+											'".$weighing_sts."', 
+											'".$weighing_sts2."',
+											'".$reffer."',
+											'".$p1."',
+											'".$p2."')");
+					
+				if(!$insert){
+					//echo 'Data Gagal Masuk';
+					trigger_error("Data gagal Masuk, Silahkan dicoba lagi ".$id, E_USER_ERROR);
+					HEADER("location: index.php");
+					exit();
+				}
 			}
+
 		}
 		
 		if($jenis != 'B'){
@@ -3723,9 +3793,12 @@
 									cost2				= '".$total2."'
 								where weighing_id 		= '".$id."'");
 							
-		$update2 = mysql_query("update 	weighing_mitra 
+		$datePayCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
+		if ($datePayCheck == NULL) {
+			$update2 = mysql_query("update 	weighing_mitra 
 								set 	date_check 	= '".$dt_now."'
 								where 	weighing_id = '".$id."'");
+		}
 
 		// Insert SPV LOG
 		$merchant_id 		= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
@@ -3747,7 +3820,7 @@
 									'Ada kesalahan pada penginputan data mitra & mandor', 
 									'".$dt_now."')");
 
-		if($update && $update2 && $insert_spv){
+		if($update && $insert_spv){
 			echo "<script>window.location=('check_edit.php?id=$id')</script>";
 			exit();
 		} else{

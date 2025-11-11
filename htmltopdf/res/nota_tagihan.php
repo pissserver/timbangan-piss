@@ -7,9 +7,11 @@
     
     if (!empty($_SESSION['checker'])) {
         $cashier_name = executeScalar("SELECT checker_name FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
-    } elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
+    } 
+    elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
         $spv_name = executeScalar("SELECT name FROM admin WHERE username = '".$_SESSION['username']."'");
-    } else {
+    } 
+    else {
         header("Location: login.html");
         exit();
     }
@@ -24,7 +26,7 @@
         $jam 			= date("H:i");
         $dt_now			= date("Y-m-d H:i:s");
         $id				= $_GET['id'];
-        $uid			= $_GET['u'];
+        // $uid			= $_GET['u'];
         $idq 			= sprintf("%07d", $id);
         $tarif			= 0;
         $biayatonase 	= 0;

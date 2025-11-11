@@ -102,7 +102,7 @@
 					</div>
 				</div>
 				<div class="form-group" style="padding:10px; margin-top:30px; margin-bottom:-10px; margin-left:0px; margin-right:0px;">
-				<button type="submit" class="btn btn-primary btn-block">Simpan <i class="fa fa-angle-double-right fa-lg"></i></button>
+				<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Simpan </button>
 				</div>
 			</fieldset>
 			</form>
