@@ -18,6 +18,7 @@
 
 	while ($r 	= mysql_fetch_array($edit)){
 		$tarif			= 0;
+		$tarif1			= 0;
 		$cost_mitra		= 0;
 		$jenis			= mb_substr($r['merchant_id'], 0, 1, 'utf-8');
 		$merchant 		= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");

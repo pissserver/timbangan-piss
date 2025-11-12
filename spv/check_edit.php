@@ -18,6 +18,7 @@
 	while ($r 	= mysql_fetch_array($edit)){
 		$tarif			= 0;
 		$cost_mitra		= 0;
+		$tarif1			= 0;
 		$jenis			= mb_substr($r['merchant_id'], 0, 1, 'utf-8');
 		$merchant 		= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 		$nick	 		= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
@@ -221,7 +222,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							<div class="row">
-								<div class="col-md-9" style="margin-top: 20px;">
+								<div class="col-md-9" style="margin-top: 13px;">
 									<?php if ($c == NULL) { ?>
 										<i class="fa fa-square-o fa-fw"></i>
 									<?php } else { ?>
@@ -231,10 +232,10 @@
 								</div>
 
 								<form method="GET" action="check_edit_search.php">
-									<div class="col-md-2" style="margin-top: 10px;">
+									<div class="col-md-2" style="margin-top: 5px;">
 										<input type="search" class="form-control" id="search" name="search_id" placeholder="Cari No Nota" value="" required>
 									</div>
-									<button type="submit" class="btn btn-primary" style="border: 1px solid #fff; margin-top: 10px;">Cari</button>
+									<button type="submit" class="btn btn-primary" style="border: 1px solid #fff; margin-top: 5px;">Cari</button>
 								</form>
 							</div>
                         </div>
