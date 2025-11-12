@@ -1900,7 +1900,7 @@
 					$nopol 		 	= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 					$merchant_id 	= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 					$name 		   	= executeScalar("select checker_name from checker where checker_id = '".$checker."'");
-					$insert_spv 	= mysql_query("insert into cashier_log (cashier_log_id, 
+					$insert_cashier 	= mysql_query("insert into cashier_log (cashier_log_id, 
 																						cashier_user, 
 																						cashier_action, 
 																						cashier_target, 
@@ -1914,7 +1914,7 @@
 																						'".$nopol."', 
 																						'".$merchant_id."',
 																						'".$dt_now."')");
-					if($update2 && $insert_spv){
+					if($update2 && $insert_cashier){
 						echo "<script>window.location=('check_edit.php?id=$id')</script>";
 						exit();
 					}
@@ -2035,7 +2035,7 @@
 				$nopol 		 = executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 				$merchant_id = executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 				$name 		   	= executeScalar("select checker_name from checker where checker_id = '".$checker."'");
-				$insert_spv 	= mysql_query("insert into cashier_log (cashier_log_id, 
+				$insert_cashier 	= mysql_query("insert into cashier_log (cashier_log_id, 
 												cashier_user, 
 												cashier_action, 
 												cashier_target, 
@@ -2049,7 +2049,7 @@
 												'".$nopol."', 
 												'".$merchant_id."',
 												'".$dt_now."')");
-				if($update && $insert_spv){//jika berhasil update
+				if($update && $insert_cashier){//jika berhasil update
 					echo "<script>window.location=('check_edit.php?id=$id')</script>";
 					exit();
 				}

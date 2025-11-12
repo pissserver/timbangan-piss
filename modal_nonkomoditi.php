@@ -23,12 +23,13 @@
 								if($ada>0){
 									$data1 	= executeScalar("select noncommodity1 from weighing_detail where weighing_id = '".$id."'");
 									$data2 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data1."'");
-									$data3 	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data1."'");
-									if($data1==0){
+									$weight1= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data1."'");
+									$qty1	= executeScalar("select count1 from weighing_detail where weighing_id = '".$id."'");
+									if($data1==0 || $qty1==0){
 										echo '<option value="">Jenis Nonkomoditi 1 </option>';
 									}
 									else{
-										echo '<option value="'.$data1.'">'.$data2.' ('.$data3.' Kg)</option>';
+										echo '<option value="'.$data1.'">'.$data2.' ('.$weight1.' Kg)</option>';
 									}
 								}
 								else{
@@ -46,11 +47,13 @@
 								if($ada>0){
 									$data3 	= executeScalar("select noncommodity2 from weighing_detail where weighing_id = '".$id."'");
 									$data4 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data3."'");
-									if($data3==0){
+									$weight2= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data3."'");
+									$qty2	= executeScalar("select count2 from weighing_detail where weighing_id = '".$id."'");
+									if($data3==0 || $qty2==0){
 										echo '<option value="">Jenis Nonkomoditi 2 </option>';
 									}
 									else{
-										echo '<option value="'.$data3.'">'.$data4.'</option>';
+										echo '<option value="'.$data3.'">'.$data4.' ('.$weight2.' Kg)</option>';
 									}
 								}
 								else{
@@ -67,11 +70,13 @@
 								if($ada>0){
 									$data5 	= executeScalar("select noncommodity3 from weighing_detail where weighing_id = '".$id."'");
 									$data6 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data5."'");
-									if($data5==0){
+									$weight3= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data5."'");
+									$qty3	= executeScalar("select count3 from weighing_detail where weighing_id = '".$id."'");
+									if($data5==0 || $qty3==0){
 										echo '<option value="">Jenis Nonkomoditi 3 </option>';
 									}
 									else{
-										echo '<option value="'.$data5.'">'.$data6.'</option>';
+										echo '<option value="'.$data5.'">'.$data6.' ('.$weight3.' Kg)</option>';
 									}
 								}
 								else{
@@ -88,11 +93,13 @@
 								if($ada>0){
 									$data7 	= executeScalar("select noncommodity4 from weighing_detail where weighing_id = '".$id."'");
 									$data8 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data7."'");
-									if($data7==0){
+									$weight4= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data7."'");
+									$qty4	= executeScalar("select count4 from weighing_detail where weighing_id = '".$id."'");
+									if($data7==0 || $qty4==0){
 										echo '<option value="">Jenis Nonkomoditi 4</option>';
 									}
 									else{
-										echo '<option value="'.$data7.'">'.$data8.'</option>';
+										echo '<option value="'.$data7.'">'.$data8.' ('.$weight4.' Kg)</option>';
 									}
 								}
 								else{
@@ -157,11 +164,13 @@
 								if($ada>0){
 									$data9 		= executeScalar("select noncommodity5 from weighing_detail where weighing_id = '".$id."'");
 									$data10 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data9."'");
-									if($data9==0){
+									$weight5	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data9."'");
+									$qty5		= executeScalar("select count5 from weighing_detail where weighing_id = '".$id."'");
+									if($data9==0 || $qty5==0){
 										echo '<option value="">Jenis Nonkomoditi 5</option>';
 									}
 									else{
-										echo '<option value="'.$data9.'">'.$data10.'</option>';
+										echo '<option value="'.$data9.'">'.$data10.' ('.$weight5.' Kg)</option>';
 									}
 								}
 								else{
@@ -178,11 +187,13 @@
 								if($ada>0){
 									$data11 	= executeScalar("select noncommodity6 from weighing_detail where weighing_id = '".$id."'");
 									$data12 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data11."'");
-									if($data11==0){
+									$weight6	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data11."'");
+									$qty6		= executeScalar("select count6 from weighing_detail where weighing_id = '".$id."'");
+									if($data11==0 || $qty6==0){
 										echo '<option value="">Jenis Nonkomoditi 6</option>';
 									}
 									else{
-										echo '<option value="'.$data11.'">'.$data12.'</option>';
+										echo '<option value="'.$data11.'">'.$data12.' ('.$weight6.' Kg)</option>';
 									}
 								}
 								else{
@@ -199,11 +210,13 @@
 								if($ada>0){
 									$data13 	= executeScalar("select noncommodity7 from weighing_detail where weighing_id = '".$id."'");
 									$data14 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data13."'");
-									if($data13==0){
+									$weight7	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data13."'");
+									$qty7		= executeScalar("select count7 from weighing_detail where weighing_id = '".$id."'");
+									if($data13==0 || $qty7==0){
 										echo '<option value="">Jenis Nonkomoditi 7</option>';
 									}
 									else{
-										echo '<option value="'.$data13.'">'.$data14.'</option>';
+										echo '<option value="'.$data13.'">'.$data14.' ('.$weight7.' Kg)</option>';
 									}
 								}
 								else{
@@ -220,11 +233,13 @@
 								if($ada>0){
 									$data15 	= executeScalar("select noncommodity8 from weighing_detail where weighing_id = '".$id."'");
 									$data16 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data15."'");
-									if($data15==0){
+									$weight8	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data15."'");
+									$qty8		= executeScalar("select count8 from weighing_detail where weighing_id = '".$id."'");
+									if($data15==0 || $qty8==0){
 										echo '<option value="">Jenis Nonkomoditi 8</option>';
 									}
 									else{
-										echo '<option value="'.$data15.'">'.$data16.'</option>';
+										echo '<option value="'.$data15.'">'.$data16.' ('.$weight8.' Kg)</option>';
 									}
 								}
 								else{

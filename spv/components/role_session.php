@@ -7,7 +7,8 @@
 		}else{
 			header("Location:../login.html");
 		}
-	}else{
+	}
+	else{
 		header("Location:../login.html");
 	}
 

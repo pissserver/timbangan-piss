@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	include "../connection.php";
 	include "components/role_session.php";
@@ -13,6 +14,7 @@
         $showWelcome = true;
         unset($_SESSION['show_welcome_modal']); // supaya tidak muncul lagi selama sesi aktif
     }
+    
 
     $startDate          = date("Y-01-01");
     $endDate            = date("Y-m-d");
@@ -37,7 +39,6 @@
     $omzetMitraAll2      = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetAllStartDate' AND '$omzetAllEndDate'");
     $omzet2              = executeScalar("SELECT SUM(netto) FROM weighing WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetStartDate' AND '$omzetEndDate'");
     $omzetMitra2         = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetStartDate' AND '$omzetEndDate'");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

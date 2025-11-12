@@ -28,12 +28,13 @@
 								if($ada>0){
 									$data1 	= executeScalar("select noncommodity1 from weighing_detail where weighing_id = '".$id."'");
 									$data2 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data1."'");
-									$data3 	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data1."'");
-									if($data1==0){
+									$weight1= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data1."'");
+									$qty1	= executeScalar("select count1 from weighing_detail where weighing_id = '".$id."'");
+									if($data1==0 || $qty1==0){
 										echo '<option value="">Jenis Nonkomoditi 1 </option>';
 									}
 									else{
-										echo '<option value="'.$data1.'">'.$data2.' ('.$data3.' Kg)</option>';
+										echo '<option value="'.$data1.'">'.$data2.' ('.$weight1.' Kg)</option>';
 									}
 								}
 								else{
@@ -44,18 +45,20 @@
 								while($r1 = mysql_fetch_array($sql1)){
 									echo '<option value="'.$r1['noncommodity_id'].'">'.$r1['noncommodity_name'].' ('.$r1['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 2</label>
 						<select class="form-control" id="weight2" name="weight2">
 							<?php 
 								if($ada>0){
 									$data3 	= executeScalar("select noncommodity2 from weighing_detail where weighing_id = '".$id."'");
 									$data4 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data3."'");
-									if($data3==0){
+									$weight2= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data3."'");
+									$qty2	= executeScalar("select count2 from weighing_detail where weighing_id = '".$id."'");
+									if($data3==0 || $qty2==0){
 										echo '<option value="">Jenis Nonkomoditi 2 </option>';
 									}
 									else{
-										echo '<option value="'.$data3.'">'.$data4.'</option>';
+										echo '<option value="'.$data3.'">'.$data4.' ('.$weight2.' Kg)</option>';
 									}
 								}
 								else{
@@ -65,18 +68,20 @@
 								while($r2 = mysql_fetch_array($sql2)){
 								echo '<option value="'.$r2['noncommodity_id'].'">'.$r2['noncommodity_name'].' ('.$r2['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 3</label>
 						<select class="form-control" id="weight3" name="weight3">
 							<?php 
 								if($ada>0){
 									$data5 	= executeScalar("select noncommodity3 from weighing_detail where weighing_id = '".$id."'");
 									$data6 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data5."'");
-									if($data5==0){
+									$weight3= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data5."'");
+									$qty3	= executeScalar("select count3 from weighing_detail where weighing_id = '".$id."'");
+									if($data5==0 || $qty3==0){
 										echo '<option value="">Jenis Nonkomoditi 3 </option>';
 									}
 									else{
-										echo '<option value="'.$data5.'">'.$data6.'</option>';
+										echo '<option value="'.$data5.'">'.$data6.' ('.$weight3.' Kg)</option>';
 									}
 								}
 								else{
@@ -86,18 +91,20 @@
 								while($r3 = mysql_fetch_array($sql3)){
 								echo '<option value="'.$r3['noncommodity_id'].'">'.$r3['noncommodity_name'].' ('.$r3['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 4</label>
 						<select class="form-control" id="weight4" name="weight4">
 							<?php 
 								if($ada>0){
 									$data7 	= executeScalar("select noncommodity4 from weighing_detail where weighing_id = '".$id."'");
 									$data8 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data7."'");
-									if($data7==0){
+									$weight4= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data7."'");
+									$qty4	= executeScalar("select count4 from weighing_detail where weighing_id = '".$id."'");
+									if($data7==0 || $qty4==0){
 										echo '<option value="">Jenis Nonkomoditi 4</option>';
 									}
 									else{
-										echo '<option value="'.$data7.'">'.$data8.'</option>';
+										echo '<option value="'.$data7.'">'.$data8.' ('.$weight4.' Kg)</option>';
 									}
 								}
 								else{
@@ -107,7 +114,7 @@
 								while($r4 = mysql_fetch_array($sql4)){
 								echo '<option value="'.$r4['noncommodity_id'].'">'.$r4['noncommodity_name'].' ('.$r4['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -120,7 +127,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count2" name="count2" <?php 
 						if($ada>0){
@@ -129,7 +136,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count3" name="count3" <?php 
 						if($ada>0){
@@ -138,7 +145,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count4" name="count4" <?php 
 						if($ada>0){
@@ -162,11 +169,13 @@
 								if($ada>0){
 									$data9 		= executeScalar("select noncommodity5 from weighing_detail where weighing_id = '".$id."'");
 									$data10 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data9."'");
-									if($data9==0){
+									$weight5	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data9."'");
+									$qty5		= executeScalar("select count5 from weighing_detail where weighing_id = '".$id."'");
+									if($data9==0 || $qty5==0){
 										echo '<option value="">Jenis Nonkomoditi 5</option>';
 									}
 									else{
-										echo '<option value="'.$data9.'">'.$data10.'</option>';
+										echo '<option value="'.$data9.'">'.$data10.' ('.$weight5.' Kg)</option>';
 									}
 								}
 								else{
@@ -176,18 +185,20 @@
 								while($r5 = mysql_fetch_array($sql5)){
 									echo '<option value="'.$r5['noncommodity_id'].'">'.$r5['noncommodity_name'].' ('.$r5['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 6</label>
 						<select class="form-control" id="weight6" name="weight6">
 							<?php 
 								if($ada>0){
 									$data11 	= executeScalar("select noncommodity6 from weighing_detail where weighing_id = '".$id."'");
 									$data12 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data11."'");
-									if($data11==0){
+									$weight6	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data11."'");
+									$qty6		= executeScalar("select count6 from weighing_detail where weighing_id = '".$id."'");
+									if($data11==0 || $qty6==0){
 										echo '<option value="">Jenis Nonkomoditi 6</option>';
 									}
 									else{
-										echo '<option value="'.$data11.'">'.$data12.'</option>';
+										echo '<option value="'.$data11.'">'.$data12.' ('.$weight6.' Kg)</option>';
 									}
 								}
 								else{
@@ -197,18 +208,20 @@
 								while($r6 = mysql_fetch_array($sql6)){
 									echo '<option value="'.$r6['noncommodity_id'].'">'.$r6['noncommodity_name'].' ('.$r6['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 7</label>
 						<select class="form-control" id="weight7" name="weight7">
 							<?php 
 								if($ada>0){
 									$data13 	= executeScalar("select noncommodity7 from weighing_detail where weighing_id = '".$id."'");
 									$data14 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data13."'");
-									if($data13==0){
+									$weight7	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data13."'");
+									$qty7		= executeScalar("select count7 from weighing_detail where weighing_id = '".$id."'");
+									if($data13==0 || $qty7==0){
 										echo '<option value="">Jenis Nonkomoditi 7</option>';
 									}
 									else{
-										echo '<option value="'.$data13.'">'.$data14.'</option>';
+										echo '<option value="'.$data13.'">'.$data14.' ('.$weight7.' Kg)</option>';
 									}
 								}
 								else{
@@ -218,18 +231,20 @@
 								while($r7 = mysql_fetch_array($sql7)){
 									echo '<option value="'.$r7['noncommodity_id'].'">'.$r7['noncommodity_name'].' ('.$r7['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 						<label>NonKomoditi 8</label>
 						<select class="form-control" id="weight8" name="weight8">
 							<?php 
 								if($ada>0){
 									$data15 	= executeScalar("select noncommodity8 from weighing_detail where weighing_id = '".$id."'");
 									$data16 	= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$data15."'");
-									if($data15==0){
+									$weight8	= executeScalar("select noncommodity_weight from noncommodity where noncommodity_id = '".$data15."'");
+									$qty8		= executeScalar("select count8 from weighing_detail where weighing_id = '".$id."'");
+									if($data15==0 || $qty8==0){
 										echo '<option value="">Jenis Nonkomoditi 8</option>';
 									}
 									else{
-										echo '<option value="'.$data15.'">'.$data16.'</option>';
+										echo '<option value="'.$data15.'">'.$data16.' ('.$weight8.' Kg)</option>';
 									}
 								}
 								else{
@@ -239,7 +254,7 @@
 								while($r8 = mysql_fetch_array($sql8)){
 									echo '<option value="'.$r8['noncommodity_id'].'">'.$r8['noncommodity_name'].' ('.$r8['noncommodity_weight'].' Kg)</option>';
 								} ?>
-						</select>
+						</select><br>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -252,7 +267,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count6" name="count6" <?php 
 						if($ada>0){
@@ -261,7 +276,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count7" name="count7" <?php 
 						if($ada>0){
@@ -270,7 +285,7 @@
 						}
 						else{
 							echo 'placeholder="Jumlah Barang"';
-						}?> >
+						}?> ><br>
 						<label>Jumlah</label>
 						<input type="number" class="form-control" id="count8" name="count8" <?php 
 						if($ada>0){
