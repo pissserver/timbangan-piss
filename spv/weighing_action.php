@@ -2065,7 +2065,11 @@
 			}
 		}
 
-		$update1 	= mysql_query("	update 	weighing 
+
+		// Cek apakah data weighing sudah terbayar atau belum
+		$datePayCheck = executeScalar("SELECT date_pay FROM weighing WHERE weighing_id = '".$id."'");
+		if($datePayCheck == NULL){
+			$update1 	= mysql_query("	update 	weighing 
 									set 	nopol 				= '".$_POST['nopol']."',
 											noncommodity		= '".$nc."',
 											rafaksi				= '".$rafa."',
@@ -2079,12 +2083,38 @@
 											cost				= '".$total1."',
 											cost2				= '".$total2."'
 									where 	weighing_id 		= '".$id."'");
+		} else {
+			$update1 	= mysql_query("	update 	weighing 
+									set 	nopol 				= '".$_POST['nopol']."',
+											noncommodity		= '".$nc."',
+											rafaksi				= '".$rafa."',
+											netto				= '".$netto."',
+											merchant_id			= '".$_POST['merchant']."',
+											goods_id			= '".$_POST['goods']."',
+											cost_tonase			= '".$cost_tonase."',
+											cost_real_tonase	= '".$cost_real_tonase."',
+											cost_bongkar		= '".$cost_bongkar."',
+											cost				= '".$total1."',
+											cost2				= '".$total2."'
+									where 	weighing_id 		= '".$id."'");
+		}
 
-		$update2 = mysql_query("update 	weighing_mitra 
+
+		// Cek apakah data weighing_mitra sudah terbayar atau belum
+		$datePayMitraCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
+		if ($datePayMitraCheck == NULL) {
+			$update2 = mysql_query("update 	weighing_mitra 
 								set 	date_check 	= '".$dt_now."',
 										merchant_id	= '".$_POST['merchant']."',
 										goods_id	= '".$_POST['goods']."' 
 								where 	weighing_id = '".$id."'");
+		} else {
+			$update2 = mysql_query("update 	weighing_mitra 
+								set 	merchant_id	= '".$_POST['merchant']."',
+										goods_id	= '".$_POST['goods']."' 
+								where 	weighing_id = '".$id."'");
+		}
+		
 		
 		$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
 								spv_user, 
@@ -2118,7 +2148,7 @@
 		}
 	}
 	
-//Input Detail Nonkomodity
+	//Input Detail Nonkomodity
 	elseif($task == 'detail'){
 		$id	= $_GET['id'];
 		//Ambil Harga Tonase

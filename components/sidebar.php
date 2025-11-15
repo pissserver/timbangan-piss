@@ -328,8 +328,8 @@
 								
 								<li class="<?= isParentActive(['report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php']); ?>"><a href="#"><i class="fa fa-money fa-fw"></i> Tagihan Tonase<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
-										<li><a class="<?= isActive(['report_revenue.php']); ?>" href="report_revenue.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar</a></li> 
-										<li><a class="<?= isActive(['report_revenue_merchant.php']); ?>" href="report_revenue_merchant.php">
+										<!-- <li><a class="<?= isActive(['report_revenue.php']); ?>" href="report_revenue.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar</a></li>  -->
+										<!-- <li><a class="<?= isActive(['report_revenue_merchant.php']); ?>" href="report_revenue_merchant.php">
 											<table>
 												<tr>
 													<td><i class="fa fa-check-square fa-fw"></i></td>
@@ -337,7 +337,7 @@
 													<td>Terbayar Per Pedagang</td>
 												</tr>
 											</table>
-										</a></li>
+										</a></li> -->
 										<li><a class="<?= isActive(['report_revenue_unpaid.php']); ?>" href="report_revenue_unpaid.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar</a></li>
 										<li><a class="<?= isActive(['report_revenue_unpaid_merchant.php']); ?>" href="report_revenue_unpaid_merchant.php">
 											<table>
@@ -361,7 +361,7 @@
 								</li> -->
 								<li class="<?= isParentActive(['report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php']); ?>"><a href="#"><i class="fa fa-money fa-fw"></i> Tagihan Mitra<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
-										<li><a class="<?= isActive(['report_revenue_mitra.php']); ?>" href="report_revenue_mitra.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar</a></li>
+										<!-- <li><a class="<?= isActive(['report_revenue_mitra.php']); ?>" href="report_revenue_mitra.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar</a></li>
 										<li><a class="<?= isActive(['report_revenue_merchant_mitra.php']); ?>" href="report_revenue_merchant_mitra.php">
 											<table>
 												<tr>
@@ -370,7 +370,7 @@
 													<td>Terbayar Per Pedagang</td>
 												</tr>
 											</table>
-										</a></li>
+										</a></li> -->
 										<li><a class="<?= isActive(['report_revenue_unpaid_mitra.php']); ?>" href="report_revenue_unpaid_mitra.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar</a></li>
 										<li><a class="<?= isActive(['report_revenue_unpaid_merchant_mitra.php']); ?>" href="report_revenue_unpaid_merchant_mitra.php">
 											<table>
