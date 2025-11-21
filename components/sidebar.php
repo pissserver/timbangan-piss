@@ -24,6 +24,7 @@
 
 	$greetingMessage = greeting();
 
+	$photoUrl	= executeScalar("select photo from checker where checker_code = '".$_SESSION['checker']."'");
 	$checkerCode = mysql_real_escape_string($_SESSION['checker']);
 	$allUser = mysql_query("SELECT * FROM checker WHERE checker_role = 'cashier' AND status_aktif = 1 AND checker_code != '$checkerCode' ORDER BY checker_name ASC");
 
@@ -65,6 +66,20 @@
 	.notification-revision-hidden {
 		display: none;
 	}
+
+	/* Image Profile */
+	.nav-profile-img {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
+		border: 2px solid #fff;
+		box-shadow: 0 0 5px rgba(255,255,255,0.7);
+		transition: transform .2s ease-in-out;
+		vertical-align: middle;
+	}
+
 </style>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #428bca;">
@@ -86,13 +101,27 @@
 			style="color: #ffffff !important; background-color: transparent !important;"
 			onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'" 
 			onmouseout="this.style.backgroundColor='transparent'">
-				<i class="fa fa-user fa-fw" style="color: #ffffff;"></i>
+				<!-- <i class="fa fa-user fa-fw" style="color: #ffffff;"></i> -->
 				<span style="color: #ffffff;"><?php echo $greetingMessage; ?></span>
 				<b style="text-transform: capitalize; color: #ffffff;"><?php echo 'Kasir - ' . $checker; ?>&nbsp;</b>
+				<img id="previewPhoto" class="nav-profile-img" src="<?php echo $photoUrl ? 'uploads/' . $photoUrl : 'img/profile-default.png'; ?>">&nbsp; 
 				<i id="dropdownIcon" class="fa fa-angle-down" style="color: #ffffff;"></i>
 			</a>
 			<ul class="dropdown-menu dropdown-user" style="width: 200px; margin-right: 10px; margin-top: 10px; border: 3px solid #ffffff; background-color: #428bca; border-radius: 10px;">
 				<li>
+					<a href="profile.php" 
+					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
+					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
+					onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffffff';">
+						<div class="name" style="display: inline-block; padding-right: 100px; padding-left: 10px;">
+							Profil
+						</div>
+						<div class="icon" style="display: inline-block;">
+							<i class="fa fa-user fa-fw" style="color: #ffffff; font-size: 15px;"></i>
+						</div>
+					</a>
+				</li>
+				<!-- <li>
 					<a data-toggle="modal" data-target="#modalPassword" href="#" 
 					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
 					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
@@ -104,7 +133,7 @@
 							<i class="fa fa-lock fa-fw" style="color: #ffffff; font-size: 15px;"></i>
 						</div>
 					</a>
-				</li>
+				</li> -->
 				<li class="divider"></li>
 				<li>
 					<a data-toggle="modal" data-target="#modalAccount" href="#" 
@@ -125,7 +154,7 @@
 					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
 					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
 					onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffffff';">
-						<div class="name" style="display: inline-block; padding-right: 95px; padding-left: 10px;">
+						<div class="name" style="display: inline-block; padding-right: 90px; padding-left: 10px;">
 							Keluar
 						</div>
 						<div class="icon" style="display: inline-block;">
@@ -174,9 +203,10 @@
 									<div class="panel-body">
 										<div class="row" style="align-items: center;">
 											<div class="col-xs-1 text-center">
-												<i class="fa fa-user fa-3x text-primary"></i>
+												<!-- <i class="fa fa-user fa-3x text-primary"></i> -->
+												<img id="previewPhoto" src="<?php echo $row['photo'] ? 'uploads/' . $row['photo'] : 'img/profile-default.png'; ?>" style="width: 50px; border-radius: 100%;">
 											</div>
-											<div class="col-xs-8">
+											<div class="col-xs-8" style="padding-left: 30px;">
 												<h4 class="media-heading" style="margin-top: 5px;"><?php echo $row['checker_name'] ?></h4>
 												<p style="margin-bottom: 0;">Kode Kasir | <?php echo $row['checker_code'] ?></p>
 											</div>
@@ -186,6 +216,7 @@
 													style="padding: 10px 20px; font-size: 14px; margin-top:5px;"
 													data-id="<?php echo $row['checker_id'] ?>"
 													data-nama="<?php echo htmlspecialchars($row['checker_name']) ?>"
+													data-photo="<?php echo htmlspecialchars($row['photo']) ?>"
 													data-kode="<?php echo htmlspecialchars($row['checker_code']) ?>">
 													Pilih
 												</a>
@@ -215,10 +246,11 @@
 							<div class="panel-body">
 								<div class="row" style="align-items: center;">
 									<div class="col-xs-1 text-center">
-										<i class="fa fa-user fa-3x text-primary"></i>
+										<!-- <i class="fa fa-user fa-3x text-primary"></i> -->
+										<img id="previewPhotoSwitch" src="img/profile-default.png" style="width:50px; border-radius:100%;">
 									</div>
 									<input type="hidden" id="modal_id_user" value="">
-									<div class="col-xs-5">
+									<div class="col-xs-5" style="padding-left: 30px;">
 										<h4 class="media-heading" style="margin-top: 5px;"> <span id="modal_nama"></span></h4>
 										<p style="margin-bottom: 0;">Kode Kasir |  <span id="modal_kode"></span></p>
 									</div>
@@ -504,11 +536,17 @@
 		var id = $(this).data('id');
 		var nama = $(this).data('nama');
 		var kode = $(this).data('kode');
+		var photo = $(this).data('photo');
 
 		$('#modal_nama').text(nama);
 		$('#modal_kode').text(kode);
 		$('#modal_id_user').val(id);
 		$('#modal_password').val('');
+		$('#modal_photo').val(photo);
+
+		// 🔥 UPDATE FOTO DI MODAL
+		var photoUrl = photo ? 'uploads/' + photo : 'img/profile-default.png';
+		$('#previewPhotoSwitch').attr('src', photoUrl);
 
 		$('#modalLoginConfirm').modal('show');
 	});

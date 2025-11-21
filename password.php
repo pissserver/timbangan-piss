@@ -1,26 +1,3 @@
-<style>
-	.password-wrapper {
-		position: relative;
-		width: 100%;
-	}
-	.password-wrapper input {
-		padding-right: 40px; /* kasih ruang buat ikon */
-	}
-	.password-wrapper .toggle-password {
-		position: absolute;
-		right: 10px;
-		top: 50%;
-		transform: translateY(-50%);
-		background: none;
-		border: none;
-		color: #666;
-		cursor: pointer;
-	}
-	.password-wrapper .toggle-password:hover {
-		color: #000;
-	}
-</style>
-
 <?php
 	session_start();
 	include "connection.php";
