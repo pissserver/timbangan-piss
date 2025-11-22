@@ -4,11 +4,14 @@
 
 	$name     = $_POST['name'];
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$old_username = executeScalar("SELECT checker_code FROM checker WHERE checker_code = '".$_SESSION['checker']."'");    // username lama
+	$password      = $_POST['password'];		// password baru
+	$old_password  = $_POST['old_password'];    // password lama
+	$id = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$old_username."'");
 
 	// Cek apakah ada file foto
 	$photoName = "";
-	$oldPhoto = executescalar("SELECT photo FROM checker WHERE checker_code = '".$username."'");
+	$oldPhoto = executescalar("SELECT photo FROM checker WHERE checker_code = '".$old_username."'");
 
 	if ($photoName == "") {
 		$photoName = $oldPhoto;
@@ -37,27 +40,47 @@
 		move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile);
 	}
 
-	// Update
-	$update = mysql_query("
-		UPDATE checker SET
-			checker_name = '".$name."',
-			checker_code = '".$username."',
-			checker_pass = '".$password."',
-			photo = '".$photoName."'
-		WHERE checker_code = '".$username."'
-	") or die(mysql_error());
+	$shouldLogout = false;
 
-	if($update){
-		// Alert Information
-		$_SESSION['success'] = true;
-		$_SESSION['title'] = 'Berhasil';
-		$_SESSION['message'] = "Update Profile";
-		echo "<script>window.location=('profile.php')</script>";
-	}else{
-		// Alert Information
-		$_SESSION['success'] = false;
-		$_SESSION['title'] = 'Gagal';
-		$_SESSION['message'] = "Update Profile";
-		echo "<script>window.location=('profile.php')</script>";
+	if ($username != $old_username) {
+		$shouldLogout = true;
+	}
+
+	if ($password != $old_password) {
+		$shouldLogout = true;
+	}
+
+	if ($shouldLogout) {
+		// UPDATE
+		$update = mysql_query("UPDATE checker SET
+				checker_name = '$name',
+				checker_code = '$username',
+				checker_pass = '$password',
+				photo = '$photoName'
+			WHERE checker_id = '$id'") or die(mysql_error());
+
+		// LOGOUT
+		echo '<script>alert("Login kembali untuk masuk sistem")</script>';
+		session_destroy();
+		echo '<script>
+		localStorage.removeItem("notificationHidden");
+		window.location.href = "login.html";
+		</script>';
+	} else {
+		// UPDATE TANPA LOGOUT
+		$update = mysql_query("UPDATE checker SET
+				checker_name = '$name',
+				checker_code = '$username',
+				checker_pass = '$password',
+				photo = '$photoName'
+			WHERE checker_id = '$id'") or die(mysql_error());
+
+		// Feedback
+		if($update){
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Update Profile";
+			echo "<script>window.location=('profile.php')</script>";
+		}
 	}
 ?>

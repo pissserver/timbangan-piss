@@ -102,7 +102,7 @@
 <!-- Tombol untuk memunculkan offcanvas -->
 <button class="btn btn-canvas btn-primary" onclick="toggleOffcanvas()">
     <i class="fa fa-bell"></i>
-    <!-- <div class="notification">1</div> -->
+    <!-- <div class="notification">3</div> -->
 </button>
 
 <!-- Offcanvas -->
@@ -122,12 +122,20 @@
         <!-- <table>
             <tr>
                 <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Sekarang pengajuan revisi dari kasir bisa dilakukan pada menu developer</td>
+                <td>Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</td>
+            </tr>
+            <tr>
+                <td style="font-size:28px; padding-right: 20px;"> • </td>
+                <td>Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan</td>
+            </tr>
+            <tr>
+                <td style="font-size:28px; padding-right: 20px;"> • </td>
+                <td>Penambahaan alert informasi saat pertama login</td>
             </tr>
         </table> -->
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">
-        <p class="text-primary text-uppercase text-center"><b>Version 1.2.1</b></p>
+        <p class="text-primary text-uppercase text-center"><b>Version 1.3.0</b></p>
     </div>
 </div>
 
