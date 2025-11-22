@@ -134,6 +134,7 @@
 		object-fit: cover;
 		margin-bottom: 15px;
 		background: #f0f0f0;
+		cursor: pointer;
 	}
 
 	.profile-card h3 {
@@ -360,6 +361,8 @@
 			return true;
 			}
 		</script>
+		<link rel="stylesheet" href="https://unpkg.com/viewerjs/dist/viewer.css">
+		<script src="https://unpkg.com/viewerjs/dist/viewer.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -371,62 +374,61 @@
 					<div class="col-md-12">
 						<div class="profile-preview">
 							<div class="profile-card">
-								<div class="img-profile">
-								<div class="achievement-badge-head">
-									<?php
-											$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
-											$tonase = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+								<div class="img-profile" id="photoContainer">
+									<div class="achievement-badge-head">
+										<?php
+												$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+												$tonase = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
 
-											// Tentukan level & batas maksimal
-											// LEVEL CHECK
-											if ($tonase > 25000) {
-												$level = "Platinum";
-												$color = "linear-gradient(45deg, #3d3d3d, #666666)";
-											} elseif ($tonase > 15000) {
-												$level = "Gold";
-												$color = "linear-gradient(45deg, #ffd700, #ffbf00)";
-											} elseif ($tonase > 10000) {
-												$level = "Silver";
-												$color = "linear-gradient(45deg, #c0c0c0, #e0e0e0)";
-											} else {
-												$level = "Basic";
-												$color = "linear-gradient(45deg, #b87333, #cd7f32)"; // bronze
-											}
+												// Tentukan level & batas maksimal
+												// LEVEL CHECK
+												if ($tonase > 25000) {
+													$level = "Platinum";
+													$color = "linear-gradient(45deg, #3d3d3d, #666666)";
+												} elseif ($tonase > 15000) {
+													$level = "Gold";
+													$color = "linear-gradient(45deg, #ffd700, #ffbf00)";
+												} elseif ($tonase > 10000) {
+													$level = "Silver";
+													$color = "linear-gradient(45deg, #c0c0c0, #e0e0e0)";
+												} else {
+													$level = "Basic";
+													$color = "linear-gradient(45deg, #b87333, #cd7f32)"; // bronze
+												}
 
-											// PROGRESS
-											// tonase di bawah 25000 → pakai tonase asli
-											// tonase lebih dari 25000 → stop di 25000 (MAX)
-											$progressValue = ($tonase > 25000) ? 25000 : $tonase;
+												// PROGRESS
+												// tonase di bawah 25000 → pakai tonase asli
+												// tonase lebih dari 25000 → stop di 25000 (MAX)
+												$progressValue = ($tonase > 25000) ? 25000 : $tonase;
 
-											// Biar progress bar terlihat proporsional, ubah ke persen
-											$progressPercent = ($progressValue / 25000) * 100;
+												// Biar progress bar terlihat proporsional, ubah ke persen
+												$progressPercent = ($progressValue / 25000) * 100;
 
-										?>
-									<?php if ($level == "Basic") { ?>
-										<div class="level-badge basic">
-											<i class="fa fa-shield"></i>
-											
-										</div>
-									<?php } ?>
+											?>
+										<?php if ($level == "Basic") { ?>
+											<div class="level-badge basic">
+												<i class="fa fa-shield"></i>
+											</div>
+										<?php } ?>
 
-									<?php if ($level == "Silver") { ?>
-										<div class="level-badge silver">
-											<i class="fa fa-shield"></i>
-										</div>
-									<?php } ?>
+										<?php if ($level == "Silver") { ?>
+											<div class="level-badge silver">
+												<i class="fa fa-shield"></i>
+											</div>
+										<?php } ?>
 
-									<?php if ($level == "Gold") { ?>
-										<div class="level-badge gold">
-											<i class="fa fa-shield"></i>
-										</div>
-									<?php } ?>
+										<?php if ($level == "Gold") { ?>
+											<div class="level-badge gold">
+												<i class="fa fa-shield"></i>
+											</div>
+										<?php } ?>
 
-									<?php if ($level == "Platinum") { ?>
-										<div class="level-badge platinum">
-											<i class="fa fa-diamond"></i>
-										</div>
-									<?php } ?>
-								</div>
+										<?php if ($level == "Platinum") { ?>
+											<div class="level-badge platinum">
+												<i class="fa fa-diamond"></i>
+											</div>
+										<?php } ?>
+									</div>
 								
 								
 									<img id="previewPhoto"
@@ -474,14 +476,18 @@
 											</div>
 
 											<div class="row" style="margin-top: 10px;">
+												<!-- Username Baru -->
 												<div class="col-md-6">
 													<div class="form-group" style="margin-right: 5px;">
-														<label for="username">
-															Username
-														</label>
+														<label for="username">Username</label>
 														<input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $username; ?>" required>
 													</div>
 												</div>
+
+												<!-- Password Lama -->
+												<input type="hidden" name="old_password" value="<?php echo $password; ?>">
+
+												<!-- Password Baru -->
 												<div class="col-md-6">
 													<div class="form-group" style="margin-left: 5px;">
 														<label for="password">
@@ -782,6 +788,23 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Viewer JS untuk zoom foto profil -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+
+				const container = document.getElementById('photoContainer');
+
+				const viewer = new Viewer(container, {
+					navbar: false,
+					toolbar: true,
+					title: false,
+					zoomRatio: 0.5,
+				});
+
+			});
+		</script>
+
 
 		<!-- Script Background -->
 		<script>

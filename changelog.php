@@ -74,6 +74,26 @@
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog">
 
+									<!-- Versi 1.3.0 -->
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
+													<i class="fa fa-plus"></i> Version 1.3.0 - 21 November 2025
+												</a>
+											</h4>
+										</div>
+										<div id="ver130" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<h5># Penambahan Fitur</h5>
+												<ul>
+													<li>🌭 Menambahkan halaman profil untuk update akun</li>
+													<li>⚙️ Menambahkan badge pencapaian untuk melihat kemajuan operasional kasir pada halaman profil</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+
 									<!-- Versi 1.2.1 -->
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -83,7 +103,7 @@
 												</a>
 											</h4>
 										</div>
-										<div id="ver121" class="panel-collapse collapse in">
+										<div id="ver121" class="panel-collapse collapse">
 											<div class="panel-body">
 												<h5># Bug Fixing</h5>
 												<ul>

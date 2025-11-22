@@ -135,7 +135,7 @@
         </table> -->
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">
-        <p class="text-primary text-uppercase text-center"><b>Version 1.2.1</b></p>
+        <p class="text-primary text-uppercase text-center"><b>Version 1.3.0</b></p>
     </div>
 </div>
 

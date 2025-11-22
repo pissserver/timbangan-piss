@@ -397,7 +397,7 @@
                 $('#lottieContainer').html('');
                 $('#welcomeMessage').html(
                     `<span style="font-size:15px; line-height:1.6;">
-                        📢 <b>Update baru:</b> Mengoptimalkan sesi <b>Input Mitra</b> dari kesalahan input.<br>
+                        📢 <b>Update baru:</b> Menambahkan halaman baru <b>Profil</b> untuk update akun.<br>
                         <span style="font-size:15px;">${greeting}</span>
                     </span>`
                 );
