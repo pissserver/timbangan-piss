@@ -16,7 +16,7 @@
 	$photoName = $oldPhoto;
 
 	if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-		$targetDir = "../uploads/";
+		$targetDir = "../../uploads/";
 
 		if (!file_exists($targetDir)) {
 			mkdir($targetDir, 0777, true);

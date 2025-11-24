@@ -20,7 +20,7 @@
 	if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
 
 		// Folder tujuan
-		$targetDir = "uploads/";
+		$targetDir = "../uploads/";
 
 		// Jika folder belum ada → buat
 		if (!file_exists($targetDir)) {

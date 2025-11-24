@@ -229,7 +229,7 @@
 							<div class="profile-card">
 								<div class="img-profile" id="photoContainer">
 									<img id="previewPhoto"
-									src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../img/profile-default.png'; ?>"
+									src="<?php echo $photoUrl ? '../../uploads/' . $photoUrl : '../../uploads/profile-default.png'; ?>"
 									style="width:120px; height:120px; border-radius:50%;">
 								</div>
 								
