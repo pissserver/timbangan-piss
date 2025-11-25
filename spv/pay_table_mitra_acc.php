@@ -30,7 +30,7 @@
 			$no			= 0;
 			$query 		= mysql_query("select * from km_mitra where km_status = 'Acc' order by km_id DESC limit 50");
 			while($data	= mysql_fetch_array($query)) { 
-				$cashier_id	= executeScalar("select cashier_id from ko where km_id = '".$data['km_id']."'");
+				$cashier_id	= executeScalar("select cashier_id from ko_mitra where km_id = '".$data['km_id']."'");
 				$cashier	= executeScalar("select checker_name from checker where checker_id = '".$cashier_id."'");
 				$no++;
 		?>
