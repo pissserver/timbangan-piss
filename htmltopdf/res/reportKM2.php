@@ -32,14 +32,14 @@
         </table>
     </page_footer>
     <div style="font-size: 14px; font-weight: bold; text-align: center; margin-top:0px; margin-right:65px;">
-		SETORAN KO TONASE ke KM TONASE PISS
+		RINCIAN SETORAN TONASE KO ke KM
 		<br>PASAR INDUK SURABAYA SIDOTOPO (PISS)
 	</div>
     <br/>
-	<table style="margin-bottom: 5px;font-size:11pt; width:400px;" >
+	<table style="margin-bottom: 5px;font-size:10pt; width:400px;" >
 		<tr>
-			<td style="width: 40%;">ID KM</td>
-			<td style="width: 60%;">: KM<?php echo $km; ?></td>
+			<td style="width: 35%;">KM ID</td>
+			<td style="width: 65%;">: KM<?php echo $km; ?></td>
 		</tr>
 		<tr>
 			<td>Nama Kasir</td>
@@ -48,6 +48,10 @@
 		<tr>
 			<td>Tanggal Setoran KM</td>
 			<td>: <?php echo date("d M Y", strtotime($km_date)); ?></td>
+		</tr>
+		<tr>
+			<td>Total Setoran</td>
+			<td>: <?php echo format_rupiah($km_total); ?></td>
 		</tr>
 		<tr>
 			<td>Uang Yang Diterima</td>
@@ -60,13 +64,13 @@
 		</tr>
 	</table>
 	<br />
-	<table style="border: solid 1px black; border-collapse: collapse; margin-bottom: 5px;font-size:10pt; width:850px; margin-right:0px;" id="tableNonkomoditi">
+	<table style="border: solid 1px black; border-collapse: collapse; margin-bottom: 5px;font-size:8pt; width:850px; margin-right:0px;" id="tableNonkomoditi">
 		<tr>
-			<th style="text-align: center;height: 2%; width: 5%; border: solid 1px black;">NO</th>
+			<th style="text-align: center;height: 3%; width: 10%; border: solid 1px black;">NO</th>
 			<th style="text-align: center;width: 15%; border: solid 1px black;">KO ID</th>
+			<th style="text-align: center;width: 25%;border: solid 1px black;">NAMA PENYETOR</th>
 			<th style="text-align: center;width: 15%;border: solid 1px black;">TANGGAL KO</th>
-			<th style="text-align: center;width: 30%;border: solid 1px black;">NAMA PENYETOR</th>
-			<th style="text-align: center;width: 15%;border: solid 1px black;">TOTAL KO (Rp)</th>
+			<th style="text-align: center;width: 15%;border: solid 1px black;">TOTAL KO (RP)</th>
 		</tr>
 		<?php
 			$no 	= 1;
@@ -76,8 +80,8 @@
 		<tr>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
 			<td style="text-align: center;border: solid 1px black;"><?php echo 'KO'.$r['ko_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['ko_date'])); ?></td>
 			<td style="text-align: left;border: solid 1px black;"><?php echo $checker; ?></td>
+			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['ko_date'])); ?></td>
 			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['ko_total']); ?></td>
 		</tr>
 		<?php 
@@ -86,7 +90,7 @@
 			$cost = executeScalar("select km_total from km where km_id = '".$km."'");
 		?>
 		<tr>
-			<td style="text-align: right;border: solid 1px black;" colspan="4"><b>Total </b></td>
+			<td style="text-align: center;border: solid 1px black;" colspan="4"><b>Total </b></td>
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($cost); ?></td>
 		</tr>
 	</table>
