@@ -463,6 +463,7 @@
 								</li>
 							</ul>
 
+							<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian </a></li>
 							<li>
 								<a class="<?= isActive(['developer.php']); ?> notification-wrapper" href="developer.php">
 									<?php 
