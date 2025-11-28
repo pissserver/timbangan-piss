@@ -10,57 +10,42 @@
 ?>
 
 <style>
-	/* BADGE STYLE */
-	.level-badge {
-		display: inline-flex;
-		align-items: center;
-		padding: 10px 18px;
-		border-radius: 30px;
-		font-weight: 600;
-		font-size: 15px;
-		gap: 8px;
-		color: white;
-		box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-		animation: popIn .4s ease;
+	.card-cashier {
+		border-radius: 10px;
+		background: #ffffff;
+		padding: 20px;
+		margin-bottom: 20px;
+		box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
+		transition: 0.2s;
+	}
+	
+	.card-cashier:hover {
+		transform: translateY(-3px);
+		box-shadow: 0px 5px 18px rgba(0,0,0,0.15);
 	}
 
-	/* BASIC */
-	.level-badge.basic {
-		background: linear-gradient(45deg, #b87333, #cd7f32);
-		box-shadow: 0 0 15px #cd7f32aa;
-	}
-
-	/* SILVER */
-	.level-badge.silver {
-		background: linear-gradient(45deg, #c0c0c0, #e0e0e0);
+	.card-title {
+		font-size: 18px;
+		font-weight: bold;
 		color: #333;
-		box-shadow: 0 0 15px #c0c0c0cc;
 	}
 
-	/* GOLD */
-	.level-badge.gold {
-		background: linear-gradient(45deg, #ffd700, #ffbf00);
-		color: #222;
-		box-shadow: 0 0 20px #ffcc00aa;
+	.level-badge {
+		display: inline-block;
+		padding: 8px 14px;
+		border-radius: 20px;
+		color: #fff;
+		font-size: 13px;
+		font-weight: bold;
 	}
 
-	/* PLATINUM */
-	.level-badge.platinum {
-		background: linear-gradient(45deg, #6d6d6d, #3d3d3d);
-		box-shadow: 0 0 25px #ffffffaa;
-	}
+	.level-basic     { background: linear-gradient(45deg, #b87333, #cd7f32); }
+	.level-silver    { background: linear-gradient(45deg, #c0c0c0, #e0e0e0); color:#333; }
+	.level-gold      { background: linear-gradient(45deg, #ffd700, #ffbf00); color:#333; }
+	.level-platinum  { background: linear-gradient(45deg, #3d3d3d, #666666); }
 
-	/* TONASE */
-	.achievement-tonase {
-		margin-top: 5px;
-		font-size: 14px;
-		color: #444;
-	}
-
-	/* ANIMASI */
-	@keyframes popIn {
-		from { transform: scale(.7); opacity: 0; }
-		to   { transform: scale(1); opacity: 1; }
+	.card-footer-btn {
+		margin-top: 15px;
 	}
 </style>
 
@@ -77,37 +62,6 @@
 		<title>Pencapaian | PISS</title>
 
 		<?php echo headScript(); ?>
-
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		<script src="../js/jquery.min.js"></script>
-		<!-- input number -->
-		<link href="../js/touchpin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
-		<script src="../js/touchpin/jquery.bootstrap-touchspin.js"></script>
-		<script>
-			/* hide all elements & show preloader*/
-			document.documentElement.className += 'js';
-
-			/* display variabel */
-			var alertLoadProcess = "<span class='alert alert-info' onclick='clearNotif()'><i class='fa fa-spinner fa-spin'></i> Loading...</span>";
-			//fungsi input hanya angka
-			function isNumber(event) {
-			if (event) {
-				var charCode = (event.which) ? event.which : event.keyCode;
-				if (charCode != 190 && charCode > 31 && 
-				(charCode < 48 || charCode > 57) && 
-				(charCode < 96 || charCode > 105) && 
-				(charCode < 37 || charCode > 40) && 
-					charCode != 110 && charCode != 8 && charCode != 46 )
-				return false;
-			}
-			return true;
-			}
-		</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -116,19 +70,86 @@
 			<div id="page-wrapper">
 				<br><br><br><br>
 				<div class="row">
-					<div class="col-md-12">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<i class="fa fa-trophy"></i> Pencapaian Tim Kasir
-								</h4>
-							</div>
-							<div class="panel-body">
-								<div id="Area1">
-									<div class="alert alert-info" onclick="clearNotif()">
-										<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+					<div class="panel-primary">
+						<div class="panel-heading" style="border-radius: 10px; padding: 15px 20px; font-size: 18px;">
+							<h4 class="panel-title">
+								<i class="fa fa-trophy"></i>&nbsp; Pencapaian Tim Kasir
+							</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row" style="margin-top:30px;">
+								<?php
+									$sql = "
+										SELECT 
+											c.checker_id,
+											c.checker_name, 
+											COUNT(w.weighing_id) AS total_tonase
+											FROM checker c
+											JOIN weighing w ON w.checker_id = c.checker_id
+											WHERE status_aktif = '1' 
+											AND checker_role = 'Cashier' 
+											AND weighing_sts = 'Lunas'
+											GROUP BY c.checker_id, c.checker_name
+											ORDER BY total_tonase DESC
+											";
+
+									$query = mysql_query($sql);
+									$no = 1;
+
+									while($data = mysql_fetch_array($query)) {
+
+									// LEVEL CHECK
+									if ($data['total_tonase'] > 25000) {
+										$level = "Platinum";  $badgeClass = "level-platinum";
+									} elseif ($data['total_tonase'] > 15000) {
+										$level = "Gold";      $badgeClass = "level-gold";
+									} elseif ($data['total_tonase'] > 10000) {
+										$level = "Silver";    $badgeClass = "level-silver";
+									} else {
+										$level = "Basic";     $badgeClass = "level-basic";
+									} ?>
+
+									<div class="col-md-4 col-sm-6">
+										<div class="card-cashier">					
+											<div class="card-title">
+												<?php echo $no . ". " . $data['checker_name']; ?>
+											</div>
+
+											<div style="margin-top:10px;">
+												<span class="level-badge <?php echo $badgeClass; ?>">
+													<i class="fa fa-shield"></i> 
+													<?php echo $level; ?>
+												</span>
+											</div>
+
+											<div style="margin-top:10px; color:#666;">
+												Total Tonase Terbayar:
+												<b><?php echo number_format($data['total_tonase']); ?></b>
+												Nota Lunas
+											</div>
+
+											<div style="margin-top:10px; color:#666;">
+												Dengan Revisi:
+												<b>
+													<?php 
+														$revision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE applicant = '".$data['checker_id']."'");
+														echo number_format($revision); 
+													?>
+												</b>
+												Kali
+											</div>
+
+											<div class="card-footer-btn">
+												<a href="achievement_detail.php?id=<?php echo $data['checker_id']; ?>" 
+													class="btn btn-primary btn-sm btn-block">
+													<i class="fa fa-eye"></i>&nbsp; Lihat Detail
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
+									<?php 
+									$no++; 
+									} ?>
 							</div>
 						</div>
 					</div>
@@ -136,22 +157,6 @@
 			</div>
 			<!-- End Main Content -->
 		</div>
-
-		<script>
-		$(document).ready(function(){
-				// Auto Refresh Page
-				$("#notifArea").html(alertLoadProcess);
-				$('#Area1').load("achievement_table.php",function(){clearNotif();});
-				setTimeout('$("html").removeClass("js")',1000); 
-				
-				//Modal Password
-				$('#modalPassword').on('shown.bs.modal', function (e) {
-					$("#notifArea").html(alertLoadProcess);
-					$("#data_password").load("password.php",function(){clearNotif();});
-				})
-			});
-			function clearNotif(){$("#notifArea").html("");}
-		</script>
 
 		<!-- jQuery -->
 		<script src="../js/jquery.js"></script>

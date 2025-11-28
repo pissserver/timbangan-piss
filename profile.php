@@ -11,6 +11,8 @@
 	$username	= $_SESSION['checker'];
 	$password	= executeScalar("select checker_pass from checker where checker_code = '".$_SESSION['checker']."'");
 	$photoUrl	= executeScalar("select photo from checker where checker_code = '".$_SESSION['checker']."'");
+	$checkerId	= executeScalar("select checker_id from checker where checker_code = '".$_SESSION['checker']."'");
+	$firstWeighing = executeScalar("SELECT MIN(date_in) FROM weighing WHERE checker_id = '".$checkerId."'");
 
 	function headScript(){
 		$headScript=file_get_contents("headScript.html");
@@ -534,16 +536,22 @@
 				</div>
 
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-4">
+					<div class="col-md-6">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<i class="fa fa-star"></i>&nbsp; Pencapaian Pengguna
+									<i class="fa fa-trophy"></i>&nbsp; Pencapaian Keseluruhan
 								</h4>
 							</div>
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog" style="padding: 5px 15px 0px;">
 											<div class="row">
+												<div style="margin: 0px 15px;" class="alert alert-info" role="alert">
+													<i class="fa fa-warning" style="display: inline-block;"></i>&nbsp;
+													<p style="font-size: 14px; display: inline-block">
+														Data dari <?php echo date("d M Y", strtotime($firstWeighing)); ?> - Sekarang
+													</p>
+												</div><br>
 												<div class="col-md-12">
 													<div class="form-group">
 														<label for="name">
@@ -638,7 +646,128 @@
 						</div>
 					</div>
 
-					<div class="col-md-8">
+					<div class="col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<i class="fa fa-trophy"></i>&nbsp; Pencapaian Bulanan 
+									<div class="wrap-month" style="display: inline-block; color: #f1ea18ff; font-weight: bold;">
+										<?php echo date("F Y"); ?>
+									</div>
+								</h4>
+							</div>
+							<div class="panel-body">
+								<div class="panel-group" id="accordionChangelog" style="padding: 5px 15px 0px;">
+											<div class="row">
+												<div style="margin: 0px 15px;" class="alert alert-info" role="alert">
+													<i class="fa fa-warning" style="display: inline-block;"></i>&nbsp;
+													<p style="font-size: 14px; display: inline-block">
+														Data ini reset setiap bulan
+													</p>
+												</div><br>
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Timbang Kendaraan
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$weighingCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_in LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."'");
+															$weighingCount = number_format($weighingCount, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $weighingCount . " Kendaraan"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Tonase Terbayar
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$tonasePayCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$tonasePayCount = number_format($tonasePayCount, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Mitra Terbayar
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$mitraPayLunas = executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$mitraPayLunas = number_format($mitraPayLunas, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Setoran Laporan KO
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$reportKO = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE ko_date LIKE '".$monthYearNow."%' AND cashier_id = '".$idChecker."'");
+															$reportKO = number_format($reportKO, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKO . " Setoran"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Setoran Laporan KO Mitra
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$reportKOM = executeScalar("SELECT COUNT(ko_id) FROM ko_mitra WHERE ko_date LIKE '".$monthYearNow."%' AND cashier_id = '".$idChecker."'");
+															$reportKOM = number_format($reportKOM, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKOM . " Setoran"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="name">
+															Revisi
+														</label>
+														<?php 
+															$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+															$monthYearNow = date("Y-m");
+															$revision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE date LIKE '".$monthYearNow."%' AND applicant = '".$idChecker."'");
+															$revision = number_format($revision, 0, ',', '.');
+														?>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $revision . " Pengajuan Revisi"; ?>" disabled>
+													</div>
+												</div>
+											</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h4 class="panel-title">

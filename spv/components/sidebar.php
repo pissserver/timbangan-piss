@@ -26,6 +26,48 @@
 	$photoUrl	= executeScalar("select photo from admin where username = '".$_SESSION['username']."'");
 
 	$countRevision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 != 'Ditolak' AND status2 IS NULL");
+
+	// Trophy Query
+	$monthNames = [
+		'01' => 'Januari',
+		'02' => 'Februari',
+		'03' => 'Maret',
+		'04' => 'April',
+		'05' => 'Mei',
+		'06' => 'Juni',
+		'07' => 'Juli',
+		'08' => 'Agustus',
+		'09' => 'September',
+		'10' => 'Oktober',
+		'11' => 'November',
+		'12' => 'Desember'
+	];
+
+	$month = date('m', strtotime('-1 month'));
+	$year = date('Y', strtotime('-1 month'));
+	$lastMonthName = $monthNames[$month] . " " . $year;
+	$sql = "
+		SELECT 
+			c.checker_name, 
+			c.photo, 
+			COUNT(w.weighing_id) AS total_transactions
+		FROM checker c
+		JOIN weighing w 
+			ON w.checker_id = c.checker_id
+		WHERE 
+			c.status_aktif = '1'
+			AND c.checker_role = 'Cashier'
+			AND w.weighing_sts = 'Lunas'
+			AND DATE_FORMAT(w.date_pay, '%m') = '".$month."'
+			AND DATE_FORMAT(w.date_pay, '%Y') = '".$year."'
+		GROUP BY c.checker_id
+		ORDER BY total_transactions DESC
+		LIMIT 1
+	";
+
+
+	$result = mysql_query($sql);
+	$data = mysql_fetch_assoc($result);
 ?>
 
 <style>
@@ -115,6 +157,103 @@
 		background: linear-gradient(45deg, #ef4646ff, #9a0404ff);
 		color: #fff;
 		/* box-shadow: 0 0 15px #f7c40eff; */
+	}
+
+	/* Floating Trophy */
+	.floating-trophy {
+		position: fixed;
+		bottom: 25px;
+		right: 25px;
+		width: 65px;
+		height: 65px;
+		background: #ffcc00;
+		color: white;
+		border-radius: 50%;
+		font-size: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+		z-index: 9999;
+		transition: 0.25s ease;
+	}
+
+	/* Hover effect */
+	.floating-trophy:hover {
+		transform: scale(1.15);
+	}
+
+	/* Small floating animation (optional) */
+	.floating-trophy {
+		animation: floatAnim 2.5s ease-in-out infinite;
+	}
+
+	@keyframes floatAnim {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(-8px); }
+	}
+
+	/* Kotak modal elegan */
+	.modal-congrats-box {
+		border-radius: 18px !important;
+		padding: 25px;
+		text-align: center;
+		background: linear-gradient(to bottom right, #ffffff, #d8e4f2ff);
+		border: 2px solid #e0e7ff;
+		box-shadow: 0 0 25px rgba(0,0,0,0.15);
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Foto */
+	.modal-congrats-photo {
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		border: 4px solid #ffd369;
+		box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+		margin-top: 15px;
+	}
+
+	/* Judul */
+	.modal-congrats-title {
+		font-weight: bold;
+		font-size: 24px;
+		color: #333;
+		margin-top: 20px;
+	}
+
+	/* Subjudul */
+	.modal-congrats-sub {
+		font-size: 16px;
+		color: #555;
+		margin-top: 10px;
+	}
+
+	/* Detail */
+	.modal-congrats-detail {
+		font-size: 16px;
+		color: #444;
+		margin-top: 10px;
+	}
+
+	/* Dekorasi atas */
+	.modal-decor-top {
+		width: 100%;
+		height: 8px;
+		background: linear-gradient(to right, #ffb200, #ffe38f, #ffb200);
+		border-radius: 0 0 10px 10px;
+		margin-top: -25px;
+	}
+
+	/* Dekorasi bawah */
+	.modal-decor-bottom {
+		width: 100%;
+		height: 8px;
+		background: linear-gradient(to right, #6ca8ff, #d5e6ff, #6ca8ff);
+		border-radius: 10px 10px 0 0;
+		margin-bottom: -25px;
 	}
 </style>
 
@@ -463,7 +602,7 @@
 								</li>
 							</ul>
 
-							<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian </a></li>
+							<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian Cashier</a></li>
 							<li>
 								<a class="<?= isActive(['developer.php']); ?> notification-wrapper" href="developer.php">
 									<?php 
@@ -481,7 +620,122 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+</nav>
+
+<!-- Floating Trophy -->
+<div class="floating-trophy" onclick="openCongrats()">
+    <i class="fa fa-trophy"></i>
+</div>
+
+
+<!-- Modal Congrats -->
+<div class="modal fade" id="modalCongrats" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-congrats-box">
+
+            <div class="modal-decor-top"></div>
+
+            <img id="previewPhoto" 
+                src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
+                class="modal-congrats-photo">
+
+            <h3 class="modal-congrats-title">
+                Selamat, <?php echo $data['checker_name']; ?> 🎉
+            </h3>
+
+            <p class="modal-congrats-sub">
+                Menjadi <b>Cashier of The Month</b><br>
+                untuk bulan <?php echo $lastMonthName ?>!
+            </p>
+
+            <p class="modal-congrats-detail">
+                Dengan pembayaran tonase sebanyak:
+                <br><b><?php echo number_format($data['total_transactions'], 0, ',', '.'); ?></b> Nota Lunas!
+            </p>
+
+            <div class="modal-decor-bottom"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Canvas Confetti -->
+<canvas id="confetti-canvas" style="position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998;"></canvas>
+
+
+<!-- Confetti -->
+<script>
+	function openCongrats() {
+		// buka modal manual tanpa bootstrap
+		document.getElementById("modalCongrats").style.display = "block";
+		document.getElementById("modalCongrats").classList.add("in");
+
+		startConfetti();
+	}
+
+	window.onclick = function(e){
+		if(e.target.id === "modalCongrats"){
+			document.getElementById("modalCongrats").style.display = "none";
+			document.getElementById("modalCongrats").classList.remove("in");
+		}
+	}
+</script>
+
+<script>
+	const confettiCanvas = document.getElementById('confetti-canvas');
+	const ctx = confettiCanvas.getContext('2d');
+
+	confettiCanvas.width = window.innerWidth;
+	confettiCanvas.height = window.innerHeight;
+
+	let particles = [];
+
+	function random(min, max) {
+		return Math.random() * (max - min) + min;
+	}
+
+	function createConfetti() {
+		for (let i = 0; i < 150; i++) {
+			particles.push({
+				x: random(0, confettiCanvas.width),
+				y: random(-200, -10),
+				size: random(3, 6),
+				speed: random(1, 4),
+				angle: random(0, Math.PI * 2),
+				color: "hsl(" + random(0, 360) + ", 100%, 50%)"
+			});
+		}
+	}
+
+	function draw() {
+		ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+		particles.forEach((p, index) => {
+			ctx.beginPath();
+			ctx.fillStyle = p.color;
+			ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+			ctx.fill();
+
+			p.y += p.speed;
+			p.x += Math.sin(p.angle);
+
+			if (p.y > confettiCanvas.height) {
+				particles.splice(index, 1);
+			}
+		});
+
+		requestAnimationFrame(draw);
+	}
+
+	draw();
+
+	function startConfetti() {
+		particles = []; // reset biar tidak numpuk
+		createConfetti();
+	}
+</script>
+
 
 <script>
 	$(document).ready(function() {
