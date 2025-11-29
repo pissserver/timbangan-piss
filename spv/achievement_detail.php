@@ -408,8 +408,14 @@
 															$idChecker = $_GET['id'];
 															$tonasePayCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
 															$tonasePayCount = number_format($tonasePayCount, 0, ',', '.');
+															$tonasePayCountCost = executeScalar("SELECT SUM(cost_tonase) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$tonasePayCountCost = number_format($tonasePayCountCost, 0, ',', '.');
+															$tonasePayCountWeight = executeScalar("SELECT SUM(netto) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$tonasePayCountWeight = number_format($tonasePayCountWeight, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $tonasePayCountCost; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCountWeight . " Kg"; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -423,8 +429,14 @@
 															$idChecker = $_GET['id'];
 															$mitraPayLunas = executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
 															$mitraPayLunas = number_format($mitraPayLunas, 0, ',', '.');
+															$mitraPayCost = executeScalar("SELECT SUM(cost) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$mitraPayCost = number_format($mitraPayCost, 0, ',', '.');
+															$mitraPayWeight = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$mitraPayWeight = number_format($mitraPayWeight, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $mitraPayCost;?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayWeight . " Kg"; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -523,8 +535,14 @@
 															$monthYearNow = date("Y-m");
 															$tonasePayCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
 															$tonasePayCount = number_format($tonasePayCount, 0, ',', '.');
+															$tonasePayCountCost = executeScalar("SELECT SUM(cost_tonase) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$tonasePayCountCost = number_format($tonasePayCountCost, 0, ',', '.');
+															$tonasePayCountWeight = executeScalar("SELECT SUM(netto) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$tonasePayCountWeight = number_format($tonasePayCountWeight, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $tonasePayCountCost; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCountWeight . " Kg"; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -539,8 +557,14 @@
 															$monthYearNow = date("Y-m");
 															$mitraPayLunas = executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
 															$mitraPayLunas = number_format($mitraPayLunas, 0, ',', '.');
+															$mitraPayCost = executeScalar("SELECT SUM(cost) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$mitraPayCost = number_format($mitraPayCost, 0, ',', '.');
+															$mitraPayWeight = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+															$mitraPayWeight = number_format($mitraPayWeight, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" id="name" style="margin-bottom: 5px;" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
+														<input type="text" class="form-control" id="name" style="margin-bottom: 5px;" name="name" value="<?php echo "Rp " . $mitraPayCost; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayWeight . " Kg"; ?>" disabled>
 													</div>
 												</div>
 											</div>
