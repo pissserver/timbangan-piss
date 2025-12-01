@@ -159,7 +159,7 @@
 					<div class="panel-primary">
 						<div class="panel-heading" style="border-radius: 10px; padding: 15px 20px; font-size: 18px; background-color: #008000;">
 							<h4 class="panel-title">
-								<i class="fa fa-trophy"></i>&nbsp; Pencapaian Tim Kasir
+								<i class="fa fa-trophy"></i>&nbsp; Pencapaian Tim Checker
 							</h4>
 						</div>
 						<div class="panel-body">

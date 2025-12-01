@@ -68,6 +68,23 @@
 
 	$result = mysql_query($sql);
 	$data = mysql_fetch_assoc($result);
+
+	$sql2 = "SELECT 
+				c.checker_id,
+				c.checker_name, 
+				c.photo,
+				COUNT(k.ko_id) AS total_ko
+			FROM checker c
+			JOIN ko k ON k.receiver_id = c.checker_id
+			WHERE status_aktif = '1' 
+			AND checker_role = 'Checker'
+			AND DATE_FORMAT(k.ko_date, '%m') = '".$month."'
+			AND DATE_FORMAT(k.ko_date, '%Y') = '".$year."'
+			GROUP BY c.checker_id, c.checker_name
+			ORDER BY total_ko DESC
+			LIMIT 1";
+	$result2 = mysql_query($sql2);
+	$data2 = mysql_fetch_assoc($result2);
 ?>
 
 <style>
@@ -215,6 +232,40 @@
 		border-radius: 10px 10px 0 0;
 		margin-bottom: -25px;
 	}
+
+	
+	/* Carousel Modal */
+	.slide {
+		display: none;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.slide.active {
+		display: block;
+		opacity: 1;
+	}
+
+	/* Tombol Next Prev */
+	.slide-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(0,0,0,0.4);
+		border: none;
+		color: #fff;
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		cursor: pointer;
+		font-size: 18px;
+		line-height: 35px;
+		text-align: center;
+	}
+
+	.prev-btn { left: 15px; }
+	.next-btn { right: 15px; }
+
 </style>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #428bca;">
@@ -541,7 +592,7 @@
 								</li>
 							</ul>
 
-							<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian Cashier</a></li>
+							<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian Cashier</a></li>
 							<li>
 								<a class="<?= isActive(['developer.php']); ?> notification-wrapper" href="developer.php">
 									<?php 
@@ -575,23 +626,50 @@
 
             <div class="modal-decor-top"></div>
 
-            <img id="previewPhoto" 
-                src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
-                class="modal-congrats-photo">
+            <!-- 2 SLIDE -->
+            <div class="slide slide1 active">
+                <img id="previewPhoto" 
+                    src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
+                    class="modal-congrats-photo">
 
-            <h3 class="modal-congrats-title">
-                Selamat, <?php echo $data['checker_name']; ?> 🎉
-            </h3>
+                <h3 class="modal-congrats-title">
+                    Selamat, <?php echo $data['checker_name']; ?> 🎉
+                </h3>
 
-            <p class="modal-congrats-sub">
-                Menjadi <b>Cashier of The Month</b><br>
-                untuk bulan <?php echo $lastMonthName ?>!
-            </p>
+                <p class="modal-congrats-sub">
+                    Menjadi <b>Cashier of The Month</b><br>
+                    untuk bulan <?php echo $lastMonthName ?>!
+                </p>
 
-            <p class="modal-congrats-detail">
-                Dengan pembayaran tonase sebanyak:
-                <br><b><?php echo number_format($data['total_transactions'], 0, ',', '.'); ?></b> Nota Lunas!
-            </p>
+                <p class="modal-congrats-detail">
+                    Dengan pembayaran tonase sebanyak:
+                    <br><b><?php echo number_format($data['total_transactions'], 0, ',', '.'); ?></b> Nota Lunas!
+                </p>
+            </div>
+
+            <div class="slide slide2">
+                <img id="previewPhoto" 
+                    src="<?php echo $data2['photo'] ? '../../uploads/' . $data2['photo'] : '../../uploads/profile-default.png'; ?>"
+                    class="modal-congrats-photo">
+
+                <h3 class="modal-congrats-title">
+                    Selamat, <?php echo $data2['checker_name']; ?> 🎉
+                </h3>
+
+                <p class="modal-congrats-sub">
+                    Menjadi <b>Checker of The Month</b><br>
+                    untuk bulan <?php echo $lastMonthName ?>!
+                </p>
+
+                <p class="modal-congrats-detail">
+                    Dengan setoran KO sebanyak:
+                    <br><b><?php echo number_format($data2['total_ko'], 0, ',', '.'); ?></b> Setoran!
+                </p>
+            </div>
+
+            <!-- BUTTON CONTROL -->
+            <button class="slide-btn prev-btn">❮</button>
+            <button class="slide-btn next-btn">❯</button>
 
             <div class="modal-decor-bottom"></div>
 
@@ -676,6 +754,64 @@
 	}
 </script>
 
+<!-- Carousel Modal -->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+
+		var slides = document.querySelectorAll(".slide");
+		var current = 0;
+		var autoSlide;
+
+		function showSlide(index) {
+			slides.forEach(function(s, i) {
+				s.classList.remove("active");
+			});
+			slides[index].classList.add("active");
+		}
+
+		function nextSlide() {
+			current = (current + 1) % slides.length;
+			showSlide(current);
+		}
+
+		function prevSlide() {
+			current = (current - 1 + slides.length) % slides.length;
+			showSlide(current);
+		}
+
+		document.querySelector(".next-btn").onclick = function() {
+			nextSlide();
+			resetAutoSlide();
+		};
+
+		document.querySelector(".prev-btn").onclick = function() {
+			prevSlide();
+			resetAutoSlide();
+		};
+
+		function startAutoSlide() {
+			autoSlide = setInterval(nextSlide, 5000);
+		}
+
+		function resetAutoSlide() {
+			clearInterval(autoSlide);
+			startAutoSlide();
+		}
+
+		// Saat modal dibuka → mulai auto-slide
+		$('#modalCongrats').on('shown.bs.modal', function () {
+			current = 0;
+			showSlide(current);
+			startAutoSlide();
+		});
+
+		// Saat modal ditutup → stop auto-slide
+		$('#modalCongrats').on('hidden.bs.modal', function () {
+			clearInterval(autoSlide);
+		});
+
+	});
+</script>
 
 <script>
 	$(document).ready(function() {

@@ -8,7 +8,7 @@
 	$username	= executeScalar("select checker_code from checker where checker_id = '".$_GET['id']."'");
 	$password	= executeScalar("select checker_pass from checker where checker_id = '".$_GET['id']."'");
 	$photoUrlChecker	= executeScalar("select photo from checker where checker_id = '".$_GET['id']."'");
-	$firstWeighing = executeScalar("SELECT MIN(date_in) FROM weighing WHERE checker_id = '".$_GET['id']."'");
+	$firstWeighing = executeScalar("SELECT MIN(ko_date) FROM ko WHERE receiver_id = '".$_GET['id']."'");
 
 	function headScript(){
 		$headScript=file_get_contents("headScript.html");
@@ -301,17 +301,17 @@
 									<div class="achievement-badge-head-wrapper">
 										<?php
 												$idChecker = $_GET['id'];
-												$tonase = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
+												$ko = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE receiver_id = '".$idChecker."'");
 
 												// Tentukan level & batas maksimal
 												// LEVEL CHECK
-												if ($tonase > 25000) {
+												if ($ko > 1000) {
 													$level = "Platinum";
 													$color = "linear-gradient(45deg, #3d3d3d, #666666)";
-												} elseif ($tonase > 15000) {
+												} elseif ($ko > 500) {
 													$level = "Gold";
 													$color = "linear-gradient(45deg, #ffd700, #ffbf00)";
-												} elseif ($tonase > 10000) {
+												} elseif ($ko > 250) {
 													$level = "Silver";
 													$color = "linear-gradient(45deg, #c0c0c0, #e0e0e0)";
 												} else {
@@ -320,12 +320,12 @@
 												}
 
 												// PROGRESS
-												// tonase di bawah 25000 → pakai tonase asli
-												// tonase lebih dari 25000 → stop di 25000 (MAX)
-												$progressValue = ($tonase > 25000) ? 25000 : $tonase;
+												// ko di bawah 1000 → pakai ko asli
+												// ko lebih dari 1000 → stop di 1000 (MAX)
+												$progressValue = ($ko > 1000) ? 1000 : $ko;
 
 												// Biar progress bar terlihat proporsional, ubah ke persen
-												$progressPercent = ($progressValue / 25000) * 100;
+												$progressPercent = ($progressValue / 1000) * 100;
 
 											?>
 										<?php if ($level == "Basic") { ?>
@@ -384,61 +384,6 @@
 														Data dari <?php echo date("d M Y", strtotime($firstWeighing)); ?> - Sekarang
 													</p>
 												</div><br>
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Timbang Kendaraan
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$weighingCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."'");
-															$weighingCount = number_format($weighingCount, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $weighingCount . " Kendaraan"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Tonase Terbayar
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$tonasePayCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCount = number_format($tonasePayCount, 0, ',', '.');
-															$tonasePayCountCost = executeScalar("SELECT SUM(cost_tonase) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCountCost = number_format($tonasePayCountCost, 0, ',', '.');
-															$tonasePayCountWeight = executeScalar("SELECT SUM(netto) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCountWeight = number_format($tonasePayCountWeight, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $tonasePayCountCost; ?>" disabled>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCountWeight . " Kg"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Mitra Terbayar
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$mitraPayLunas = executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayLunas = number_format($mitraPayLunas, 0, ',', '.');
-															$mitraPayCost = executeScalar("SELECT SUM(cost) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayCost = number_format($mitraPayCost, 0, ',', '.');
-															$mitraPayWeight = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayWeight = number_format($mitraPayWeight, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $mitraPayCost;?>" disabled>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayWeight . " Kg"; ?>" disabled>
-													</div>
-												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
@@ -447,11 +392,13 @@
 															Setoran Laporan KO
 														</label>
 														<?php 
-															$idChecker = $_GET['id'];
-															$reportKO = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE cashier_id = '".$idChecker."'");
+															$reportKO = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE receiver_id = '".$idChecker."'");
 															$reportKO = number_format($reportKO, 0, ',', '.');
+															$reportKOCost = executeScalar("SELECT SUM(ko_total) FROM ko WHERE receiver_id = '".$idChecker."'");
+															$reportKOCost = number_format($reportKOCost, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKO . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $reportKO . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo "Rp " . $reportKOCost; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -462,26 +409,13 @@
 															Setoran Laporan KO Mitra
 														</label>
 														<?php 
-															$idChecker = $_GET['id'];
-															$reportKOM = executeScalar("SELECT COUNT(ko_id) FROM ko_mitra WHERE cashier_id = '".$idChecker."'");
+															$reportKOM = executeScalar("SELECT COUNT(ko_id) FROM ko_mitra WHERE receiver_id = '".$idChecker."'");
 															$reportKOM = number_format($reportKOM, 0, ',', '.');
+															$reportKOMCost = executeScalar("SELECT SUM(ko_total) FROM ko_mitra WHERE receiver_id = '".$idChecker."'");
+															$reportKOMCost = number_format($reportKOMCost, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKOM . " Setoran"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Revisi
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$revision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE applicant = '".$idChecker."'");
-															$revision = number_format($revision, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $revision . " Pengajuan Revisi"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $reportKOM . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo "Rp " . $reportKOMCost; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -509,64 +443,6 @@
 														Data ini reset setiap bulan
 													</p>
 												</div><br>
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Timbang Kendaraan
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$monthYearNow = date("Y-m");
-															$weighingCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_in LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."'");
-															$weighingCount = number_format($weighingCount, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $weighingCount . " Kendaraan"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Tonase Terbayar
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$monthYearNow = date("Y-m");
-															$tonasePayCount = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCount = number_format($tonasePayCount, 0, ',', '.');
-															$tonasePayCountCost = executeScalar("SELECT SUM(cost_tonase) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCountCost = number_format($tonasePayCountCost, 0, ',', '.');
-															$tonasePayCountWeight = executeScalar("SELECT SUM(netto) FROM weighing WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$tonasePayCountWeight = number_format($tonasePayCountWeight, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $tonasePayCount . " Nota Lunas"; ?>" disabled>
-														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo "Rp " . $tonasePayCountCost; ?>" disabled>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $tonasePayCountWeight . " Kg"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Mitra Terbayar
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$monthYearNow = date("Y-m");
-															$mitraPayLunas = executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayLunas = number_format($mitraPayLunas, 0, ',', '.');
-															$mitraPayCost = executeScalar("SELECT SUM(cost) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayCost = number_format($mitraPayCost, 0, ',', '.');
-															$mitraPayWeight = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE date_pay LIKE '".$monthYearNow."%' AND checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-															$mitraPayWeight = number_format($mitraPayWeight, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" id="name" style="margin-bottom: 5px;" name="name" value="<?php echo $mitraPayLunas . " Nota Lunas"; ?>" disabled>
-														<input type="text" class="form-control" id="name" style="margin-bottom: 5px;" name="name" value="<?php echo "Rp " . $mitraPayCost; ?>" disabled>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $mitraPayWeight . " Kg"; ?>" disabled>
-													</div>
-												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
@@ -575,12 +451,14 @@
 															Setoran Laporan KO
 														</label>
 														<?php 
-															$idChecker = $_GET['id'];
 															$monthYearNow = date("Y-m");
-															$reportKO = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE ko_date LIKE '".$monthYearNow."%' AND cashier_id = '".$idChecker."'");
-															$reportKO = number_format($reportKO, 0, ',', '.');
+															$reportKOMonthly = executeScalar("SELECT COUNT(ko_id) FROM ko WHERE ko_date LIKE '".$monthYearNow."%' AND receiver_id = '".$idChecker."'");
+															$reportKOMonthly = number_format($reportKOMonthly, 0, ',', '.');
+															$reportKOMonthlyCost = executeScalar("SELECT SUM(ko_total) FROM ko WHERE ko_date LIKE '".$monthYearNow."%' AND receiver_id = '".$idChecker."'");
+															$reportKOMonthlyCost = number_format($reportKOMonthlyCost, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKO . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $reportKOMonthly . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo "Rp " . $reportKOMonthlyCost; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -591,28 +469,14 @@
 															Setoran Laporan KO Mitra
 														</label>
 														<?php 
-															$idChecker = $_GET['id'];
 															$monthYearNow = date("Y-m");
-															$reportKOM = executeScalar("SELECT COUNT(ko_id) FROM ko_mitra WHERE ko_date LIKE '".$monthYearNow."%' AND cashier_id = '".$idChecker."'");
-															$reportKOM = number_format($reportKOM, 0, ',', '.');
+															$reportKOMMonthly = executeScalar("SELECT COUNT(ko_id) FROM ko_mitra WHERE ko_date LIKE '".$monthYearNow."%' AND receiver_id = '".$idChecker."'");
+															$reportKOMMonthly = number_format($reportKOMMonthly, 0, ',', '.');
+															$reportKOMMonthlyCost = executeScalar("SELECT SUM(ko_total) FROM ko_mitra WHERE ko_date LIKE '".$monthYearNow."%' AND receiver_id = '".$idChecker."'");
+															$reportKOMMonthlyCost = number_format($reportKOMMonthlyCost, 0, ',', '.');
 														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $reportKOM . " Setoran"; ?>" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="name">
-															Revisi
-														</label>
-														<?php 
-															$idChecker = $_GET['id'];
-															$monthYearNow = date("Y-m");
-															$revision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE date LIKE '".$monthYearNow."%' AND applicant = '".$idChecker."'");
-															$revision = number_format($revision, 0, ',', '.');
-														?>
-														<input type="text" class="form-control" id="name" name="name" value="<?php echo $revision . " Pengajuan Revisi"; ?>" disabled>
+														<input type="text" class="form-control" style="margin-bottom: 5px;" id="name" name="name" value="<?php echo $reportKOMMonthly . " Setoran"; ?>" disabled>
+														<input type="text" class="form-control" id="name" name="name" value="<?php echo "Rp " . $reportKOMMonthlyCost; ?>" disabled>
 													</div>
 												</div>
 											</div>
@@ -633,35 +497,6 @@
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog" style="padding: 5px 15px 0px;">
 									<div class="achievement-box">
-										<?php
-											$idChecker = $_GET['id'];
-											$tonase = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE checker_id = '".$idChecker."' AND weighing_sts = 'Lunas'");
-
-											// Tentukan level & batas maksimal
-											// LEVEL CHECK
-											if ($tonase > 25000) {
-												$level = "Platinum";
-												$color = "linear-gradient(45deg, #3d3d3d, #666666)";
-											} elseif ($tonase > 15000) {
-												$level = "Gold";
-												$color = "linear-gradient(45deg, #ffd700, #ffbf00)";
-											} elseif ($tonase > 10000) {
-												$level = "Silver";
-												$color = "linear-gradient(45deg, #c0c0c0, #e0e0e0)";
-											} else {
-												$level = "Basic";
-												$color = "linear-gradient(45deg, #b87333, #cd7f32)"; // bronze
-											}
-
-											// PROGRESS
-											// tonase di bawah 25000 → pakai tonase asli
-											// tonase lebih dari 25000 → stop di 25000 (MAX)
-											$progressValue = ($tonase > 25000) ? 25000 : $tonase;
-
-											// Biar progress bar terlihat proporsional, ubah ke persen
-											$progressPercent = ($progressValue / 25000) * 100;
-
-										?>
 
 										<!-- BADGE LEVEL SAAT INI -->
 										<div class="achievement-box">
@@ -711,8 +546,8 @@
 											</div>
 
 											<div class="achievement-tonase">
-												Total Tonase Terbayar:  
-												<b><?php echo number_format($tonase,0,',','.'); ?></b> Nota Lunas
+												Total Setoran KO:  
+												<b><?php echo number_format($ko,0,',','.'); ?></b> Setoran
 											</div>
 
 										</div>
@@ -735,9 +570,9 @@
 											<!-- LABEL BATAS -->
 											<div class="level-line">
 												<span>Basic (0)</span>
-												<span>Silver (10.000)</span>
-												<span>Gold (15.000)</span>
-												<span>Platinum (25.000+)</span>
+												<span>Silver (250)</span>
+												<span>Gold (500)</span>
+												<span>Platinum (1000+)</span>
 											</div>
 										</div>
 									</div>
@@ -793,7 +628,7 @@
 													</div>
 
 													<div class="card-footer-btn">
-														<a href="achievement_detail.php?id=<?php echo $data['checker_id']; ?>" 
+														<a href="achievement_detail2.php?id=<?php echo $data['checker_id']; ?>" 
 														class="btn btn-primary btn-sm btn-block">
 															<i class="fa fa-eye"></i> Lihat Detail
 														</a>
