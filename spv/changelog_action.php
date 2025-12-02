@@ -30,6 +30,9 @@
         $desc = trim($_POST[$field]);
         if ($desc == "") continue;
 
+        // Escape petik & karakter berbahaya
+        $desc = mysql_real_escape_string($desc);
+
         $query2 = mysql_query("
             INSERT INTO update_desc_timbangan (update_timbangan_id, description)
             VALUES ('$update_id', '$desc')
