@@ -22,36 +22,6 @@
 
 		<?php echo headScript(); ?>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		<script src="../js/jquery.min.js"></script>
-		<!-- input number -->
-		<link href="../js/touchpin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
-		<script src="../js/touchpin/jquery.bootstrap-touchspin.js"></script>
-		<script>
-			/* hide all elements & show preloader*/
-			document.documentElement.className += 'js';
-
-			/* display variabel */
-			var alertLoadProcess = "<span class='alert alert-info' onclick='clearNotif()'><i class='fa fa-spinner fa-spin'></i> Loading...</span>";
-			//fungsi input hanya angka
-			function isNumber(event) {
-			if (event) {
-				var charCode = (event.which) ? event.which : event.keyCode;
-				if (charCode != 190 && charCode > 31 && 
-				(charCode < 48 || charCode > 57) && 
-				(charCode < 96 || charCode > 105) && 
-				(charCode < 37 || charCode > 40) && 
-					charCode != 110 && charCode != 8 && charCode != 46 )
-				return false;
-			}
-			return true;
-			}
-		</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -70,72 +40,50 @@
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog">
 
-									<!-- Versi 1.3.0 -->
-									<div class="panel panel-info">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
-													<i class="fa fa-plus"></i> Version 1.3.0 - 21 November 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver130" class="panel-collapse collapse in">
-											<div class="panel-body">
-												<h5># Penambahan Fitur</h5>
-												<ul>
-													<li>🌭 Menambahkan halaman profil untuk update akun</li>
-													<li>⚙️ Menambahkan badge pencapaian untuk melihat kemajuan operasional kasir pada halaman profil</li>
-												</ul>
-											</div>
-										</div>
+								<?php
+								    $first = true;
+									$query = mysql_query("SELECT * FROM update_timbangan ORDER BY id DESC");
+
+									while($data = mysql_fetch_array($query)){
+										$update_id = $data['id'];
+										$semantic = $data['semantic'];
+										$version = $data['version'];
+										$title = $data['title'];
+										$date = date("d F Y", strtotime($data['date']));
+										$panelClass = $semantic == 'major' ? 'panel-success' :
+														($semantic == 'minor' ? 'panel-info' : 'panel-default');
+									?>
+
+								<div class="panel <?php echo $panelClass; ?>">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver<?= $update_id ?>">
+												<i class="fa fa-plus"></i> <?= "Version $version - $date" ?>
+											</a>
+										</h4>
 									</div>
 
-									<!-- Versi 1.2.1 -->
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
-													<i class="fa fa-plus"></i> Version 1.2.1 - 04 November 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver121" class="panel-collapse collapse">
-											<div class="panel-body">
-												<h5># Bug Fixing</h5>
-												<ul>
-													<li>🐞 Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</li>
-													<li>⚙️ Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan </li>
-													<li>🛠️ Penambahaan alert informasi saat pertama login</li>
-												</ul>
-											</div>
+									<div id="ver<?= $update_id ?>" class="panel-collapse collapse <?= $first ? 'in' : '' ?>"">
+										<div class="panel-body">
+											<h5># <?= $title; ?></h5>
+											<ul>
+												<?php
+													$desc_query = mysql_query("SELECT * FROM update_desc_timbangan WHERE update_timbangan_id = '$update_id'");
+
+													while($desc_data = mysql_fetch_array($desc_query)){
+														$descriptions = $desc_data['description'];
+														echo "<li>" . $descriptions . "</li>";
+													}
+												?>
+											</ul>
 										</div>
 									</div>
-									
-									<!-- Versi 1.2.0 -->
-									<div class="panel panel-info">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver120">
-													<i class="fa fa-plus"></i> Version 1.2.0 - 31 Oktober 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver120" class="panel-collapse collapse">
-											<div class="panel-body">
-												<h5># Penambahan & Optimalisasi Fitur</h5>
-												<ul>
-													<li>✨ Sistem versioning timbangan 1.2.0</li>
-													<li>🐞 Sedikit perubahan tampilan pada nota timbang, tagihan, mitra, dan hasil timbang</li>
-													<li>⚙️ Optimalisasi pada fitur 'Data Belum Dicek' & 'Data Sudah Dicek'</li>
-													<li>🦴 Fixing bug pada fitur 'Listing Data'</li>
-													<li>🎊 Sedikit perubahan button (Tombol Aksi) pada fitur 'Pembayaran & Setoran'</li>
-													<li>🎈 Penambahan fitur log update (changelog)</li>
-													<li>⏰ Penambahan fitur jam disamping nama akun</li>
-													<li>🙌 Fixing bug notification pada icon "bell" disamping nama akun pada saat ada pembaruan sistem</li>
-												</ul>
-											</div>
-										</div>
-									</div>
+								</div>
+
+								<?php 
+									$first = false;
+								} ?>
+
 								</div>
 							</div>
 						</div>

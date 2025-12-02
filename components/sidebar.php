@@ -537,15 +537,12 @@
 								<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php']); ?>"><a href="#"><i class="fa fa-balance-scale fa-fw"></i> Transaksi Timbang <span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_transaction.php']); ?>" href="report_transaction.php"><i class="fa fa-adjust fa-fw"></i> Timbang Harian</a></li>
-										<li><a class="<?= isActive(['report_outstanding.php']); ?>" href="report_outstanding.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding Timbang</td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_outstanding.php']); ?>" href="report_outstanding.php" style="display:flex; align-items:center;">
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding Timbang</span>
+											</a>
+										</li>
 										<li><a class="<?= isActive(['report_cancel.php']); ?>" href="report_cancel.php"><i class="fa fa-close fa-fw"></i> Timbang Batal</a></li>
 									</ul>
 								</li>
@@ -563,15 +560,16 @@
 											</table>
 										</a></li> -->
 										<li><a class="<?= isActive(['report_revenue_unpaid.php']); ?>" href="report_revenue_unpaid.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar</a></li>
-										<li><a class="<?= isActive(['report_revenue_unpaid_merchant.php']); ?>" href="report_revenue_unpaid_merchant.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Belum Terbayar Per Pedagang</td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_unpaid_merchant.php']); ?>" 
+											href="report_revenue_unpaid_merchant.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Belum Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 
@@ -596,15 +594,16 @@
 											</table>
 										</a></li> -->
 										<li><a class="<?= isActive(['report_revenue_unpaid_mitra.php']); ?>" href="report_revenue_unpaid_mitra.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar</a></li>
-										<li><a class="<?= isActive(['report_revenue_unpaid_merchant_mitra.php']); ?>" href="report_revenue_unpaid_merchant_mitra.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Belum Terbayar Per Pedagang</td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_unpaid_merchant_mitra.php']); ?>"
+											href="report_revenue_unpaid_merchant_mitra.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Belum Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 
@@ -628,24 +627,27 @@
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_kokm.php']); ?>" href="report_kokm.php"><i class="fa fa-sticky-note-o fa-fw"></i> KO & KM Tonase</a></li>
 										<li><a class="<?= isActive(['report_kokm_mitra.php']); ?>" href="report_kokm_mitra.php"><i class="fa fa-sticky-note-o fa-fw"></i> KO & KM Mitra</a></li>
-										<li><a class="<?= isActive(['report_outstanding_ko.php']); ?>" href="report_outstanding_ko.php">
-										<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding KO & KM Tonase</td>
-												</tr>
-											</table>
-										</a></li>
-										<li><a class="<?= isActive(['report_outstanding_ko_mitra.php']); ?>" href="report_outstanding_ko_mitra.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding KO & KM Mitra</td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_outstanding_ko.php']); ?>"
+											href="report_outstanding_ko.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding KO & KM Tonase</span>
+
+											</a>
+										</li>
+
+										<li>
+											<a class="<?= isActive(['report_outstanding_ko_mitra.php']); ?>"
+											href="report_outstanding_ko_mitra.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding KO & KM Mitra</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 							</ul>

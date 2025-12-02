@@ -1,3 +1,14 @@
+<?php
+    // Mengambil data versi terbaru dari database
+
+    $version_query = mysql_query("SELECT version, date FROM update_timbangan ORDER BY id DESC LIMIT 1");
+    $version_data = mysql_fetch_array($version_query);
+    $latestDate = $version_data['date'];          // format YYYY-MM-DD
+    $today      = date("Y-m-d");
+    // Hitung selisih hari (2hari)
+    $diff = (strtotime($today) - strtotime($latestDate)) / (60 * 60 * 24);
+?>    
+
 <style>
     /* Style untuk tombol */
     .btn-canvas {
@@ -22,7 +33,7 @@
         display: block;
         position: absolute;
         top: -5px;
-        right: 0;
+        right: -10px;
         background-color: red;
         color: white;
         border-radius: 50%;
@@ -102,7 +113,13 @@
 <!-- Tombol untuk memunculkan offcanvas -->
 <button class="btn btn-canvas btn-primary" onclick="toggleOffcanvas()">
     <i class="fa fa-bell"></i>
-    <!-- <div class="notification">3</div> -->
+    <?php 
+        if (!empty($version_data['version']) && $diff <= 2) { ?>
+            <div class="notification">
+                New
+            </div>
+        <?php }
+    ?>
 </button>
 
 <!-- Offcanvas -->
@@ -112,30 +129,40 @@
         <button class="close-btn" onclick="toggleOffcanvas()"><i class="fa fa-close"></i></button>
     </div>
     <div class="offcanvas-body">
-        <!-- Jika tidak ada pembaruan sistem -->
-        <div class="box-update">
-            <img src="img/update.png" alt="Update Illustration" width="210px">
-            <h3 class="text-primary text-uppercase"><b>Tidak ada pembaruan sistem</b></h3>
-        </div>
-
-        <!-- Jika ada pembaruan sistem -->
-        <!-- <table>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan</td>
-            </tr>
-            <tr>
-                <td style="font-size:28px; padding-right: 20px;"> • </td>
-                <td>Penambahaan alert informasi saat pertama login</td>
-            </tr>
-        </table> -->
+        <?php 
+        if (!empty($version_data['version']) && $diff <= 2) { ?>
+            <!-- Jika ada pembaruan sistem -->
+            <table>
+                <?php
+                    // Menampilkan daftar pembaruan sistem terbaru
+                    $updates_query = mysql_query("SELECT description FROM update_desc_timbangan WHERE update_timbangan_id = (SELECT id FROM update_timbangan ORDER BY id DESC LIMIT 1)");
+                    while ($update = mysql_fetch_array($updates_query)) {
+                        echo "
+                            <tr>
+                                <td style='font-size:28px; padding-right: 20px;'> • </td>
+                                <td>" . $update['description'] . "</td>
+                            </tr>
+                        ";
+                    }
+                ?>
+            </table>
+        <?php } else { ?>
+            <!-- Jika tidak ada pembaruan sistem -->
+            <div class="box-update">
+                <img src="../img/update.png" alt="Update Illustration" width="210px">
+                <h3 class="text-primary text-uppercase"><b>Tidak ada pembaruan sistem</b></h3>
+            </div>
+        <?php } ?>
     </div>
     <div class="offcanvas-footer" style="margin-top: 30px; text-align: center;">
-        <p class="text-primary text-uppercase text-center"><b>Version 1.3.0</b></p>
+        <p class="text-primary text-uppercase text-center">
+            <b>
+                Version
+                <?php
+                    echo $version_data['version'];
+                ?>
+            </b>
+        </p>
     </div>
 </div>
 

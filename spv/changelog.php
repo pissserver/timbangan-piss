@@ -21,44 +21,82 @@
 		<title>Update Log | PISS</title>
 
 		<?php echo headScript(); ?>
-
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		<script src="../js/jquery.min.js"></script>
-		<!-- input number -->
-		<link href="../js/touchpin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
-		<script src="../js/touchpin/jquery.bootstrap-touchspin.js"></script>
-		<script>
-			/* hide all elements & show preloader*/
-			document.documentElement.className += 'js';
-
-			/* display variabel */
-			var alertLoadProcess = "<span class='alert alert-info' onclick='clearNotif()'><i class='fa fa-spinner fa-spin'></i> Loading...</span>";
-			//fungsi input hanya angka
-			function isNumber(event) {
-			if (event) {
-				var charCode = (event.which) ? event.which : event.keyCode;
-				if (charCode != 190 && charCode > 31 && 
-				(charCode < 48 || charCode > 57) && 
-				(charCode < 96 || charCode > 105) && 
-				(charCode < 37 || charCode > 40) && 
-					charCode != 110 && charCode != 8 && charCode != 46 )
-				return false;
-			}
-			return true;
-			}
-		</script>
 	</head>
 	<body>
 		<div id="wrapper">
 		<?php include "components/sidebar.php" ?>
 
 			<div id="page-wrapper">
-				<br><br><br><br>
+				
+				<?php 
+					$username	= $_SESSION['username'];
+					$privileges = executeScalar("SELECT privileges FROM admin WHERE username = '$username'");
+					if ($privileges == 'developer') { ?>
+
+					<div class="row">
+						<div class="col-lg-12">
+							<br><br><br><br>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<i class="fa fa-plus fa-fw"></i> Buat Update Log / Changelog
+								</div>
+								<div class="panel-body">
+									<form class="form-horizontal" id="formUpdateLog" name = "formUpdateLog" method="POST" action="changelog_action.php">
+										<fieldset>
+											<div class="form-group" style="padding:10px; margin-top:-10px; margin-bottom:0px;">
+												<label for="semantic">Semantic Versioning</label>
+												<select  name="semantic" id="semantic" class="form-control" required>
+													<option value="" selected>Pilih Semantic Versioning</option>
+													<option value="major">Major (Format Perubahan 1.x.x)</option>
+													<option value="minor">Minor (Format Perubahan x.1.x)</option>
+													<option value="patch">Patch (Format Perubahan x.x.1)</option>
+												</select>                  
+											</div>
+											<div class="form-group" style="padding:10px; margin-top: -5px; margin-bottom:0px;">
+												<label for="version">Version</label>
+												<input type="text" class="form-control" id="version" name="version" placeholder="Contoh: 1.0.0" required>                  
+											</div>
+											<div class="form-group" style="padding:10px; margin-top: -5px; margin-bottom:0px;">
+												<label for="title">Title Update</label>
+												<input type="text" class="form-control" id="title" name="title" placeholder="Masukkan Title Update" required>                  
+											</div>
+											<div class="form-group" style="padding:10px; margin-top: -5px; margin-bottom:0px;">
+												<label for="date">Tanggal Update</label>
+												<input type="date" class="form-control" id="date" name="date" placeholder="Tanggal Update" required>                  
+											</div>
+											<div class="form-group" style="padding:10px; margin-top: -5px; margin-bottom:0px;">
+												<label for="lots">Banyak Deskripsi Update</label>
+												<input type="number" class="form-control" id="lots" name="lots" placeholder="Banyak Deskripsi Update" required>
+											</div>
+
+											<!-- Tempat untuk input deskripsi otomatis -->
+											<div id="desc-wrapper"></div>
+
+											<div class="form-group" style="padding:10px; margin-bottom:0px;">
+												<center><button type="submit" class="btn btn-block btn-primary"><i class="fa fa-floppy-o fa-fw"></i>&nbsp;Simpan</button></center>
+											</div>
+										</fieldset>
+									</form> 
+								</div>
+							</div>
+							<!-- <div class="panel panel-primary">
+								<div class="panel-heading">
+									<i class="fa fa-truck fa-fw"></i> Print Data Kir Kendaraan
+								</div>
+								<div class="panel-body">
+									<form action="htmltopdf/reportKir.php" target="_blank" class="form-horizontal" id="formTransportation" name = "formTransportation" method="POST">
+										<div class="form-group" style="padding:10px; margin-bottom:-10px;">
+											<center><button type="submit" class="btn btn-block btn-primary">Print</button></center>
+										</div>
+									</form> 
+								</div>
+							</div> -->
+						</div>
+					</div>
+				<?php } elseif ($privileges == 'manager') { ?>
+					<br><br><br><br>
+				<?php } ?>
+				
 				<div class="row">
 					<div class="col-md-12">
 						<div class="panel panel-primary">
@@ -70,72 +108,50 @@
 							<div class="panel-body">
 								<div class="panel-group" id="accordionChangelog">
 
-									<!-- Versi 1.3.0 -->
-									<div class="panel panel-info">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
-													<i class="fa fa-plus"></i> Version 1.3.0 - 21 November 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver130" class="panel-collapse collapse in">
-											<div class="panel-body">
-												<h5># Penambahan Fitur</h5>
-												<ul>
-													<li>🌭 Menambahkan halaman profil untuk update akun</li>
-													<li>⚙️ Menambahkan badge pencapaian untuk melihat kemajuan operasional kasir pada halaman profil</li>
-												</ul>
-											</div>
-										</div>
+								<?php
+								    $first = true;
+									$query = mysql_query("SELECT * FROM update_timbangan ORDER BY id DESC");
+
+									while($data = mysql_fetch_array($query)){
+										$update_id = $data['id'];
+										$semantic = $data['semantic'];
+										$version = $data['version'];
+										$title = $data['title'];
+										$date = date("d F Y", strtotime($data['date']));
+										$panelClass = $semantic == 'major' ? 'panel-success' :
+														($semantic == 'minor' ? 'panel-info' : 'panel-default');
+									?>
+
+								<div class="panel <?php echo $panelClass; ?>">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver<?= $update_id ?>">
+												<i class="fa fa-plus"></i> <?= "Version $version - $date" ?>
+											</a>
+										</h4>
 									</div>
 
-									<!-- Versi 1.2.1 -->
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver121">
-													<i class="fa fa-plus"></i> Version 1.2.1 - 04 November 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver121" class="panel-collapse collapse">
-											<div class="panel-body">
-												<h5># Bug Fixing</h5>
-												<ul>
-													<li>🐞 Pembetulan bug saat data telah dipecah, sekarang pedagang utama tidak bisa diganti</li>
-													<li>⚙️ Pengoptimalan input mitra, sekarang input mitra menjadi lebih aman dari kesalahan. Karena mitra yang ditampilkan sesuai dengan jenis pedagang yang bersangkutan </li>
-													<li>🛠️ Penambahaan alert informasi saat pertama login</li>
-												</ul>
-											</div>
+									<div id="ver<?= $update_id ?>" class="panel-collapse collapse <?= $first ? 'in' : '' ?>"">
+										<div class="panel-body">
+											<h5># <?= $title; ?></h5>
+											<ul>
+												<?php
+													$desc_query = mysql_query("SELECT * FROM update_desc_timbangan WHERE update_timbangan_id = '$update_id'");
+
+													while($desc_data = mysql_fetch_array($desc_query)){
+														$descriptions = $desc_data['description'];
+														echo "<li>" . $descriptions . "</li>";
+													}
+												?>
+											</ul>
 										</div>
 									</div>
-									
-									<!-- Versi 1.2.0 -->
-									<div class="panel panel-info">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordionChangelog" href="#ver120">
-													<i class="fa fa-plus"></i> Version 1.2.0 - 31 Oktober 2025
-												</a>
-											</h4>
-										</div>
-										<div id="ver120" class="panel-collapse collapse">
-											<div class="panel-body">
-												<h5># Penambahan & Optimalisasi Fitur</h5>
-												<ul>
-													<li>✨ Sistem versioning timbangan 1.2.0</li>
-													<li>🐞 Sedikit perubahan tampilan pada nota timbang, tagihan, mitra, dan hasil timbang</li>
-													<li>⚙️ Optimalisasi pada fitur 'Data Belum Dicek' & 'Data Sudah Dicek'</li>
-													<li>🦴 Fixing bug pada fitur 'Listing Data'</li>
-													<li>🎊 Sedikit perubahan button (Tombol Aksi) pada fitur 'Pembayaran & Setoran'</li>
-													<li>🎈 Penambahan fitur log update (changelog)</li>
-													<li>⏰ Penambahan fitur jam disamping nama akun</li>
-													<li>🙌 Fixing bug notification pada icon "bell" disamping nama akun pada saat ada pembaruan sistem</li>
-												</ul>
-											</div>
-										</div>
-									</div>
+								</div>
+
+								<?php 
+									$first = false;
+								} ?>
+
 								</div>
 							</div>
 						</div>
@@ -144,6 +160,27 @@
 			</div>
 			<!-- End Main Content -->
 		</div>
+
+		<!-- Input Show By Input Lots Of Description -->
+		<script>
+			$(document).ready(function(){
+				$("#lots").on("input", function(){
+					var lots = $(this).val();
+					var descWrapper = $("#desc-wrapper");
+					descWrapper.empty(); // Clear previous inputs
+
+					for(var i=1; i<=lots; i++){
+						var descInput = `
+							<div class="form-group" style="padding:10px; margin-top: -5px; margin-bottom:0px;">
+								<label for="descriptions_`+i+`">Deskripsi Update `+i+`</label>
+								<input type="text" class="form-control" id="descriptions_`+i+`" name="descriptions_`+i+`" placeholder="Masukkan Deskripsi Update `+i+`" required>                  
+							</div>
+						`;
+						descWrapper.append(descInput);
+					}
+				});
+			});
+		</script>
 
 		<!-- jQuery -->
 		<script src="../js/jquery.js"></script>
@@ -162,5 +199,25 @@
 				})
 			});
 		</script>
+
+		<!-- Sweet Alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+		<?php
+			// Menampilkan SweetAlert jika session success ada dan bernilai true
+			if (isset($_SESSION['success'])) {
+				$title = $_SESSION['title'];
+				$message = $_SESSION['message'];
+				$icon = $_SESSION['success'] ? 'success' : 'error';
+				echo "<script>
+					Swal.fire({
+						title: '$title',
+						text: '$message',
+						icon: '$icon'
+					});
+				</script>";
+				unset($_SESSION['success']);
+				unset($_SESSION['message']);
+			}
+		?>
 	</body>
 </html>

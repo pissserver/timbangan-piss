@@ -281,8 +281,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link rel="icon" href="../img/logo.png">
-		<link rel="shortcut icon" href="../img/logo.png" />
+		<link rel="icon" href="img/logo.png">
+		<link rel="shortcut icon" href="img/logo.png" />
 		<title>Detail Pencapaian | PISS</title>
 
 		<?php echo headScript(); ?>
