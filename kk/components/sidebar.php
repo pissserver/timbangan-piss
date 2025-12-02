@@ -24,6 +24,66 @@
 
 	$greetingMessage = greeting();
 	$photoUrl	= executeScalar("select photo from admin where username = '".$_SESSION['username']."'");
+
+
+	// Trophy Query
+	$monthNames = [
+		'01' => 'Januari',
+		'02' => 'Februari',
+		'03' => 'Maret',
+		'04' => 'April',
+		'05' => 'Mei',
+		'06' => 'Juni',
+		'07' => 'Juli',
+		'08' => 'Agustus',
+		'09' => 'September',
+		'10' => 'Oktober',
+		'11' => 'November',
+		'12' => 'Desember'
+	];
+
+	$month = date('m', strtotime('-1 month'));
+	$year = date('Y', strtotime('-1 month'));
+	$lastMonthName = $monthNames[$month] . " " . $year;
+	$sql = "
+		SELECT 
+			c.checker_name, 
+			c.photo, 
+			COUNT(w.weighing_id) AS total_transactions
+		FROM checker c
+		JOIN weighing w 
+			ON w.checker_id = c.checker_id
+		WHERE 
+			c.status_aktif = '1'
+			AND c.checker_role = 'Cashier'
+			AND w.weighing_sts = 'Lunas'
+			AND DATE_FORMAT(w.date_pay, '%m') = '".$month."'
+			AND DATE_FORMAT(w.date_pay, '%Y') = '".$year."'
+		GROUP BY c.checker_id
+		ORDER BY total_transactions DESC
+		LIMIT 1
+	";
+
+
+	$result = mysql_query($sql);
+	$data = mysql_fetch_assoc($result);
+
+	$sql2 = "SELECT 
+				c.checker_id,
+				c.checker_name, 
+				c.photo,
+				COUNT(k.ko_id) AS total_ko
+			FROM checker c
+			JOIN ko k ON k.receiver_id = c.checker_id
+			WHERE status_aktif = '1' 
+			AND checker_role = 'Checker'
+			AND DATE_FORMAT(k.ko_date, '%m') = '".$month."'
+			AND DATE_FORMAT(k.ko_date, '%Y') = '".$year."'
+			GROUP BY c.checker_id, c.checker_name
+			ORDER BY total_ko DESC
+			LIMIT 1";
+	$result2 = mysql_query($sql2);
+	$data2 = mysql_fetch_assoc($result2);
 ?>
 
 <style>
@@ -55,6 +115,138 @@
 		transition: transform .2s ease-in-out;
 		vertical-align: middle;
 	}
+
+
+	/* Floating Trophy */
+	.floating-trophy {
+		position: fixed;
+		bottom: 25px;
+		right: 25px;
+		width: 65px;
+		height: 65px;
+		background: #ffcc00;
+		color: white;
+		border-radius: 50%;
+		font-size: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+		z-index: 9999;
+		transition: 0.25s ease;
+	}
+
+	/* Hover effect */
+	.floating-trophy:hover {
+		transform: scale(1.15);
+	}
+
+	/* Small floating animation (optional) */
+	.floating-trophy {
+		animation: floatAnim 2.5s ease-in-out infinite;
+	}
+
+	@keyframes floatAnim {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(-8px); }
+	}
+
+	/* Kotak modal elegan */
+	.modal-congrats-box {
+		border-radius: 18px !important;
+		padding: 25px;
+		text-align: center;
+		background: linear-gradient(to bottom right, #ffffff, #d8e4f2ff);
+		border: 2px solid #e0e7ff;
+		box-shadow: 0 0 25px rgba(0,0,0,0.15);
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Foto */
+	.modal-congrats-photo {
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		border: 4px solid #ffd369;
+		box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+		margin-top: 15px;
+	}
+
+	/* Judul */
+	.modal-congrats-title {
+		font-weight: bold;
+		font-size: 24px;
+		color: #333;
+		margin-top: 20px;
+	}
+
+	/* Subjudul */
+	.modal-congrats-sub {
+		font-size: 16px;
+		color: #555;
+		margin-top: 10px;
+	}
+
+	/* Detail */
+	.modal-congrats-detail {
+		font-size: 16px;
+		color: #444;
+		margin-top: 10px;
+	}
+
+	/* Dekorasi atas */
+	.modal-decor-top {
+		width: 100%;
+		height: 8px;
+		background: linear-gradient(to right, #ffb200, #ffe38f, #ffb200);
+		border-radius: 0 0 10px 10px;
+		margin-top: -25px;
+	}
+
+	/* Dekorasi bawah */
+	.modal-decor-bottom {
+		width: 100%;
+		height: 8px;
+		background: linear-gradient(to right, #6ca8ff, #d5e6ff, #6ca8ff);
+		border-radius: 10px 10px 0 0;
+		margin-bottom: -25px;
+	}
+
+	
+	/* Carousel Modal */
+	.slide {
+		display: none;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.slide.active {
+		display: block;
+		opacity: 1;
+	}
+
+	/* Tombol Next Prev */
+	.slide-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(0,0,0,0.4);
+		border: none;
+		color: #fff;
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		cursor: pointer;
+		font-size: 18px;
+		line-height: 35px;
+		text-align: center;
+	}
+
+	.prev-btn { left: 15px; }
+	.next-btn { right: 15px; }
+
 </style>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #428bca;">
@@ -216,15 +408,12 @@
 								<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php']); ?>"><a href="#"><i class="fa fa-balance-scale fa-fw"></i> Laporan Transaksi Timbang<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_transaction.php']); ?>" href="report_transaction.php"><i class="fa fa-adjust fa-fw"></i> Timbang Harian </a></li>
-										<li><a class="<?= isActive(['report_outstanding.php']); ?>" href="report_outstanding.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding Timbang</td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_outstanding.php']); ?>" href="report_outstanding.php" style="display:flex; align-items:center;">
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding Timbang</span>
+											</a>
+										</li>
 										<li><a class="<?= isActive(['report_cancel.php']); ?>" href="report_cancel.php"><i class="fa fa-close fa-fw"></i> Timbang Batal </a></li>
 									</ul>
 								</li>
@@ -232,50 +421,54 @@
 								<li class="<?= isParentActive(['report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php']); ?>"><a href="#"><i class="fa fa-money fa-fw"></i> Laporan Tagihan Tonase<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_revenue.php']); ?>" href="report_revenue.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar </a></li> 
-										<li><a class="<?= isActive(['report_revenue_merchant.php']); ?>" href="report_revenue_merchant.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-check-square fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Terbayar Per Pedagang </td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_merchant.php']); ?>" 
+											href="report_revenue_merchant.php"
+											style="display:flex; align-items:center;">
+											
+												<i class="fa fa-check-square fa-fw"></i>
+												<span style="margin-left:8px;">Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 										<li><a class="<?= isActive(['report_revenue_unpaid.php']); ?>" href="report_revenue_unpaid.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar </a></li>
-										<li><a class="<?= isActive(['report_revenue_unpaid_merchant.php']); ?>" href="report_revenue_unpaid_merchant.php">
-										<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Belum Terbayar Per Pedagang </td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_unpaid_merchant.php']); ?>" 
+											href="report_revenue_unpaid_merchant.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Belum Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 
 								<li class="<?= isParentActive(['report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php']); ?>"><a href="#"><i class="fa fa-money fa-fw"></i> Laporan Tagihan Mitra<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_revenue_mitra.php']); ?>" href="report_revenue_mitra.php"><i class="fa fa fa-check-square fa-fw"></i> Terbayar </a></li> 
-										<li><a class="<?= isActive(['report_revenue_merchant_mitra.php']); ?>" href="report_revenue_merchant_mitra.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-check-square fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Terbayar Per Pedagang </td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_merchant_mitra.php']); ?>"
+											href="report_revenue_merchant_mitra.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-check-square fa-fw"></i>
+												<span style="margin-left:8px;">Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 										<li><a class="<?= isActive(['report_revenue_unpaid_mitra.php']); ?>" href="report_revenue_unpaid_mitra.php"><i class="fa fa-clock-o fa-fw"></i> Belum Terbayar </a></li>
-										<li><a class="<?= isActive(['report_revenue_unpaid_merchant_mitra.php']); ?>" href="report_revenue_unpaid_merchant_mitra.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Belum Terbayar Per Pedagang </td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_revenue_unpaid_merchant_mitra.php']); ?>"
+											href="report_revenue_unpaid_merchant_mitra.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Belum Terbayar Per Pedagang</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 
@@ -318,24 +511,27 @@
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_kokm.php']); ?>" href="report_kokm.php"><i class="fa fa-sticky-note-o fa-fw"></i> KO & KM Tonase </a></li>
 										<li><a class="<?= isActive(['report_kokm_mitra.php']); ?>" href="report_kokm_mitra.php"><i class="fa fa-sticky-note-o fa-fw"></i> KO & KM Mitra </a></li>
-										<li><a class="<?= isActive(['report_outstanding_ko.php']); ?>" href="report_outstanding_ko.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding KO & KM Tonase </td>
-												</tr>
-											</table>
-										</a></li>
-										<li><a class="<?= isActive(['report_outstanding_ko_mitra.php']); ?>" href="report_outstanding_ko_mitra.php">
-											<table>
-												<tr>
-													<td><i class="fa fa-clock-o fa-fw"></i></td>
-													<td>&nbsp;</td>
-													<td>Outstanding KO & KM Mitra </td>
-												</tr>
-											</table>
-										</a></li>
+										<li>
+											<a class="<?= isActive(['report_outstanding_ko.php']); ?>"
+											href="report_outstanding_ko.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding KO & KM Tonase</span>
+
+											</a>
+										</li>
+
+										<li>
+											<a class="<?= isActive(['report_outstanding_ko_mitra.php']); ?>"
+											href="report_outstanding_ko_mitra.php"
+											style="display:flex; align-items:center;">
+
+												<i class="fa fa-clock-o fa-fw"></i>
+												<span style="margin-left:8px;">Outstanding KO & KM Mitra</span>
+
+											</a>
+										</li>
 									</ul>
 								</li>
 						<!-- <li class="<?= isParentActive(['admin.php', 'checker.php', 'laborer.php', 'transportation.php', 'goods.php', 'seasonalcommodity.php', 'noncommodity.php', 'payment.php']); ?>">
@@ -372,11 +568,212 @@
 								</li>
 							</ul>
 						</li> -->
+						<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian Cashier</a></li>
 						<li><a class="<?= isActive(['changelog.php']); ?>" href="changelog.php"><i class="fa fa-history fa-fw"></i> Update Log </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
+
+<!-- Floating Trophy -->
+<div class="floating-trophy" onclick="openCongrats()">
+    <i class="fa fa-trophy"></i>
+</div>
+
+
+<!-- Modal Congrats -->
+<div class="modal fade" id="modalCongrats" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-congrats-box">
+
+            <div class="modal-decor-top"></div>
+
+            <!-- 2 SLIDE -->
+            <div class="slide slide1 active">
+                <img id="previewPhoto" 
+                    src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
+                    class="modal-congrats-photo">
+
+                <h3 class="modal-congrats-title">
+                    Selamat, <?php echo $data['checker_name']; ?> 🎉
+                </h3>
+
+                <p class="modal-congrats-sub">
+                    Menjadi <b>Cashier of The Month</b><br>
+                    untuk bulan <?php echo $lastMonthName ?>!
+                </p>
+
+                <p class="modal-congrats-detail">
+                    Dengan pembayaran tonase sebanyak:
+                    <br><b><?php echo number_format($data['total_transactions'], 0, ',', '.'); ?></b> Nota Lunas!
+                </p>
+            </div>
+
+            <div class="slide slide2">
+                <img id="previewPhoto" 
+                    src="<?php echo $data2['photo'] ? '../../uploads/' . $data2['photo'] : '../../uploads/profile-default.png'; ?>"
+                    class="modal-congrats-photo">
+
+                <h3 class="modal-congrats-title">
+                    Selamat, <?php echo $data2['checker_name']; ?> 🎉
+                </h3>
+
+                <p class="modal-congrats-sub">
+                    Menjadi <b>Checker of The Month</b><br>
+                    untuk bulan <?php echo $lastMonthName ?>!
+                </p>
+
+                <p class="modal-congrats-detail">
+                    Dengan setoran KO sebanyak:
+                    <br><b><?php echo number_format($data2['total_ko'], 0, ',', '.'); ?></b> Setoran!
+                </p>
+            </div>
+
+            <!-- BUTTON CONTROL -->
+            <button class="slide-btn prev-btn">❮</button>
+            <button class="slide-btn next-btn">❯</button>
+
+            <div class="modal-decor-bottom"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Canvas Confetti -->
+<canvas id="confetti-canvas" style="position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998;"></canvas>
+
+
+<!-- Confetti -->
+<script>
+	function openCongrats() {
+		// buka modal manual tanpa bootstrap
+		document.getElementById("modalCongrats").style.display = "block";
+		document.getElementById("modalCongrats").classList.add("in");
+
+		startConfetti();
+	}
+
+	window.onclick = function(e){
+		if(e.target.id === "modalCongrats"){
+			document.getElementById("modalCongrats").style.display = "none";
+			document.getElementById("modalCongrats").classList.remove("in");
+		}
+	}
+</script>
+
+<script>
+	const confettiCanvas = document.getElementById('confetti-canvas');
+	const ctx = confettiCanvas.getContext('2d');
+
+	confettiCanvas.width = window.innerWidth;
+	confettiCanvas.height = window.innerHeight;
+
+	let particles = [];
+
+	function random(min, max) {
+		return Math.random() * (max - min) + min;
+	}
+
+	function createConfetti() {
+		for (let i = 0; i < 150; i++) {
+			particles.push({
+				x: random(0, confettiCanvas.width),
+				y: random(-200, -10),
+				size: random(3, 6),
+				speed: random(1, 4),
+				angle: random(0, Math.PI * 2),
+				color: "hsl(" + random(0, 360) + ", 100%, 50%)"
+			});
+		}
+	}
+
+	function draw() {
+		ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+		particles.forEach((p, index) => {
+			ctx.beginPath();
+			ctx.fillStyle = p.color;
+			ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+			ctx.fill();
+
+			p.y += p.speed;
+			p.x += Math.sin(p.angle);
+
+			if (p.y > confettiCanvas.height) {
+				particles.splice(index, 1);
+			}
+		});
+
+		requestAnimationFrame(draw);
+	}
+
+	draw();
+
+	function startConfetti() {
+		particles = []; // reset biar tidak numpuk
+		createConfetti();
+	}
+</script>
+
+<!-- Carousel Modal -->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+
+		var slides = document.querySelectorAll(".slide");
+		var current = 0;
+		var autoSlide;
+
+		function showSlide(index) {
+			slides.forEach(function(s, i) {
+				s.classList.remove("active");
+			});
+			slides[index].classList.add("active");
+		}
+
+		function nextSlide() {
+			current = (current + 1) % slides.length;
+			showSlide(current);
+		}
+
+		function prevSlide() {
+			current = (current - 1 + slides.length) % slides.length;
+			showSlide(current);
+		}
+
+		document.querySelector(".next-btn").onclick = function() {
+			nextSlide();
+			resetAutoSlide();
+		};
+
+		document.querySelector(".prev-btn").onclick = function() {
+			prevSlide();
+			resetAutoSlide();
+		};
+
+		function startAutoSlide() {
+			autoSlide = setInterval(nextSlide, 5000);
+		}
+
+		function resetAutoSlide() {
+			clearInterval(autoSlide);
+			startAutoSlide();
+		}
+
+		// Saat modal dibuka → mulai auto-slide
+		$('#modalCongrats').on('shown.bs.modal', function () {
+			current = 0;
+			showSlide(current);
+			startAutoSlide();
+		});
+
+		// Saat modal ditutup → stop auto-slide
+		$('#modalCongrats').on('hidden.bs.modal', function () {
+			clearInterval(autoSlide);
+		});
+
+	});
+</script>
 
 <script>
 	$(document).ready(function() {

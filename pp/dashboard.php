@@ -21,6 +21,10 @@
     $weighing 	        = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE DATE(date_check) BETWEEN '$startDate' AND '$endDate'");
     $paymentDone 	    = executeScalar("SELECT COUNT(weighing_id) FROM weighing WHERE weighing_sts = 'Lunas' AND date_pay BETWEEN '$startDate' AND '$endDate'");
     $paymentMitraDone 	= executeScalar("SELECT COUNT(weighing_id) FROM weighing_mitra WHERE weighing_sts = 'Lunas' AND date_pay BETWEEN '$startDate' AND '$endDate'");
+
+    $update_query = mysql_query("SELECT title FROM update_timbangan ORDER BY id DESC LIMIT 1");
+    $update_data = mysql_fetch_array($update_query);
+    $titleUpdate = $update_data['title'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -316,7 +320,7 @@
                 $('#lottieContainer').html('');
                 $('#welcomeMessage').html(
                     `<span style="font-size:15px; line-height:1.6;">
-                        📢 <b>Update baru:</b> Menambahkan halaman baru <b>Profil</b> untuk update akun.<br>
+                        📢 <b>Update baru:</b> <?php echo $titleUpdate; ?><br>
                         <span style="font-size:15px;">${greeting}</span>
                     </span>`
                 );

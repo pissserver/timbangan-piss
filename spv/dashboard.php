@@ -39,6 +39,10 @@
     $omzetMitraAll2      = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetAllStartDate' AND '$omzetAllEndDate'");
     $omzet2              = executeScalar("SELECT SUM(netto) FROM weighing WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetStartDate' AND '$omzetEndDate'");
     $omzetMitra2         = executeScalar("SELECT SUM(netto) FROM weighing_mitra WHERE weighing_sts != 'Batal' AND date_pay BETWEEN '$omzetStartDate' AND '$omzetEndDate'");
+
+    $update_query = mysql_query("SELECT title FROM update_timbangan ORDER BY id DESC LIMIT 1");
+    $update_data = mysql_fetch_array($update_query);
+    $titleUpdate = $update_data['title'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -430,7 +434,7 @@
                 $('#lottieContainer').html('');
                 $('#welcomeMessage').html(
                     `<span style="font-size:15px; line-height:1.6;">
-                        📢 <b>Update baru:</b> Menambahkan halaman baru <b>Profil</b> untuk update akun.<br>
+                        📢 <b>Update baru:</b> <?php echo $titleUpdate; ?><br>
                         <span style="font-size:15px;">${greeting}</span>
                     </span>`
                 );

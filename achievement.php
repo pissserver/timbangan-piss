@@ -158,6 +158,80 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="row" style="margin-top: 30px;">
+					<div class="panel-primary">
+						<div class="panel-heading" style="border-radius: 10px; padding: 15px 20px; font-size: 18px; background-color: #008000;">
+							<h4 class="panel-title">
+								<i class="fa fa-trophy"></i>&nbsp; Pencapaian Tim Checker
+							</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row" style="margin-top:30px;">
+								<?php
+									$sql = "
+										SELECT 
+											c.checker_id,
+											c.checker_name, 
+											COUNT(k.ko_id) AS total_ko
+											FROM checker c
+											JOIN ko k ON k.receiver_id = c.checker_id
+											WHERE status_aktif = '1' 
+											AND checker_role = 'Checker'
+											GROUP BY c.checker_id, c.checker_name
+											ORDER BY total_ko DESC
+											";
+
+									$query = mysql_query($sql);
+									$no = 1;
+
+									while($data = mysql_fetch_array($query)) {
+
+									// LEVEL CHECK
+									if ($data['total_ko'] > 1000) {
+										$level = "Platinum";  $badgeClass = "level-platinum";
+									} elseif ($data['total_ko'] > 500) {
+										$level = "Gold";      $badgeClass = "level-gold";
+									} elseif ($data['total_ko'] > 250) {
+										$level = "Silver";    $badgeClass = "level-silver";
+									} else {
+										$level = "Basic";     $badgeClass = "level-basic";
+									} ?>
+
+									<div class="col-md-4 col-sm-6">
+										<div class="card-cashier">					
+											<div class="card-title">
+												<?php echo $no . ". " . $data['checker_name']; ?>
+											</div>
+
+											<div style="margin-top:10px;">
+												<span class="level-badge <?php echo $badgeClass; ?>">
+													<i class="fa fa-shield"></i> 
+													<?php echo $level; ?>
+												</span>
+											</div>
+
+											<div style="margin-top:10px; color:#666;">
+												Total Setoran KO:
+												<b><?php echo number_format($data['total_ko']); ?></b>
+												Setoran
+											</div>
+
+											<div class="card-footer-btn">
+												<a href="achievement_detail2.php?id=<?php echo $data['checker_id']; ?>" 
+													class="btn btn-sm btn-block" style="background-color: #008000; color:#fff;">
+													<i class="fa fa-eye"></i>&nbsp; Lihat Detail
+												</a>
+											</div>
+										</div>
+									</div>
+									<?php 
+									$no++; 
+									} ?>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- End Main Content -->
 		</div>
