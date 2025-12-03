@@ -271,7 +271,8 @@
 						echo "<a href='pay_mitra_salary2.php?date=".$r['dt']."' class='btn btn-xs btn-outline btn-primary btn-block'><i class='fa fa-money'></i>&nbsp;Bayar</a>";
 					}else{
 						echo "<a href='pay_mitra_salary2.php?date=".$r['dt']."' class='btn btn-xs btn-outline btn-primary btn-block'><i class='fa fa-edit'></i>&nbsp;Revisi</a>";
-						echo "<a href='htmltopdf/mitra_dibagi.php?date=".$r['dt']."' target='_blank' class='btn btn-xs btn-outline btn-success btn-block'><i class='fa fa-print'></i>&nbsp;Cetak</a>";
+						echo "<a href='htmltopdf/mitra_dibagi.php?date=".$r['dt']."' target='_blank' class='btn btn-xs btn-outline btn-success btn-block'><i class='fa fa-file-pdf-o'></i>&nbsp;Print PDF</a>";
+						echo "<a href='exportExcel/exportMitraDibagi.php?date=".$r['dt']."' target='_self' class='btn btn-xs btn-outline btn-warning btn-block'><i class='fa fa-file-excel-o'></i>&nbsp;Export Excel</a>";
 					}
 				?>
 			</td>
