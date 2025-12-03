@@ -48,7 +48,7 @@
 					// Periksa kode sesuai dengan kriteria yang ditentukan
 					if ((strpos($code, 'B') === 0 && $code <= 'B006') || 
 						(strpos($code, 'S') === 0 && $code <= 'S012') || 
-						(strpos($code, 'M') === 0 && $code <= 'M004')) {
+						(strpos($code, 'M') === 0 && $code <= 'M04')) {
 						
 						// Mengambil total fee dari laborer_fee2 berdasarkan kode dan tanggal
 						$fee = executeScalar("SELECT SUM(fee_$code) FROM laborer_fee2 WHERE DATE(fee_date) = '".$date."'");
@@ -92,6 +92,56 @@
 		</tr>
 		
 		<?php 
+			// ===== SORTING KODE B → S → M (PHP 5 compatible) =====
+			uksort($fees, function($a, $b) {
+				$prefixA = $a[0];
+				$prefixB = $b[0];
+
+				// Urutan grup
+				$order = ['B' => 1, 'S' => 2, 'M' => 3];
+
+				// Kalau salah satu prefix tidak dikenal → anggap sama
+				if (!isset($order[$prefixA]) || !isset($order[$prefixB])) {
+					return 0;
+				}
+
+				// Jika prefix berbeda → urutkan berdasarkan grup
+				if ($prefixA !== $prefixB) {
+					if ($order[$prefixA] == $order[$prefixB]) return 0;
+					return ($order[$prefixA] < $order[$prefixB]) ? -1 : 1;
+				}
+
+				// Jika prefix sama → urutkan berdasarkan angka
+				$numA = (int)substr($a, 1);
+				$numB = (int)substr($b, 1);
+
+				if ($numA == $numB) return 0;
+				return ($numA < $numB) ? -1 : 1;
+			});
+
+			uksort($names, function($a, $b) {
+				$prefixA = $a[0];
+				$prefixB = $b[0];
+
+				$order = ['B' => 1, 'S' => 2, 'M' => 3];
+
+				// Kalau salah satu prefix tidak dikenal → anggap sama
+				if (!isset($order[$prefixA]) || !isset($order[$prefixB])) {
+					return 0;
+				}
+
+				if ($prefixA !== $prefixB) {
+					if ($order[$prefixA] == $order[$prefixB]) return 0;
+					return ($order[$prefixA] < $order[$prefixB]) ? -1 : 1;
+				}
+
+				$numA = (int)substr($a, 1);
+				$numB = (int)substr($b, 1);
+
+				if ($numA == $numB) return 0;
+				return ($numA < $numB) ? -1 : 1;
+			});
+
 			$index = 1;
 			foreach ($fees as $code => $amount) {
 				$name = isset($names[$code]) ? $names[$code] : 'Nama Tidak Ditemukan';
