@@ -3333,7 +3333,13 @@
 														cost				= '".$total1."',
 														cost2				= '".$total2."' 
 												where weighing_id 			= '".$id."'");
-			if($update1 && $update2){
+			
+			$update3 = mysql_query("update 	weighing_mitra 
+									set 	date_check 	= '".$dt_now."',
+										    weighing_sts= 'Batal'
+									where 	weighing_id = '".$id."'");
+
+			if($update1 && $update2 && $update3){
 				echo "<script>window.location = 'check_edit.php?id={$id}';</script>";
 				exit();
 			}
@@ -3668,6 +3674,13 @@
 									cost				= '".$total1."',
 									cost2				= '".$total2."'
 								where weighing_id 		= '".$id."'");
+
+		$datePayCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
+		if ($datePayCheck == NULL) {
+			$update2 = mysql_query("update 	weighing_mitra 
+								set 	date_check 	= '".$dt_now."'
+								where 	weighing_id = '".$id."'");
+		}
 							
 		$nopol 		 	= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 		$merchant_id 	= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");

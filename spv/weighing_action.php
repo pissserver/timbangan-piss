@@ -3458,7 +3458,8 @@
 												where weighing_id 			= '".$id."'");
 											
 			$update3 = mysql_query("update 	weighing_mitra 
-									set 	date_check 	= '".$dt_now."'
+									set 	date_check 	= '".$dt_now."',
+										    weighing_sts= 'Batal'
 									where 	weighing_id = '".$id."'");
 
 			if ($update1 && $update2 && $update3) {
@@ -3674,8 +3675,8 @@
 				$cost_bayar 		= intval($cost_bagi_mitra) + intval($cost_simpan_mitra) + intval($cost_bagi_mandor) + intval($cost_simpan_mandor); // Hitung cost simpan mandor
 			}
 
-			$datePayCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
 			$cek = executeScalar("select count(weighing_id) from laborer_fee where weighing_id = '".$id."'");
+			$datePayCheck = executeScalar("SELECT date_pay FROM weighing_mitra WHERE weighing_id = '".$id."'");
 			//$ketemu	= mysql_num_rows($ada);
 			if($cek > 0 && $datePayCheck == NULL){
 				mysql_query("delete from weighing_mitra where weighing_id = '".$id."'");
