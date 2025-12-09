@@ -395,6 +395,8 @@
 							</ul>
 						</li> -->
 
+						<li><a class="<?= isActive(['index5.php', 'listing.php']); ?>" href="index5.php"><i class="fa fa-search fa-fw"></i> Listing Nota </a></li>
+						
 						<li class="<?= isParentActive(['cancel1.php', 'cancel2.php', 'cancel3.php']); ?>"> 
 							<a href="#"><i class="fa fa-close fa-fw"></i> Pembatalan<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
