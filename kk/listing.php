@@ -38,7 +38,7 @@
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<div class="col-md-8"  style="padding-top: 8px; margin-left: -10px;">
-									<i class="fa fa-file-text-o fa-fw"></i> Detail Listing Data
+									<i class="fa fa-file-text-o fa-fw"></i> Detail Listing Nota
 								</div>
 								<form method="GET" action="listing.php">
 									<div class="col-md-2" style="margin-left: -10px;">
@@ -56,7 +56,7 @@
 								<div class="row d-flex justify-content-center align-items-center">
 									<div class="text-center">
 										<img src="../img/empty-listing.png" alt="Empty" width="450px" class="img-fluid">
-										<h2 style="color: #333333;"><b>Maaf, Data Tidak Ada</b></h2>
+										<h2 style="color: #333333;"><b>Maaf, Nota Tidak Ada</b></h2>
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-md-10"  style="padding-top: 8px;">
-											<i class="fa fa-file-text-o fa-fw"></i> Detail Listing Data
+											<i class="fa fa-file-text-o fa-fw"></i> Detail Listing Nota
 											(<?php 
 												$wid = sprintf("%07d", $id);
 												

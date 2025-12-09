@@ -31,26 +31,32 @@
 					<br /><br><br><br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-search fa-fw"></i> Listing Data
+                            <i class="fa fa-search fa-fw"></i> Listing Nota
                         </div>
                         <div class="panel-body">
-							<div class="row">
-								<form class="form-horizontal" id="formListing" name = "formListing" method="GET" action="listing.php">
+							<form class="form-horizontal" id="formListing" name = "formListing" method="GET" action="listing.php">
 								<fieldset>
-									<div class="col-md-6">
-										<div class="form-group" style="padding:10px; margin-top:-10px;">
-											<label>No Nota</label>
-											<input type="text" class="form-control" id="id_nota" name="id_nota" placeholder="No Nota" autofocus="autofocus" required>                  
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group" style="padding:10px; margin-top:-10px;">
+												<label>No Nota</label>
+												<input type="text" class="form-control" id="id_nota" name="id_nota" placeholder="Contoh: 250041315 (Tanpa TG/TB)" autofocus="autofocus" required>                  
+											</div>
 										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group" style="padding:10px; margin-top:15px; margin-right:0px;">
-											<center><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i>&nbsp;&nbsp;Cari</button></center>
+										<div class="col-md-6">
+											<div class="form-group" style="padding:10px; margin-top:15px; margin-right:0px;">
+												<center><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i>&nbsp;&nbsp;Cari</button></center>
+											</div>
+										</div>
+
+										<div class="row d-flex justify-content-center align-items-center">
+											<div class="col-md-12 text-center">
+												<img src="../img/listing-img.png" alt="Empty" width="350px" class="img-fluid">
+											</div>
 										</div>
 									</div>
 								</fieldset>
-								</form>
-							</div>
+							</form>
                         </div>
                     </div>
                 </div>
