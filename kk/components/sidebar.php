@@ -404,7 +404,8 @@
 								<li><a class="<?= isActive(['pay_mitra.php', 'pay_mitra2.php']); ?>" href="pay_mitra.php"><i class="fa fa-mail-forward fa-fw"></i></i> Pembulatan Upah Mitra </a></li>
 							</ul>
 						</li> -->
-
+						<li><a class="<?= isActive(['index5.php', 'listing.php']); ?>" href="index5.php"><i class="fa fa-search fa-fw"></i> Listing Nota </a></li>
+						
 								<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php']); ?>"><a href="#"><i class="fa fa-balance-scale fa-fw"></i> Laporan Transaksi Timbang<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
 										<li><a class="<?= isActive(['report_transaction.php']); ?>" href="report_transaction.php"><i class="fa fa-adjust fa-fw"></i> Timbang Harian </a></li>
