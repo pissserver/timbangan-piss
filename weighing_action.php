@@ -223,116 +223,257 @@
 		}
 	}
 	// End barang Masuk ==============================================================================================================================
-	// Start Retail Masuk ============================================================================================================================
-	if($task=='masuk2'){
-		if($_POST['merchant']==''||$_POST['goods']==''){
-			trigger_error("Data pedagang & jenis barang belum diisi", E_USER_ERROR);
+	// Start Retail Masuk OLD ============================================================================================================================
+	// if($task=='masuk2'){
+	// 	if($_POST['merchant']==''||$_POST['goods']==''){
+	// 		trigger_error("Data pedagang & jenis barang belum diisi", E_USER_ERROR);
+	// 		exit();
+	// 	}
+	// 	//cara mendapatkan data 1 menit yg lalu
+	// 	$currentDate = strtotime($time_now);
+	// 	$pastdate 	= $currentDate-(60*1);
+	// 	$past 		= date("H:i:s", $pastdate);
+		
+	// 	//Menghindari kemasukan data double
+	// 	// $double 	= mysql_query("select nopol from weighing where nopol = '".$_POST['nopol']."'
+	// 	// and date_in = '".$date_now."' and merchant_id = '".$_POST['merchant']."' and
+	// 	// (time_in between '".$past."' and '".$time_now."')");
+		
+	// 	// $ketemu		= mysql_num_rows($double);
+	// 	// if($ketemu>=1){
+	// 	// 	echo "<script>window.alert('Data Double');
+	// 	// 	window.location=('index.php')</script>";
+	// 	// 	exit();
+	// 	// }else{
+	// 		$nopol 	= 'CENTENG';
+	// 		//tahun 2018
+	// 		$year 	= date("y");
+	// 		$year2 	= date("Y");
+			
+	// 		$count_id 	= executeScalar("select count(weighing_id) from weighing where YEAR(date_in) = '".$year2."'");
+	// 		$total_id	= $count_id+1;
+	// 		$idx 	= sprintf("%07d", $total_id);
+	// 		$id		= $year.''.$idx+4;//+3 Krn nota 2018 dipecah ke 2019
+			
+	// 		//ambil tarif retail dari db
+	// 		$tarifretail 	= executeScalar("select pay_total from payment where pay_id = '1'");
+			
+	// 		//Simpan data ke tabel timbangan
+	// 		$insert = mysql_query("INSERT INTO `weighing` (	`weighing_id`, 
+	// 														`nopol`, 
+	// 														`weight_in`, 
+	// 														`weight_out`,  
+	// 														`noncommodity`, 
+	// 														`netto`, 
+	// 														`checker_id`, 
+	// 														`merchant_id`, 
+	// 														`goods_id`, 
+	// 														`date_in`, 
+	// 														`date_out`, 
+	// 														`time_in`, 
+	// 														`time_out`, 
+	// 														`laborer_sts`, 
+	// 														`cost_tonase`, 
+	// 														`cost_real_tonase`,
+	// 														`cost`, 
+	// 														`cost2`, 
+	// 														`weighing_sts`, 
+	// 														`weighing_sts2`) 
+	// 								VALUES ('".$id."', 
+	// 										'".$nopol."', 
+	// 										'0', 
+	// 										'0', 
+	// 										'0', 
+	// 										'0', 
+	// 										'".$checker."', 
+	// 										'".$_POST['merchant']."', 
+	// 										'".$_POST['goods']."', 
+	// 										'".$date_now."', 
+	// 										'".$date_now."', 
+	// 										'".$time_now."', 
+	// 										'".$time_now."', 
+	// 										'Tidak',
+	// 										'".$tarifretail."', 
+	// 										'".$tarifretail."', 
+	// 										'".$tarifretail."', 
+	// 										'".$tarifretail."', 
+	// 										'Keluar', 
+	// 										'Tanpa Timbang')");
+								
+	// 			// Insert SPV LOG
+	// 			$name 		   = executeScalar("select checker_name from checker where checker_id = '".$checker."'");
+	// 			$insert_spv = mysql_query("insert into cashier_log (cashier_log_id, 
+	// 										cashier_user, 
+	// 										cashier_action, 
+	// 										cashier_target, 
+	// 										cashier_nopol, 
+	// 										cashier_merchant_id,
+	// 										action_time) 
+	// 									value (	'', 
+	// 										'".$name."', 
+	// 										'Membuat data baru CENTENG dengan status Tanpa Timbang',  
+	// 										'".$id."', 
+	// 										'".$nopol."', 
+	// 										'".$_POST['merchant']."',
+	// 										'".$dt_now."')");
+	// 		if($insert && $insert_spv){
+	// 			// Alert Information
+	// 			$_SESSION['success'] = true;
+	// 			$_SESSION['title'] = 'Berhasil';
+	// 			$_SESSION['message'] = "Pembuatan Data Retail Berhasil";
+	// 			HEADER("location: index4.php");
+	// 			exit();
+	// 		}
+	// 		else{
+	// 			//echo 'Data Gagal Masuk';
+	// 			trigger_error("Data gagal Masuk, Silahkan dicoba lagi", E_USER_ERROR);
+	// 			HEADER("location: index.php");
+	// 			exit();
+	// 		}
+	// 	// }
+	// }
+
+	// Start Retail Masuk NEW ============================================================================================================================
+	// if ($task=='masuk2') {
+
+	// 	if (!isset($_POST['merchant']) || count($_POST['merchant']) == 0) {
+	// 		trigger_error("Tidak ada data pedagang dalam form", E_USER_ERROR);
+	// 		exit();
+	// 	}
+
+	// 	// ambil tarif retail
+	// 	$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+
+	// 	$allSuccess = true;
+
+	// 	foreach ($_POST['merchant'] as $i => $merchant_id) {
+
+	// 		// Cek radio cetak untuk merchant ini
+	// 		if (isset($_POST['cetak'][$merchant_id]) && $_POST['cetak'][$merchant_id] == "tidak") {
+	// 			// skip pedagang ini
+	// 			continue;
+	// 		}
+
+	// 		$goods_id = $_POST['goods'][$i];
+
+	// 		// generate ID
+	// 		$year 	= date("y");
+	// 		$year2 	= date("Y");
+			
+	// 		$count_id 	= executeScalar("select count(weighing_id) from weighing where YEAR(date_in) = '".$year2."'");
+	// 		$total_id	= $count_id+1;
+	// 		$idx 	= sprintf("%07d", $total_id);
+	// 		$id		= $year.''.$idx+4;//+3 Krn nota 2018 dipecah ke 2019
+
+	// 		$nopol = 'CENTENG';
+
+	// 		$insert = mysql_query("
+	// 			INSERT INTO weighing 
+	// 			(weighing_id, nopol, weight_in, weight_out, noncommodity, netto, 
+	// 			checker_id, merchant_id, goods_id, date_in, date_out, 
+	// 			time_in, time_out, laborer_sts,
+	// 			cost_tonase, cost_real_tonase, cost, cost2,
+	// 			weighing_sts, weighing_sts2)
+	// 			VALUES 
+	// 			('".$id."', '".$nopol."', '0', '0', '0', '0',
+	// 			'".$checker."', '".$merchant_id."', '".$goods_id."',
+	// 			'".$date_now."', '".$date_now."', '".$time_now."', '".$time_now."',
+	// 			'Tidak',
+	// 			'".$tarifretail."', '".$tarifretail."', 
+	// 			'".$tarifretail."', '".$tarifretail."',
+	// 			'Keluar', 'Tanpa Timbang')
+	// 		");
+
+	// 		if (!$insert) {
+	// 			$allSuccess = false;
+	// 		}
+
+	// 		$name = executeScalar("SELECT checker_name FROM checker WHERE checker_id = '".$checker."'");
+
+	// 		$insert_log = mysql_query("
+	// 			INSERT INTO cashier_log 
+	// 			(cashier_log_id, cashier_user, cashier_action, cashier_target, 
+	// 			cashier_nopol, cashier_merchant_id, action_time)
+	// 			VALUES 
+	// 			('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+	// 			'".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
+	// 		");
+
+	// 		if (!$insert_log) {
+	// 			$allSuccess = false;
+	// 		}
+	// 	}
+
+	// 	if ($allSuccess) {
+	// 		$_SESSION['success'] = true;
+	// 		$_SESSION['title'] = 'Berhasil';
+	// 		$_SESSION['message'] = "Semua Data Retail Berhasil Dibuat";
+	// 	} else {
+	// 		$_SESSION['success'] = false;
+	// 		$_SESSION['title'] = 'Gagal';
+	// 		$_SESSION['message'] = "Beberapa atau semua data retail gagal dibuat!";
+	// 	}
+
+	// 	header("location: index4.php");
+	// 	exit();
+
+	// }
+	
+	// Input Pedagang Retail ============================================================================================================================
+	if ($task == 'createMerchantRetail') {
+		$merchantId = $_POST['merchant'];
+		$dateNow	= date("Y-m-d");
+
+		$query = "SELECT * FROM merchant_retail WHERE merchant_id = '".$merchantId."'";
+		$result = mysql_query($query) or die(mysql_error());
+
+		$checkMerchant = mysql_fetch_array($result);
+
+		if (!empty($checkMerchant)) {
+			$_SESSION['success'] = false;
+			$_SESSION['title'] = 'Gagal';
+			$_SESSION['message'] = "Pedagang Retail Sudah Ada";
+			header("Location: index4.php");
 			exit();
 		}
-		//cara mendapatkan data 1 menit yg lalu
-		$currentDate = strtotime($time_now);
-		$pastdate 	= $currentDate-(60*1);
-		$past 		= date("H:i:s", $pastdate);
-		
-		//Menghindari kemasukan data double
-		// $double 	= mysql_query("select nopol from weighing where nopol = '".$_POST['nopol']."'
-		// and date_in = '".$date_now."' and merchant_id = '".$_POST['merchant']."' and
-		// (time_in between '".$past."' and '".$time_now."')");
-		
-		// $ketemu		= mysql_num_rows($double);
-		// if($ketemu>=1){
-		// 	echo "<script>window.alert('Data Double');
-		// 	window.location=('index.php')</script>";
-		// 	exit();
-		// }else{
-			$nopol 	= 'CENTENG';
-			//tahun 2018
-			$year 	= date("y");
-			$year2 	= date("Y");
-			
-			$count_id 	= executeScalar("select count(weighing_id) from weighing where YEAR(date_in) = '".$year2."'");
-			$total_id	= $count_id+1;
-			$idx 	= sprintf("%07d", $total_id);
-			$id		= $year.''.$idx+4;//+3 Krn nota 2018 dipecah ke 2019
-			
-			//ambil tarif retail dari db
-			$tarifretail 	= executeScalar("select pay_total from payment where pay_id = '1'");
-			
-			//Simpan data ke tabel timbangan
-			$insert = mysql_query("INSERT INTO `weighing` (	`weighing_id`, 
-															`nopol`, 
-															`weight_in`, 
-															`weight_out`,  
-															`noncommodity`, 
-															`netto`, 
-															`checker_id`, 
-															`merchant_id`, 
-															`goods_id`, 
-															`date_in`, 
-															`date_out`, 
-															`time_in`, 
-															`time_out`, 
-															`laborer_sts`, 
-															`cost_tonase`, 
-															`cost_real_tonase`,
-															`cost`, 
-															`cost2`, 
-															`weighing_sts`, 
-															`weighing_sts2`) 
-									VALUES ('".$id."', 
-											'".$nopol."', 
-											'0', 
-											'0', 
-											'0', 
-											'0', 
-											'".$checker."', 
-											'".$_POST['merchant']."', 
-											'".$_POST['goods']."', 
-											'".$date_now."', 
-											'".$date_now."', 
-											'".$time_now."', 
-											'".$time_now."', 
-											'Tidak',
-											'".$tarifretail."', 
-											'".$tarifretail."', 
-											'".$tarifretail."', 
-											'".$tarifretail."', 
-											'Keluar', 
-											'Tanpa Timbang')");
+
+		$insert = mysql_query("INSERT INTO `merchant_retail` ( `merchant_id`, `print_status`, `created_at`) 
+								VALUES ( '".$merchantId."', 'iya', '".$dateNow."')");
 								
-				// Insert SPV LOG
-				$name 		   = executeScalar("select checker_name from checker where checker_id = '".$checker."'");
-				$insert_spv = mysql_query("insert into cashier_log (cashier_log_id, 
-											cashier_user, 
-											cashier_action, 
-											cashier_target, 
-											cashier_nopol, 
-											cashier_merchant_id,
-											action_time) 
-										value (	'', 
-											'".$name."', 
-											'Membuat data baru CENTENG dengan status Tanpa Timbang',  
-											'".$id."', 
-											'".$nopol."', 
-											'".$_POST['merchant']."',
-											'".$dt_now."')");
-			if($insert && $insert_spv){
-				// Alert Information
-				$_SESSION['success'] = true;
-				$_SESSION['title'] = 'Berhasil';
-				$_SESSION['message'] = "Pembuatan Data Retail Berhasil";
-				HEADER("location: index4.php");
-				exit();
-			}
-			else{
-				//echo 'Data Gagal Masuk';
-				trigger_error("Data gagal Masuk, Silahkan dicoba lagi", E_USER_ERROR);
-				HEADER("location: index.php");
-				exit();
-			}
-		// }
+		if ($insert) {
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Pedagang Retail Berhasil Ditambahkan";
+			HEADER("location: index4.php");
+			exit();
+		} else {
+			//echo 'Data Gagal Masuk';
+			trigger_error("Data gagal Masuk, Silahkan dicoba lagi", E_USER_ERROR);
+			HEADER("location: index4.php");
+			exit();
+		}
 	}
-	// End Retail Masuk ======================================================================================================================================
+
+	// Hapus Pedagang Retail ============================================================================================================================
+	if ($task == 'deleteMerchantRetail') {
+		$merchantRetailId = $_GET['retail_id'];
+
+		$delete = mysql_query("DELETE FROM `merchant_retail` WHERE `retail_id` = '".$merchantRetailId."'");
+
+		if ($delete) {
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Pedagang Retail Berhasil Dihapus";
+			HEADER("location: index4.php");
+		} else {
+			trigger_error("Data gagal Dihapus, Silahkan dicoba lagi", E_USER_ERROR);
+			HEADER("location: index4.php");
+			exit();
+		}
+	}
+
 	// Start Edit Kendaraan Masuk ============================================================================================================================
 	elseif($task=='edit'){
 		$id		= $_GET['id'];

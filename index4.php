@@ -11,6 +11,85 @@
 		return $headScript;
 	}
 ?>
+
+<style>
+	.card-box {
+		background: #fff;
+		border-radius: 10px;
+		padding: 18px;
+		box-shadow: 0 0 10px rgba(0,0,0,0.12);
+		margin-bottom: 20px;
+		border-left: 5px solid #007bff;
+		transition: 0.2s;
+	}
+	.card-box:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+	}
+
+	.toggle-wrapper {
+		display: flex;
+		align-items: center;
+		margin: 6px 0;
+	}
+
+	/* Hide checkbox */
+	.toggle-switch {
+		display: none;
+	}
+
+	/* Toggle background */
+	.toggle-label {
+		width: 50px;
+		height: 26px;
+		background: #ccc;
+		border-radius: 50px;
+		position: relative;
+		cursor: pointer;
+		transition: background 0.25s ease-in-out;
+	}
+
+	/* Bulatan + ikon */
+	.toggle-icon {
+		width: 22px;
+		height: 22px;
+		background: white;
+		border-radius: 50%;
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		font-size: 14px;
+		line-height: 22px;
+		text-align: center;
+		color: #dc3545; /* merah default */
+		transition: transform 0.25s, background 0.25s, color 0.25s;
+	}
+
+	/* ON → IYA */
+	.toggle-switch:checked + .toggle-label {
+		background: #28a745;
+	}
+
+	/* Bulatan bergerak + ikon centang */
+	.toggle-switch:checked + .toggle-label .toggle-icon {
+		transform: translateX(24px);
+		color: #28a745;   /* warna ikon sama dengan background */
+		background: white;
+	}
+
+	/* Ikon default: silang */
+	.toggle-label .toggle-icon::before {
+		content: "✖";
+	}
+
+	/* Jika aktif → ganti ke centang */
+	.toggle-switch:checked + .toggle-label .toggle-icon::before {
+		content: "✔";
+	}
+
+</style>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,13 +115,13 @@
 					<br /><br><br><br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-truck fa-fw"></i> Retail Kendaraan Masuk
+                            <i class="fa fa-plus fa-fw"></i> Tambah Pedagang Retail
                         </div>
                         <div class="panel-body">
 							<div class="row">
-								<form action="weighing_action.php?task=masuk2" class="form-horizontal" id="formWeighingIn" name = "formWeighingIn" method="POST">
+								<form action="weighing_action.php?task=createMerchantRetail" class="form-horizontal" id="formWeighingIn" name = "formWeighingIn" method="POST">
 								<fieldset>
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div class="form-group" style="padding:10px; margin-top:-10px;">
 											<label>Pedagang</label>
 											<select class="form-control chzn-select" name="merchant" id="merchant" required>
@@ -75,7 +154,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<div class="form-group" style="padding:10px; margin-top:-10px;">
 											<label>Barang</label>
 											<select class="form-control chzn-select" name="goods" id="goods" required>
@@ -88,10 +167,10 @@
 												<?php } ?>
 											</select>
 										</div>
-									</div>
-									<div class="col-md-4">
+									</div> -->
+									<div class="col-md-6">
 										<div class="form-group" style="padding:10px; margin-top:15px;">
-											<center><button type="submit" class="btn btn-primary btn-block">Masuk <i class="fa fa-angle-double-right fa-lg"></i></button></center>
+											<center><button type="submit" class="btn btn-primary btn-block">Tambahkan &nbsp;<i class="fa fa-floppy-o"></i></button></center>
 										</div>
 									</div>
 								</fieldset>
@@ -101,41 +180,135 @@
                     </div>
                 </div>
             </div>
+			
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-truck fa-fw"></i> Data Kendaraan Masuk
+                            <i class="fa fa-users fa-fw"></i> Data Pedagang Retail
                         </div>
                         <div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<?php 
-										$query 	= mysql_query("select * from weighing 
-										where (date_in  between '2016-03-15' and '$date_now') and 
-										weighing_sts = 'Masuk' order by weighing_id desc");
+							<form action="htmltopdf/nota_tagihan_retail.php" method="POST" target="_blank">
+								<div class="row" style="padding:10px;">
 
-										if (mysql_num_rows($query) != 0) { ?>
-											<div id="Area1">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										<?php } else { ?>
-											<div class="payment-notfound text-center">
-												<img src="img/logistic.png" alt="Image Payment Not Found" width="250px">
-												<h3><b>Belum Ada Kendaraan Masuk</b></h3>
-											</div>
-										<?php }
-									?>
+								<?php 
+								$query = mysql_query("
+									SELECT r.retail_id,
+										r.print_status,
+										r.print_date,
+										m.merchant_name,
+										m.merchant_id,
+										m.merchant_nick
+									FROM merchant_retail r
+									JOIN merchant m ON r.merchant_id = m.merchant_id
+									ORDER BY r.retail_id ASC
+								");
+
+								
+								while($d = mysql_fetch_array($query)) {
+
+									$lpk 	= executeScalar("select 	l.lapak_name 
+																					from 	rent r, 
+																							lapak l 
+																					where 	r.lapak_id = l.lapak_id and 
+																							r.merchant_id = '".$d['merchant_id']."' 
+																							and (r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) limit 1");
+														$nick	= $d['merchant_nick'];
+														if($nick!=''){
+															$nick = $nick.' / ';
+														}else{
+															$nick = '';
+														}
+								?>
+
+								<div class="col-md-4">
+									<div class="card-box">
+
+										<input type="hidden" name="merchant[]" value="<?php echo $d['merchant_id']; ?>">
+										<input type="text" class="form-control"
+											value="<?php echo $d['merchant_name'] . ' (' . $lpk . ')'; ?>" 
+											readonly>
+
+										<input type="hidden" name="goods[]" value="79">
+										<input style="margin-top:10px; margin-bottom: 10px;" type="text" class="form-control" value="Centeng" readonly>
+
+										<div class="toggle-wrapper">
+											<input type="checkbox"
+												class="toggle-switch"
+												id="cetak_<?= $d['merchant_id'] ?>"
+												name="cetak[<?= $d['merchant_id'] ?>]"
+												value="iya"
+												<?= ($d['print_status'] == 'iya') ? 'checked' : '' ?>>
+											
+											<label for="cetak_<?= $d['merchant_id'] ?>" class="toggle-label">
+												<span class="toggle-icon"></span>
+											</label>
+										</div>
+
+										<button style="margin-top: 10px;" type="button" 
+											class="btn btn-danger btn-block"
+											data-toggle="modal" 
+											data-target="#deleteModal"
+											data-nama="<?php echo $d['merchant_name']; ?>" 
+											data-lapak="<?php echo $lpk; ?>"
+											data-id="<?php echo $d['retail_id']; ?>">
+											Hapus Dari Retail &nbsp;<i class="fa fa-trash"></i>
+										</button>
+									</div>
 								</div>
-							</div>
-                        </div>
+
+								<?php } ?>
+								</div>
+
+								<div class="form-group" style="padding:10px; margin-bottom: 0px;">
+									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" onclick="postAndReload()">Buat Data Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
+								</div>
+							</form>
+						</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+	<!-- Modal konfirmasi hapus -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				
+				<div class="modal-header bg-primary text-white">
+					<h5 class="modal-title"><b>KONFIRMASI HAPUS</b></h5>
+					<button type="button" class="close text-white" data-dismiss="modal">
+						<span>&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+
+					<p>Anda yakin ingin menghapus pedagang berikut dari Retail?</p>
+
+					<!-- BOX NAMA PEDAGANG -->
+					<input id="namaPedagangBox"
+						type="text"
+						class="form-control p-3 mb-3"
+						style="border:2px solid #dc3545; border-radius:8px; background:#fff5f5; 
+							font-size:16px; font-weight:bold; text-align:center;"
+						readonly
+						value="">
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					
+					<a id="confirmDeleteBtn" href="#" class="btn btn-danger">
+						Hapus
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal Ubah -->
 	<div class="modal fade" id="modalUbah" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -165,6 +338,73 @@
 			</div>
 		</div>
 	</div>
+
+
+    <!-- Radio Button -->
+	<script>
+		document.querySelectorAll('.toggle-switch').forEach(sw => {
+			sw.addEventListener('change', function() {
+				let text = this.closest('.toggle-wrapper').querySelector('.toggle-text');
+				text.textContent = this.checked ? 'Iya' : 'Tidak';
+			});
+		});
+	</script>
+	
+	<!-- Display none btnCetalAll -->
+	<script>
+		function checkAllToggles() {
+			let toggles = document.querySelectorAll('.toggle-switch');
+			let btn = document.getElementById('btnCetakAll');
+
+			let hasIya = false;
+
+			toggles.forEach(t => {
+				if (t.checked) {
+					hasIya = true;
+				}
+			});
+
+			btn.style.display = hasIya ? 'block' : 'none';
+		}
+
+		// Saat page load
+		document.addEventListener("DOMContentLoaded", checkAllToggles);
+
+		// Saat toggle berubah
+		document.addEventListener("change", function(e) {
+			if (e.target.classList.contains("toggle-switch")) {
+				checkAllToggles();
+			}
+		});
+	</script>
+
+
+    <!-- Script delete merchant retail -->
+	<script>
+	$(document).ready(function (){
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button   = $(event.relatedTarget); 
+			var nama     = button.data('nama'); 
+			var retailId = button.data('id');
+			var lapak    = button.data('lapak');
+
+			$('#namaPedagangBox').val(nama + ' (' + lapak + ')');
+			$('#confirmDeleteBtn').attr("href", 
+				"weighing_action.php?task=deleteMerchantRetail&retail_id=" + retailId
+			);
+		});
+	});
+	</script>
+
+	<!-- Post & reload -->
+	 <script>
+		function postAndReload() {
+			setTimeout( function() {
+				location.reload();
+			}, 100);
+		}
+	 </script>
+
 	<script>
 		$(document).ready(function(){
 			$("#notifArea").html(alertLoadProcess);
