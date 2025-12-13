@@ -14,6 +14,7 @@
 
 <style>
 	.card-box {
+		position: relative;
 		background: #fff;
 		border-radius: 10px;
 		padding: 18px;
@@ -25,6 +26,23 @@
 	.card-box:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+	}
+
+	.toggle-row {
+		display: flex;
+		align-items: center;
+		margin-top: 10px;
+	}
+
+	.toggle-col {
+		width: 60px; /* lebih besar agar tidak turun */
+		display: flex;
+		justify-content: center;
+	}
+
+	.btn-col {
+		flex: 1;
+		margin-left: 10px;
 	}
 
 	.toggle-wrapper {
@@ -47,6 +65,7 @@
 		position: relative;
 		cursor: pointer;
 		transition: background 0.25s ease-in-out;
+		transform: scale(1.2);
 	}
 
 	/* Bulatan + ikon */
@@ -86,7 +105,6 @@
 	.toggle-switch:checked + .toggle-label .toggle-icon::before {
 		content: "✔";
 	}
-
 </style>
 
 
@@ -118,7 +136,7 @@
                             <i class="fa fa-plus fa-fw"></i> Tambah Pedagang Retail
                         </div>
                         <div class="panel-body">
-							<div class="row">
+							<div class="row" style="margin-bottom: -20px;">
 								<form action="weighing_action.php?task=createMerchantRetail" class="form-horizontal" id="formWeighingIn" name = "formWeighingIn" method="POST">
 								<fieldset>
 									<div class="col-md-6">
@@ -185,13 +203,22 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-users fa-fw"></i> Data Pedagang Retail
+                            <i class="fa fa-users fa-fw"></i> Data Pedagang Retail &nbsp;
+							<div class="label-header" style="display: inline-block;">
+								<span class="label label-warning" style="font-size:14px; border-radius:20px; padding:8px 10px;"> 
+									<?php 
+										$totalRetail = executeScalar("SELECT COUNT(*) FROM merchant_retail");
+										echo $totalRetail; 
+									?>
+								</span>
+							</div>
                         </div>
                         <div class="panel-body">
-							<form action="htmltopdf/nota_tagihan_retail.php" method="POST" target="_blank">
+							<form action="htmltopdf/nota_tagihan_retail.php?task=printAll" method="POST" target="_blank">
 								<div class="row" style="padding:10px;">
 
 								<?php 
+								$no = 0;
 								$query = mysql_query("
 									SELECT r.retail_id,
 										r.print_status,
@@ -206,7 +233,7 @@
 
 								
 								while($d = mysql_fetch_array($query)) {
-
+									$no++;
 									$lpk 	= executeScalar("select 	l.lapak_name 
 																					from 	rent r, 
 																							lapak l 
@@ -219,30 +246,81 @@
 														}else{
 															$nick = '';
 														}
+
+									$today = date("Y-m-d");
+									$labelToday = date("d M Y");
+									$already = executeScalar("
+										SELECT COUNT(*) 
+										FROM weighing 
+										WHERE merchant_id = '".$d['merchant_id']."' 
+										AND DATE(date_in) = '".$today."' AND weighing_sts2 = 'Tanpa Timbang'
+									");
 								?>
 
 								<div class="col-md-4">
 									<div class="card-box">
+										<div class="label-body" style="position:absolute; top:-15px; right:-20px;">
+											<span style="
+												display:flex;
+												align-items:center;
+												justify-content:center;
+												width:45px;
+												height:45px;
+												background:#f0ad4e;
+												color:#fff;
+												border-radius:50%;
+												font-size:16px;
+												font-weight:bold;
+												box-shadow:0 2px 6px rgba(0,0,0,0.3);
+											">
+												<?php echo $no; ?>
+											</span>
+										</div>
+
 
 										<input type="hidden" name="merchant[]" value="<?php echo $d['merchant_id']; ?>">
 										<input type="text" class="form-control"
 											value="<?php echo $d['merchant_name'] . ' (' . $lpk . ')'; ?>" 
+											style="font-weight:bold; font-size:16px; text-align:center;"
 											readonly>
 
 										<input type="hidden" name="goods[]" value="79">
-										<input style="margin-top:10px; margin-bottom: 10px;" type="text" class="form-control" value="Centeng" readonly>
+										<input style="margin-top:10px; margin-bottom: 10px; text-align: center;" type="text" class="form-control" value="Centeng" readonly>
 
-										<div class="toggle-wrapper">
-											<input type="checkbox"
-												class="toggle-switch"
-												id="cetak_<?= $d['merchant_id'] ?>"
-												name="cetak[<?= $d['merchant_id'] ?>]"
-												value="iya"
-												<?= ($d['print_status'] == 'iya') ? 'checked' : '' ?>>
-											
-											<label for="cetak_<?= $d['merchant_id'] ?>" class="toggle-label">
-												<span class="toggle-icon"></span>
-											</label>
+										<div class="toggle-row">
+											<div class="toggle-col">
+												<div class="toggle-wrapper" style="margin-top: 10px;">
+													<input type="checkbox"
+														class="toggle-switch"
+														id="cetak_<?= $d['merchant_id'] ?>"
+														name="cetak[<?= $d['merchant_id'] ?>]"
+														value="iya"
+														<?= ($d['print_status'] == 'iya') ? 'checked' : '' ?>>
+
+													<label for="cetak_<?= $d['merchant_id'] ?>" class="toggle-label">
+														<span class="toggle-icon"></span>
+													</label>
+												</div>
+											</div>
+
+											<div class="btn-col">
+												<?php if ($already > 0) { ?>
+													<button type="button"
+														class="btn btn-success btn-block btn-sm"
+														style="opacity:0.9; cursor:not-allowed; border-radius:20px;"
+														disabled>
+														<?= $labelToday ?> Sudah Terbuat&nbsp;&nbsp;<i class="fa fa-check-circle"></i>
+													</button>
+												<?php } else { ?>
+													<a  href="htmltopdf/nota_tagihan_retail.php?task=singlePrint&merchant_id=<?php echo $d['merchant_id']; ?>"
+														target="_blank"
+														class="btn btn-primary btn-block btn-sm"
+														style="border-radius:20px;"
+														onclick="postAndReload()">
+														Buat Nota&nbsp;&nbsp;<i class="fa fa-print"></i>
+													</a>
+												<?php } ?>
+											</div>
 										</div>
 
 										<button style="margin-top: 10px;" type="button" 
@@ -261,7 +339,7 @@
 								</div>
 
 								<div class="form-group" style="padding:10px; margin-bottom: 0px;">
-									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" onclick="postAndReload()">Buat Data Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
+									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" name="print_all" onclick="postAndReload()">Buat Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
 								</div>
 							</form>
 						</div>

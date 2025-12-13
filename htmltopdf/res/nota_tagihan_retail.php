@@ -9,9 +9,11 @@
     if (!empty($_SESSION['checker'])) {
         $cashier_name = executeScalar("SELECT checker_name FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
         $checker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
+        $name = executeScalar("SELECT checker_name FROM checker WHERE checker_id = '".$checker."'");
     } 
     elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
         $spv_name = executeScalar("SELECT name FROM admin WHERE username = '".$_SESSION['username']."'");
+        $checker = $_POST['checker'];
     } 
     else {
         header("Location: login.html");
@@ -19,31 +21,17 @@
     }
 
 	date_default_timezone_set('Asia/Jakarta');
-	$dt_now	= date("Y-m-d H:i:s");
-    $date_now = date("Y-m-d H:i:s");   
+    $dt_now = date("Y-m-d H:i:s");   
 
-    // Cek data retail already created on this day
-    $check_existing_retail = mysql_query("SELECT COUNT(weighing_id) AS total FROM weighing WHERE DATE(date_in) = CURDATE() AND weighing_sts2 = 'Tanpa Timbang'");
-    
-    if (mysql_num_rows($check_existing_retail) > 0) {
-        $row = mysql_fetch_array($check_existing_retail);
-        if ($row['total'] > 0) {
-            // Jika sudah ada data retail untuk hari ini, ambil semua weighing_id-nya
-            $existing_retail_ids = [];
-            $get_existing_ids = mysql_query("SELECT weighing_id FROM weighing WHERE DATE(date_in) = CURDATE() AND weighing_sts2 = 'Tanpa Timbang'");
-            while ($data = mysql_fetch_array($get_existing_ids)) {
-                $existing_retail_ids[] = $data['weighing_id'];
-            }
-        }
-    } else {
-        // Query for create weighing
-		// ambil tarif retail
-		$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+    // Query for create weighing
+	$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+    $shownIds = [];
+    $allSuccess = false;
 
-		$allSuccess = true;
-        $created_ids = [];
-
-		foreach ($_POST['merchant'] as $i => $merchant_id) {
+    // If print all
+    if (isset($_GET['task']) && $_GET['task'] == 'printAll') {
+        
+        foreach ($_POST['merchant'] as $i => $merchant_id) {
 
             // toggle ON = iya, toggle OFF = tidak
             $printStatus = isset($_POST['cetak'][$merchant_id]) ? 'iya' : 'tidak';
@@ -66,69 +54,157 @@
                 ");
             }
 
-
-			$goods_id = $_POST['goods'][$i];
-
 			// generate ID
 			$year 	= date("y");
 			$year2 	= date("Y");    
-			
 			$count_id 	= executeScalar("select count(weighing_id) from weighing where YEAR(date_in) = '".$year2."'");
 			$total_id	= $count_id+1;
 			$idx 	= sprintf("%07d", $total_id);
 			$id		= $year.''.$idx+4;//+3 Krn nota 2018 dipecah ke 2019
-
-			$nopol = 'CENTENG';
-
-			$insert = mysql_query("
-				INSERT INTO weighing 
-				(weighing_id, nopol, weight_in, weight_out, noncommodity, netto, 
-				checker_id, merchant_id, goods_id, date_in, date_out, 
-				time_in, time_out, date_check, laborer_sts,
-				cost_tonase, cost_real_tonase, cost, cost2,
-				weighing_sts, weighing_sts2)
-				VALUES 
-				('".$id."', '".$nopol."', '0', '0', '0', '0',
-				'".$checker."', '".$merchant_id."', '".$goods_id."',
-				'".$date_now."', '".$date_now."', '".$time_now."', '".$time_now."', '".$date_now."',
-				'Tidak',
-				'".$tarifretail."', '".$tarifretail."', 
-				'".$tarifretail."', '".$tarifretail."',
-				'Keluar', 'Tanpa Timbang')
-			");
-
             
-            $created_ids[] = $id;
+			$nopol = 'CENTENG';
+			$goods_id = $_POST['goods'][$i];
 
-			if (!$insert) {
-				$allSuccess = false;
-			}
+            // Check if retail already exists for this merchant today
+            $existingMerchantQuery = mysql_query("
+                SELECT weighing_id 
+                FROM weighing 
+                WHERE merchant_id = '".$merchant_id."'
+                AND date_in >= CURDATE()
+                AND weighing_sts2 = 'Tanpa Timbang'");
+            
+            if (mysql_num_rows($existingMerchantQuery) > 0) {
+                $shownIds[] = mysql_result($existingMerchantQuery, 0, 'weighing_id');
+            } else {
+                // Proceed to insert new retail weighing
+                $insert = mysql_query("
+                    INSERT INTO weighing 
+                    (weighing_id, nopol, weight_in, weight_out, noncommodity, netto, 
+                    checker_id, merchant_id, goods_id, date_in, date_out, 
+                    time_in, time_out, date_check, laborer_sts,
+                    cost_tonase, cost_real_tonase, cost, cost2,
+                    weighing_sts, weighing_sts2)
+                    VALUES 
+                    ('".$id."', '".$nopol."', '0', '0', '0', '0',
+                    '".$checker."', '".$merchant_id."', '".$goods_id."',
+                    '".$dt_now."', '".$dt_now."', '".$time_now."', '".$time_now."', '".$dt_now."',
+                    'Tidak',
+                    '".$tarifretail."', '".$tarifretail."', 
+                    '".$tarifretail."', '".$tarifretail."',
+                    'Keluar', 'Tanpa Timbang')
+                ");
 
-			$name = executeScalar("SELECT checker_name FROM checker WHERE checker_id = '".$checker."'");
+                $shownIds[] = $id;
 
-			$insert_log = mysql_query("
-				INSERT INTO cashier_log 
-				(cashier_log_id, cashier_user, cashier_action, cashier_target, 
-				cashier_nopol, cashier_merchant_id, action_time)
-				VALUES 
-				('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
-				'".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
-			");
+                if (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
+                    $insert_log = mysql_query("
+                        INSERT INTO spv_log 
+                        (spv_log_id, spv_user, spv_action, spv_target, 
+                        spv_nopol, spv_merchant_id, spv_reason, action_time)
+                        VALUES 
+                        ('', '".$spv_name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+                        '".$id."', '".$nopol."', '".$merchant_id."', 'Tidak Ada', '".$dt_now."')
+                    ");
+                } elseif (!empty($_SESSION['checker'])) {
+                    $insert_log = mysql_query("
+                        INSERT INTO cashier_log 
+                        (cashier_log_id, cashier_user, cashier_action, cashier_target, 
+                        cashier_nopol, cashier_merchant_id, action_time)
+                        VALUES 
+                        ('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+                        '".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
+                    ");
+                }
 
-			if (!$insert_log) {
-				$allSuccess = false;
-			}
+                if ($insert && $insert_log) {
+                    $allSuccess = true;
+                }
+            }
 		}
 
-		if ($allSuccess) {
-			$_SESSION['success'] = true;
-			$_SESSION['title'] = 'Berhasil';
-			$_SESSION['message'] = "Semua Data Retail Berhasil Dibuat";
-		} else {
-			$_SESSION['success'] = false;
-			$_SESSION['title'] = 'Gagal';
-			$_SESSION['message'] = "Beberapa atau semua data retail gagal dibuat!";
-		}
+        if (mysql_num_rows($existingMerchantQuery) == 0) {
+            if ($allSuccess) {
+                $_SESSION['success'] = true;
+                $_SESSION['title'] = 'Berhasil';
+                $_SESSION['message'] = "Semua Data Retail Berhasil Dibuat";
+            } else {
+                $_SESSION['success'] = false;
+                $_SESSION['title'] = 'Gagal';
+                $_SESSION['message'] = "Beberapa atau semua data retail gagal dibuat!";
+            }
+        }
+
+    } elseif (isset($_GET['task']) && $_GET['task'] == 'singlePrint') {
+        
+        $merchant_id = $_GET['merchant_id'];
+
+        // generate ID
+		$year 	= date("y");
+		$year2 	= date("Y");    
+		$count_id 	= executeScalar("select count(weighing_id) from weighing where YEAR(date_in) = '".$year2."'");
+		$total_id	= $count_id+1;
+		$idx 	= sprintf("%07d", $total_id);
+		$id		= $year.''.$idx+4;//+3 Krn nota 2018 dipecah ke 2019
+            
+		$nopol = 'CENTENG';
+
+        // Check if retail already exists for this merchant today
+        $existingMerchantQuery = mysql_query("
+            SELECT weighing_id 
+            FROM weighing 
+            WHERE merchant_id = '".$merchant_id."'
+            AND date_in >= CURDATE()
+            AND weighing_sts2 = 'Tanpa Timbang'");
+        
+        if (mysql_num_rows($existingMerchantQuery) > 0) {
+            $shownIds[] = mysql_result($existingMerchantQuery, 0, 'weighing_id');
+        } else {
+                // Proceed to insert new retail weighing
+                $singleInsert = mysql_query("
+                    INSERT INTO weighing 
+                    (weighing_id, nopol, weight_in, weight_out, noncommodity, netto, 
+                    checker_id, merchant_id, goods_id, date_in, date_out, 
+                    time_in, time_out, date_check, laborer_sts,
+                    cost_tonase, cost_real_tonase, cost, cost2,
+                    weighing_sts, weighing_sts2)
+                    VALUES 
+                    ('".$id."', '".$nopol."', '0', '0', '0', '0',
+                    '".$checker."', '".$merchant_id."', '79',
+                    '".$dt_now."', '".$dt_now."', '".$time_now."', '".$time_now."', '".$dt_now."',
+                    'Tidak',
+                    '".$tarifretail."', '".$tarifretail."', 
+                    '".$tarifretail."', '".$tarifretail."',
+                    'Keluar', 'Tanpa Timbang')
+                ");
+
+                $update = mysql_query("
+                    UPDATE merchant_retail 
+                    SET print_status = 'iya', print_date = '".$dt_now."' 
+                    WHERE merchant_id = '".$merchant_id."'
+                ");
+
+                $shownIds[] = $id;
+
+                $single_insert_log = mysql_query("
+                    INSERT INTO cashier_log 
+                    (cashier_log_id, cashier_user, cashier_action, cashier_target, 
+                    cashier_nopol, cashier_merchant_id, action_time)
+                    VALUES 
+                    ('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+                    '".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
+                ");
+
+                if ($singleInsert && $single_insert_log) {
+                    $_SESSION['success'] = true;
+                    $_SESSION['title'] = 'Berhasil';
+                    $_SESSION['message'] = "Data Retail Berhasil Dibuat";
+                } else {
+                    $_SESSION['success'] = false;
+                    $_SESSION['title'] = 'Gagal';
+                    $_SESSION['message'] = "Data retail gagal dibuat!";
+                }
+            }
+
     }
 
         // Query for nota tagihan
@@ -142,14 +218,7 @@
         $biayatonase 	= 0;
         $biayamitra 	= 0;
         
-        if (!empty($created_ids)) {
-            $idList = "'" . implode("','", $created_ids) . "'";
-        } elseif (!empty($existing_retail_ids)) {
-            $idList = "'" . implode("','", $existing_retail_ids) . "'";
-        } else {
-            // Jika tidak ada ID yang dibuat atau ditemukan, hentikan proses
-            die("Tidak ada data retail untuk diproses.");
-        }
+        $idList = "'" . implode("','", $shownIds) . "'";
 
         $sql = mysql_query("SELECT * FROM weighing WHERE weighing_id IN ($idList)");
         
