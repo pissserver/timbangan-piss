@@ -149,7 +149,7 @@
         <?php } else { ?>
             <!-- Jika tidak ada pembaruan sistem -->
             <div class="box-update">
-                <img src="../img/update.png" alt="Update Illustration" width="210px">
+                <img src="img/update.png" alt="Update Illustration" width="210px">
                 <h3 class="text-primary text-uppercase"><b>Tidak ada pembaruan sistem</b></h3>
             </div>
         <?php } ?>
