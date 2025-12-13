@@ -937,6 +937,61 @@
 			}
 		// }
 	}
+
+		// Input Pedagang Retail ============================================================================================================================
+	if ($task == 'createMerchantRetail') {
+		$merchantId = $_POST['merchant'];
+		$dateNow	= date("Y-m-d");
+
+		$query = "SELECT * FROM merchant_retail WHERE merchant_id = '".$merchantId."'";
+		$result = mysql_query($query) or die(mysql_error());
+
+		$checkMerchant = mysql_fetch_array($result);
+
+		if (!empty($checkMerchant)) {
+			$_SESSION['success'] = false;
+			$_SESSION['title'] = 'Gagal';
+			$_SESSION['message'] = "Pedagang Retail Sudah Ada";
+			header("Location: index4.php");
+			exit();
+		}
+
+		$insert = mysql_query("INSERT INTO `merchant_retail` ( `merchant_id`, `print_status`, `created_at`) 
+								VALUES ( '".$merchantId."', 'iya', '".$dateNow."')");
+								
+		if ($insert) {
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Pedagang Retail Berhasil Ditambahkan";
+			HEADER("location: index4.php");
+			exit();
+		} else {
+			//echo 'Data Gagal Masuk';
+			trigger_error("Data gagal Masuk, Silahkan dicoba lagi", E_USER_ERROR);
+			HEADER("location: index4.php");
+			exit();
+		}
+	}
+
+	// Hapus Pedagang Retail ============================================================================================================================
+	if ($task == 'deleteMerchantRetail') {
+		$merchantRetailId = $_GET['retail_id'];
+
+		$delete = mysql_query("DELETE FROM `merchant_retail` WHERE `retail_id` = '".$merchantRetailId."'");
+
+		if ($delete) {
+			// Alert Information
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil';
+			$_SESSION['message'] = "Pedagang Retail Berhasil Dihapus";
+			HEADER("location: index4.php");
+		} else {
+			trigger_error("Data gagal Dihapus, Silahkan dicoba lagi", E_USER_ERROR);
+			HEADER("location: index4.php");
+			exit();
+		}
+	}
 		
 
 	// Edit Kendaraan Masuk
