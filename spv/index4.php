@@ -102,6 +102,12 @@
 	.toggle-switch:checked + .toggle-label .toggle-icon::before {
 		content: "✔";
 	}
+
+	/* Disabled selected input */
+	.no-open[data-readonly="true"] {
+		pointer-events: none;
+		background-color: #e9ecef;
+	}
 </style>
 
 <!DOCTYPE html>
@@ -135,7 +141,7 @@
 							<div class="row" style="margin-bottom: -20px;">
 								<form action="weighing_action.php?task=createMerchantRetail" class="form-horizontal" id="formWeighingIn" name = "formWeighingIn" method="POST">
 								<fieldset>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group" style="padding:10px; margin-top:-10px;">
 											<label>Pedagang</label>
 											<select class="form-control chzn-select" name="merchant" id="merchant" required>
@@ -168,21 +174,21 @@
 											</select>
 										</div>
 									</div>
-									<!-- <div class="col-md-4">
+									<div class="col-md-4">
 										<div class="form-group" style="padding:10px; margin-top:-10px;">
 											<label>Barang</label>
-											<select class="form-control chzn-select" name="goods" id="goods" required>
+											<select class="form-control chzn-select" name="goods_id" id="goods" required>
 												<option value="">- Pilih Barang -</option>
 												<?php 
-													$sql2 		= mysql_query("select goods_id, goods_name from goods order by goods_name");
+													$sql2 		= mysql_query("select goods_id, goods_name from goods where goods_id in('79', '41') order by goods_name");
 													while($d2 	= mysql_fetch_array($sql2))
 												{?>
 													<option value="<?php echo $d2['goods_id'];?>"><?php echo $d2['goods_name'];?></option>
 												<?php } ?>
 											</select>
 										</div>
-									</div> -->
-									<div class="col-md-6">
+									</div>
+									<div class="col-md-4">
 										<div class="form-group" style="padding:10px; margin-top:15px;">
 											<center><button type="submit" class="btn btn-primary btn-block">Tambahkan &nbsp;<i class="fa fa-floppy-o"></i></button></center>
 										</div>
@@ -280,8 +286,40 @@
 											style="font-weight:bold; font-size:16px; text-align:center;"
 											readonly>
 
-										<input type="hidden" name="goods[]" value="79">
-										<input style="margin-top:10px; margin-bottom: 10px; text-align: center;" type="text" class="form-control" value="Centeng" readonly>
+										<div class="form-group" style="margin-top:10px; margin-bottom: 10px;">
+											<select class="form-control no-open"
+												name="goods[]"
+												id="goods_<?= $d['merchant_id']; ?>"
+												style="text-align:center;"
+												required
+												<?php echo ($already > 0) ? 'data-readonly="true"' : ''; ?>>
+
+											`	<?php
+												// goods yang pernah dipilih merchant
+												$selectedGoods = executeScalar("
+													SELECT goods_id 
+													FROM merchant_retail 
+													WHERE merchant_id = '".$d['merchant_id']."' 
+													LIMIT 1
+												");
+
+												// daftar goods
+												$sql2 = mysql_query("
+													SELECT goods_id, goods_name 
+													FROM goods 
+													WHERE goods_id IN ('79','41') 
+													ORDER BY goods_name
+												");
+
+												while ($d2 = mysql_fetch_array($sql2)) {
+													$selected = ($d2['goods_id'] == $selectedGoods) ? 'selected' : '';
+												?>
+													<option value="<?= $d2['goods_id']; ?>" <?= $selected; ?>>
+														<?= $d2['goods_name']; ?>
+													</option>
+												<?php } ?>`
+											</select>
+										</div>
 
 										<div class="toggle-row">
 											<div class="toggle-col">
@@ -308,13 +346,13 @@
 														<?= $labelToday ?> Sudah Terbuat&nbsp;&nbsp;<i class="fa fa-check-circle"></i>
 													</button>
 												<?php } else { ?>
-													<a href="#"
-														id="btnNota"
+													<a  href="javascript:void(0)"
 														target="_blank"
 														class="btn btn-primary btn-block btn-sm"
-														style="border-radius:20px;">
+														style="border-radius:20px;"
+														onclick="printNota('<?= $d['merchant_id']; ?>'); return false;">
 														Buat Nota&nbsp;&nbsp;<i class="fa fa-print"></i>
-														</a>
+													</a>
 												<?php } ?>
 											</div>
 										</div>
@@ -360,7 +398,7 @@
 								</div>
 
 								<div class="form-group" style="padding:10px; margin-bottom: 0px;">
-									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" name="print_all" onclick="postAndReload()">Buat Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
+									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" name="print_all" onclick="postAndReload('all')">Buat Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
 								</div>
 							</form>
 						</div>
@@ -399,7 +437,31 @@
 		</div>
 	</div>
 
+    <!-- Single Print -->
+	<script>
+		function printNota(merchantId) {
 
+			const select = document.getElementById('goods_' + merchantId);
+
+			if (!select) {
+				alert('Goods tidak ditemukan');
+				return false;
+			}
+
+			const goods = select.value;
+
+			if (!goods) {
+				alert('Pilih goods terlebih dahulu');
+				return false;
+			}
+
+			const url = `../htmltopdf/nota_tagihan_retail.php?task=singlePrint&merchant_id=${merchantId}&goods=${goods}`;
+			window.open(url, '_blank');
+
+			postAndReload('single'); // reload setelah print
+		}
+	</script>
+	
 	<!-- Radio Button -->
 	<script>
 		document.querySelectorAll('.toggle-switch').forEach(sw => {
@@ -458,15 +520,19 @@
 
 	<!-- Post & reload -->
 	<script>
-		function postAndReload() {
-			var checker = document.getElementById('checker').value;
+		function postAndReload(type) {
 
-			if (checker === '') {
-				// alert('Silakan pilih kasir terlebih dahulu!');
-				return false; // ⛔ hentikan proses
+			// hanya cek kalau cetak ALL
+			if (type === 'all') {
+				var checker = document.getElementById('checker').value;
+
+				if (checker === '') {
+					alert('Silakan pilih kasir terlebih dahulu!');
+					return false; // ⛔ STOP
+				}
 			}
 
-			// ✔️ kasir sudah dipilih → reload
+			// reload tetap jalan
 			setTimeout(function () {
 				location.reload();
 			}, 100);

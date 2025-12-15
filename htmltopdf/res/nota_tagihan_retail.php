@@ -13,7 +13,8 @@
     } 
     elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
         $spv_name = executeScalar("SELECT name FROM admin WHERE username = '".$_SESSION['username']."'");
-        $checker = $_POST['checker'];
+        $checker = executeScalar("SELECT checker_id FROM weighing WHERE  date_in >= CURDATE()
+                AND weighing_sts2 = 'Tanpa Timbang' LIMIT 1 ");
     } 
     else {
         header("Location: login.html");
@@ -35,6 +36,7 @@
 
             // toggle ON = iya, toggle OFF = tidak
             $printStatus = isset($_POST['cetak'][$merchant_id]) ? 'iya' : 'tidak';
+            $goods_id = $_POST['goods'][$i];
 
             // Jika status adalah "tidak", jangan buat weighing
             if ($printStatus == 'tidak') {
@@ -49,7 +51,7 @@
                 // Jika status adalah "iya", buat weighing dan update status cetak
                 $update = mysql_query("
                     UPDATE merchant_retail 
-                    SET print_status = 'iya', print_date = '".$dt_now."' 
+                    SET goods_id = '".$goods_id."', print_status = 'iya', print_date = '".$dt_now."' 
                     WHERE merchant_id = '".$merchant_id."'
                 ");
             }
@@ -137,6 +139,7 @@
     } elseif (isset($_GET['task']) && $_GET['task'] == 'singlePrint') {
         
         $merchant_id = $_GET['merchant_id'];
+        $goods_id = $_GET['goods'];
 
         // generate ID
 		$year 	= date("y");
@@ -169,7 +172,7 @@
                     weighing_sts, weighing_sts2)
                     VALUES 
                     ('".$id."', '".$nopol."', '0', '0', '0', '0',
-                    '".$checker."', '".$merchant_id."', '79',
+                    '".$checker."', '".$merchant_id."', '".$goods_id."',
                     '".$dt_now."', '".$dt_now."', '".$time_now."', '".$time_now."', '".$dt_now."',
                     'Tidak',
                     '".$tarifretail."', '".$tarifretail."', 
@@ -179,20 +182,31 @@
 
                 $update = mysql_query("
                     UPDATE merchant_retail 
-                    SET print_status = 'iya', print_date = '".$dt_now."' 
+                    SET goods_id = '".$goods_id."', print_status = 'iya', print_date = '".$dt_now."' 
                     WHERE merchant_id = '".$merchant_id."'
                 ");
 
                 $shownIds[] = $id;
 
-                $single_insert_log = mysql_query("
-                    INSERT INTO cashier_log 
-                    (cashier_log_id, cashier_user, cashier_action, cashier_target, 
-                    cashier_nopol, cashier_merchant_id, action_time)
-                    VALUES 
-                    ('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
-                    '".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
-                ");
+                if (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
+                    $single_insert_log = mysql_query("
+                        INSERT INTO spv_log 
+                        (spv_log_id, spv_user, spv_action, spv_target, 
+                        spv_nopol, spv_merchant_id, spv_reason, action_time)
+                        VALUES 
+                        ('', '".$spv_name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+                        '".$id."', '".$nopol."', '".$merchant_id."', 'Tidak Ada', '".$dt_now."')
+                    ");
+                } elseif (!empty($_SESSION['checker'])) {
+                    $single_insert_log = mysql_query("
+                        INSERT INTO cashier_log 
+                        (cashier_log_id, cashier_user, cashier_action, cashier_target, 
+                        cashier_nopol, cashier_merchant_id, action_time)
+                        VALUES 
+                        ('', '".$name."', 'Membuat data retail (".$nopol.") status Tanpa Timbang',
+                        '".$id."', '".$nopol."', '".$merchant_id."', '".$dt_now."')
+                    ");
+                }
 
                 if ($singleInsert && $single_insert_log) {
                     $_SESSION['success'] = true;

@@ -422,6 +422,7 @@
 	// Input Pedagang Retail ============================================================================================================================
 	if ($task == 'createMerchantRetail') {
 		$merchantId = $_POST['merchant'];
+		$goodsId = $_POST['goods_id'];
 		$dateNow	= date("Y-m-d");
 
 		$query = "SELECT * FROM merchant_retail WHERE merchant_id = '".$merchantId."'";
@@ -437,8 +438,8 @@
 			exit();
 		}
 
-		$insert = mysql_query("INSERT INTO `merchant_retail` ( `merchant_id`, `print_status`, `created_at`) 
-								VALUES ( '".$merchantId."', 'iya', '".$dateNow."')");
+		$insert = mysql_query("INSERT INTO `merchant_retail` ( `merchant_id`, `goods_id`, `print_status`, `created_at`) 
+								VALUES ( '".$merchantId."', '".$goodsId."', 'iya', '".$dateNow."')");
 								
 		if ($insert) {
 			// Alert Information
