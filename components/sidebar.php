@@ -271,6 +271,191 @@
 	.prev-btn { left: 15px; }
 	.next-btn { right: 15px; }
 
+
+	/* Collapse Sidebar */
+	/* Sidebar tetap bisa scroll */
+	.sidebar-nav {
+		overflow-y: auto;
+		scrollbar-width: none;        /* Firefox */
+		-ms-overflow-style: none;     /* IE & Edge lama */
+	}
+
+	/* Chrome, Safari, Edge */
+	.sidebar-nav::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+	.sidebar {
+		width: 230px;
+		transition: all 0.3s ease;
+	}
+
+	/* Content ikut geser */
+	#page-wrapper {
+		margin-left: 240px;
+		transition: all 0.3s ease;
+	}
+
+	/* Mode sidebar kecil */
+	body.sidebar-collapse .sidebar {
+		width: 60px;
+	}
+
+	/* Content ikut mengecil */
+	body.sidebar-collapse #page-wrapper {
+		margin-left: 60px;
+	}
+
+	/* Sembunyikan teks menu */
+	body.sidebar-collapse .sidebar .nav > li > a span,
+	body.sidebar-collapse .sidebar .nav-second-level {
+		display: none;
+	}
+
+	/* Tengah ikon */
+	body.sidebar-collapse .sidebar .nav > li > a {
+		text-align: center;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	/* === PROFILE SAAT COLLAPSE === */
+	body.sidebar-collapse .profile-sidebar {
+		justify-content: center;   /* center horizontal */
+		padding: 15px 0;
+	}
+
+	/* Sembunyikan text */
+	body.sidebar-collapse .profile-sidebar .text-profile {
+		display: none;
+	}
+
+	/* Foto tetap center & proporsional */
+	body.sidebar-collapse .profile-sidebar img {
+		margin: 0;
+		width: 40px;
+		height: 40px;
+	}
+
+	body.sidebar-collapse .profile-sidebar:hover img {
+		transform: scale(1.05);
+		transition: 0.2s;
+	}
+
+
+	.sidebar-toggle-btn {
+		background: transparent;
+		border: none;
+		color: #fff;
+		font-size: 18px;
+		width: 40px;
+		height: 40px;
+		margin-left: 5px;
+		margin-top: 5px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sidebar-toggle-btn:hover {
+		background: rgba(255,255,255,0.2);
+		border-radius: 4px;
+	}
+
+	/* ===== SIDEBAR DARK MODE ===== */
+	.sidebar {
+		width: 240px;
+		background-color: #1f2937;
+		border-right: 1px solid #2d3748;
+		transition: all 0.3s ease;
+	}
+
+	/* Menu utama */
+	.sidebar .nav > li > a {
+		color: #e5e7eb;
+		padding: 12px 18px;
+		font-size: 14px;
+		transition: all 0.2s ease;
+	}
+
+	/* Icon */
+	.sidebar .nav > li > a i {
+		color: #e5e7eb;
+		width: 20px;
+		text-align: center;
+		margin-right: 8px;
+	}
+
+	/* Hover */
+	.sidebar .nav > li > a:hover {
+		background-color: #374151;
+		color: #ffffff;
+	}
+
+	/* Active menu */
+	.sidebar .nav > li.active > a,
+	.sidebar .nav > li > a.active {
+		background-color: #111827;
+		color: #ffffff;
+	}
+
+	/* Submenu */
+	.sidebar .nav-second-level {
+		background-color: #111827;
+	}
+
+	.sidebar .nav-second-level li a {
+		color: #cbd5f5;
+		padding-left: 40px;
+	}
+
+	.sidebar .nav-second-level li a:hover {
+		background-color: #1f2937;
+		color: #ffffff;
+	}
+
+	.sidebar .nav > li {
+    	border-bottom: 1px solid rgba(255,255,255,0.06);
+	}
+
+	.profile-sidebar {
+		display: flex;
+		align-items: center;
+		padding: 15px;
+		gap: 12px;
+		background-color: #1f2937;
+
+		/* divider */
+		border-bottom: 1px solid rgba(255,255,255,0.08);
+	}
+
+
+	/* Foto */
+	.profile-sidebar img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	/* Text */
+	.text-profile {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.2;
+	}
+
+	.text-profile b {
+		color: #ffffff;
+		font-size: 16px;
+		margin-bottom: 5px;
+	}
+
+	.text-profile span {
+		color: #9ca3af;     /* abu lembut */
+		font-size: 14px;
+	}
 </style>
 
 
@@ -282,7 +467,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="dashboard.php" style="color: #ffffff;"><i class="fa fa-balance-scale fa-fw silhouette"></i> <b class="silhouette">TIMBANGAN PISS</b></a>
+        <a class="navbar-brand" href="dashboard.php" style="color: #ffffff; background-color: #111827; width: 240px;"><i class="fa fa-balance-scale fa-fw silhouette"></i> <b class="silhouette">TIMBANGAN PISS</b></a>
+		<button type="button" class="sidebar-toggle-btn"
+			onclick="toggleSidebar()">
+			<i class="fa fa-bars"></i>
+		</button>
     </div>
 			
 	<ul class="nav navbar-top-links navbar-right">
@@ -293,10 +482,9 @@
 			style="color: #ffffff !important; background-color: transparent !important;"
 			onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'" 
 			onmouseout="this.style.backgroundColor='transparent'">
-				<!-- <i class="fa fa-user fa-fw" style="color: #ffffff;"></i> -->
-				<span style="color: #ffffff;"><?php echo $greetingMessage; ?></span>
-				<b style="text-transform: capitalize; color: #ffffff;"><?php echo 'Kasir - ' . $checkerName; ?>&nbsp;</b>
-				<img id="previewPhoto" class="nav-profile-img" src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../uploads/profile-default.png'; ?>">&nbsp; 
+
+				<i class="fa fa-cog" style="color: #ffffff;"></i>&nbsp;
+				<b style="text-transform: capitalize; color: #ffffff;">Pengaturan</b>&nbsp;
 				<i id="dropdownIcon" class="fa fa-angle-down" style="color: #ffffff;"></i>
 			</a>
 			<ul class="dropdown-menu dropdown-user" style="width: 200px; margin-right: 10px; margin-top: 10px; border: 3px solid #ffffff; background-color: #428bca; border-radius: 10px;">
@@ -484,12 +672,25 @@
 			</div>
 
             <div class="navbar-default sidebar" role="navigation">
-				<div class="sidebar-nav navbar-collapse" style="overflow-y: auto; max-height: 100vh;">
+				<div class="sidebar-nav navbar-collapse" style="min-height: 100vh;  background-color: #1f2937;">
 					<ul class="nav" id="side-menu" style="margin-bottom: 70px;">
-						<li><a class="<?= isActive(['dashboard.php']); ?>" href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard </a></li>
+						<!-- Profile -->
+						<div class="profile-sidebar">
+							<img id="previewPhoto" class="nav-profile-img"
+								src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../uploads/profile-default.png'; ?>">
+
+							<div class="text-profile">
+								<b><?php echo $checkerName; ?></b>
+								<span>Kasir</span>
+							</div>
+						</div>
+
+						
+						<!-- Navigation -->
+						<li><a class="<?= isActive(['dashboard.php']); ?>" href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> <span>Dashboard</span> </a></li>
 
 						<li class="<?= isParentActive(['index.php', 'index2.php', 'index3.php', 'index4.php', 'check2.php', 'check.php', 'check_edit.php', 'index5.php', 'listing.php']); ?>">
-							<a href="#"><i class="fa fa-balance-scale fa-fw"></i> Timbangan<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-balance-scale fa-fw"></i> <span>Timbangan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a class="<?= isActive(['index.php', 'index2.php', 'index3.php']); ?>" href="index.php"><i class="fa fa-truck fa-fw"></i> Masuk / Keluar / Kir </a></li>
 								<li><a class="<?= isActive(['index4.php']); ?>" href="index4.php"><i class="fa fa-users fa-fw"></i> Pedagang Retail </a></li>
@@ -500,7 +701,7 @@
 						</li>
 
 						<li class="<?= isParentActive(['pay.php', 'pay_mitra.php', 'pay_mitra_salary.php', 'pay_mitra_salary2.php', 'pay_acc.php', 'pay_acc_mitra.php', 'pay_tonase_mitra.php', 'pay_acc_tonase_mitra.php']); ?>">
-							<a href="#"><i class="fa fa-credit-card fa-fw"></i> Pembayaran & Setoran<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-credit-card fa-fw"></i> <span>Pembayaran & Setoran</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<!-- <li class="<?= isParentActive(['pay.php', 'pay_acc.php']); ?>"><a href="#"><i class="fa fa-truck fa-fw"></i> Tonase<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
@@ -524,7 +725,7 @@
 						</li>
 
 						<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php', 'report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php', 'report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php', 'report_mitra.php', 'report_kokm.php', 'report_kokm_mitra.php', 'report_outstanding_ko.php', 'report_outstanding_ko_mitra.php']); ?>">
-							<a href="#"><i class="fa fa-clipboard fa-fw"></i> Laporan<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-clipboard fa-fw"></i> <span>Laporan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<!-- <li><a href="#"><i class="fa fa-line-chart fa-fw"></i> Transaksi Timbang<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
@@ -653,14 +854,14 @@
 							</ul>
 
 						<li class="<?= isParentActive(['laborer.php', 'transportation.php', 'transportation_edit.php']); ?>">
-							<a href="#"><i class="fa fa-database fa-fw"></i> Master<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-database fa-fw"></i> <span>Master</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<!-- <li><a class="<?= isActive('laborer.php'); ?>" href="laborer.php"><i class="fa fa-group fa-fw"></i> Mitra</a></li> -->
 								<li><a class="<?= isActive(['transportation.php', 'transportation_edit.php']); ?>" href="transportation.php"><i class="fa fa-truck fa-fw"></i> Kendaraan </a></li>
 							</ul>
 						</li>
 
-						<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> Pencapaian Cashier</a></li>
+						<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> <span>Pencapaian Cashier</span></a></li>
 							<li>
 								<a class="<?= isActive(['developer.php']); ?>" href="developer.php">
 									<?php 
@@ -670,10 +871,10 @@
 											echo '<span class="notification-revision-hidden"></span>';
 										}
 									?>
-									<i class="fa fa-pencil fa-fw"></i> Revisi <span style="margin-left: 100px;"></span>
+									<i class="fa fa-pencil fa-fw"></i> <span>Revisi</span> <span style="margin-left: 100px;"></span>
 								</a>
 							</li>
-							<li><a class="<?= isActive(['changelog.php']); ?>" href="changelog.php"><i class="fa fa-history fa-fw"></i> Update Log </a></li>
+							<li><a class="<?= isActive(['changelog.php']); ?>" href="changelog.php"><i class="fa fa-history fa-fw"></i><span> Update Log</span> </a></li>
 						</li>
                     </ul>
                 </div>
