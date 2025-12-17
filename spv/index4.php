@@ -351,7 +351,7 @@
 														class="btn btn-primary btn-block btn-sm"
 														style="border-radius:20px;"
 														onclick="printNota('<?= $d['merchant_id']; ?>'); return false;">
-														Buat Nota&nbsp;&nbsp;<i class="fa fa-print"></i>
+														Buat Tagihan&nbsp;&nbsp;<i class="fa fa-print"></i>
 													</a>
 												<?php } ?>
 											</div>
