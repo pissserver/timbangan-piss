@@ -34,7 +34,7 @@
 					<br /><br><br><br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-search fa-fw"></i> Listing Data
+                            <i class="fa fa-search fa-fw"></i> Listing Nota
                         </div>
                         <div class="panel-body">
 							<div class="row">
@@ -51,6 +51,12 @@
 											<center><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i>&nbsp;Cari </button></center>
 										</div>
 									</div>
+
+									<div class="row d-flex justify-content-center align-items-center">
+											<div class="col-md-12 text-center">
+												<img src="img/listing-img.png" alt="Empty" width="350px" class="img-fluid">
+											</div>
+										</div>
 								</fieldset>
 								</form>
 							</div>
