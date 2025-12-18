@@ -214,8 +214,6 @@
 			return true;
 			}
 		</script>
-		<link rel="stylesheet" href="https://unpkg.com/viewerjs/dist/viewer.css">
-		<script src="https://unpkg.com/viewerjs/dist/viewer.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
