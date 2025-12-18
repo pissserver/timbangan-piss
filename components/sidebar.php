@@ -335,6 +335,7 @@
 		margin: 0;
 		width: 40px;
 		height: 40px;
+		cursor: pointer;
 	}
 
 	body.sidebar-collapse .profile-sidebar:hover img {
@@ -437,6 +438,7 @@
 		height: 50px;
 		border-radius: 50%;
 		object-fit: cover;
+		cursor: pointer;
 	}
 
 	/* Text */
@@ -675,7 +677,7 @@
 				<div class="sidebar-nav navbar-collapse" style="min-height: 100vh;  background-color: #1f2937;">
 					<ul class="nav" id="side-menu" style="margin-bottom: 70px;">
 						<!-- Profile -->
-						<div class="profile-sidebar">
+						<div class="profile-sidebar" id="photoContainer">
 							<img id="previewPhoto" class="nav-profile-img"
 								src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../uploads/profile-default.png'; ?>">
 
@@ -720,7 +722,7 @@
 
 								<li><a class="<?= isActive(['pay_tonase_mitra.php']); ?>" href="pay_tonase_mitra.php"><i class="fa fa-money fa-fw"></i> Pembayaran</a></li>
 								<li><a class="<?= isActive(['pay_acc_tonase_mitra.php']); ?>" href="pay_acc_tonase_mitra.php"><i class="fa fa fa-book fa-fw"></i> Setoran KO</a></li>
-								<li><a class="<?= isActive(['pay_mitra_salary.php', 'pay_mitra_salary2.php']); ?>" href="pay_mitra_salary.php"><i class="fa fa-mail-forward fa-fw"></i> Pembulatan Upah Mitra </a></li>
+								<li><a class="<?= isActive(['pay_mitra_salary.php', 'pay_mitra_salary2.php']); ?>" href="pay_mitra_salary.php" style="display:flex; align-items:center;"><i class="fa fa-mail-forward fa-fw"></i> Pembulatan Upah Mitra </a></li>
 							</ul>
 						</li>
 
@@ -861,7 +863,7 @@
 							</ul>
 						</li>
 
-						<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> <span>Pencapaian Cashier</span></a></li>
+						<li><a class="<?= isActive(['achievement.php', 'achievement_detail.php', 'achievement_detail2.php']); ?>" href="achievement.php"><i class="fa fa-trophy fa-fw"></i> <span>Pencapaian Kasir</span></a></li>
 							<li>
 								<a class="<?= isActive(['developer.php']); ?>" href="developer.php">
 									<?php 
@@ -1148,4 +1150,18 @@
 	}
 </script>
 
+<!-- Viewer JS untuk zoom foto profil -->
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
 
+		const container = document.getElementById('photoContainer');
+
+		const viewer = new Viewer(container, {
+			navbar: false,
+			toolbar: true,
+			title: false,
+			zoomRatio: 0.5,
+		});
+
+	});
+</script>

@@ -363,8 +363,6 @@
 			return true;
 			}
 		</script>
-		<link rel="stylesheet" href="https://unpkg.com/viewerjs/dist/viewer.css">
-		<script src="https://unpkg.com/viewerjs/dist/viewer.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -376,7 +374,7 @@
 					<div class="col-md-12">
 						<div class="profile-preview">
 							<div class="profile-card">
-								<div class="img-profile" id="photoContainer">
+								<div class="img-profile" id="photoContainerProfile">
 									<div class="achievement-badge-head">
 										<?php
 												$idChecker = executeScalar("SELECT checker_id FROM checker WHERE checker_code = '".$_SESSION['checker']."'");
@@ -922,7 +920,7 @@
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 
-				const container = document.getElementById('photoContainer');
+				const container = document.getElementById('photoContainerProfile');
 
 				const viewer = new Viewer(container, {
 					navbar: false,
@@ -933,7 +931,6 @@
 
 			});
 		</script>
-
 
 		<!-- Script Background -->
 		<script>
