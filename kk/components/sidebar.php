@@ -558,10 +558,8 @@
 			style="color: #ffffff !important; background-color: transparent !important;"
 			onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'" 
 			onmouseout="this.style.backgroundColor='transparent'">
-				<!-- <i class="fa fa-user fa-fw" style="color: #ffffff;"></i> -->
-				<span style="color: #ffffff;"><?php echo $greetingMessage; ?></span>
-				<b style="text-transform: capitalize; color: #ffffff;"><?php echo 'Keuangan - ' . $name; ?>&nbsp;</b>
-				<img id="previewPhoto" class="nav-profile-img" src="<?php echo $photoUrl ? '../../uploads/' . $photoUrl : '../../uploads/profile-default.png'; ?>">&nbsp; 
+				<i class="fa fa-cog" style="color: #ffffff;"></i>&nbsp;
+				<b style="text-transform: capitalize; color: #ffffff;">Pengaturan</b>&nbsp;
 				<i id="dropdownIcon" class="fa fa-angle-down" style="color: #ffffff;"></i>
 			</a>
 			<ul class="dropdown-menu dropdown-user" style="width: 200px; margin-right: 10px; margin-top: 10px; border: 3px solid #ffffff; background-color: #428bca; border-radius: 10px;">
