@@ -294,31 +294,6 @@
 		padding-right: 0;
 	}
 
-	/* === PROFILE SAAT COLLAPSE === */
-	body.sidebar-collapse .profile-sidebar {
-		justify-content: center;   /* center horizontal */
-		padding: 15px 0;
-	}
-
-	/* Sembunyikan text */
-	body.sidebar-collapse .profile-sidebar .text-profile {
-		display: none;
-	}
-
-	/* Foto tetap center & proporsional */
-	body.sidebar-collapse .profile-sidebar img {
-		margin: 0;
-		width: 40px;
-		height: 40px;
-		cursor: pointer;
-	}
-
-	body.sidebar-collapse .profile-sidebar:hover img {
-		transform: scale(1.05);
-		transition: 0.2s;
-	}
-
-
 	.sidebar-toggle-btn {
 		background: transparent;
 		border: none;
@@ -395,43 +370,168 @@
     	border-bottom: 1px solid rgba(255,255,255,0.06);
 	}
 
-	.profile-sidebar {
+	/* ==============================
+	PROFILE CARD (NORMAL)
+	================================ */
+	.profile-card-sidebar {
 		display: flex;
 		align-items: center;
-		padding: 15px;
 		gap: 12px;
-		background-color: #1f2937;
-
-		/* divider */
-		border-bottom: 1px solid rgba(255,255,255,0.08);
+		padding: 12px;
+		margin: 15px;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 55%);
+		border-radius: 14px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.35);
+		transition: all .3s ease;
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
 	}
 
+	/* Ring cahaya */
+	.profile-card-sidebar::before {
+		content: "";
+		position: absolute;
+		inset: -2px;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			#facc15 60deg,
+			#fde68a 120deg,
+			#f59e0b 180deg,
+			#fde68a 240deg,
+			#facc15 300deg,
+			transparent 360deg
+		);
+		animation: rotateGlow 6s linear infinite;
+		filter: blur(6px);
+		opacity: .9;
+		z-index: -1;
+	}
 
-	/* Foto */
-	.profile-sidebar img {
-		width: 50px;
-		height: 50px;
+	/* Mask agar glow hanya di pinggir */
+	.profile-card-sidebar::after {
+		content: "";
+		position: absolute;
+		inset: 2px;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 55%);
+		border-radius: 14px;
+		z-index: -1;
+	}
+
+	/* Animasi putar */
+	@keyframes rotateGlow {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.profile-card-sidebar:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 18px rgba(0,0,0,.45);
+	}
+
+	/* ==============================
+	AVATAR
+	================================ */
+	.profile-avatar {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.profile-avatar img {
+		width: 48px;
+		height: 48px;
 		border-radius: 50%;
 		object-fit: cover;
+		border: 2px solid #3b82f6;
 		cursor: pointer;
 	}
 
-	/* Text */
-	.text-profile {
-		display: flex;
-		flex-direction: column;
-		line-height: 1.2;
+	/* STATUS ONLINE */
+	.status-online {
+		position: absolute;
+		bottom: 2px;
+		right: 2px;
+		width: 10px;
+		height: 10px;
+		background: #22c55e;
+		border: 2px solid #0f172a;
+		border-radius: 50%;
 	}
 
-	.text-profile b {
-		color: #ffffff;
-		font-size: 16px;
-		margin-bottom: 5px;
-	}
-
-	.text-profile span {
-		color: #9ca3af;     /* abu lembut */
+	/* ==============================
+	PROFILE INFO
+	================================ */
+	.profile-info b {
+		display: block;
 		font-size: 14px;
+		color: #ffffff;
+	}
+
+	.profile-info span {
+		font-size: 11px;
+		color: #94a3b8;
+	}
+
+	/* ROLE BADGE */
+	.profile-card-sidebar .role-badge {
+		display: inline-block;
+		margin-top: 2px;
+		padding: 3px 8px;
+		font-size: 10px;
+		border-radius: 20px;
+		background: #2563eb;
+		color: #ffffff !important;
+		line-height: 1.3;
+	}
+
+
+	/* ==============================
+	PROFILE CARD SAAT COLLAPSE
+	================================ */
+	body.sidebar-collapse .profile-card-sidebar {
+		justify-content: center;
+		align-items: center;
+		padding: 12px 0;
+		margin: 15px auto;
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top, rgba(59,130,246,.25), transparent 60%);
+	}
+
+	/* SEMBUNYIKAN TEKS */
+	body.sidebar-collapse .profile-info {
+		display: none;
+	}
+
+	/* AVATAR SAAT COLLAPSE */
+	body.sidebar-collapse .profile-avatar img {
+		width: 42px;
+		height: 42px;
+		border-width: 2px;
+	}
+
+	/* STATUS ONLINE SAAT COLLAPSE */
+	body.sidebar-collapse .status-online {
+		bottom: 3px;
+		right: 3px;
+	}
+
+	/* HOVER SAAT COLLAPSE */
+	body.sidebar-collapse .profile-card-sidebar:hover {
+		transform: scale(1.05);
+		box-shadow: 0 10px 22px rgba(0,0,0,.6);
 	}
 </style>
 
@@ -554,13 +654,16 @@
             	<div class="sidebar-nav navbar-collapse" style="min-height: 100vh;  background-color: #1f2937;">
 					<ul class="nav" id="side-menu" style="margin-bottom: 70px;">
 						<!-- Profile -->
-						<div class="profile-sidebar" id="profileContainer">
-							<img id="previewPhoto" class="nav-profile-img"
+						<div class="profile-card-sidebar" id="profileContainer">
+							<div class="profile-avatar">
+								<img id="previewPhoto"
 								src="<?php echo $photoUrl ? '../../uploads/' . $photoUrl : '../../uploads/profile-default.png'; ?>">
+								<span class="status-online"></span>
+							</div>
 
-							<div class="text-profile">
+							<div class="profile-info">
 								<b><?php echo $name; ?></b>
-								<span>Keuangan</span>
+								<span class="role-badge">Keuangan</span>
 							</div>
 						</div>
 

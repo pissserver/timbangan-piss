@@ -454,25 +454,141 @@
     	border-bottom: 1px solid rgba(255,255,255,0.06);
 	}
 
-	.profile-sidebar {
+	/* ==============================
+	PROFILE CARD (NORMAL)
+	================================ */
+	.profile-card-sidebar {
 		display: flex;
 		align-items: center;
-		padding: 15px;
 		gap: 12px;
-		background-color: #1f2937;
-
-		/* divider */
-		border-bottom: 1px solid rgba(255,255,255,0.08);
+		padding: 12px;
+		margin: 15px;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 55%);
+		border-radius: 14px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.35);
+		transition: all .3s ease;
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
 	}
 
+	/* Ring cahaya */
+	.profile-card-sidebar::before {
+		content: "";
+		position: absolute;
+		inset: -2px;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			#facc15 60deg,
+			#fde68a 120deg,
+			#f59e0b 180deg,
+			#fde68a 240deg,
+			#facc15 300deg,
+			transparent 360deg
+		);
+		animation: rotateGlow 6s linear infinite;
+		filter: blur(6px);
+		opacity: .9;
+		z-index: -1;
+	}
 
-	/* Foto */
-	.profile-sidebar img {
-		width: 50px;
-		height: 50px;
+	/* Mask agar glow hanya di pinggir */
+	.profile-card-sidebar::after {
+		content: "";
+		position: absolute;
+		inset: 2px;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 55%);
+		border-radius: 14px;
+		z-index: -1;
+	}
+
+	/* Animasi putar */
+	@keyframes rotateGlow {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.profile-card-sidebar:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 18px rgba(0,0,0,.45);
+	}
+
+	/* ==============================
+	AVATAR
+	================================ */
+	.profile-avatar {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.profile-avatar img {
+		width: 48px;
+		height: 48px;
 		border-radius: 50%;
 		object-fit: cover;
+		border: 2px solid #3b82f6;
 		cursor: pointer;
+	}
+
+	/* STATUS ONLINE */
+	.status-online {
+		position: absolute;
+		bottom: 2px;
+		right: 2px;
+		width: 10px;
+		height: 10px;
+		background: #22c55e;
+		border: 2px solid #0f172a;
+		border-radius: 50%;
+	}
+
+	/* ==============================
+	PROFILE CARD SAAT COLLAPSE
+	================================ */
+	body.sidebar-collapse .profile-card-sidebar {
+		justify-content: center;
+		align-items: center;
+		padding: 12px 0;
+		margin: 15px auto;
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		background:
+			linear-gradient(135deg, #334155, #020617),
+			radial-gradient(circle at top, rgba(59,130,246,.25), transparent 60%);
+	}
+
+	/* SEMBUNYIKAN TEKS */
+	body.sidebar-collapse .text-profile {
+		display: none;
+	}
+
+	/* AVATAR SAAT COLLAPSE */
+	body.sidebar-collapse .profile-avatar img {
+		width: 42px;
+		height: 42px;
+		border-width: 2px;
+	}
+
+	/* STATUS ONLINE SAAT COLLAPSE */
+	body.sidebar-collapse .status-online {
+		bottom: 3px;
+		right: 3px;
+	}
+
+	/* HOVER SAAT COLLAPSE */
+	body.sidebar-collapse .profile-card-sidebar:hover {
+		transform: scale(1.05);
+		box-shadow: 0 10px 22px rgba(0,0,0,.6);
 	}
 
 	/* Text */
@@ -613,9 +729,12 @@
                 <div class="sidebar-nav navbar-collapse" style="min-height: 100vh;  background-color: #1f2937;">
 					<ul class="nav" id="side-menu" style="margin-bottom: 70px;">
 						<!-- Profile -->
-						<div class="profile-sidebar" id="photoContainerProfile">
-							<img id="previewPhoto" class="nav-profile-img"
+						<div class="profile-card-sidebar" id="profileContainer">
+							<div class="profile-avatar">
+								<img id="previewPhoto"
 								src="<?php echo $photoUrl ? '../../uploads/' . $photoUrl : '../../uploads/profile-default.png'; ?>">
+								<span class="status-online"></span>
+							</div>
 
 							<div class="text-profile">
 								<b><?php echo $name; ?></b>
@@ -1094,7 +1213,7 @@
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 
-		const container = document.getElementById('photoContainerProfile');
+		const container = document.getElementById('profileContainer');
 
 		const viewer = new Viewer(container, {
 			navbar: false,
