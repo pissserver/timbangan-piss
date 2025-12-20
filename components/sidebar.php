@@ -576,6 +576,155 @@
 		color: #9ca3af;     /* abu lembut */
 		font-size: 14px;
 	}
+
+	/* ======================================================
+	BASE SIDEBAR CARD (ALL LEVEL)
+	====================================================== */
+	.sidebar-nav .nav li > a {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		position: relative;
+
+		padding: 12px 14px;
+		margin: 6px 10px;
+		border-radius: 14px;
+
+		background: rgba(255,255,255,0.04);
+		backdrop-filter: blur(4px);
+
+		color: #cbd5e1;
+		transition: all .3s ease;
+	}
+
+	/* Text fleksibel agar arrow ke kanan */
+	.sidebar-nav .nav li > a span {
+		flex: 1;
+	}
+
+	/* Hover card */
+	.sidebar-nav .nav li > a:hover {
+		background: rgba(250, 204, 21, 0.10);
+		transform: translateX(4px);
+		color: #fff;
+	}
+
+	/* ======================================================
+	ICON MINI CARD
+	====================================================== */
+	.sidebar-nav .nav li > a i:not(.arrow) {
+		width: 34px;
+		height: 34px;
+		min-width: 34px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border-radius: 10px;
+		background: rgba(255,255,255,0.08);
+
+		color: #facc15;
+		font-size: 14px;
+
+		transition: all .3s ease;
+	}
+
+	/* Hover icon */
+	.sidebar-nav .nav li > a:hover i:not(.arrow) {
+		background: rgba(250, 204, 21, 0.25);
+		color: #fff;
+	}
+
+	/* ======================================================
+	ARROW (SELALU DI KANAN)
+	====================================================== */
+	.sidebar-nav .nav li > a .arrow {
+		margin-left: auto;
+		font-size: 13px;
+		opacity: 0.7;
+		transition: transform .3s ease;
+	}
+
+	/* Arrow rotate saat submenu open */
+	.sidebar-nav .nav li.open > a .arrow {
+		transform: rotate(180deg);
+	}
+
+	/* ======================================================
+	ACTIVE STATE (ALL LEVEL)
+	====================================================== */
+	.sidebar-nav .nav li > a.active {
+		background: linear-gradient(135deg, #facc15, #f59e0b);
+		color: #1f2937;
+		font-weight: 600;
+
+		box-shadow:
+			0 0 12px rgba(250, 204, 21, 0.9),
+			0 0 28px rgba(250, 204, 21, 0.6);
+
+		animation: glowPulse 1.8s infinite alternate;
+	}
+
+	/* Icon aktif */
+	.sidebar-nav .nav li > a.active i:not(.arrow) {
+		background: rgba(31, 41, 55, 0.25);
+		color: #1f2937;
+		box-shadow: inset 0 0 8px rgba(0,0,0,0.25);
+	}
+
+	/* Garis samping emas */
+	.sidebar-nav .nav li > a.active::before {
+		content: '';
+		position: absolute;
+		left: -6px;
+		top: 15%;
+		width: 4px;
+		height: 70%;
+		background: linear-gradient(to bottom, #fde68a, #f59e0b);
+		border-radius: 5px;
+	}
+
+	/* ======================================================
+	INDENT LEVEL (HIRARKI MENU)
+	====================================================== */
+
+	/* SECOND LEVEL */
+	.sidebar-nav .nav-second-level > li > a {
+		margin-left: 24px;
+		padding-left: 16px;
+		background: rgba(255,255,255,0.03);
+	}
+
+	/* THIRD LEVEL */
+	.sidebar-nav .nav-third-level > li > a {
+		margin-left: 44px;
+		padding-left: 16px;
+		background: rgba(255,255,255,0.02);
+	}
+
+	/* Active second & third tetap glow */
+	.sidebar-nav .nav-second-level li > a.active,
+	.sidebar-nav .nav-third-level li > a.active {
+		background: linear-gradient(135deg, #facc15, #f59e0b);
+		color: #1f2937;
+	}
+
+	/* ======================================================
+	GLOW ANIMATION
+	====================================================== */
+	@keyframes glowPulse {
+		from {
+			box-shadow:
+				0 0 8px rgba(250, 204, 21, 0.6),
+				0 0 20px rgba(250, 204, 21, 0.4);
+		}
+		to {
+			box-shadow:
+				0 0 16px rgba(250, 204, 21, 1),
+				0 0 36px rgba(250, 204, 21, 0.8);
+		}
+	}
 </style>
 
 
@@ -795,7 +944,7 @@
 				<div class="sidebar-nav navbar-collapse" style="min-height: 100vh;  background-color: #1f2937;">
 					<ul class="nav" id="side-menu" style="margin-bottom: 70px;">
 						<!-- Profile Card -->
-						<div class="profile-card-sidebar" id="photoContainer">
+						<div class="profile-card-sidebar" id="photoContainer" style="margin-bottom: 30px;">
 							<div class="profile-avatar">
 								<img id="previewPhoto"
 									src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../uploads/profile-default.png'; ?>">
