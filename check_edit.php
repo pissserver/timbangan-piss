@@ -288,17 +288,18 @@
 											
 											<?php
 												$sameMerchant = executeScalar("select merchant_id from weighing where reffer = '".$id."'");
+												$weighingStatus = executeScalar("select weighing_sts2 from weighing where weighing_id = '".$id."'");
 											?>
 											<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:5px;">
 												<label>Nopol</label>
 												<?php 
-													if($sameMerchant === $r['merchant_id'] && $c == NULL) { ?>
+													if(($sameMerchant === $r['merchant_id'] || $weighingStatus == 'Pecahan') && $c == NULL) { ?>
 														<p style="color: red; font-size: 11px; display: inline-block;">*Nopol utama saat dipecah</p>
 													<?php }
 												?>
-												<input type="text" class="form-control" id="nopol" name="nopol" value="<?php echo $r['nopol']; ?>" required <?php echo ($sameMerchant === $r['merchant_id'] || $c != NULL) ? 'disabled' : ''; ?>>  
+												<input type="text" class="form-control" id="nopol" name="nopol" value="<?php echo $r['nopol']; ?>" required <?php echo ($sameMerchant === $r['merchant_id'] || $weighingStatus == 'Pecahan' || $c != NULL) ? 'disabled' : ''; ?>>  
 												
-												<?php if ($sameMerchant === $r['merchant_id'] || $c != NULL): ?>
+												<?php if ($sameMerchant === $r['merchant_id'] || $weighingStatus == 'Pecahan' || $c != NULL): ?>
 													<!-- Hidden input agar value tetap terkirim -->
 													<input type="hidden" name="nopol" value="<?php echo $r['nopol']; ?>">
 												<?php endif; ?>
@@ -342,12 +343,7 @@
 
 											<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:5px;">
 												<label>Barang</label>
-												<?php 
-													if($sameMerchant === $r['merchant_id'] && $c == NULL) { ?>
-														<p style="color: red; font-size: 11px; display: inline-block;">*Barang utama saat dipecah</p>
-													<?php }
-												?>
-												<select class="form-control <?php echo ($sameMerchant === $r['merchant_id'] || $c != NULL) ? '' : 'chzn-select'; ?>" name="goods" id="goods" <?php echo ($sameMerchant === $r['merchant_id'] || $c != NULL) ? 'disabled' : ''; ?> required>
+												<select class="form-control <?php echo $c != NULL ? '' : 'chzn-select'; ?>" name="goods" id="goods" <?php echo $c != NULL ? 'disabled' : ''; ?> required>
 													<option value="<?php echo $r['goods_id']; ?>" required><?php echo $goods; ?></option>
 													<?php
 														$sql 		= mysql_query("select goods_id, goods_name from goods order by goods_name");
@@ -356,11 +352,6 @@
 														<option value="<?php echo $data['goods_id'];?>"><?php echo $data['goods_name'];?></option>
 													<?php } ?>
 												</select>
-
-												<?php if ($sameMerchant === $r['merchant_id'] || $c != NULL): ?>
-													<!-- Hidden input agar value goods tetap terkirim ke backend -->
-													<input type="hidden" name="goods" value="<?php echo $r['goods_id']; ?>">
-												<?php endif; ?>
 											</div>
 										</div>
 
