@@ -72,8 +72,8 @@
 			</td>
 			<td style="vertical-align: middle; text-align:center;">
 				<?php
-				// Data dasar pesan
-				$url = "https://89269b8d8d8a.ngrok-free.app/timbangan-piss/login.html?redirect=pp/developer.php";
+				// Data pesan
+				$url = "https://9d7532a5c30d.ngrok-free.app/timbangan-piss/login.php?redirect=pp/developer";
 				$message = "*REVISI TIMBANGAN*\n\n" .
 					"Nama Pemohon : $checkerName\n" .
 					"No Nota : {$data['type']}{$data['nota']}\n" .
