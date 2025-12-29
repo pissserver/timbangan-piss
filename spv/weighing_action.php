@@ -2869,9 +2869,11 @@
 				//Jika total berat yg dipecah sesuai dgn batas toleransi
 				if($nettotal>=$netto2&&$nettotal<=$netto){
 					//update status transaksi yg lama
+					$first_id	= executeScalar("select weighing_id from weighing where reffer = '".$id."'");
 					$update = mysql_query("	update weighing 
 											set weighing_sts = 'Batal',
 												weighing_sts2 	= 'Dipecah'
+												reffer			= '".$first_id."'
 											where weighing_id	= '".$id."'");
 
 					//update status mitra nota yg dipecah menjadi batal
@@ -3358,6 +3360,23 @@
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
 					}
+
+					//update status transaksi yg lama
+					$first_id	= executeScalar("select weighing_id from weighing where reffer = '".$id."'");
+					$update = mysql_query("	update 	weighing 
+											set 	weighing_sts 	= 'Batal',
+											weighing_sts2 	= 'Dipecah',
+											reffer			= '".$first_id."'	
+											where 	weighing_id		= '".$id."'");
+					
+					//update status mitra nota yg dipecah menjadi batal
+					$update2 = mysql_query("update laborer_fee set laborer_fee_sts = 'Batal' where weighing_id = '".$id."'");
+										
+					// Update pembatalan weighing mitra karena nota dipecah
+					$update3 = mysql_query("update weighing_mitra 
+											set weighing_sts 	= 'Batal',
+											weighing_sts2 	= 'Dipecah'
+											where weighing_id	= '".$id."'");
 
 					if($insert1||$insert2||$insert3||$insert4||$insert5||$insert6||$insert7||$insert8||$insert9||$insert10){
 						$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
