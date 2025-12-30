@@ -719,7 +719,8 @@
     </div>
 
 	<ul class="nav navbar-top-links navbar-right">
-		<?php include 'components/clock.php'; ?>&nbsp;&nbsp;
+		<?php include 'components/clock.php'; ?>
+		<?php include 'components/calculator.php'; ?>&nbsp;&nbsp;
 		<?php include 'components/offcanvas_note.php'; ?>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#" 

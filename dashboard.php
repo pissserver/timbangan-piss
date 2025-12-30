@@ -202,32 +202,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="panel" style="background-color:rgb(179, 177, 41); color: #fff;">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-user fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge" id="checker">Muharam Aam</div>
-                                        <div>Supervisor Timbangan</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a>
-                                <div class="panel-footer">
-                                    <span class="pull-left" style="color: rgb(179, 177, 41);">Sekarang</span>
-                                    <span class="pull-right"><i class="fa fa-calendar-check-o" style="color: rgb(179, 177, 41);"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div> -->
-
+                
                 <br>
                 <div class="row">
                     <div class="col-lg-12">
