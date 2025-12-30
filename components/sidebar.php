@@ -744,7 +744,8 @@
     </div>
 			
 	<ul class="nav navbar-top-links navbar-right">
-		<?php include 'components/clock.php'; ?>&nbsp;&nbsp;
+		<?php include 'components/clock.php'; ?>
+		<?php include 'components/calculator.php'; ?>&nbsp;&nbsp;
 		<?php include 'components/offcanvas_note.php'; ?>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#" 
@@ -896,7 +897,7 @@
 								<div class="row" style="align-items: center;">
 									<div class="col-xs-1 text-center">
 										<!-- <i class="fa fa-user fa-3x text-primary"></i> -->
-										<img id="previewPhotoSwitch" src="img/profile-default.png" style="width:50px; border-radius:100%;">
+										<img id="previewPhotoSwitch" style="width:50px; border-radius:100%;">
 									</div>
 									<input type="hidden" id="modal_id_user" value="">
 									<div class="col-xs-5" style="padding-left: 30px;">
@@ -1376,9 +1377,9 @@
 		$('#modal_id_user').val(id);
 		$('#modal_password').val('');
 		$('#modal_photo').val(photo);
-
+		
 		// 🔥 UPDATE FOTO DI MODAL
-		var photoUrl = photo ? 'uploads/' + photo : 'img/profile-default.png';
+		var photoUrl = photo ? '../uploads/' + photo : 'img/profile-default.png';
 		$('#previewPhotoSwitch').attr('src', photoUrl);
 
 		$('#modalLoginConfirm').modal('show');
