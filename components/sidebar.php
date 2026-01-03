@@ -22,6 +22,24 @@
 		}
 	}
 
+	date_default_timezone_set('Asia/Jakarta');
+	$hour = (int) date('H');
+
+	if ($hour >= 7 && $hour < 15) {
+		$shiftText  = 'Shift 1';
+		$shiftClass = 'shift-pagi';
+		$shiftTime  = '07:00 – 15:00';
+	} elseif ($hour >= 15 && $hour < 23) {
+		$shiftText  = 'Shift 2';
+		$shiftClass = 'shift-sore';
+		$shiftTime  = '15:00 – 23:00';
+	} else {
+		$shiftText  = 'Shift 3';
+		$shiftClass = 'shift-malam';
+		$shiftTime  = '15:00 – 23:00';
+	}
+
+
 	$greetingMessage = greeting();
 
 	$checkerName	= executeScalar("select checker_name from checker where checker_code = '".$_SESSION['checker']."'");
@@ -442,6 +460,77 @@
 		line-height: 1.3;
 	}
 
+	.profile-meta {
+		margin-top: 4px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 10px;
+	}
+
+	.meta-separator {
+		color: rgba(255,255,255,0.5);
+	}
+
+	.shift-badge {
+		padding: 0px 8px;
+		line-height: 18px;
+		border-radius: 10px;
+		font-weight: 500;
+		position: relative;
+    	cursor: pointer;
+	}
+
+	/* Warna shift */
+	.shift-pagi {
+		background: #dcfce7;
+		color: #166534 !important;
+	}
+
+	.shift-sore {
+		background: #ffedd5;
+		color: #9a3412 !important;
+	}
+
+	.shift-malam {
+		background: #e0e7ff;
+		color: #1e3a8a !important;
+	}
+
+	.shift-badge::after {
+		content: attr(data-tooltip);
+		position: absolute;
+		bottom: 130%;
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(65, 75, 97, 0.95);
+		color: #fff;
+		padding: 4px 8px;
+		font-size: 11px;
+		border-radius: 6px;
+		white-space: nowrap;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity .2s ease;
+		z-index: 9999;
+	}
+
+	.shift-badge::before {
+		content: '';
+		position: absolute;
+		bottom: 120%;
+		left: 50%;
+		transform: translateX(-50%);
+		border: 5px solid transparent;
+		border-top-color: rgba(15,23,42,.95);
+		opacity: 0;
+		transition: opacity .2s ease;
+	}
+
+	.shift-badge:hover::after,
+	.shift-badge:hover::before {
+		opacity: 1;
+	}
 
 	/* ==============================
 	PROFILE CARD SAAT COLLAPSE
@@ -742,7 +831,7 @@
 			<i class="fa fa-bars"></i>
 		</button>
     </div>
-			
+	
 	<ul class="nav navbar-top-links navbar-right">
 		<?php include 'components/clock.php'; ?>
 		<?php include 'components/calculator.php'; ?>&nbsp;&nbsp;
@@ -954,7 +1043,13 @@
 
 							<div class="profile-info">
 								<b><?php echo $checkerName; ?></b>
-								<span class="role-badge">Kasir</span>
+								<div class="profile-meta">
+									<span class="role-badge">Kasir</span>
+									<span class="meta-separator">|</span>
+									<span class="shift-badge <?php echo $shiftClass; ?>" data-tooltip="<?php echo $shiftTime; ?>">
+										<?php echo $shiftText; ?>
+									</span>
+								</div>
 							</div>
 						</div>
 
