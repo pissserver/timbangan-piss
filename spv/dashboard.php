@@ -20,7 +20,11 @@
     $endDate            = date("Y-m-d");
 
     $omzetAllStartDate  = date("Y-01-01"); // 1 Januari tahun ini
-    $omzetAllEndDate    = date("Y-m-t", strtotime("last month")); // Akhir bulan lalu
+    if (date('m') == 1) {
+        $omzetAllEndDate    = date("Y-m-d"); // Hari ini jika bulan Januari
+    } else {
+        $omzetAllEndDate    = date("Y-m-t", strtotime("last month")); // Akhir bulan lalu
+    }
 
     $omzetStartDate  = date("Y-m-01"); // Awal bulan ini
     $omzetEndDate    = date("Y-m-d");  // Hari ini
@@ -529,10 +533,12 @@
                 animateValue("weighing", 0, <?php echo $weighing; ?>, 1500);
                 animateValue("paymentDone", 0, <?php echo $paymentDone; ?>, 1500);
                 animateValue("paymentMitraDone", 0, <?php echo $paymentMitraDone; ?>, 1500);
+
                 animateValue("omzetAll1", 0, <?php echo $omzetAll1; ?>, 1500, "currency");
                 animateValue("omzetAll2", 0, <?php echo $omzetAll2; ?>, 1500, "kg");
                 animateValue("omzetMitraAll1", 0, <?php echo $omzetMitraAll1; ?>, 1500, "currency");
                 animateValue("omzetMitraAll2", 0, <?php echo $omzetMitraAll2; ?>, 1500, "kg");
+                
                 animateValue("omzet1", 0, <?php echo $omzet1; ?>, 1500, "currency");
                 animateValue("omzet2", 0, <?php echo $omzet2; ?>, 1500, "kg");
                 animateValue("omzetMitra1", 0, <?php echo $omzetMitra1; ?>, 1500, "currency");
