@@ -16,6 +16,7 @@
 		}
 	}
 ?>
+
 <!-- jquery -->
 <script src="dataTables/jquery.dataTables.js"></script>
 <script src="dataTables/dataTables.tableTools.js"></script>
@@ -100,8 +101,21 @@
 						<?php } ?>
 					</td>
 					<td style="vertical-align: middle;">
+						<a href="javascript:void(0)"
+							class="action-icon copy-row btn btn-block btn-primary btn-xs"
+							title="Salin data"
+							data-nota="<?php echo 'TB'.$data['weighing_id']; ?>"
+							data-nopol="<?php echo $data['nopol']; ?>"
+							data-pedagang="<?php echo $merchant; ?>"
+							data-barang="<?php echo $goods; ?>"
+							data-berat="<?php echo $data['weight_in']; ?>"
+							data-tanggal="<?php echo date("d M Y", strtotime($data['date_in'])); ?>"
+							data-jam="<?php echo date("H:i", strtotime($data['time_in'])); ?>">
+							<i class="fa fa-copy"></i>
+							Salin
+						</a>
 						<a style="text-decoration: none" class="modalUbah" data-toggle="modal" data-target="#modalUbah" data-id="<?php echo $data['weighing_id']; ?>">
-							<button class="btn btn-outline btn-block btn-warning btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>
+							<button style="margin-top: 10px;" class="btn btn-outline btn-block btn-warning btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>
 						</a>
 						<?php if($data['weighing_sts']=='Masuk'){ ?>
 							<a style="text-decoration: none" href="index2.php?id= <?php echo $data['weighing_id'] ?>">
@@ -143,3 +157,31 @@
 		}, 100);
 	}
 </script>
+
+<!-- Script Copy -->
+<script>
+	document.addEventListener('click', function(e) {
+		if (e.target.closest('.copy-row')) {
+			const el = e.target.closest('.copy-row');
+
+			const text =
+				"*Share Timbangan*" + "\n" + "-------------------------" + "\n" +
+				"No Nota : " + el.dataset.nota + "\n" +
+				"Nopol : " + el.dataset.nopol + "\n" +
+				"Pedagang : " + el.dataset.pedagang + "\n" +
+				"Barang	: " + el.dataset.barang + "\n" +
+				"Berat Masuk : " + el.dataset.berat + " Kg" + "\n" +
+				"Tanggal : " + el.dataset.tanggal + " (" + el.dataset.jam  + ")" + "\n" +
+				"-------------------------" + "\n" +
+				"~ Ini adalah pesan otomatis dari sistem Timbangan PISS ~";
+
+			navigator.clipboard.writeText(text).then(() => {
+				el.innerHTML = '<i class="fa fa-check"></i> Berhasil';
+				setTimeout(() => {
+					el.innerHTML = '<i class="fa fa-copy"></i> Salin';
+				}, 1000);
+			});
+		}
+	});
+</script>
+
