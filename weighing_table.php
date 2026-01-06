@@ -163,6 +163,7 @@
 	document.addEventListener('click', function(e) {
 		if (e.target.closest('.copy-row')) {
 			const el = e.target.closest('.copy-row');
+    		if (!el) return;
 
 			const text =
 				"*Share Timbangan*" + "\n" + "-------------------------" + "\n" +
@@ -175,12 +176,26 @@
 				"-------------------------" + "\n" +
 				"~ Ini adalah pesan otomatis dari sistem Timbangan PISS ~";
 
-			navigator.clipboard.writeText(text).then(() => {
-				el.innerHTML = '<i class="fa fa-check"></i> Berhasil';
+			// ===== COPY SAFE (SEMUA BROWSER) =====
+			const textarea = document.createElement("textarea");
+			textarea.value = text;
+			textarea.style.position = "fixed"; // avoid scroll
+			document.body.appendChild(textarea);
+			textarea.focus();
+			textarea.select();
+
+			try {
+				document.execCommand('copy');
+				// feedback
+				el.innerHTML = '<i class="fa fa-check"></i> Disalin';
 				setTimeout(() => {
 					el.innerHTML = '<i class="fa fa-copy"></i> Salin';
-				}, 1000);
-			});
+				}, 1200);
+			} catch (err) {
+				alert('Gagal menyalin teks');
+			}
+
+			document.body.removeChild(textarea);
 		}
 	});
 </script>
