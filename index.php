@@ -182,7 +182,7 @@
 	</div>
 
 	<!-- Modal Password -->
-	<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	<!-- <div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -199,7 +199,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<script>
 		$(document).ready(function(){
 			$("#notifArea").html(alertLoadProcess);
