@@ -14,42 +14,144 @@
 ?>
 
 <style>
+	/* ===============================
+	CASHIER CARD – PREMIUM UPGRADE
+	=============================== */
+
 	.card-cashier {
-		border-radius: 10px;
-		background: #ffffff;
-		padding: 20px;
-		margin-bottom: 20px;
-		box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
-		transition: 0.2s;
+		background: linear-gradient(180deg, #ffffff, #f9fafb);
+		border-radius: 16px;
+		padding: 22px 20px 20px;
+		margin-bottom: 24px;
+		box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+		transition: all .3s ease;
+		position: relative;
+		overflow: hidden;
 	}
-	
+
+	.card-cashier::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: 16px;
+		box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+		pointer-events: none;
+	}
+
 	.card-cashier:hover {
-		transform: translateY(-3px);
-		box-shadow: 0px 5px 18px rgba(0,0,0,0.15);
+		transform: translateY(-5px);
+		box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
 	}
+
+	/* ===============================
+	TITLE
+	=============================== */
 
 	.card-title {
-		font-size: 18px;
-		font-weight: bold;
-		color: #333;
+		font-size: 17px;
+		font-weight: 600;
+		color: #1f2937;
+		padding-right: 90px; /* ruang foto */
 	}
+
+	/* ===============================
+	PROFILE PHOTO (ABSOLUTE)
+	=============================== */
+
+	.card-title .img-profile {
+		position: absolute;
+		top: 14px;
+		right: 16px;
+	}
+
+	.card-title .img-profile img {
+		width: 86px !important;
+		height: 86px !important;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 4px solid #ffffff;
+		background: #fff;
+		box-shadow: 0 12px 25px rgba(0,0,0,.25);
+		cursor: zoom-in;
+		transition: all .25s ease;
+	}
+
+	.card-title .img-profile img:hover {
+		transform: scale(1.08);
+	}
+
+	/* ===============================
+	LEVEL BADGE
+	=============================== */
 
 	.level-badge {
-		display: inline-block;
-		padding: 8px 14px;
-		border-radius: 20px;
-		color: #fff;
-		font-size: 13px;
-		font-weight: bold;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 7px 16px;
+		border-radius: 999px;
+		font-size: 12px;
+		font-weight: 600;
+		box-shadow: 0 6px 15px rgba(0,0,0,.15);
 	}
 
-	.level-basic     { background: linear-gradient(45deg, #b87333, #cd7f32); }
-	.level-silver    { background: linear-gradient(45deg, #c0c0c0, #e0e0e0); color:#333; }
-	.level-gold      { background: linear-gradient(45deg, #ffd700, #ffbf00); color:#333; }
-	.level-platinum  { background: linear-gradient(45deg, #3d3d3d, #666666); }
+	/* LEVEL COLORS */
+	.level-basic {
+		background: linear-gradient(135deg, #b87333, #cd7f32);
+	}
+
+	.level-silver {
+		background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+		color: #374151;
+	}
+
+	.level-gold {
+		background: linear-gradient(135deg, #fde68a, #facc15);
+		color: #92400e;
+	}
+
+	.level-platinum {
+		background: linear-gradient(135deg, #0f172a, #475569);
+	}
+
+	/* ===============================
+	INFO TEXT
+	=============================== */
+
+	.card-cashier > div:nth-of-type(3) {
+		font-size: 13px;
+		color: #6b7280;
+		margin-top: 10px;
+	}
+
+	.card-cashier b {
+		color: #111827;
+	}
+
+	/* ===============================
+	FOOTER BUTTON
+	=============================== */
 
 	.card-footer-btn {
-		margin-top: 15px;
+		margin-top: 18px;
+	}
+
+	.card-footer-btn .btn {
+		border-radius: 12px;
+		padding: 11px 14px;
+		font-weight: 600;
+		letter-spacing: .3px;
+		transition: all .25s ease;
+	}
+
+	.card-footer-btn.blue .btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 94, 128, 0.35);
+	}
+
+	.card-footer-btn.green .btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 128, 0, 0.35);
 	}
 </style>
 
@@ -87,6 +189,7 @@
 										SELECT 
 											c.checker_id,
 											c.checker_name, 
+											c.photo,
 											COUNT(w.weighing_id) AS total_tonase
 											FROM checker c
 											JOIN weighing w ON w.checker_id = c.checker_id
@@ -117,6 +220,11 @@
 										<div class="card-cashier">					
 											<div class="card-title">
 												<?php echo $no . ". " . $data['checker_name']; ?>
+												<div class="img-profile photo-viewer" id="photoContainerProfile">
+													<img id="previewPhoto"
+													src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
+													style="width:120px; height:120px; border-radius:50%;">
+												</div>
 											</div>
 
 											<div style="margin-top:10px;">
@@ -143,7 +251,7 @@
 												Kali
 											</div>
 
-											<div class="card-footer-btn">
+											<div class="card-footer-btn blue">
 												<a href="achievement_detail.php?id=<?php echo $data['checker_id']; ?>" 
 													class="btn btn-primary btn-sm btn-block">
 													<i class="fa fa-eye"></i>&nbsp; Lihat Detail
@@ -173,6 +281,7 @@
 										SELECT 
 											c.checker_id,
 											c.checker_name, 
+											c.photo,
 											COUNT(k.ko_id) AS total_ko
 											FROM checker c
 											JOIN ko k ON k.receiver_id = c.checker_id
@@ -202,6 +311,11 @@
 										<div class="card-cashier">					
 											<div class="card-title">
 												<?php echo $no . ". " . $data['checker_name']; ?>
+												<div class="img-profile photo-viewer" id="photoContainerProfile2">
+													<img id="previewPhoto2"
+													src="<?php echo $data['photo'] ? '../../uploads/' . $data['photo'] : '../../uploads/profile-default.png'; ?>"
+													style="width:120px; height:120px; border-radius:50%;">
+												</div>
 											</div>
 
 											<div style="margin-top:10px;">
@@ -217,7 +331,7 @@
 												Setoran
 											</div>
 
-											<div class="card-footer-btn">
+											<div class="card-footer-btn green">
 												<a href="achievement_detail2.php?id=<?php echo $data['checker_id']; ?>" 
 													class="btn btn-sm btn-block" style="background-color: #008000; color:#fff;">
 													<i class="fa fa-eye"></i>&nbsp; Lihat Detail
@@ -235,6 +349,25 @@
 			</div>
 			<!-- End Main Content -->
 		</div>
+
+		<!-- Viewer JS untuk zoom foto profil -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+
+				const containers = document.querySelectorAll('.photo-viewer');
+
+				containers.forEach(container => {
+					new Viewer(container, {
+						navbar: false,
+						toolbar: true,
+						title: false,
+						zoomRatio: 0.5,
+					});
+				});
+
+			});
+		</script>
+
 
 		<!-- jQuery -->
 		<script src="js/jquery.js"></script>

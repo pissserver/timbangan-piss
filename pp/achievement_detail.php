@@ -297,7 +297,7 @@
 					<div class="col-md-12">
 						<div class="profile-preview">
 							<div class="profile-card">
-								<div class="img-profile" id="photoContainer">
+								<div class="img-profile" id="photoContainerProfile">
 									<div class="achievement-badge-head-wrapper">
 										<?php
 												$idChecker = $_GET['id'];
@@ -809,7 +809,7 @@
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 
-				const container = document.getElementById('photoContainer');
+				const container = document.getElementById('photoContainerProfile');
 
 				const viewer = new Viewer(container, {
 					navbar: false,
