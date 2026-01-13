@@ -65,11 +65,29 @@
         </div>
     </div>
 	
-	<!-- Modal Edit -->
+	<!-- Modal Edit Masuk-->
 	<div id="modalWeightIn" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Meload modal "edit1.php" file -->
+            </div>
+        </div>
+    </div>
+
+	<!-- Modal Edit Keluar-->
+	<div id="modalWeightOut" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Meload modal "edit2.php" file -->
+            </div>
+        </div>
+    </div>
+
+	<!-- Modal Edit Bersih-->
+	<div id="modalNetto" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Meload modal "edit3.php" file -->
             </div>
         </div>
     </div>

@@ -3,15 +3,8 @@
 ?>
 <!-- jquery -->
 <script src="../dataTables/jquery.dataTables.js"></script>
-<script src="../dataTables/dataTables.tableTools.js"></script>
 <script src="../dataTables/dataTables.bootstrap.js"></script>
-<script>
-	$(document).ready(function() {
-	//data table
-	$('#transactionView').dataTable({"aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]]});
-	});
-</script>
-<!--<div class="table-responsive">-->
+
 <table id="transactionView" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
 		<tr>

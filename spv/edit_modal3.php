@@ -29,7 +29,7 @@
 		</div>
 		<div class="form-group" style="padding:10px; margin-left:10px; margin-right: 10px; margin-top: -15px;">
 			<label>Berat Bersih Kendaraan</label>
-			<input id="netto" name="netto" value="<?php echo $nt; ?>" type="number" class="form-control">                  
+			<input id="netto" name="netto" value="<?php echo $nt ? $nt : '0' ; ?>" type="number" class="form-control">                  
 		</div>
 		<div class="form-group" style="padding:10px; margin-left:10px; margin-right: 10px; margin-top: -15px;">
 			<label>Alasan Pengeditan</label>

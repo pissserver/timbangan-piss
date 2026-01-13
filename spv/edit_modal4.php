@@ -35,6 +35,7 @@
 				<option value="Masuk">Masuk</option>
 				<option value="Keluar">Keluar</option>
 				<option value="Lunas">Lunas</option>
+				<option value="Batal">Batal</option>
 			</select>
 		</div>
 		<div class="form-group" style="padding:10px; margin-left:10px; margin-right: 10px; margin-top: -15px;">

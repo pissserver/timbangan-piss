@@ -33,7 +33,7 @@
 			</div>
 			<div class="form-group" style="padding:10px; margin-left:10px; margin-right: 10px; margin-top: -15px">
 				<label>Jam Keluar Kendaraan</label>
-				<input id="time_out" name="time_out" value="<?php echo date("H:i", strtotime($time_out)); ?>" type="time" class="form-control">  
+				<input id="time_out" name="time_out" value="<?php echo $time_out ? date("H:i", strtotime($time_out)) : ''; ?>" type="time" class="form-control">  
 			</div>
 			<div class="form-group" style="padding:10px; margin-left:10px; margin-right: 10px; margin-top: -15px;">
 				<label>Alasan Pengeditan</label>

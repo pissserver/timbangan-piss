@@ -929,11 +929,11 @@
 						<li class="<?= isParentActive(['edit1.php', 'edit2.php', 'edit3.php', 'edit4.php', 'edit5.php']); ?>"> 
 							<a href="#"><i class="fa fa-edit fa-fw"></i> <span>Pengeditan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a class="<?= isActive(['edit1.php']); ?>" href="edit1.php"><i class="fa fa-arrow-circle-down fa-fw"></i> Berat Masuk </a></li>
-								<li><a class="<?= isActive(['edit2.php']); ?>" href="edit2.php"><i class="fa fa-arrow-circle-up fa-fw"></i> Berat Keluar </a></li>
-								<li><a class="<?= isActive(['edit3.php']); ?>" href="edit3.php"><i class="fa fa-pie-chart fa-fw"></i> Berat Bersih </a></li>
-								<li><a class="<?= isActive(['edit5.php']); ?>" href="edit5.php"><i class="fa fa-clock-o fa-fw"></i> Jam & Tanggal </a></li>
+								<li><a class="<?= isActive(['edit1.php']); ?>" href="edit1.php"><i class="fa fa-balance-scale fa-fw"></i> Berat Timbang </a></li>
+								<!-- <li><a class="<?= isActive(['edit2.php']); ?>" href="edit2.php"><i class="fa fa-arrow-circle-up fa-fw"></i> Berat Keluar </a></li>
+								<li><a class="<?= isActive(['edit3.php']); ?>" href="edit3.php"><i class="fa fa-pie-chart fa-fw"></i> Berat Bersih </a></li> -->
 								<li><a class="<?= isActive(['edit4.php']); ?>" href="edit4.php"><i class="fa fa-file fa-fw"></i> Status </a></li>
+								<li><a class="<?= isActive(['edit5.php']); ?>" href="edit5.php"><i class="fa fa-clock-o fa-fw"></i> Jam & Tanggal </a></li>
 							</ul>
 						</li>
 
