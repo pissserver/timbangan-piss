@@ -41,12 +41,12 @@
 				<?php
 					if($data['type']=='TB'){ ?>
 						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
-							<a href="listing.php?id_nota=<?php echo $data['nota'] ?>" target="_blank" style="color: #fff"><?php echo $data['type'] . $data['nota']; ?></a>
+							<a href="listing.php?id_nota=<?php echo $data['nota'] ?>&task=preview" target="_blank" style="color: #fff"><?php echo $data['type'] . $data['nota']; ?></a>
 						</div>
 				<?php }
 					elseif($data['type']=='TG'){ ?>
 						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 150px;">		
-							<a href="listing.php?id_nota=<?php echo $data['nota'] ?>" target="_blank" style="color: #fff"><?php echo $data['type'] . $data['nota']; ?></a>
+							<a href="listing.php?id_nota=<?php echo $data['nota'] ?>&task=preview" target="_blank" style="color: #fff"><?php echo $data['type'] . $data['nota']; ?></a>
 						</div>
 					<?php } 
 				?>

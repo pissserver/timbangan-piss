@@ -45,14 +45,14 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 						<div class="row">
-								<div class="col-md-6" style="padding-top: 8px;">
+								<div class="col-md-6">
 									<i class="fa fa-truck fa-fw"></i> Kendaraan Keluar
 								</div>
-								<div class="col-md-6 text-right">
+								<!-- <div class="col-md-6 text-right">
 									<a style="text-decoration: none;" class="modalWeightOut2" data-toggle="modal" data-target="#modalWeightOut2" data-id="<?php echo $r['weighing_id']; ?>">
 										<button style="border: 1px solid #fff;" class="btn btn-primary"><i class="fa fa-arrow-circle-up"></i>&nbsp;Keluar Manual</button>
 									</a>
-								</div>
+								</div> -->
 							</div>
                         </div>
                         <div class="panel-body">

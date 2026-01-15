@@ -108,7 +108,11 @@
 												// 	$year = executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$r['weighing_id']."'");
 												// 	echo 'TB'.$wid;
 												// } 
-												echo 'TG'.$wid;
+												if ($r['weighing_sts']=='Masuk' || $r['weighing_sts']=='Batal') {
+													echo 'TB'.$wid;
+												} else {
+													echo 'TG'.$wid;
+												}
 											?>)
 										</div>
 										<form method="GET" action="listing.php">
@@ -248,7 +252,7 @@
 												<label>Tanggal Bayar</label>
 												<input type="text" class="form-control" id="date_out" name="date_out" value="<?php 
 												if($r['date_pay']!=null){
-													echo date("d-m-Y", strtotime($r['date_pay'])).' | '.date("H:s", strtotime($r['time_pay']));
+													echo date("d M Y", strtotime($r['date_pay'])).' | '.date("H:s", strtotime($r['time_pay']));
 												} else {
 													echo "Belum Terbayar";
 												}
@@ -307,11 +311,19 @@
 												</button>
 											</div>
 										</div>
-										<div class="form-group" style="padding:10px; margin-left:5px; margin-right:5px; margin-top:-10px;">
-											<a href="javascript:history.back()"><button type="button"  class="btn btn-block btn-primary">
-												<i class="fa fa-arrow-left"></i> &nbsp;Kembali
-											</button></a>
-										</div>
+
+										<?php
+											$task = isset($_GET['task']) ? $_GET['task'] : '';
+										?>
+										<?php if ($task != 'preview') { ?>
+											<div class="form-group" style="padding:10px; margin-left:5px; margin-right:5px; margin-top:-10px;">
+												<a href="javascript:history.back()">
+													<button type="button" class="btn btn-block btn-primary">
+														<i class="fa fa-arrow-left"></i> &nbsp;Kembali
+													</button>
+												</a>
+											</div>
+										<?php } ?>
 									</div>
 								</div>
 							</div>

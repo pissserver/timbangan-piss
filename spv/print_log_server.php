@@ -57,21 +57,32 @@ $no = $start + 1;
 while($row = mysql_fetch_assoc($q)){
     $wid = sprintf("%07d", $row['weighing_id']);
 
+    $hint = "<div style='text-align:center;color:red;font-size:10px;margin-bottom:4px'>*Klik untuk tinjau nota</div>";
+
     if($row['weighing_sts']=='Masuk' || $row['weighing_sts']=='Batal'){
-        $nota = "<div style='background:#428bca;color:#fff;padding:3px;border-radius:5px;width:100px;text-align:center'>TB$wid</div>";
+        $link = "<a href='listing.php?id_nota=$wid&task=preview' target='_blank' style='color:#fff'>TB$wid</a>";
+        $badge = "<div style='background:#428bca;color:#fff;padding:3px 10px;border-radius:5px;display:inline-block;'>$link</div>";
     } else {
-        $nota = "<div style='background:green;color:#fff;padding:3px;border-radius:5px;width:100px;text-align:center'>TG$wid</div>";
+        $link = "<a href='listing.php?id_nota=$wid&task=preview' target='_blank' style='color:#fff'>TG$wid</a>";
+        $badge = "<div style='background:#28a745;color:#fff;padding:3px 10px;border-radius:5px;display:inline-block;'>$link</div>";
     }
 
+    $nota = "
+        <div style='text-align:center'>
+            $hint
+            $badge
+        </div>
+    ";
+
     $data[] = [
-        $no++,
-        $row['print_user'],
-        $nota,
-        $row['print_nopol'],
+        "<div style='text-align:center'>".$no++."</div>",
+        "<div style='text-align:center'>".$row['print_user']."</div>",
+        "<div style='text-align:center'>".$nota."</div>",
+        "<div style='text-align:center'>".$row['print_nopol']."</div>",
         $row['merchant_name'],
         $row['print_action'],
-        date("H:i", strtotime($row['print_date'])),
-        date("d M Y", strtotime($row['print_date']))
+        "<div style='text-align:center'>".date("H:i", strtotime($row['print_date']))."</div>",
+        "<div style='text-align:center'>".date("d M Y", strtotime($row['print_date']))."</div>"
     ];
 }
 
