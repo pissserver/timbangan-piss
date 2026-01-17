@@ -39,6 +39,7 @@
 			<td style="text-align:center; vertical-align: middle;"><?php echo $no; ?></td>
 			<td style="text-align: center; vertical-align: middle;"><?php echo $data['pp_user']; ?></td>
 			<td style="text-align:center; vertical-align: middle;">
+				<span style="color: red; font-size: 10px; margin-bottom: 5px;">*Klik untuk tinjau nota</span>
 				<?php 
 					$wid 	= sprintf("%07d", $data['pp_target']);
 					$status = executeScalar("select weighing_sts from weighing where weighing_id = '".$data['pp_target']."'");
@@ -46,14 +47,14 @@
 						//$year = executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$data['pp_target']."'"); ?>
 						
 						<div style="vertical-align: middle; background-color: #428bca; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
-							<?php echo 'TB'.$wid; ?>
+							<a href="listing.php?id_nota=<?php echo $wid ?>&task=preview" target="_blank" style="color: #fff"><?php echo 'TB'.$wid; ?></a>
 						</div>
 				<?php }
 					elseif($status=='Keluar'||$status=='Lunas'){
 						//$year = executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$data['pp_target']."'"); ?>
 						
 						<div style="vertical-align: middle; background-color: green; color: #fff; padding: 3px; border-radius: 5px; margin: 5px auto 5px auto; width: 110px;">		
-							<?php echo 'TG'.$wid; ?>
+							<a href="listing.php?id_nota=<?php echo $wid ?>&task=preview" target="_blank" style="color: #fff"><?php echo 'TG'.$wid; ?></a>
 						</div>
 					<?php } 
 				?>

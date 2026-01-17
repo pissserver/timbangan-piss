@@ -36,17 +36,17 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							<div class="row">
-								<div class="col-md-6" style="padding-top: 8px;">
+								<div class="col-md-6">
 									<i class="fa fa-truck fa-fw"></i> Kendaraan Masuk
 								</div>
-								<div class="col-md-6 text-right">
+								<!-- <div class="col-md-6 text-right">
 									<a href="modal_weight_in.php" style="text-decoration: none;" class="modalWeightIn" data-toggle="modal" data-target="#modalWeightIn">
 										<button style="border: 1px solid #fff;" class="btn btn-primary"><i class="fa fa-arrow-circle-down"></i>&nbsp;Masuk Manual</button>
 									</a>
 									<a href="modal_weight_out.php" style="text-decoration: none;" class="modalWeightOut" data-toggle="modal" data-target="#modalWeightOut">
 										<button style="border: 1px solid #fff;" class="btn btn-primary"><i class="fa fa-arrow-circle-up"></i>&nbsp;Masuk & Keluar Manual</button>
 									</a>
-								</div>
+								</div> -->
 							</div>
                         </div>
                         <div class="panel-body">

@@ -1390,7 +1390,7 @@
 				$_SESSION['success'] = true;
 				$_SESSION['title'] = 'Berhasil';
 				$_SESSION['message'] = "Edit berat keluar kendaraan";
-				echo "<script>window.location=('edit2.php')</script>";
+				echo "<script>window.location=('edit1.php')</script>";
 			}else{
 				echo "<script>window.alert('Data log spv gagal Masuk, Silahkan dicoba lagi')</script>;
 				<script>window.history.back()</script>";
@@ -1526,7 +1526,7 @@
 				$_SESSION['success'] = true;
 				$_SESSION['title'] = 'Berhasil';
 				$_SESSION['message'] = "Edit berat bersih kendaraan";
-				echo "<script>window.location=('edit3.php')</script>";
+				echo "<script>window.location=('edit1.php')</script>";
 				exit();
 			}else{
 				echo "<script>window.alert('Data log spv gagal Masuk, Silahkan dicoba lagi')</script>;
@@ -1611,7 +1611,11 @@
 		$time_out_old = executeScalar("SELECT DATE_FORMAT(time_out, '%H:%i') FROM weighing WHERE weighing_id = '".$id."'");
 		$merchant 		= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 		
-		$update = mysql_query("update weighing set time_in	= '".$time_in."', time_out = '".$time_out."' where weighing_id = '".$id."'");
+		if ($time_out_old == NULL) {
+			$update = mysql_query("update weighing set time_in	= '".$time_in."' where weighing_id = '".$id."'");
+		} else {
+			$update = mysql_query("update weighing set time_in	= '".$time_in."', time_out = '".$time_out."' where weighing_id = '".$id."'");
+		}
 
 		if($update){
 			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
@@ -1663,7 +1667,11 @@
 		$date_out_old = executeScalar("SELECT DATE_FORMAT(date_out, '%d %b %Y') FROM weighing WHERE weighing_id = '".$id."'");
 		$merchant 		= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
 		
-		$update = mysql_query("update weighing set date_in	= '".$date_in."', date_out = '".$date_out."' where weighing_id = '".$id."'");
+		if ($date_out_old == NULL) {
+			$update = mysql_query("update weighing set date_in	= '".$date_in."' where weighing_id = '".$id."'");
+		} else {
+			$update = mysql_query("update weighing set date_in	= '".$date_in."', date_out = '".$date_out."' where weighing_id = '".$id."'");
+		}
 
 		if($update){
 			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 

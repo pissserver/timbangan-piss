@@ -199,6 +199,95 @@
 			$c = '';
 		}
 ?>
+
+<style>
+	/* Dark glass background */
+	.modal-backdrop.modern-alert-backdrop {
+		opacity: 0.55;
+	}
+
+
+	/* Centering */
+	.modern-alert .modal-dialog {
+		margin-top: 12vh;
+	}
+
+	/* Glass box */
+	.modern-box {
+		border-radius: 14px;
+		overflow: hidden;
+		border: none;
+		box-shadow: 0 30px 60px rgba(0,0,0,.35);
+		background: rgba(255,255,255,.95);
+		backdrop-filter: blur(6px);
+		animation: popIn .35s cubic-bezier(.4,0,.2,1);
+	}
+
+	/* Header */
+	.modern-header {
+		background: linear-gradient(135deg,#f59e0b,#fbbf24);
+		padding: 22px;
+		text-align: center;
+		color: #fff;
+	}
+
+	.modern-icon {
+		width: 52px;
+		height: 52px;
+		background: rgba(255,255,255,.25);
+		border-radius: 50%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		margin-bottom: 8px;
+	}
+
+	.modern-header h4 {
+		margin: 6px 0 0;
+		font-weight: 600;
+	}
+
+	/* Body */
+	.modern-body {
+		padding: 22px;
+		text-align: center;
+		color: #374151;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	/* Footer */
+	.modern-footer {
+		padding: 16px;
+		text-align: center;
+		background: #f9fafb;
+	}
+
+	/* Button */
+	.modern-btn {
+		background: linear-gradient(135deg,#f59e0b,#fbbf24);
+		border: none;
+		color: #fff;
+		padding: 10px 28px;
+		border-radius: 30px;
+		font-weight: 600;
+		box-shadow: 0 6px 15px rgba(245,158,11,.35);
+		transition: all .2s ease;
+	}
+
+	.modern-btn:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 25px rgba(245,158,11,.45);
+	}
+
+	/* Animation */
+	@keyframes popIn {
+		from {transform: scale(.8); opacity: 0;}
+		to {transform: scale(1); opacity: 1;}
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -217,9 +306,9 @@
         <?php include 'components/sidebar.php'; ?>
 
         <div id="page-wrapper">
+			<br /><br><br><br>
 			<div class="row">
                 <div class="col-lg-12">
-					<br /><br><br><br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							<div class="row">
@@ -1489,6 +1578,64 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal alert process mitra & save data -->
+	<?php if($c == NULL){ ?>
+	<div id="alertMitraModal" class="modal fade modern-alert" tabindex="-1">
+		<div class="modal-dialog modal-sm modal-dialog-centered">
+			<div class="modal-content modern-box">
+
+			<div class="modern-header">
+				<div class="modern-icon">
+				<i class="fa fa-exclamation-triangle"></i>
+				</div>
+				<h4>Peringatan</h4>
+			</div>
+
+			<div class="modern-body">
+				Proses input mitra &amp; simpan data menjadi tagihan harus di hari yang sama!
+			</div>
+
+			<div class="modern-footer">
+				<button id="btnMitraOk" class="modern-btn">
+				Saya Mengerti
+				</button>
+			</div>
+
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+
+
+	<!-- Script auto load modal -->
+	 <?php if($c == NULL){ ?>
+	<script>
+		$(function(){
+			$('#alertMitraModal').modal({
+				backdrop:'static',
+				keyboard:false,
+				show:true
+			});
+
+			$('#alertMitraModal').on('shown.bs.modal', function () {
+				$('#btnMitraOk').focus();
+			});
+
+			$('#alertMitraModal').on('show.bs.modal', function () {
+				setTimeout(function(){
+					$('.modal-backdrop').addClass('modern-alert-backdrop');
+				}, 10);
+			});
+
+			$('#btnMitraOk').on('click', function(){
+				$('#alertMitraModal').modal('hide');
+			});
+		});
+
+	</script>
+	<?php } ?>
+
 	
 	<script>
 		$(document).ready(function(){
