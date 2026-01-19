@@ -11,27 +11,115 @@
 		return $headScript;
 	}
 
-	$checker 			= executeScalar("select checker_name from checker where checker_code = '".$_SESSION['checker']."'");
-	//Generate KO ID Tonase
 	$ko_id 			= 0;
 	$year			= date('Y');
-	$ko_id 			= executeScalar("select count(ko_id) from ko where ko_year = '".$year."'");
-	$ko_id 			= $ko_id+1;
-	$ko_id 			= sprintf("%06d", $ko_id);
-	$ko_id  		= $year.$ko_id;
+
+	// Check Tonase
 	$check 			= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
 	$cost_tonase 	= executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
 
-	// Generate KO ID Mitra
-	$ko_id_mitra 	= 0;
-	$ko_id_mitra 	= executeScalar("select count(ko_id) from ko_mitra where ko_year = '".$year."'");
-	$ko_id_mitra 	= $ko_id_mitra+1;
-	$ko_id_mitra 	= sprintf("%06d", $ko_id_mitra);
-	$ko_id_mitra  = $year.$ko_id_mitra;
+	// Check Mitra
 	$check_mitra 	= executeScalar("select count(weighing_id) from weighing_mitra where weighing_sts3 = 'Pending'");
 	$cost_mitra 	= executeScalar("select sum(cost_bayar) from weighing_mitra where weighing_sts3 = 'Pending'");
 	
 ?>
+
+<style>
+	/* ===== PAYMENT MODE SWITCH (FINTECH STYLE) ===== */
+	.payment-mode-switch {
+		display: flex;
+		justify-content: center;
+		margin: 15px 0 5px 0;
+	}
+
+	.switch-container {
+		position: relative;
+		display: flex;
+		background: #f1f4f8;
+		border-radius: 50px;
+		padding: 5px;
+		width: 360px;
+		box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
+	}
+
+	.switch-btn {
+		position: relative;
+		flex: 1;
+		border: none;
+		background: transparent;
+		padding: 10px 0;
+		border-radius: 50px;
+		font-weight: 700;
+		font-size: 13px;
+		color: #7a8a9a;
+		cursor: pointer;
+		z-index: 2;
+		transition: all .3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.switch-btn i {
+		font-size: 14px;
+	}
+
+	.switch-btn.active {
+		color: #fff;
+	}
+
+	/* Sliding pill */
+	.switch-indicator {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		width: 50%;
+		height: calc(100% - 10px);
+		background: linear-gradient(135deg, #3b82f6, #428BCA);
+		border-radius: 50px;
+		box-shadow: 0 6px 15px rgba(37,99,235,.35);
+		transition: all .35s cubic-bezier(.4,0,.2,1);
+	}
+
+	/* When Mitra Active */
+	.switch-container.mitra-active .switch-indicator {
+		left: calc(50% - 5px);
+		background: linear-gradient(135deg, #22c55e, #16a34a);
+		box-shadow: 0 6px 15px rgba(22,163,74,.35);
+	}
+
+	/* ===== ANIMASI PINDAH KE KERANJANG ===== */
+	.payment-card-tonase {
+		transition: all .45s ease;
+	}
+
+	.payment-card-mitra {
+		transition: all .45s ease;
+	}
+
+	.card-slide-out {
+		transform: translateX(120px) scale(.95);
+		opacity: 0;
+	}
+
+	/* ===== ANIMASI MASUK KE PANEL BAWAH ===== */
+	.card-slide-in {
+		animation: slideInRight .45s ease;
+	}
+
+	@keyframes slideInRight {
+		from {
+			transform: translateX(-80px) scale(.95);
+			opacity: 0;
+		}
+		to {
+			transform: translateX(0) scale(1);
+			opacity: 1;
+		}
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -69,381 +157,145 @@
 		<div id="wrapper">
 			<?php include 'components/sidebar.php'; ?>
 
-			<div id="page-wrapper">
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<br><br><br><br>
-						<div class="panel panel-primary" style="margin-bottom:-10px;">
-							<div class="panel-heading">
-								<i class="	fa fa-file-text-o fa-fw"></i> Data Tagihan Tonase
-							</div>
-							<div class="panel-body" style="margin-bottom:-10px;">
-								<div class="row" style=" overflow-x: auto;">
-									<div class="col-md-12">
-										<div id="Area1">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+			<div id="page-wrapper"><br><br><br>
+				<!-- Switch Toggle -->
+				<div class="payment-mode-switch">
+					<div class="switch-container">
+						<div class="switch-indicator"></div>
+
+						<button id="btn-tonase" class="switch-btn active">
+							<i class="fa fa-truck"></i>
+							<span>TONASE</span>
+						</button>
+
+						<button id="btn-mitra" class="switch-btn">
+							<i class="fa fa-users"></i>
+							<span>MITRA</span>
+						</button>
 					</div>
+				</div>
+				<hr>
 
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<br/><br><br><br>
-						<div class="panel panel-success" style="margin-bottom:-10px;">
-							<div class="panel-heading" style="background: green; color: #fff;">
-								<i class="fa fa-file-text-o fa-fw"></i> Data Tagihan Mitra
-							</div>
-							<div class="panel-body" style="margin-bottom:-10px;">
-								<div class="row" style=" overflow-x: auto;">
-									<div class="col-md-12">
-										<div id="AreaMitra1">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									</div>
+				<!-- Tonase -->
+				<div id="mode-tonase">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<div class="panel panel-primary" style="margin-bottom:-10px;">
+								<div class="panel-heading">
+									<i class="	fa fa-file-text-o fa-fw"></i> Data Tagihan Tonase
 								</div>
-							</div>
-						</div>
-					</div>
-				</div><br>
-
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="panel panel-primary" style="margin-bottom:0px;">
-							<div class="panel-heading">
-								<i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Tonase Sementara
-							</div>
-							<div class="panel-body" style="margin-bottom:-10px;">
-								<div class="row" style=" overflow-x: auto;">
-									<div class="col-md-12">
-										<div id="Area2">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									</div>
-
-									<form class="form-horizontal" action="pay_action.php?task=cancelAll&type=ko" id="cancelko" name="cancelko" method="POST">
-										<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
-											<?php 
-												if($check>=1){
-													echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua </button></center>';
-												}
-											?>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="panel panel-success" style="margin-bottom:0px;">
-							<div class="panel-heading" style="background: green; color: #fff;">
-								<i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Mitra Sementara
-							</div>
-							<div class="panel-body" style="margin-bottom:-10px;">
-								<div class="row" style=" overflow-x: auto;">
-									<div class="col-md-12" >
-										<div id="AreaMitra2">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									</div>
-
-									<form class="form-horizontal" action="pay_action.php?task=cancelAll_mitra&type=ko" id="cancelko" name="cancelko" method="POST">
-										<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
-											<?php 
-												if($check_mitra>=1){
-													echo'<center><button type="submit" class="btn btn-outline btn-success btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua </i></button></center>';
-												}
-											?>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div><br>
-				
-				<div class="row">
-					<!-- <div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<i class="fa fa-close fa-fw"></i> Pembatalan Data Pembayaran
-							</div>
-							<div class="panel-body">
-								<div class="row">
-									<form class="form-horizontal" action="pay_action.php?task=cancelAll" id="cancelko" name="cancelko" method="POST">
-										<div class="col-md-6" style="margin-bottom:-10px;">
-											<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-												<label>ID KO: <?php echo $ko_id; ?></label>
-											</div>
-										</div>
-										<div class="col-md-6" style="margin-top:0px;margin-bottom:-10px;">
-											<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-												<label>Total Rupiah: <?php echo format_rupiah($cost_tonase); ?></label>
-											</div>
-										</div>
-										<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
-											<?php 
-												if($check>=1){
-													echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block">Batalkan Semua <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
-												}
-											?>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div> -->
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<i class="fa fa-check-square fa-fw"></i> Acc Data Pembayaran Tonase
-							</div>
-							<div class="panel-body">
-								<?php if($check>=1) { ?>
-								<div class="row">
-									<div class="col-md-6" style="margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>ID KO : <?php echo $ko_id; ?></label>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>Total Rupiah: <?php echo format_rupiah($cost_tonase); ?></label>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- <div class="row">
-									<div class="col-md-12" style="margin-bottom:-10px;">
-										<form class="form-horizontal" action="pay_action.php?task=calculate&type=ko" id="calculate" name="calculate" method="POST">
-											<div class="form-group" style="padding:10px; text-align:center;">
-												<input type="number" class="form-control text-center" id="received" name="receive" placeholder="Uang Yg Diterima" required>                  
-											</div>
-											<div class="form-group" style="padding:10px; margin-top: -20px;">
-												<?php 
-													if($check>=1){
-														echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block">Hitung <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
-													}
-												?>
-											</div>
-										</form>
-									</div>
-								</div> -->
-								<div class="row">
-									<div class="col-md-12">
-										<form class="form-horizontal" action="pay_action.php?task=acc&type=ko" id="accko" name="accko" method="POST" target="_blank">
-											<div class="form-group" style="padding:10px; text-align:center;">
-												<select class="form-control" name="receiver" id="receiver" required>
-													<option value="" class="text-center">- Pilih Penyetor Uang -</option>
-													<?php 
-														$sql 		= mysql_query("select checker_id, checker_name from checker where checker_sts = 'Aktif' AND checker_role = 'Checker' AND status_aktif = '1' order by checker_name");
-														while($data = mysql_fetch_array($sql))
-													{?>
-														<option class="text-center" value="<?php echo $data['checker_id'];?>"><?php echo $data['checker_name'];?></option>
-													<?php } ?>
-												</select>
-											</div>
-											<div class="form-group" style="padding:10px; margin-top: -20px;">
-												<?php 
-													if($check>=1){
-														echo'<center>
-																<button type="button" class="btn btn-outline btn-primary btn-block" id="btn-acc" data-toggle="modal" data-target="#confirmationModal" style="display: none;" ><i class="fa fa-check"></i>&nbsp;ACC </button>
-															</center>';
-													}
-												?>
-
-												<!-- Modal -->
-												<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-														<div class="modal-header bg-primary" >
-															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
-															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-															</button>
-														</div>
-														<div class="modal-body">
-															<table>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Uang fisik tagihan harus sama dengan nota</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Total rupiah pembayaran tonase harus sama dengan uang fisik tagihan</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Setelah laporan KO Tonase terbuat cek total setoran sebelum melakukan print laporan</td>
-																</tr>
-															</table>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-															<button type="button" class="btn btn-primary" id="confirmSubmit" onclick="postAndReload()">Yakin dan lanjutkan</button>
-														</div>
-														</div>
-													</div>
+								<div class="panel-body" style="margin-bottom:-10px;">
+									<div class="row" style=" overflow-x: auto;">
+										<div class="col-md-12">
+											<div id="Area1">
+												<div class="alert alert-info" onclick="clearNotif()">
+													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
 												</div>
 											</div>
-										</form>
+										</div>
 									</div>
 								</div>
-								<?php } elseif($check<1) { ?>
-									<div class="payment-notfound text-center">
-										<img src="img/payment-tonase-notfound.png" alt="Image Payment Not Found" width="200px">
-										<h3><b>Belum Ada Pembayaran</b></h3>
-									</div>
-								<?php } ?>
 							</div>
 						</div>
 					</div>
+					<br><br>
 
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="panel panel-success">
-							<div class="panel-heading" style="background: green; color: #fff;">
-								<i class="fa fa-check-square fa-fw"></i> Acc Data Pembayaran Mitra
-							</div>
-							<div class="panel-body">
-							<?php if($check_mitra>=1) { ?>
-								<div class="row">
-									<div class="col-md-6" style="margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>ID KOM : <?php echo $ko_id_mitra; ?></label>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>Total Rupiah: <?php echo format_rupiah($cost_mitra); ?></label>
-											</div>
-										</div>
-									</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<div class="panel panel-primary" style="margin-bottom:0px;">
+								<div class="panel-heading">
+									<i class="fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Tonase
 								</div>
-								<!-- <div class="row">
-									<div class="col-md-12" style="margin-bottom:-10px;">
-										<form class="form-horizontal" action="pay_action.php?task=calculate_mitra&type=ko" id="calculate" name="calculate" method="POST">
-											<div class="form-group" style="padding:10px; text-align:center;">
-												<input type="number" class="form-control text-center" id="received" name="receive" placeholder="Uang Yg Diterima" required>                  
-											</div>
-											<div class="form-group" style="padding:10px; margin-top: -20px;">
-												<?php 
-													if($check_mitra>=1){
-														echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block">Hitung <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
-													}
-												?>
-											</div>
-										</form>
-									</div>
-								</div> -->
-								<div class="row">
-									<div class="col-md-12">
-										<form class="form-horizontal" action="pay_action.php?task=acc_mitra&type=ko" id="accko_mitra" name="accko" method="POST" target="_blank">
-											<div class="form-group" style="padding:10px; text-align:center;">
-												<select class="form-control" name="receiver" id="receiver-mitra" required>
-													<option value="" class="text-center">- Pilih Penyetor Uang -</option>
-													<?php 
-														$sql 		= mysql_query("select checker_id, checker_name from checker where checker_sts = 'Aktif' AND checker_role = 'Checker' AND status_aktif = '1' order by checker_name");
-														while($data = mysql_fetch_array($sql))
-													{?>
-														<option class="text-center" value="<?php echo $data['checker_id'];?>"><?php echo $data['checker_name'];?></option>
-													<?php } ?>
-												</select>
-											</div>
-											<div class="form-group" style="padding:10px; margin-top: -20px;">
-												<?php 
-													if($check_mitra>=1){
-														echo'<center>
-															<button type="button" class="btn btn-outline btn-success btn-block" id="btn-acc-mitra" style="display: none;" data-toggle="modal" data-target="#confirmationModalMitra">
-															<i class="fa fa-check"></i>&nbsp;ACC</i>
-															</button>
-														</center>';
-													}
-												?>
-
-												<!-- Modal -->
-												<div class="modal fade" id="confirmationModalMitra" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-														<div class="modal-header" style="background: green; color: #fff;">
-															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
-															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-															</button>
-														</div>
-														<div class="modal-body">
-															<table>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Uang fisik tagihan harus sama dengan nota</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Total rupiah pembayaran mitra harus sama dengan uang fisik tagihan</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Setelah laporan KOM Mitra terbuat cek total setoran sebelum melakukan print laporan</td>
-																</tr>
-															</table>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-															<button type="button" class="btn btn-success" id="confirmSubmitMitra" onclick="postAndReload()">Yakin dan lanjutkan</button>
-														</div>
-														</div>
-													</div>
+								<div class="panel-body" style="margin-bottom:-10px;">
+									<div class="row" style=" overflow-x: auto;">
+										<div class="col-md-12">
+											<div id="Area2">
+												<div class="alert alert-info" onclick="clearNotif()">
+													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
 												</div>
 											</div>
-										</form>
+										</div>
 									</div>
 								</div>
-								<?php } elseif($check_mitra<1) { ?>
-									<div class="payment-notfound text-center">
-										<img src="img/payment-mitra-notfound.png" alt="Image Payment Not Found" width="200px">
-										<h3><b>Belum Ada Pembayaran</b></h3>
-									</div>
-								<?php } ?>
 							</div>
 						</div>
 					</div>
+					<br><br>
+				</div>
+
+				<!-- Mitra -->
+				<div id="mode-mitra" style="display: none;">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<div class="panel panel-success" style="margin-bottom:-10px;">
+								<div class="panel-heading" style="background: green; color: #fff;">
+									<i class="fa fa-file-text-o fa-fw"></i> Data Tagihan Mitra
+								</div>
+								<div class="panel-body" style="margin-bottom:-10px;">
+									<div class="row" style=" overflow-x: auto;">
+										<div class="col-md-12">
+											<div id="AreaMitra1">
+												<div class="alert alert-info" onclick="clearNotif()">
+													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><br><br>
+
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<div class="panel panel-success" style="margin-bottom:0px;">
+								<div class="panel-heading" style="background: green; color: #fff;">
+									<i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Mitra
+								</div>
+								<div class="panel-body" style="margin-bottom:-10px;">
+									<div class="row" style=" overflow-x: auto;">
+										<div class="col-md-12" >
+											<div id="AreaMitra2">
+												<div class="alert alert-info" onclick="clearNotif()">
+													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><br><br>
 				</div>
 			</div>
 		</div>
-		<!-- Modal Password -->
-		<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src='../assets/image/Delete.png' width='25' height='25'/></button>
-						<h4 id="header_password">Ganti Password</h4>
-					</div>
-					<div class="modal-body">
-						<div id="data_password" style="margin-bottom: 0px;">
-							<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
-						</div>
-						<input type="hidden" id="value_id" />
-					</div>
-					<div class="modal-footer">
-					</div>
-				</div>
-			</div>
-		</div>
+
+
+		<!-- Switch Toggle -->
+		<script>
+		$('#btn-tonase').on('click', function(){
+
+			$('#btn-mitra').removeClass('active');
+			$(this).addClass('active');
+
+			$('.switch-container').removeClass('mitra-active');
+
+			$('#mode-mitra').hide();
+			$('#mode-tonase').fadeIn(200);
+		});
+
+		$('#btn-mitra').on('click', function(){
+
+			$('#btn-tonase').removeClass('active');
+			$(this).addClass('active');
+
+			$('.switch-container').addClass('mitra-active');
+
+			$('#mode-tonase').hide();
+			$('#mode-mitra').fadeIn(200);
+		});
+		</script>
+		
 		<script>
 			$(document).ready(function(){
 				// Auto Refresh Page
@@ -462,6 +314,183 @@
 			});
 			function clearNotif(){$("#notifArea").html("");}
 		</script>
+
+		// * TONASE
+		<!-- Ajax Tonase -->
+		<script>
+			function reloadPaymentArea(){
+				$("#Area1").load("pay_table.php");
+				$("#Area2").load("pay_acc_table.php");
+			}
+
+			/* ================= BAYAR TONASE (ANIMATED) ================= */
+			$(document).on('click', 'a[href*="pay_action.php?task=pay&type=ko"]', function(e){
+				e.preventDefault();
+
+				const url = $(this).attr('href');
+				const card = $(this).closest('.payment-card-tonase');
+
+				// Animasi geser keluar
+				card.addClass('card-slide-out');
+
+				setTimeout(function(){
+
+					$.get(url, function(){
+
+						// Reload kedua area
+						$('#Area1').load('pay_table.php');
+						$('#Area2').load('pay_acc_table.php', function(){
+
+							// Animasi masuk untuk kartu baru di panel bawah
+							$('#Area2 .payment-card-tonase').first().addClass('card-slide-in');
+
+						});
+
+					}).fail(function(){
+						alert('Gagal memproses pembayaran');
+						card.removeClass('card-slide-out');
+					});
+
+				}, 350);
+			});
+
+			/* ================= CANCEL TONASE (ANIMATED) ================= */
+			$(document).on('click', 'a[href*="pay_action.php?task=cancel&type=ko"]', function(e){
+				e.preventDefault();
+
+				const url = $(this).attr('href');
+				const card = $(this).closest('.payment-card-tonase');
+
+				card.addClass('card-slide-out');
+
+				setTimeout(function(){
+
+					$.get(url, function(){
+
+						$('#Area1').load('pay_table.php', function(){
+							$('#Area1 .payment-card-tonase').first().addClass('card-slide-in');
+						});
+
+						$('#Area2').load('pay_acc_table.php');
+
+					}).fail(function(){
+						alert('Gagal membatalkan pembayaran');
+						card.removeClass('card-slide-out');
+					});
+
+				}, 350);
+			});
+
+			/* ================= CANCEL ALL TONASE ================= */
+			$(document).on('submit', 'form[action*="pay_action.php?task=cancelAll&type=ko"]', function(e){
+				e.preventDefault();
+
+				const form = $(this);
+
+				$.post(form.attr('action'), form.serialize(), function(){
+					reloadPaymentArea();
+				}).fail(function(){
+					alert('Gagal membatalkan semua pembayaran');
+				});
+			});
+		</script>
+
+
+		// * MITRA
+		<!-- Ajax Mitra -->
+		<script>
+			function reloadMitraArea(){
+				$("#AreaMitra1").load("pay_mitra_table.php");
+				$("#AreaMitra2").load("pay_mitra_acc_table.php");
+			}
+
+			/* ================= BAYAR MITRA (ANIMATED) ================= */
+			$(document).on('click', 'a[href*="pay_action.php?task=pay_mitra&type=ko"]', function(e){
+
+				e.preventDefault();
+
+				// hanya jika mode mitra aktif
+				if(!$('#mode-mitra').is(':visible')) return;
+
+				const url  = $(this).attr('href');
+				const card = $(this).closest('.payment-card-mitra');
+
+				/* Animasi geser keluar */
+				card.addClass('card-slide-out');
+
+				setTimeout(function(){
+
+					$.get(url, function(){
+
+						/* Reload kedua area */
+						$('#AreaMitra1').load('pay_mitra_table.php');
+
+						$('#AreaMitra2').load('pay_mitra_acc_table.php', function(){
+
+							/* Animasi masuk kartu baru di panel bawah */
+							$('#AreaMitra2 .payment-card-mitra')
+								.first()
+								.addClass('card-slide-in');
+						});
+
+					}).fail(function(){
+						alert('Gagal memproses pembayaran mitra');
+						card.removeClass('card-slide-out');
+					});
+
+				}, 350);
+			});
+
+			/* ================= CANCEL MITRA (ANIMATED) ================= */
+			$(document).on('click', 'a[href*="pay_action.php?task=cancel_mitra&type=ko"]', function(e){
+
+				e.preventDefault();
+
+				if(!$('#mode-mitra').is(':visible')) return;
+
+				const url  = $(this).attr('href');
+				const card = $(this).closest('.payment-card-mitra');
+
+				card.addClass('card-slide-out');
+
+				setTimeout(function(){
+
+					$.get(url, function(){
+
+						$('#AreaMitra1').load('pay_mitra_table.php', function(){
+
+							$('#AreaMitra1 .payment-card-mitra')
+								.first()
+								.addClass('card-slide-in');
+						});
+
+						$('#AreaMitra2').load('pay_mitra_acc_table.php');
+
+					}).fail(function(){
+						alert('Gagal membatalkan pembayaran mitra');
+						card.removeClass('card-slide-out');
+					});
+
+				}, 350);
+			});
+
+			/* ================= CANCEL ALL MITRA ================= */
+			$(document).on('submit', 'form[action*="pay_action.php?task=cancelAll_mitra&type=ko"]', function(e){
+
+				e.preventDefault();
+
+				if(!$('#mode-mitra').is(':visible')) return;
+
+				const form = $(this);
+
+				$.post(form.attr('action'), form.serialize(), function(){
+					reloadMitraArea();
+				}).fail(function(){
+					alert('Gagal membatalkan semua pembayaran mitra');
+				});
+			});
+		</script>
+
 		<!-- jQuery -->
 		<script src="js/jquery.js"></script>
 		<!-- Bootstrap Core JavaScript -->
@@ -471,71 +500,6 @@
 		<!-- Custom Theme JavaScript -->
 		<script src="js/sb-admin-2.js"></script>
 		
-		<!-- Reload Window Tonase-->
-		<script>
-			// Fungsi untuk menampilkan tombol jika penyetor dipilih (Tonase)
-			const receiverTonase = document.getElementById('receiver');
-			const btnAccTonase = document.getElementById('btn-acc');
-
-			if (receiverTonase && btnAccTonase) {
-				receiverTonase.addEventListener('change', function() {
-					const receiverValue = this.value; // Ambil nilai dari select box
-
-					if (receiverValue !== "") {
-						btnAccTonase.style.display = "block"; // Tampilkan tombol jika ada opsi dipilih
-					} else {
-						btnAccTonase.style.display = "none"; // Sembunyikan tombol jika tidak ada opsi dipilih
-					}
-				});
-			}
-
-			// Modal konfirmasi tombol acc (tonase)
-			document.addEventListener('DOMContentLoaded', function() {
-				document.getElementById('confirmSubmit').addEventListener('click', function () {
-				// Submit form setelah konfirmasi
-				document.getElementById('accko').submit();
-				});
-			});
-
-			function postAndReload() {
-				setTimeout(function() {
-					location.reload();
-				}, 100);
-			}
-		</script>
-
-		<!-- Reload Window Mitra-->
-		<script>
-			// Fungsi untuk menampilkan tombol jika penyetor dipilih (Mitra)
-			const receiverMitra = document.getElementById('receiver-mitra');
-			const btnAccMitra = document.getElementById('btn-acc-mitra');
-
-			if (receiverMitra && btnAccMitra) {
-				receiverMitra.addEventListener('change', function() {
-					const receiverValueMitra = this.value; // Ambil nilai dari select box
-
-					if (receiverValueMitra !== "") {
-						btnAccMitra.style.display = "block"; // Tampilkan tombol jika ada opsi dipilih
-					} else {
-						btnAccMitra.style.display = "none"; // Sembunyikan tombol jika tidak ada opsi dipilih
-					}
-				});
-			}
-
-			// Modal konfirmasi tombol acc (mitra)
-			document.addEventListener('DOMContentLoaded', function() {
-				document.getElementById('confirmSubmitMitra').addEventListener('click', function () {
-				// Submit form setelah konfirmasi
-				document.getElementById('accko_mitra').submit();
-				});
-			});
-
-			function postAndReload() {
-				setTimeout(function() {
-					location.reload();
-				}, 100);
-			}
-		</script>
 		
 		<!-- Sweet Alert -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>

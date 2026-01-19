@@ -27,6 +27,7 @@ $yesterday = date('Y-m-d',strtotime('-30 days'));
 $searchSql="";
 if($search!=''){
     $searchSql=" AND (
+        w.weighing_id LIKE '%$search%' OR
         w.nopol LIKE '%$search%' OR
         m.merchant_name LIKE '%$search%' OR
         g.goods_name LIKE '%$search%' OR

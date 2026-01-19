@@ -11,6 +11,7 @@
 	$task		= $_GET['task'];
 	$type		= $_GET['type'];
 
+	// * TONASE PAYMENT ACTIONS * //
 	//Pembayaran Tonase
 	if($type=='ko'&&$task=='pay'){
 		$id		= $_GET['id'];
@@ -37,13 +38,16 @@
 		}*/
 	}
 
-	// Pembayaran Jasa Bongkar
-	if($type=='ko'&&$task=='pay_mitra'){
-		$id		= $_GET['id'];
+	// Cancel Pembayaran Tonase
+	if ($type=='ko'&&$task=='cancel'){
+		$id	= $_GET['id'];
 		//update status pembayaran
-		$pay 	= mysql_query("update weighing_mitra set weighing_sts3 = 'Pending' where weighing_id = '".$id."'");
-		if($pay){
-			// echo "<script>window.location=('pay_mitra.php')</script>";
+		$cancel = mysql_query("	update weighing 
+								set weighing_sts3 = null 
+								where 	weighing_id = '".$id."' and 
+										weighing_sts3 = 'Pending'");
+		if($cancel){
+			// echo "<script>window.location=('pay.php')</script>";
 			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
 			exit();
 		}
@@ -52,15 +56,22 @@
 			window.history.back()</script>";
 			exit();
 		}
-		//cek jumlah nota pd ko apa sdh 10?
-		/*$jml 	= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
-		if($jml<10){
-		
-		}else{
-			echo "<script>window.alert('Pembayaran Max 10 Nota Untuk 1 KO');
+	}
+
+	// Cancel All Pembayaran Tonase
+	if ($type == 'ko' && $task=='cancelAll'){
+		//update status pembayaran
+		$cancel = mysql_query("update weighing set weighing_sts3 = null where weighing_sts3 = 'Pending'");
+		if($cancel){
+			// echo "<script>window.location=('pay.php')</script>";
+			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
+			exit();
+		}
+		else{
+			echo "<script>window.alert('Pembayaran Gagal');
 			window.history.back()</script>";
 			exit();
-		}*/
+		}
 	}
 
 	//ACC Pembayaran Tonase
@@ -139,7 +150,94 @@
 		}
 	}
 
-	//ACC Pembayaran Jasa Bongkar
+	// Calculate Pembayaran Tonase
+	if ($type == 'ko' && $task == 'calculate') {
+		$money = $_POST['receive'];
+		$cost = executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
+		$calculator = $cost - $money;
+	
+		if ($calculator <= 0) {
+			$calculator = format_rupiah(abs($calculator));
+			// Set session untuk sukses
+			$_SESSION['success'] = true;
+			$_SESSION['message'] = "Uang Setoran Kembali $calculator";
+		} else {
+			$calculator = format_rupiah(abs($calculator));
+			// Set session untuk gagal
+			$_SESSION['success'] = false;
+			$_SESSION['message'] = "Uang Setoran Kurang $calculator";
+		}
+	
+		// Redirect setelah memproses
+		header("Location: pay_tonase_mitra.php");
+		exit();
+	}
+
+
+	// * MITRA PAYMENT ACTIONS * //
+	// Pembayaran Mitra
+	if($type=='ko'&&$task=='pay_mitra'){
+		$id		= $_GET['id'];
+		//update status pembayaran
+		$pay 	= mysql_query("update weighing_mitra set weighing_sts3 = 'Pending' where weighing_id = '".$id."'");
+		if($pay){
+			// echo "<script>window.location=('pay_mitra.php')</script>";
+			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
+			exit();
+		}
+		else{
+			echo "<script>window.alert('Pembayaran Gagal');
+			window.history.back()</script>";
+			exit();
+		}
+		//cek jumlah nota pd ko apa sdh 10?
+		/*$jml 	= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
+		if($jml<10){
+		
+		}else{
+			echo "<script>window.alert('Pembayaran Max 10 Nota Untuk 1 KO');
+			window.history.back()</script>";
+			exit();
+		}*/
+	}
+	
+	// Cancel Pembayaran Mitra
+	if ($type=='ko'&&$task=='cancel_mitra'){
+		$id	= $_GET['id'];
+		//update status pembayaran
+		$cancel = mysql_query("	update weighing_mitra 
+								set weighing_sts3 = null 
+								where 	weighing_id = '".$id."' and 
+										weighing_sts3 = 'Pending'");
+		if($cancel){
+			// echo "<script>window.location=('pay_mitra.php')</script>";
+			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
+			exit();
+		}
+		else{
+			echo "<script>window.alert('Pembayaran Gagal');
+			window.history.back()</script>";
+			exit();
+		}
+	}
+
+	// Cancel All Pembayaran Mitra
+	if ($type == 'ko' && $task=='cancelAll_mitra'){
+		//update status pembayaran
+		$cancel = mysql_query("update weighing_mitra set weighing_sts3 = null where weighing_sts3 = 'Pending'");
+		if($cancel){
+			// echo "<script>window.location=('pay_mitra.php')</script>";
+			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
+			exit();
+		}
+		else{
+			echo "<script>window.alert('Pembayaran Gagal');
+			window.history.back()</script>";
+			exit();
+		}
+	}
+
+	// ACC Pembayaran Mitra
 	if ($type=='ko'&&$task=='acc_mitra'){
 		//Generate KO ID
 		$ko_id 		= 0;
@@ -215,31 +313,8 @@
 				}
 		}
 	}
-	
-	//Hitung Pembayaran Tonase
-	if ($type == 'ko' && $task == 'calculate') {
-		$money = $_POST['receive'];
-		$cost = executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
-		$calculator = $cost - $money;
-	
-		if ($calculator <= 0) {
-			$calculator = format_rupiah(abs($calculator));
-			// Set session untuk sukses
-			$_SESSION['success'] = true;
-			$_SESSION['message'] = "Uang Setoran Kembali $calculator";
-		} else {
-			$calculator = format_rupiah(abs($calculator));
-			// Set session untuk gagal
-			$_SESSION['success'] = false;
-			$_SESSION['message'] = "Uang Setoran Kurang $calculator";
-		}
-	
-		// Redirect setelah memproses
-		header("Location: pay_tonase_mitra.php");
-		exit();
-	}
 
-	//Hitung Pembayaran Mitra
+	// Hitung Pembayaran Mitra
 	if ($type == 'ko' && $task == 'calculate_mitra') {
 		$money = $_POST['receive'];
 		$cost = executeScalar("select sum(cost) from weighing_mitra where weighing_sts3 = 'Pending'");
@@ -260,90 +335,5 @@
 		// Redirect setelah memproses
 		header("Location: pay_tonase_mitra.php");
 		exit();
-	}
-	
-	//Cancel Pembayaran
-	if ($type=='ko'&&$task=='cancel'){
-		$id	= $_GET['id'];
-		//update status pembayaran
-		$cancel = mysql_query("	update weighing 
-								set weighing_sts3 = null 
-								where 	weighing_id = '".$id."' and 
-										weighing_sts3 = 'Pending'");
-		if($cancel){
-			// echo "<script>window.location=('pay.php')</script>";
-			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
-			exit();
-		}
-		else{
-			echo "<script>window.alert('Pembayaran Gagal');
-			window.history.back()</script>";
-			exit();
-		}
-	}
-
-	//Cancel Pembayaran Mitra
-	if ($type=='ko'&&$task=='cancel_mitra'){
-		$id	= $_GET['id'];
-		//update status pembayaran
-		$cancel = mysql_query("	update weighing_mitra 
-								set weighing_sts3 = null 
-								where 	weighing_id = '".$id."' and 
-										weighing_sts3 = 'Pending'");
-		if($cancel){
-			// echo "<script>window.location=('pay_mitra.php')</script>";
-			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
-			exit();
-		}
-		else{
-			echo "<script>window.alert('Pembayaran Gagal');
-			window.history.back()</script>";
-			exit();
-		}
-	}
-	
-	//Cancel Semua Pembayaran
-	// if ($type=='ko'&&$task=='cancelAll'){
-	// 	//update status pembayaran
-	// 	$cancel = mysql_query("update weighing set weighing_sts3 = null where weighing_sts3 = 'Pending'");
-	// 	if($cancel){
-	// 		echo "<script>window.location=('pay.php')</script>";
-	// 		exit();
-	// 	}
-	// 	else{
-	// 		echo "<script>window.alert('Pembayaran Gagal');
-	// 		window.history.back()</script>";
-	// 		exit();
-	// 	}
-	// }
-	if ($type == 'ko' && $task=='cancelAll'){
-		//update status pembayaran
-		$cancel = mysql_query("update weighing set weighing_sts3 = null where weighing_sts3 = 'Pending'");
-		if($cancel){
-			// echo "<script>window.location=('pay.php')</script>";
-			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
-			exit();
-		}
-		else{
-			echo "<script>window.alert('Pembayaran Gagal');
-			window.history.back()</script>";
-			exit();
-		}
-	}
-
-	//Cancel Semua Pembayaran Mitra
-	if ($type == 'ko' && $task=='cancelAll_mitra'){
-		//update status pembayaran
-		$cancel = mysql_query("update weighing_mitra set weighing_sts3 = null where weighing_sts3 = 'Pending'");
-		if($cancel){
-			// echo "<script>window.location=('pay_mitra.php')</script>";
-			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
-			exit();
-		}
-		else{
-			echo "<script>window.alert('Pembayaran Gagal');
-			window.history.back()</script>";
-			exit();
-		}
 	}
 ?>
