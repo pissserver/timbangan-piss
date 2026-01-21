@@ -273,27 +273,27 @@
 
 		<!-- Switch Toggle -->
 		<script>
-		$('#btn-tonase').on('click', function(){
+			$('#btn-tonase').on('click', function(){
 
-			$('#btn-mitra').removeClass('active');
-			$(this).addClass('active');
+				$('#btn-mitra').removeClass('active');
+				$(this).addClass('active');
 
-			$('.switch-container').removeClass('mitra-active');
+				$('.switch-container').removeClass('mitra-active');
 
-			$('#mode-mitra').hide();
-			$('#mode-tonase').fadeIn(200);
-		});
+				$('#mode-mitra').hide();
+				$('#mode-tonase').fadeIn(200);
+			});
 
-		$('#btn-mitra').on('click', function(){
+			$('#btn-mitra').on('click', function(){
 
-			$('#btn-tonase').removeClass('active');
-			$(this).addClass('active');
+				$('#btn-tonase').removeClass('active');
+				$(this).addClass('active');
 
-			$('.switch-container').addClass('mitra-active');
+				$('.switch-container').addClass('mitra-active');
 
-			$('#mode-tonase').hide();
-			$('#mode-mitra').fadeIn(200);
-		});
+				$('#mode-tonase').hide();
+				$('#mode-mitra').fadeIn(200);
+			});
 		</script>
 		
 		<script>

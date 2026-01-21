@@ -16,24 +16,76 @@
 	$check 	= executeScalar("select count(ko_id) from ko where cashier_id = '".$cashier."' and ko_status = 'Diterima'");
 	$check_mitra = executeScalar("select count(ko_id) from ko_mitra where cashier_id = '".$cashier."' and ko_status = 'Diterima'");
 
-	//Generate KM ID Tonase
 	$km_id 	= 0;
 	$year	= date('Y');
-	$km_id 	= executeScalar("select count(km_id) from km where km_year = '".$year."'");
-	$km_id 	= $km_id + 1;
-	$km_id 	= sprintf("%06d", $km_id);
-	$km_id  = $year.$km_id;
-	$cost 	= executeScalar("select sum(ko_total) from ko where cashier_id = '".$cashier."' and ko_status = 'Diterima'");
-
-	// Genarate KMM ID Mitra
-	$km_id_mitra 	= 0;
-	$km_id_mitra 	= executeScalar("select count(km_id) from km_mitra where km_year = '".$year."'");
-	$km_id_mitra 	= $km_id_mitra + 1;
-	$km_id_mitra 	= sprintf("%06d", $km_id_mitra);
-	$km_id_mitra  = $year.$km_id_mitra;
-	$cost_mitra 	= executeScalar("select sum(ko_total) from ko_mitra where cashier_id = '".$cashier."' and ko_status = 'Diterima'");
-
 ?>
+
+<style>
+	/* ===== PAYMENT MODE SWITCH (FINTECH STYLE) ===== */
+	.payment-mode-switch {
+		display: flex;
+		justify-content: center;
+		margin: 15px 0 5px 0;
+	}
+
+	.switch-container {
+		position: relative;
+		display: flex;
+		background: #f1f4f8;
+		border-radius: 50px;
+		padding: 5px;
+		width: 360px;
+		box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
+	}
+
+	.switch-btn {
+		position: relative;
+		flex: 1;
+		border: none;
+		background: transparent;
+		padding: 10px 0;
+		border-radius: 50px;
+		font-weight: 700;
+		font-size: 13px;
+		color: #7a8a9a;
+		cursor: pointer;
+		z-index: 2;
+		transition: all .3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.switch-btn i {
+		font-size: 14px;
+	}
+
+	.switch-btn.active {
+		color: #fff;
+	}
+
+	/* Sliding pill */
+	.switch-indicator {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		width: 50%;
+		height: calc(100% - 10px);
+		background: linear-gradient(135deg, #3b82f6, #428BCA);
+		border-radius: 50px;
+		box-shadow: 0 6px 15px rgba(37,99,235,.35);
+		transition: all .35s cubic-bezier(.4,0,.2,1);
+	}
+
+	/* When Mitra Active */
+	.switch-container.mitra-active .switch-indicator {
+		left: calc(50% - 5px);
+		background: linear-gradient(135deg, #22c55e, #16a34a);
+		box-shadow: 0 6px 15px rgba(22,163,74,.35);
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,315 +122,76 @@
 	<div id="wrapper">
 		<?php include 'components/sidebar.php'; ?>
 
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-6">
-					<br><br><br><br>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="	fa fa-file-text-o fa-fw"></i> Data Kasir Operasional (KO) Tonase
-                        </div>
-                        <div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div id="Area1">
-										<div class="alert alert-info" onclick="clearNotif()">
-											<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-										</div>
-									</div>
-								</div>
-							</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-					<br><br><br><br>
-                    <div class="panel panel-success">
-                        <div class="panel-heading" style="background: green; color: #fff;">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data Kasir Operasional (KOM) Mitra
-                        </div>
-                        <div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div id="AreaMitra1">
-										<div class="alert alert-info" onclick="clearNotif()">
-											<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-										</div>
-									</div>
-								</div>
-							</div>
-                        </div>
-                    </div>
-                </div>
+        <div id="page-wrapper"><br><br><br>
+			<!-- Switch Toggle -->
+			<div class="payment-mode-switch">
+				<div class="switch-container">
+					<div class="switch-indicator"></div>
+
+					<button id="btn-tonase" class="switch-btn active">
+						<i class="fa fa-truck"></i>
+						<span>TONASE</span>
+					</button>
+
+					<button id="btn-mitra" class="switch-btn">
+						<i class="fa fa-users"></i>
+						<span>MITRA</span>
+					</button>
+				</div>
+			</div>
+			<hr>
+
+            <div id="mode-tonase">
+				<div class="row">
+					<div class="col-lg-12">
+						<div id="Area2">
+						</div>
+					</div>
+				</div>
             </div>
 
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Kasir Operasional (KO) Tonase
-                        </div>
-                        <div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div id="Area2">
-										<div class="alert alert-info" onclick="clearNotif()">
-											<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-										</div>
-									</div>
-								</div>
-							</div>
-							<form class="form-horizontal" action="pay_action2.php?task=cancelAll&type=km" id="cancelko" name="cancelko" method="POST">
-								<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
-									<?php 
-										if($check>=1){
-											echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua</button></center>';
-										}
-									?>
-								</div>
-							</form>
-                        </div>
-                    </div>
-				</div>
-
-				<div class="col-lg-6">
-					<div class="panel panel-success">
-						<div class="panel-heading" style="background: green; color: #fff;">
-							<i class="fa fa-file-text-o fa-fw"></i> Data Penampungan Kasir Operasional (KOM) Mitra
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div id="AreaMitra2">
-										<div class="alert alert-info" onclick="clearNotif()">
-											<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-										</div>
-									</div>
-								</div>
-								<form class="form-horizontal" action="pay_action2.php?task=cancelAll_mitra&type=km" id="cancelko" name="cancelko" method="POST">
-									<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px;">
-										<?php 
-											if($check_mitra>=1){
-												echo'<center><button type="submit" class="btn btn-outline btn-success btn-block"><i class="fa fa-times"></i>&nbsp;Batalkan Semua </button></center>';
-											}
-										?>
-									</div>
-								</form>
-							</div>
+			<div id="mode-mitra" style="display: none;">
+				<div class="row">
+					<div class="col-lg-12">
+						<div id="AreaMitra2">
 						</div>
 					</div>
-				</div>
-
-				<!-- <div class="col-lg-6">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-close fa-fw"></i> Pembatalan Data Penampungan Kasir Operasional (KO) Tonase
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<form class="form-horizontal" action="pay_action2.php?task=cancelAll&type=km" id="cancelkm" name="cancelkm" method="POST">
-									<div class="col-md-6" style="margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<label>ID KM: <?php echo $km_id; ?></label>
-										</div>
-									</div>
-									<div class="col-md-6" style="margin-top:0px;margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<label>Total Rupiah: <?php echo format_rupiah($cost); ?></label>
-										</div>
-									</div>
-									<div class="form-group" style="padding:10px; margin-left:0px; margin-right:0px; margin-bottom:-10px;">
-										<?php 
-											if($check>=1){
-												echo'<center><button type="submit" class="btn btn-outline btn-primary btn-block">Batalkan Semua <i class="fa fa-angle-double-right fa-lg"></i></button></center>';
-											}
-										?>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div> -->
-			</div>
-
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="fa fa-check-square fa-fw"></i> Acc Data KO Tonase Menjadi KM
-                        </div>
-                        <div class="panel-body">
-						<?php if($check>=1) { ?>
-							<div class="row">
-								<form class="form-horizontal" action="pay_action2.php?task=acc&type=km" id="acckm" name="acckm" method="POST" target="_blank">
-									<div class="col-md-6" style="margin-top:0px; margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>ID KM: <?php echo $km_id; ?></label>
-											</div>
-										</div>
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
-											<input type="number" class="form-control text-center" id="cash" name="cash" placeholder="Uang Yg Diterima" required>                  
-										</div>
-									</div>
-									<div class="col-md-6" style="margin-top:0px;margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>Total Rupiah: <?php echo format_rupiah($cost); ?></label>
-											</div>
-										</div>
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
-											<?php 
-												if($check>=1){
-													echo'<center><button type="button" id="btn-acc" class="btn btn-outline btn-primary btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModal"><i class="fa fa-check"></i>&nbsp;ACC</button></center>';
-												}
-											?>
-
-											<!-- Modal -->
-											<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-													<div class="modal-dialog text-left" role="document">
-														<div class="modal-content">
-														<div class="modal-header bg-primary" >
-															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
-															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-															</button>
-														</div>
-														<div class="modal-body">
-															<table>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Total setor KO harus sama dengan total rupiah KM</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Setelah laporan KOM Tonase terbuat cek total setoran sebelum melakukan print laporan</td>
-																</tr>
-															</table>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-															<button type="button" class="btn btn-primary" id="confirmSubmit" onclick="postAndReload()">Yakin dan lanjutkan</button>
-														</div>
-														</div>
-													</div>
-												</div>
-										</div>
-									</div>
-								</form>
-							</div>
-							<?php } elseif($check<1) { ?>
-									<div class="payment-notfound text-center">
-										<img src="img/payment-tonase-notfound.png" alt="Image Payment Not Found" width="200px">
-										<h3><b>Belum Ada Persetujuan KO</b></h3>
-									</div>
-								<?php } ?>
-                        </div>
-                    </div>
-				</div>
-				<div class="col-lg-6">
-					<div class="panel panel-success">
-                        <div class="panel-heading"  style="background: green; color: #fff;">
-                            <i class="fa fa-check-square fa-fw"></i> Acc Data KOM Mitra Menjadi KMM
-                        </div>
-                        <div class="panel-body">
-						<?php if($check_mitra>=1) { ?>
-							<div class="row">
-								<form class="form-horizontal" action="pay_action2.php?task=acc_mitra&type=km" id="acckm_mitra" name="acckm" method="POST" target="_blank">
-									<div class="col-md-6" style="margin-top:0px; margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>ID KM: <?php echo $km_id_mitra; ?></label>
-											</div>
-										</div>
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
-											<input type="number" class="form-control text-center" id="cash-mitra" name="cash" placeholder="Uang Yg Diterima" required>                  
-										</div>
-									</div>
-									<div class="col-md-6" style="margin-top:0px;margin-bottom:-10px;">
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-10px;">
-											<div class="box-ko-id" style="background: #A04747; padding: 10px; color: white; border-radius: 8px;">
-												<label>Total Rupiah: <?php echo format_rupiah($cost_mitra); ?></label>
-											</div>
-										</div>
-										<div class="form-group" style="padding:10px; text-align:center; margin-top:-15px;">
-											<?php 
-												if($check_mitra>=1){
-													echo'<center><button type="button" id="btn-acc-mitra" class="btn btn-outline btn-success btn-block" style="display: none;" data-toggle="modal" data-target="#confirmationModalMitra"><i class="fa fa-check"></i>&nbsp;ACC</button></center>';
-												}
-											?>
-
-											<!-- Modal -->
-											<div class="modal fade" id="confirmationModalMitra" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-													<div class="modal-dialog text-left" role="document">
-														<div class="modal-content">
-														<div class="modal-header" style="background: green; color: #fff;">
-															<h5 class="modal-title" id="confirmationModalLabel"><b>MOHON CEK KEMBALI !</b></h5>
-															<button type="button" style="margin-top: -20px;" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-															</button>
-														</div>
-														<div class="modal-body">
-															<table>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Total setor KOM harus sama dengan total rupiah KMM</td>
-																</tr>
-																<tr>
-																	<td style="font-size:28px; padding-right: 10px;"> • </td>
-																	<td>Setelah laporan KKM Mitra terbuat cek total setoran sebelum melakukan print laporan</td>
-																</tr>
-															</table>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-															<button type="button" class="btn btn-success" id="confirmSubmitMitra" onclick="postAndReload()">Yakin dan lanjutkan</button>
-														</div>
-														</div>
-													</div>
-												</div>
-										</div>
-									</div>
-								</form>
-							</div>
-							<?php } elseif($check_mitra<1) { ?>
-									<div class="payment-notfound text-center">
-										<img src="img/payment-mitra-notfound.png" alt="Image Payment Not Found" width="200px">
-										<h3><b>Belum Ada Persetujuan KOM</b></h3>
-									</div>
-								<?php } ?>
-                        </div>
-                    </div>
 				</div>
 			</div>
         </div>
     </div>
-	<!-- Modal Password -->
-	<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src='../assets/image/Delete.png' width='25' height='25'/></button>
-					<h4 id="header_password">Ganti Password</h4>
-				</div>
-				<div class="modal-body">
-					<div id="data_password" style="margin-bottom: 0px;">
-						<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
-					</div>
-					<input type="hidden" id="value_id" />
-				</div>
-				<div class="modal-footer">
-				</div>
-			</div>
-		</div>
-	</div>
+
+
+	<!-- Switch Toggle -->
+	<script>
+		$('#btn-tonase').on('click', function(){
+
+			$('#btn-mitra').removeClass('active');
+			$(this).addClass('active');
+
+			$('.switch-container').removeClass('mitra-active');
+
+			$('#mode-mitra').hide();
+			$('#mode-tonase').fadeIn(200);
+		});
+
+		$('#btn-mitra').on('click', function(){
+
+			$('#btn-tonase').removeClass('active');
+			$(this).addClass('active');
+
+			$('.switch-container').addClass('mitra-active');
+
+			$('#mode-tonase').hide();
+			$('#mode-mitra').fadeIn(200);
+		});
+	</script>
+
 	<script>
 		$(document).ready(function(){
 			// Auto Refresh Page
 			$("#notifArea").html(alertLoadProcess);
-			$('#Area1').load("km_table.php",function(){clearNotif();});
 			$('#Area2').load("km_acc_table.php",function(){clearNotif();});
-			$('#AreaMitra1').load("km_table_mitra.php",function(){clearNotif();});
 			$('#AreaMitra2').load("km_acc_table_mitra.php",function(){clearNotif();});
 			setTimeout('$("html").removeClass("js")',1000); 
 			
@@ -388,8 +201,11 @@
 				$("#data_password").load("password.php",function(){clearNotif();});
 			})
 		});
+
 		function clearNotif(){$("#notifArea").html("");}
+
     </script>
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -398,45 +214,6 @@
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-
-	<!-- Reload Window Tonase-->
-	<script>
-			// Fungsi untuk menampilkan tombol ACC Tonase
-			document.getElementById('cash').addEventListener('input', function() {
-				const receiverValue = this.value;
-				const btnAcc = document.getElementById('btn-acc');
-
-				// Jika ada input, tampilkan tombol ACC, jika kosong sembunyikan
-				if (receiverValue !== "") {
-					btnAcc.style.display = "block";
-				} else {
-					btnAcc.style.display = "none";
-				}
-			});
-
-			// Tangkap event submit untuk form
-			document.getElementById('acckm').addEventListener('submit', function(event) {
-				event.preventDefault(); // Cegah default form submit
-				const btnAcc = document.getElementById('btn-acc');
-
-				// Jika tombol ACC terlihat, trigger klik tombol ACC
-				if (btnAcc && btnAcc.style.display === "block") {
-					btnAcc.click();
-				}
-			});
-
-			// Modal konfirmasi tombol acc (tonase)
-			document.getElementById('confirmSubmit').addEventListener('click', function () {
-				// Submit form setelah konfirmasi
-				document.getElementById('acckm').submit();
-			});
-
-			function postAndReload() {
-				setTimeout(function() {
-					location.reload();
-				}, 100);
-			}
-	</script>
 
 	<!-- Reload Window Mitra-->
 	<script>

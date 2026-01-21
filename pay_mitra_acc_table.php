@@ -221,133 +221,132 @@
 
 	/* ================= MODAL FINANCE STYLE ================= */
 
-	.modal-finance {
-		border-radius: 14px;
-		overflow: hidden;
+	.modal-reminder {
+		border-radius: 16px;
 		border: none;
-		box-shadow: 0 15px 40px rgba(0,0,0,.25);
-		animation: scaleIn .25s ease;
+		overflow: hidden;
+		box-shadow: 0 20px 50px rgba(0,0,0,.35);
+		animation: fadeUp .25s ease;
 	}
 
-	@keyframes scaleIn {
-		from { transform: scale(.9); opacity: 0; }
-		to   { transform: scale(1); opacity: 1; }
+	@keyframes fadeUp {
+		from { transform: translateY(20px); opacity: 0; }
+		to   { transform: translateY(0); opacity: 1; }
 	}
 
 	/* Header */
-	.finance-header {
-		display: flex;
+	.reminder-header {
 		position: relative;
+		display: flex;
 		align-items: center;
 		gap: 15px;
-		background: linear-gradient(135deg, #2563eb, #1e40af);
+		padding: 20px;
+		background: linear-gradient(135deg, #1f2933, #111827);
 		color: #fff;
-		padding: 18px 20px;
-		border-bottom: none;
 	}
 
-	.finance-header h4 {
+	.reminder-badge {
+		width: 48px;
+		height: 48px;
+		border-radius: 14px;
+		background: rgba(251,191,36,.2);
+		color: #fbbf24;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 22px;
+	}
+
+	.reminder-title h4 {
 		margin: 0;
 		font-weight: 700;
-		letter-spacing: .5px;
+		letter-spacing: .4px;
 	}
 
-	.finance-header small {
-		opacity: .85;
+	.reminder-title span {
 		font-size: 12px;
+		opacity: .8;
 	}
 
-	.finance-icon {
-		width: 45px;
-		height: 45px;
-		background: rgba(255,255,255,.15);
-		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 20px;
-	}
-
-	.finance-close {
+	.reminder-close {
 		position: absolute;
-		top: 14px;
-		right: 20px;   /* INI KUNCI: beri nafas dari tepi */
-
-		width: 36px;
-		height: 36px;
+		right: 18px;
+		top: 18px;
+		width: 34px;
+		height: 34px;
 		border-radius: 10px;
-
 		border: none;
-		background: rgba(255,255,255,.15);
+		background: rgba(255,255,255,.1);
 		color: #fff;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		font-size: 15px;
 		cursor: pointer;
-
-		transition: all .25s ease;
+		transition: .2s;
 	}
 
-	.finance-close:hover {
-		background: rgba(255,255,255,.35);
-		transform: scale(1.1);
+	.reminder-close:hover {
+		background: rgba(255,255,255,.25);
+		transform: rotate(90deg);
 	}
 
 	/* Body */
-	.finance-body {
+	.reminder-body {
 		padding: 25px;
 	}
 
-	.finance-alert {
-		background: #fef3c7;
-		color: #92400e;
-		padding: 12px 15px;
-		border-radius: 10px;
-		margin-bottom: 20px;
-		font-weight: 600;
+	.reminder-message {
 		display: flex;
-		align-items: center;
-		gap: 10px;
+		gap: 12px;
+		background: #fffbeb;
+		color: #92400e;
+		padding: 15px;
+		border-radius: 12px;
+		font-size: 14px;
+		margin-bottom: 22px;
 	}
 
-	.finance-checklist {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+	.reminder-message i {
+		font-size: 20px;
+		margin-top: 2px;
+		color: #f59e0b;
 	}
 
-	.finance-checklist li {
+	.reminder-points {
+		display: grid;
+		gap: 14px;
+	}
+
+	.reminder-points .point {
 		display: flex;
 		align-items: center;
 		gap: 12px;
-		padding: 12px 0;
-		border-bottom: 1px solid #eee;
-		font-size: 15px;
+		padding: 12px 14px;
+		border-radius: 12px;
+		background: #f9fafb;
+		border: 1px solid #e5e7eb;
+		font-size: 14px;
 	}
 
-	.finance-checklist li i {
-		color: #16a34a;
+	.reminder-points .point i {
+		color: #f59e0b;
 		font-size: 18px;
 	}
 
 	/* Footer */
-	.finance-footer {
+	.reminder-footer {
 		padding: 18px 20px;
-		background: #f8fafc;
 		border-top: none;
+		background: #f8fafc;
+		display: flex;
+		justify-content: space-between;
 	}
 
-	.finance-footer .btn {
-		min-width: 160px;
+	.reminder-footer .btn {
+		min-width: 150px;
 		border-radius: 30px;
 		font-weight: 600;
 	}
 
-	.btn-confirm {
-		box-shadow: 0 6px 15px rgba(37,99,235,.4);
+	.btn-reminder-confirm {
+		box-shadow: 0 8px 20px rgba(245,158,11,.45);
 	}
 
 	/* ============================
@@ -610,47 +609,65 @@
 
 
 <!-- ================= MODAL KONFIRMASI MITRA ================= -->
-<div class="modal fade" id="confirmationModalMitra" tabindex="-1">
-  <div class="modal-dialog modal-md modal-dialog-centered">
-    <div class="modal-content modal-finance">
+<div class="modal fade" id="confirmationModalMitra" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content modal-reminder">
 
-      <div class="modal-header finance-header">
-        <div class="finance-icon">
-          <i class="fa fa-shield"></i>
+      <!-- Header -->
+      <div class="reminder-header">
+        <div class="reminder-badge">
+          <i class="fa fa-bell"></i>
         </div>
-        <div>
-          <h4 class="modal-title">Verifikasi Akhir Pembayaran Mitra</h4>
-          <small>Sistem Keuangan Terproteksi</small>
+
+        <div class="reminder-title">
+          <h4>Pengingat Sebelum Pembayaran</h4>
+          <span>Tindakan ini bersifat final</span>
         </div>
-        <button type="button" class="finance-close" data-dismiss="modal">
+
+        <button type="button" class="reminder-close" data-dismiss="modal">
           <i class="fa fa-times"></i>
         </button>
       </div>
 
-      <div class="modal-body finance-body">
+      <!-- Body -->
+      <div class="modal-body reminder-body">
 
-        <div class="finance-alert">
-          <i class="fa fa-exclamation-triangle"></i>
-          Pastikan seluruh data berikut telah diverifikasi dengan benar
+        <div class="reminder-message">
+          <i class="fa fa-info-circle"></i>
+          <p>
+            Pastikan Anda telah menerima dan menghitung uang fisik dengan benar.
+            Setelah pembayaran dikonfirmasi, <b>data akan dikunci</b> dan tidak
+            dapat diubah tanpa otorisasi khusus.
+          </p>
         </div>
 
-        <ul class="finance-checklist">
-          <li><i class="fa fa-check-circle"></i> Nominal pembayaran sesuai nota mitra</li>
-          <li><i class="fa fa-check-circle"></i> Total setoran sesuai uang fisik</li>
-          <li><i class="fa fa-check-circle"></i> Data siap dicetak laporan KO Mitra</li>
-        </ul>
+        <div class="reminder-points">
+          <div class="point">
+            <i class="fa fa-money"></i>
+            <span>Jumlah uang fisik sudah sesuai</span>
+          </div>
+
+          <div class="point">
+            <i class="fa fa-file-text"></i>
+            <span>Tidak ada nota yang terlewat</span>
+          </div>
+
+          <div class="point">
+            <i class="fa fa-lock"></i>
+            <span>Pembayaran akan langsung dikunci sistem</span>
+          </div>
+        </div>
 
       </div>
 
-      <div class="modal-footer finance-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">
-          <i class="fa fa-times"></i> Batal
+      <!-- Footer -->
+      <div class="modal-footer reminder-footer">
+        <button class="btn btn-outline-secondary" data-dismiss="modal">
+          Cek Ulang
         </button>
 
-        <button type="button"
-                class="btn btn-primary btn-confirm"
-                id="confirmSubmitMitra">
-          <i class="fa fa-check-circle"></i> Ya, Lanjutkan Pembayaran
+        <button class="btn btn-warning btn-reminder-confirm" id="confirmSubmitMitra">
+          <i class="fa fa-check"></i> Saya Mengerti & Lanjutkan
         </button>
       </div>
 

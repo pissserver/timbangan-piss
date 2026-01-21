@@ -124,7 +124,7 @@
 											value (	'".$ko_id."', 
 													'".$year."', 
 													'".$total."', 
-													'Diajukan', 
+													'Diterima', 
 													'".$date_now."', 
 													'".$checker."', 
 													'".$receiver."')");
@@ -288,7 +288,7 @@
 											value (	'".$ko_id."', 
 													'".$year."', 
 													'".$total."', 
-													'Diajukan', 
+													'Diterima', 
 													'".$date_now."', 
 													'".$checker."', 
 													'".$receiver."')");

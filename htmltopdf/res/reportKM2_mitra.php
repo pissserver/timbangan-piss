@@ -86,7 +86,7 @@
 			$cost = executeScalar("select km_total from km_mitra where km_id = '".$km."'");
 		?>
 		<tr>
-			<td style="text-align: right;border: solid 1px black;" colspan="4"><b>Total </b></td>
+			<td style="text-align: center;border: solid 1px black;" colspan="4"><b>Total </b></td>
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"><?php echo format_no($cost); ?></td>
 		</tr>
 	</table>
