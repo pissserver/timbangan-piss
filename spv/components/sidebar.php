@@ -1092,7 +1092,7 @@
 								<li><a class="<?= isActive(['laborer.php']); ?>" href="laborer.php"><i class="fa fa-group fa-fw"></i> Mitra / Mandor </a></li>
 								<li><a class="<?= isActive(['transportation.php']); ?>" href="transportation.php"><i class="fa fa-truck fa-fw"></i> Kendaraan </a></li>
 								<li><a class="<?= isActive(['goods.php']); ?>" href="goods.php"><i class="fa fa-archive fa-fw"></i> Komoditi </a></li>
-								<li><a class="<?= isActive(['seasonalcommodity.php']); ?>" href="seasonalcommodity.php"><i class="fa fa-archive fa-fw"></i> Komoditi Musiman </a></li>
+								<!-- <li><a class="<?= isActive(['seasonalcommodity.php']); ?>" href="seasonalcommodity.php"><i class="fa fa-archive fa-fw"></i> Komoditi Musiman </a></li> -->
 								<li><a class="<?= isActive(['noncommodity.php']); ?>" href="noncommodity.php"><i class="fa fa-archive fa-fw"></i> NonKomoditi </a></li>
 								<li><a class="<?= isActive(['payment.php']); ?>" href="payment.php"><i class="fa fa-money fa-fw"></i> Tarif </a></li>
 							</ul>

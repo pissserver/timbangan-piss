@@ -15,13 +15,13 @@
 <table id="payViewMitra" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="font-size: 12px;">
 	<thead>
 		<tr>
-			<th style="width:5%; text-align:center;">ID NOTA</th>
-			<th style="width:10%; text-align:center;">TGL TAGIHAN</th>
+			<th style="width:3%; text-align:center;">ID NOTA</th>
+			<th style="width:12%; text-align:center;">TGL TAGIHAN</th>
 			<th style="width:8%; text-align:center;">NOPOL</th>
 			<th style="width:8%; text-align:center;">KODE</th>
 			<th style="width:20%; text-align:center;">PEDAGANG</th>
 			<th style="width:8%; text-align:center;">JENIS</th>
-			<th style="width:10%; text-align:center;">NETTO</th>
+			<th style="width:8%; text-align:center;">NETTO</th>
 			<!-- <th style="width:10%;">BAGI MITRA</th> -->
 			<!-- <th style="width:10%;">SIMPAN MITRA</th>
 			<th style="width:10%;">BAGI MANDOR</th>
@@ -75,7 +75,7 @@
 			<!-- <td style="text-align:right;"><?php echo format_rupiah($data2['cost_simpan_mitra']); ?></td>
 			<td style="text-align:right;"><?php echo format_rupiah($data2['cost_bagi_mandor']); ?></td>
 			<td style="text-align:right;"><?php echo format_rupiah($data2['cost_simpan_mandor']); ?></td> -->
-			<td style="text-align:right; vertical-align: middle;"><?php echo format_rupiah($data2['cost_bayar']); ?></td>
+			<td style="text-align:center; vertical-align: middle;"><?php echo format_rupiah($data2['cost_bayar']); ?></td>
 			<!-- <td style="text-align:right;"><?php echo format_rupiah($data2['cost']); ?></td> -->
 			<!-- <td style="text-align:center;"><?php echo $data2['weighing_sts']; ?></td> -->
 			<td style="text-align:center; vertical-align: middle;">
