@@ -174,14 +174,14 @@
 	<page_footer>
         <table style="width: 100%; high: 50px; border: solid 0px black; border-collapse: collapse; margin-top:5px; font-size:9pt;">
             <tr>
-                <th style="text-align: center;width: 33%;">Kasir</th>
+                <th style="text-align: center;width: 33%;">Manajemen</th>
                 <th style="text-align: center;width: 34%;"></th>
-                <th style="text-align: center;width: 33%;">Checker</th>
+                <th style="text-align: center;width: 33%;">Security</th>
             </tr>
             <tr>
-                <td style="text-align: center;width: 33%;"><br><br><br>Manajemen</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>(...................)</td>
                 <td style="text-align: center;width: 34%;"></td>
-                <td style="text-align: center;width: 33%;"><br><br><br>Security</td>
+                <td style="text-align: center;width: 33%;"><br><br><br>(...................)</td>
             </tr>
         </table>
         <br><br>

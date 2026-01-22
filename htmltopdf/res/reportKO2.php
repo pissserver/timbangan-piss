@@ -81,7 +81,7 @@
 			<th style="text-align: center;width: 10%;border: solid 1px black;">NOTA TAGIHAN</th>
 			<th style="text-align: center;width: 7%;border: solid 1px black;">NOPOL</th>
 			<th style="text-align: center;width: 23%;border: solid 1px black;">PEDAGANG</th>
-			<th style="text-align: center;width: 8%;border: solid 1px black;">TONASE</th>
+			<th style="text-align: center;width: 8%;border: solid 1px black;">TONASE (Kg)</th>
 			<th style="text-align: center;width: 10%;border: solid 1px black;">TOTAL (Rp)</th>
 		</tr>
 		<?php

@@ -24,102 +24,6 @@
 	
 ?>
 
-<style>
-	/* ===== PAYMENT MODE SWITCH (FINTECH STYLE) ===== */
-	.payment-mode-switch {
-		display: flex;
-		justify-content: center;
-		margin: 15px 0 5px 0;
-	}
-
-	.switch-container {
-		position: relative;
-		display: flex;
-		background: #f1f4f8;
-		border-radius: 50px;
-		padding: 5px;
-		width: 360px;
-		box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
-	}
-
-	.switch-btn {
-		position: relative;
-		flex: 1;
-		border: none;
-		background: transparent;
-		padding: 10px 0;
-		border-radius: 50px;
-		font-weight: 700;
-		font-size: 13px;
-		color: #7a8a9a;
-		cursor: pointer;
-		z-index: 2;
-		transition: all .3s ease;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 6px;
-	}
-
-	.switch-btn i {
-		font-size: 14px;
-	}
-
-	.switch-btn.active {
-		color: #fff;
-	}
-
-	/* Sliding pill */
-	.switch-indicator {
-		position: absolute;
-		top: 5px;
-		left: 5px;
-		width: 50%;
-		height: calc(100% - 10px);
-		background: linear-gradient(135deg, #3b82f6, #428BCA);
-		border-radius: 50px;
-		box-shadow: 0 6px 15px rgba(37,99,235,.35);
-		transition: all .35s cubic-bezier(.4,0,.2,1);
-	}
-
-	/* When Mitra Active */
-	.switch-container.mitra-active .switch-indicator {
-		left: calc(50% - 5px);
-		background: linear-gradient(135deg, #22c55e, #16a34a);
-		box-shadow: 0 6px 15px rgba(22,163,74,.35);
-	}
-
-	/* ===== ANIMASI PINDAH KE KERANJANG ===== */
-	.payment-card-tonase {
-		transition: all .45s ease;
-	}
-
-	.payment-card-mitra {
-		transition: all .45s ease;
-	}
-
-	.card-slide-out {
-		transform: translateX(120px) scale(.95);
-		opacity: 0;
-	}
-
-	/* ===== ANIMASI MASUK KE PANEL BAWAH ===== */
-	.card-slide-in {
-		animation: slideInRight .45s ease;
-	}
-
-	@keyframes slideInRight {
-		from {
-			transform: translateX(-80px) scale(.95);
-			opacity: 0;
-		}
-		to {
-			transform: translateX(0) scale(1);
-			opacity: 1;
-		}
-	}
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -158,28 +62,8 @@
 			<?php include 'components/sidebar.php'; ?>
 
 			<div id="page-wrapper"><br><br><br>
-				<!-- Switch Toggle -->
-				<div class="payment-mode-switch">
-					<div class="switch-container">
-						<div class="switch-indicator"></div>
-
-						<button id="btn-tonase" class="switch-btn active">
-							<i class="fa fa-truck"></i>
-							<span>TONASE</span>
-						</button>
-
-						<button id="btn-mitra" class="switch-btn">
-							<i class="fa fa-users"></i>
-							<span>MITRA</span>
-						</button>
-					</div>
-				</div>
-				<hr>
-
-				<!-- Tonase -->
-				<div id="mode-tonase">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-xs-12">
+				<div class="row">
+						<div class="col-lg-6 col-md-6 col-xs-6">
 							<div class="panel panel-primary" style="margin-bottom:-10px;">
 								<div class="panel-heading">
 									<i class="	fa fa-file-text-o fa-fw"></i> Data Tagihan Tonase
@@ -197,36 +81,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<br><br>
 
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-xs-12">
-							<div class="panel panel-primary" style="margin-bottom:0px;">
-								<div class="panel-heading">
-									<i class="fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Tonase
-								</div>
-								<div class="panel-body" style="margin-bottom:-10px;">
-									<div class="row" style=" overflow-x: auto;">
-										<div class="col-md-12">
-											<div id="Area2">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<br><br>
-				</div>
-
-				<!-- Mitra -->
-				<div id="mode-mitra" style="display: none;">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-xs-12">
+						<div class="col-lg-6 col-md-6 col-xs-6">
 							<div class="panel panel-success" style="margin-bottom:-10px;">
 								<div class="panel-heading" style="background: green; color: #fff;">
 									<i class="fa fa-file-text-o fa-fw"></i> Data Tagihan Mitra
@@ -244,10 +100,30 @@
 								</div>
 							</div>
 						</div>
-					</div><br><br>
+					</div>
+					<br><br>
 
 					<div class="row">
-						<div class="col-lg-12 col-md-12 col-xs-12">
+						<div class="col-lg-6 col-md-6 col-xs-6">
+							<div class="panel panel-primary" style="margin-bottom:0px;">
+								<div class="panel-heading">
+									<i class="fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Tonase
+								</div>
+								<div class="panel-body" style="margin-bottom:-10px;">
+									<div class="row" style=" overflow-x: auto;">
+										<div class="col-md-12">
+											<div id="Area2">
+												<div class="alert alert-info" onclick="clearNotif()">
+													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-md-6 col-xs-6">
 							<div class="panel panel-success" style="margin-bottom:0px;">
 								<div class="panel-heading" style="background: green; color: #fff;">
 									<i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Mitra
@@ -265,36 +141,11 @@
 								</div>
 							</div>
 						</div>
-					</div><br><br>
 				</div>
+				<br><br>
 			</div>
 		</div>
 
-
-		<!-- Switch Toggle -->
-		<script>
-			$('#btn-tonase').on('click', function(){
-
-				$('#btn-mitra').removeClass('active');
-				$(this).addClass('active');
-
-				$('.switch-container').removeClass('mitra-active');
-
-				$('#mode-mitra').hide();
-				$('#mode-tonase').fadeIn(200);
-			});
-
-			$('#btn-mitra').on('click', function(){
-
-				$('#btn-tonase').removeClass('active');
-				$(this).addClass('active');
-
-				$('.switch-container').addClass('mitra-active');
-
-				$('#mode-tonase').hide();
-				$('#mode-mitra').fadeIn(200);
-			});
-		</script>
 		
 		<script>
 			$(document).ready(function(){
@@ -409,9 +260,6 @@
 
 				e.preventDefault();
 
-				// hanya jika mode mitra aktif
-				if(!$('#mode-mitra').is(':visible')) return;
-
 				const url  = $(this).attr('href');
 				const card = $(this).closest('.payment-card-mitra');
 
@@ -446,8 +294,6 @@
 
 				e.preventDefault();
 
-				if(!$('#mode-mitra').is(':visible')) return;
-
 				const url  = $(this).attr('href');
 				const card = $(this).closest('.payment-card-mitra');
 
@@ -478,8 +324,6 @@
 			$(document).on('submit', 'form[action*="pay_action.php?task=cancelAll_mitra&type=ko"]', function(e){
 
 				e.preventDefault();
-
-				if(!$('#mode-mitra').is(':visible')) return;
 
 				const form = $(this);
 

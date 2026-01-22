@@ -17,16 +17,16 @@
 	<table id="payView" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="font-size: 12px;">
 		<thead>
 			<tr>
-				<th style="width:3%; text-align:center;">ID NOTA</th>
-				<th style="width:12%; text-align:center;">TGL TAGIHAN</th>
-				<th style="width:8%; text-align:center;">NOPOL</th>
-				<th style="width:8%; text-align:center;">KODE</th>
-				<th style="width:20%; text-align:center;">PEDAGANG</th>
-				<th style="width:8%; text-align:center;">JENIS</th>
-				<th style="width:8%; text-align:center;">NETTO</th>
-				<th style="width:10%; text-align:center;">SETORAN</th>
+				<th style="width:5%; text-align:center;">ID NOTA</th>
+				<th style="width:15%; text-align:center;">TGL TAGIHAN</th>
+				<th style="width:10%; text-align:center;">NOPOL</th>
+				<!-- <th style="width:8%; text-align:center;">KODE</th> -->
+				<th style="width:25%; text-align:center;">PEDAGANG</th>
+				<!-- <th style="width:8%; text-align:center;">JENIS</th> -->
+				<th style="width:15%; text-align:center;">NETTO</th>
+				<th style="width:20%; text-align:center;">SETORAN</th>
 				<!-- <th style="width:7%;">STATUS</th> -->
-				<th style="width:7%; text-align:center;">AKSI</th>
+				<th style="width:10%; text-align:center;">AKSI</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,9 +58,13 @@
 				<td style="text-align:center; vertical-align: middle;"><?php echo $data['weighing_id']; ?></td>
 				<td style="text-align:center; vertical-align: middle;"><?php echo date("d M Y", strtotime($data['date_check'])); ?></td>
 				<td style="text-align:center; vertical-align: middle;"><?php echo $data['nopol']; ?></td>
-				<td style="text-align:center; vertical-align: middle;"><?php echo $data['merchant_id']; ?></td>
-				<td style="vertical-align: middle;"><?php echo $merchant; ?></td>
-				<td style="text-align:center; vertical-align: middle;"><?php echo $data['merchant_type']; ?></td>
+				<!-- <td style="text-align:center; vertical-align: middle;"><?php echo $data['merchant_id']; ?></td> -->
+				<td style="vertical-align: middle;">
+					<?php echo $merchant; ?><br>
+					<small style="color: #646464"><?php echo $data['merchant_type']; ?></small><br>
+					<small style="color: #7f7d7d; font-weight: 600;"><?php echo $data['merchant_id']; ?></small>
+				</td>
+				<!-- <td style="text-align:center; vertical-align: middle;"><?php echo $data['merchant_type']; ?></td> -->
 				<td style="text-align:center; vertical-align: middle;"><?php echo $data['netto']; ?> Kg</td>
 				<td style="text-align:center; vertical-align: middle;"><?php echo format_rupiah($data['cost_tonase']); ?></td>
 				<!-- <td style="text-align:center;"><?php echo $data['weighing_sts']; ?></td> -->

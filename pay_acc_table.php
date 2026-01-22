@@ -208,10 +208,70 @@
 		box-shadow: 0 10px 25px rgba(22,163,74,.2);
 	}
 
-	/* PAYER */
-	.payer-group label {
-		font-weight: 800;
+	/* ===============================
+	MODERN DASHBOARD SELECT
+	================================ */
+	.select-dashboard {
+		position: relative;
+		background: #f6f8fb;
+		border-radius: 14px;
+		padding: 4px;
+		box-shadow:
+			0 10px 30px rgba(16,24,40,.06),
+			inset 0 0 0 1px rgba(16,24,40,.04);
+		transition: all .25s ease;
+	}
+
+	/* ICON */
+	.select-dashboard i {
+		position: absolute;
+		left: 18px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #64748b;
+		font-size: 15px;
+		pointer-events: none;
+	}
+
+	/* SELECT */
+	.select-dashboard select {
+		width: 100%;
+		border: none;
+		background: transparent;
+		height: 54px;
+		padding: 0 18px 0 48px;
+		font-size: 14px;
+		font-weight: 600;
 		color: #0f172a;
+		outline: none;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	/* PLACEHOLDER COLOR */
+	.select-dashboard select option[value=""] {
+		color: #94a3b8;
+	}
+
+	/* FOCUS STATE */
+	.select-dashboard:focus-within {
+		background: #ffffff;
+		box-shadow:
+			0 0 0 4px rgba(59,130,246,.15),
+			0 20px 40px rgba(16,24,40,.08);
+	}
+
+	/* ARROW */
+	.select-dashboard::after {
+		content: '\f107';
+		font-family: FontAwesome;
+		position: absolute;
+		right: 18px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #94a3b8;
+		font-size: 16px;
+		pointer-events: none;
 	}
 
 	/* BUTTON AREA */
@@ -483,7 +543,7 @@
 			</div>
 
 			<div class="payment-mid">
-				<div class="merchant"><?php echo $merchant; ?></div>
+				<div class="merchant"><i class="fa fa-user"></i>&nbsp;&nbsp;<?php echo $merchant; ?></div>
 				<div class="commodity"><?php echo $data['merchant_type']; ?></div>
 				<div class="code">Kode: <?php echo $data['merchant_id']; ?></div>
 			</div>
@@ -527,22 +587,24 @@
 		target="_blank">
 
 	<div class="form-group payer-group">
-		<label><i class="fa fa-user"></i> Penyetor Uang</label>
-		<select class="form-control input-lg" name="receiver" id="receiver" required>
-			<option value="">- Pilih Penyetor -</option>
-			<?php
-			$sql = mysql_query("select checker_id, checker_name from checker
-								where checker_sts='Aktif'
-								and checker_role='Checker'
-								and status_aktif='1'
-								order by checker_name");
-			while($c = mysql_fetch_array($sql)){
-			?>
-				<option value="<?php echo $c['checker_id']; ?>">
-					<?php echo $c['checker_name']; ?>
-				</option>
-			<?php } ?>
-		</select>
+		<div class="select-dashboard">
+			<i class="fa fa-user"></i>
+			<select name="receiver" id="receiver" required>
+				<option value="">Pilih Penyetor</option>
+				<?php
+				$sql = mysql_query("select checker_id, checker_name from checker
+									where checker_sts='Aktif'
+									and checker_role='Checker'
+									and status_aktif='1'
+									order by checker_name");
+				while($c = mysql_fetch_array($sql)){
+				?>
+					<option value="<?php echo $c['checker_id']; ?>">
+						<?php echo $c['checker_name']; ?>
+					</option>
+				<?php } ?>
+			</select>
+		</div>
 	</div>
 
 	<div class="row action-row">
