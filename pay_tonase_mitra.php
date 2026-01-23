@@ -24,6 +24,129 @@
 	
 ?>
 
+<style>
+	.data-card{
+	background:#fff;
+	border-radius:16px;
+	box-shadow:0 12px 28px rgba(0,0,0,.08);
+	display:flex;
+	flex-direction:column;
+	margin-bottom:20px;
+}
+
+.data-card-header{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	padding:14px 18px;
+	font-weight:700;
+	border-radius:16px 16px 0 0;
+}
+
+.data-card-header.primary{
+	background:#4f46e5;
+	color:#fff;
+}
+
+.data-card-header.success{
+	background:#16a34a;
+	color:#fff;
+}
+
+.search-input{
+	border:none;
+	border-radius:20px;
+	padding:6px 14px;
+	font-size:13px;
+	width:180px;
+	color:#333;
+}
+
+.search-input:focus{
+	outline:none;
+	box-shadow:0 0 0 2px rgba(255,255,255,.4);
+}
+
+.data-card-body{
+	padding:14px;
+	min-height:260px;
+}
+
+.data-item{
+	display:grid;
+	grid-template-columns: 1.2fr 1fr 110px;
+	align-items:center;
+	padding:12px 14px;
+	border-radius:12px;
+	margin-bottom:10px;
+	background:#f9fafb;
+	transition:.2s;
+}
+
+.data-item:hover{
+	background:#eef2ff;
+}
+
+.data-left{
+	font-weight:600;
+}
+
+.data-date{
+	text-align:center;
+	font-size:12px;
+	color:#64748b;
+}
+
+.data-acc{
+	text-align:right;
+}
+
+.btn-acc{
+	background:#22c55e;
+	color:#fff;
+	border:none;
+	padding:6px 14px;
+	border-radius:20px;
+	font-size:12px;
+	font-weight:600;
+	cursor:pointer;
+}
+
+.btn-acc:hover{
+	background:#16a34a;
+}
+
+.data-card-footer{
+	padding:10px 14px;
+	border-top:1px solid #eee;
+	text-align:center;
+}
+
+.pagination-btn{
+	display:inline-block;
+	padding:6px 12px;
+	margin:0 3px;
+	border-radius:8px;
+	background:#e5e7eb;
+	cursor:pointer;
+	font-size:12px;
+}
+
+.pagination-btn.active{
+	background:#4f46e5;
+	color:#fff;
+}
+
+.loading-ui,
+.empty-ui{
+	text-align:center;
+	padding:40px 0;
+	color:#64748b;
+	font-size:14px;
+}
+
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -63,84 +186,58 @@
 
 			<div id="page-wrapper"><br><br><br><br>
 				<div class="row">
-						<div class="col-lg-6 col-md-6 col-xs-6">
-							<div class="panel panel-primary" style="margin-bottom:-10px;">
-								<div class="panel-heading">
-									<i class="	fa fa-file-text-o fa-fw"></i> Data Tagihan Tonase
-								</div>
-								<div class="panel-body" style="margin-bottom:-10px;">
-									<div class="row" style=" overflow-x: auto;">
-										<div class="col-md-12">
-											<div id="Area1">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										</div>
+					<!-- TONASE -->
+					<div class="col-lg-6 col-md-6 col-xs-12">
+						<div class="data-card">
+							<div class="data-card-body">
+								<div id="Area1">
+									<div class="loading-ui">
+										<i class="fa fa-spinner fa-spin"></i> Loading data...
 									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="col-lg-6 col-md-6 col-xs-6">
-							<div class="panel panel-success" style="margin-bottom:-10px;">
-								<div class="panel-heading" style="background: green; color: #fff;">
-									<i class="fa fa-file-text-o fa-fw"></i> Data Tagihan Mitra
-								</div>
-								<div class="panel-body" style="margin-bottom:-10px;">
-									<div class="row" style=" overflow-x: auto;">
-										<div class="col-md-12">
-											<div id="AreaMitra1">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="data-card-footer">
+								<div id="pagination-tonase"></div>
 							</div>
 						</div>
 					</div>
-					<br><br>
 
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-xs-6">
-							<div class="panel panel-primary" style="margin-bottom:0px;">
-								<div class="panel-heading">
-									<i class="fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Tonase
-								</div>
-								<div class="panel-body" style="margin-bottom:-10px;">
-									<div class="row" style=" overflow-x: auto;">
-										<div class="col-md-12">
-											<div id="Area2">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										</div>
+					<!-- MITRA -->
+					<div class="col-lg-6 col-md-6 col-xs-12">
+						<div class="data-card">
+							<div class="data-card-body">
+								<div id="AreaMitra1">
+									<div class="loading-ui">
+										<i class="fa fa-spinner fa-spin"></i> Loading data...
 									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="col-lg-6 col-md-6 col-xs-6">
-							<div class="panel panel-success" style="margin-bottom:0px;">
-								<div class="panel-heading" style="background: green; color: #fff;">
-									<i class="	fa fa-file-text-o fa-fw"></i> Data Penampungan Pembayaran Mitra
-								</div>
-								<div class="panel-body" style="margin-bottom:-10px;">
-									<div class="row" style=" overflow-x: auto;">
-										<div class="col-md-12" >
-											<div id="AreaMitra2">
-												<div class="alert alert-info" onclick="clearNotif()">
-													<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="data-card-footer">
+								<div id="pagination-mitra"></div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<br><br>
+
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<div id="Area2">
+							<div class="alert alert-info" onclick="clearNotif()">
+								<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<div id="AreaMitra2">
+							<div class="alert alert-info" onclick="clearNotif()">
+								<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+							</div>
+						</div>
+					</div>
 				</div>
 				<br><br>
 			</div>

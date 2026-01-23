@@ -8,6 +8,7 @@
 	$ko_id_mitra 	= $ko_id_mitra+1;
 	$ko_id_mitra 	= sprintf("%06d", $ko_id_mitra);
 	$ko_id_mitra  = $year.$ko_id_mitra;
+	$check_mitra 	= executeScalar("select count(weighing_id) from weighing_mitra where weighing_sts3 = 'Pending'");
 	$cost_mitra 	= executeScalar("select sum(cost_bayar) from weighing_mitra where weighing_sts3 = 'Pending'");
 ?>
 
@@ -503,36 +504,36 @@
 		transform: rotate(90deg) scale(1.2);
 	}
 
-/* Search & Pagination */
-	.payment-toolbar{
+	/* Search & Pagination */
+	.payment-toolbar-mitra{
 		display:flex;
 		justify-content:space-between;
 		align-items:center;
 		gap:14px;
 		margin-bottom:18px;
 		padding:12px 14px;
-		background:linear-gradient(135deg,#f8f9ff,#eef2ff);
+		background:linear-gradient(135deg, #f8fffa, #eefff1);
 		border-radius:16px;
 		box-shadow:0 10px 28px rgba(79,70,229,.12);
 	}
 
 	/* SEARCH */
-	.search-box{
+	.search-box-mitra{
 		position:relative;
 		max-width:340px;
 		width:100%;
 	}
 
-	.search-box i{
+	.search-box-mitra i{
 		position:absolute;
 		top:50%;
 		left:14px;
 		transform:translateY(-50%);
-		color:#4f46e5;
+		color:#000;
 		font-size:14px;
 	}
 
-	.search-box input{
+	.search-box-mitra input{
 		width:100%;
 		padding:12px 16px 12px 42px;
 		border-radius:14px;
@@ -543,25 +544,25 @@
 		box-shadow:inset 0 0 0 transparent;
 	}
 
-	.search-box input:focus{
+	.search-box-mitra input:focus{
 		outline:none;
 		border-color:#4f46e5;
 		box-shadow:0 0 0 3px rgba(79,70,229,.18);
 	}
 
 	/* LIMIT */
-	.limit-box select{
+	.limit-box-mitra select{
 		padding:10px 14px;
 		border-radius:14px;
 		border:1px solid #dbe0ff;
 		background:#fff;
 		font-weight:600;
-		color:#4f46e5;
+		color:#000;
 		cursor:pointer;
 		transition:.25s ease;
 	}
 
-	.limit-box select:hover{
+	.limit-box-mitra select:hover{
 		background:#eef2ff;
 	}
 
@@ -578,16 +579,16 @@
 	}
 
 	/* PAGE BUTTON */
-	.page-link{
+	.page-link-mitra{
 		min-width:42px;
 		height:42px;
 		display:flex;
 		align-items:center;
 		justify-content:center;
 		border-radius:12px;
-		border:1px solid #dbe0ff;
+		border:1px solid #ddffdb;
 		background:#fff;
-		color:#4f46e5;
+		color:#000;
 		font-weight:600;
 		font-size:14px;
 		text-decoration:none;
@@ -595,19 +596,19 @@
 		box-shadow:0 6px 14px rgba(79,70,229,.15);
 	}
 
-	.page-link:hover{
-		background:#4f46e5;
+	.page-link-mitra:hover{
+		background:#16a34a;
 		color:#fff;
 		transform:translateY(-2px);
 		box-shadow:0 10px 22px rgba(79,70,229,.35);
 	}
 
 	/* ACTIVE */
-	.page-link.active{
-		background:linear-gradient(135deg,#4f46e5,#6366f1);
+	.page-link-mitra.active{
+		background:#16a34a;
 		color:#fff;
-		border-color:#4f46e5;
-		box-shadow:0 12px 26px rgba(79,70,229,.45);
+		border-color:#16a34a;
+		box-shadow:0 12px 26px rgba(94, 229, 70, 0.45);
 		transform:scale(1.05);
 	}
 
@@ -667,11 +668,89 @@
 		font-size:14px;
 		color:#555;
 	}
+
+	/* ================= HEADER PENAMPUNGAN ================= */
+	.payment-header-mitra{
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+		background: #dfe4e8;
+		padding:18px 22px;
+		border-radius:18px;
+		box-shadow:0 14px 32px rgba(0,0,0,.08);
+		margin-bottom:14px;
+	}
+
+	.payment-header-mitra-left{
+		display:flex;
+		align-items:center;
+		gap:16px;
+	}
+
+	.payment-header-mitra-icon{
+		width:52px;
+		height:52px;
+		border-radius:16px;
+		background:#16a34a;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:#fff;
+		font-size:22px;
+	}
+
+	.payment-header-mitra-left h3{
+		margin:0;
+		font-size:17px;
+		font-weight:800;
+		color:#111827;
+	}
+
+	.payment-header-mitra-left span{
+		font-size:12px;
+		color:#6b7280;
+	}
+
+	.payment-header-mitra-right{
+		display:flex;
+		align-items:center;
+	}
+
+	.payment-badge-mitra{
+		display:inline-flex;
+		align-items:center;
+		gap:6px;
+		background:#fff;
+		color:#16a34a;
+		font-size:12px;
+		font-weight:600;
+		padding:8px 14px;
+		border-radius:999px;
+	}
 </style>
 
 <div class="payment-frame">
-	<div class="payment-toolbar">
-		<div class="limit-box">
+	<!-- ================= HEADER PENAMPUNGAN ================= -->
+	<div class="payment-header-mitra">
+		<div class="payment-header-mitra-left">
+			<div class="payment-header-mitra-icon">
+				<i class="fa fa-database"></i>
+			</div>
+			<div>
+				<h3>Penampungan Pembayaran Mitra</h3>
+				<span>Daftar transaksi mitra yang menunggu proses pembayaran</span>
+			</div>
+		</div>
+
+		<div class="payment-header-mitra-right">
+			<span class="payment-badge-mitra">
+				<i class="fa fa-clock-o"></i> Menunggu Dibayarkan
+			</span>
+		</div>
+	</div>
+
+	<div class="payment-toolbar-mitra">
+		<div class="limit-box-mitra">
 			<select id="limitMitra">
 				<option value="5" selected>5</option>
 				<option value="10">10</option>
@@ -680,24 +759,26 @@
 			</select>
 		</div>
 
-		<div class="search-box">
+		<div class="search-box-mitra">
 			<i class="fa fa-search"></i>
 			<input type="text" id="searchMitra" placeholder="Cari Nota / Nopol / Pedagang">
 		</div>
 	</div><br>
 
 	<!-- ================= LIST PENAMPUNGAN MITRA ================= -->
-	<div class="payment-list" id="paymentMitraData">
-		<!-- DATA AJAX HERE -->
-	</div>
-	<div id="paginationMitra">
-		<!-- PAGINATION AJAX HERE -->
+	<div id="frame-mitra">
+		<div class="payment-list" id="paymentMitraData">
+			<!-- DATA AJAX HERE -->
+		</div>
+		<div id="paginationMitra">
+			<!-- PAGINATION AJAX HERE -->
+		</div>
 	</div>
 
 
 	<!-- ================= SUMMARY ================= -->
+	 <?php if($check_mitra >= 1){ ?>
 	<div class="payment-control-panel">
-
 		<div class="row summary-row">
 			<div class="col-md-6">
 				<div class="summary-tile ko">
@@ -768,6 +849,7 @@
 			</div>
 		</div>
 	</div>
+	<?php } ?>
 </div>
 
 
@@ -912,11 +994,12 @@
 			loadMitra();
 		});
 
-		$(document).on('click','.page-link-mitra',function(e){
+		$('#frame-mitra').on('click','.page-link-mitra-mitra',function(e){
 			e.preventDefault();
 			pageMitra = $(this).data('page');
 			loadMitra();
 		});
+
 	});
 
 	$('#paymentMitraData').html('<div class="loading">Memuat data</div>');

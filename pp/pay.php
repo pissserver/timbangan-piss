@@ -92,6 +92,69 @@
     color: #334155;
 }
 
+/* ===== SECTION WRAPPER ===== */
+.acc-section{
+	background:#fff;
+	border-radius:18px;
+	box-shadow:0 14px 32px rgba(0,0,0,.08);
+	padding:16px 18px;
+}
+
+/* HEADER */
+.acc-section-header{
+	display:flex;
+	align-items:center;
+	margin-bottom:14px;
+	border-bottom:1px solid #e5e7eb;
+	padding-bottom:10px;
+}
+.acc-title{
+	display:flex;
+	align-items:center;
+	gap:8px;
+	font-weight:800;
+	color:#1f2937;
+	font-size:15px;
+}
+.acc-title i{
+	color:#4f46e5;
+}
+
+/* VARIAN GREEN */
+.acc-section-blue{
+	border-top:4px solid #4f46e5;
+}
+
+/* VARIAN GREEN */
+.acc-section-green{
+	border-top:4px solid #16a34a;
+}
+
+.acc-title.green i{
+	color:#16a34a;
+}
+
+/* BODY */
+.acc-section-body{
+	padding-top:6px;
+}
+
+/* LOADING */
+.acc-loading{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+	padding:40px 0;
+	color:#6b7280;
+	cursor:pointer;
+}
+.acc-loading i{
+	font-size:28px;
+	margin-bottom:8px;
+	color:#4f46e5;
+}
+
 </style>
 
 
@@ -128,7 +191,7 @@
 	<?php include 'components/sidebar.php'; ?>
 
         <div id="page-wrapper">
-			<br><br><br><br>
+			<br><br>
             <div class="row">
                 <div class="col-lg-6">
 					<div class="dashboard-card">
@@ -162,7 +225,7 @@
 					<div class="dashboard-card dashboard-card-green">
 						<div class="dashboard-card-header">
 							<div>
-								<h4>KMM Payment</h4>
+								<h4 style="color: #16a34a;">KMM Payment</h4>
 								<span>Daftar Setoran KMM Mitra</span>
 							</div>
 						</div>
@@ -190,61 +253,71 @@
 
             <div class="row">
 				<div class="col-lg-6">
-					<div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data ACC KM Tonase
-                        </div>
-                        <div class="panel-body">
-							<div class="row" style="overflow-x: auto; padding: 0 15px;">
-								<?php 
-									$query 		= mysql_query("select * from km where km_status = 'Acc' order by km_id DESC limit 20");
-
-									if (mysql_num_rows($query) != 0) { ?>
-										<div id="Area2">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									<?php } else { ?>
-										<div class="payment-notfound text-center">
-											<img src="../img/analyze.png" alt="Image Payment Not Found" width="250px">
-											<h3><b>Belum Ada ACC KM Tonase</b></h3>
-										</div>
-									<?php }
-								?>
+					<div class="acc-section acc-section-blue">
+						<!-- HEADER -->
+						<div class="acc-section-header">
+							<div class="acc-title">
+								<i class="fa fa-file-text-o"></i>
+								<span>Data ACC KM Tonase</span>
 							</div>
 						</div>
-                    </div>
+
+						<!-- BODY -->
+						<div class="acc-section-body">
+							<?php 
+								$query = mysql_query("select * from km where km_status='Acc' order by km_id DESC limit 20");
+
+								if (mysql_num_rows($query) != 0) { ?>
+									<div id="Area2">
+										<div class="acc-loading" onclick="clearNotif()">
+											<i class="fa fa-spinner fa-spin"></i>
+											<span>Loading data...</span>
+										</div>
+									</div>
+								<?php } else { ?>
+									<div class="payment-notfound text-center">
+										<img src="../img/analyze.png" width="220">
+										<h3><b>Belum Ada ACC KM Tonase</b></h3>
+									</div>
+								<?php } ?>
+						</div>
+
+					</div>
 				</div>
 
 				<div class="col-lg-6">
-					<div class="panel panel-primary">
-						<div class="panel-heading" style="background: green; color: #fff;">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data ACC KMM Mitra
-                        </div>
-                        <div class="panel-body">
-							<div class="row" style="overflow-x: auto; padding: 0 15px;">
-								<?php 
-									$query 		= mysql_query("select * from km_mitra where km_status = 'Acc' order by km_id DESC limit 20");
-
-									if (mysql_num_rows($query) != 0) { ?>
-										<div id="Area4">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-									<?php } else { ?>
-										<div class="payment-notfound text-center">
-											<img src="../img/analyze.png" alt="Image Payment Not Found" width="250px">
-											<h3><b>Belum Ada ACC KMM Mitra</b></h3>
-										</div>
-									<?php }
-								?>
+					<div class="acc-section acc-section-green">
+						<!-- HEADER -->
+						<div class="acc-section-header">
+							<div class="acc-title green">
+								<i class="fa fa-file-text-o"></i>
+								<span>Data ACC KMM Mitra</span>
 							</div>
 						</div>
-                    </div>
+
+						<!-- BODY -->
+						<div class="acc-section-body">
+							<?php 
+								$query = mysql_query("select * from km_mitra where km_status='Acc' order by km_id DESC limit 20");
+
+								if (mysql_num_rows($query) != 0) { ?>
+									<div id="Area4">
+										<div class="acc-loading" onclick="clearNotif()">
+											<i class="fa fa-spinner fa-spin"></i>
+											<span>Loading data...</span>
+										</div>
+									</div>
+								<?php } else { ?>
+									<div class="payment-notfound text-center">
+										<img src="../img/analyze.png" width="220">
+										<h3><b>Belum Ada ACC KMM Mitra</b></h3>
+									</div>
+								<?php } ?>
+						</div>
+
+					</div>
 				</div>
-            </div>
+            </div><br><br>
         </div>
     </div>
 	

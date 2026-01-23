@@ -8,6 +8,7 @@
 	$ko_id 			= $ko_id+1;
 	$ko_id 			= sprintf("%06d", $ko_id);
 	$ko_id  		= $year.$ko_id;
+	$check 			= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
 	$cost_tonase 	= executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
 
 	// Search & Pagination
@@ -61,7 +62,7 @@
 		top: 0;
 		width: 4px;
 		height: 100%;
-		background: linear-gradient(180deg,#428BCA,#2563eb);
+		background: linear-gradient(180deg,#5148E5,#2563eb);
 		opacity: .9;
 	}
 
@@ -79,7 +80,7 @@
 	.payment-left .nota-id-tonase {
 		font-weight: 800;
 		font-size: 15px;
-		color: #428BCA;
+		color: #5148E5;
 	}
 
 	.payment-left .nota-date {
@@ -517,7 +518,7 @@
 		gap:14px;
 		margin-bottom:18px;
 		padding:12px 14px;
-		background:linear-gradient(135deg,#f8f9ff,#eef2ff);
+		background:linear-gradient(135deg, #f8f8ff, #efeeff);
 		border-radius:16px;
 		box-shadow:0 10px 28px rgba(79,70,229,.12);
 	}
@@ -534,7 +535,7 @@
 		top:50%;
 		left:14px;
 		transform:translateY(-50%);
-		color:#4f46e5;
+		color:#000;
 		font-size:14px;
 	}
 
@@ -562,7 +563,7 @@
 		border:1px solid #dbe0ff;
 		background:#fff;
 		font-weight:600;
-		color:#4f46e5;
+		color:#000;
 		cursor:pointer;
 		transition:.25s ease;
 	}
@@ -593,7 +594,7 @@
 		border-radius:12px;
 		border:1px solid #dbe0ff;
 		background:#fff;
-		color:#4f46e5;
+		color:#5148E5;
 		font-weight:600;
 		font-size:14px;
 		text-decoration:none;
@@ -602,7 +603,7 @@
 	}
 
 	.page-link:hover{
-		background:#4f46e5;
+		background:#5148E5;
 		color:#fff;
 		transform:translateY(-2px);
 		box-shadow:0 10px 22px rgba(79,70,229,.35);
@@ -610,9 +611,9 @@
 
 	/* ACTIVE */
 	.page-link.active{
-		background:linear-gradient(135deg,#4f46e5,#6366f1);
+		background:#5148E5;
 		color:#fff;
-		border-color:#4f46e5;
+		border-color:#5148E5;
 		box-shadow:0 12px 26px rgba(79,70,229,.45);
 		transform:scale(1.05);
 	}
@@ -673,10 +674,88 @@
 		font-size:14px;
 		color:#555;
 	}
+
+	/* ================= HEADER PENAMPUNGAN ================= */
+	.payment-header{
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+		background: #dfe4e8;
+		padding:18px 22px;
+		border-radius:18px;
+		box-shadow:0 14px 32px rgba(0,0,0,.08);
+		margin-bottom:14px;
+	}
+
+	.payment-header-left{
+		display:flex;
+		align-items:center;
+		gap:16px;
+	}
+
+	.payment-header-icon{
+		width:52px;
+		height:52px;
+		border-radius:16px;
+		background:#5148E5;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:#fff;
+		font-size:22px;
+	}
+
+	.payment-header-left h3{
+		margin:0;
+		font-size:17px;
+		font-weight:800;
+		color:#111827;
+	}
+
+	.payment-header-left span{
+		font-size:12px;
+		color:#6b7280;
+	}
+
+	.payment-header-right{
+		display:flex;
+		align-items:center;
+	}
+
+	.payment-badge{
+		display:inline-flex;
+		align-items:center;
+		gap:6px;
+		background:#fff;
+		color:#5148E5;
+		font-size:12px;
+		font-weight:600;
+		padding:8px 14px;
+		border-radius:999px;
+	}
 </style>
 
 
 <div class="payment-frame">
+	<!-- ================= HEADER PENAMPUNGAN ================= -->
+	<div class="payment-header">
+		<div class="payment-header-left">
+			<div class="payment-header-icon">
+				<i class="fa fa-database"></i>
+			</div>
+			<div>
+				<h3>Penampungan Pembayaran Tonase</h3>
+				<span>Daftar transaksi tonase yang menunggu proses pembayaran</span>
+			</div>
+		</div>
+
+		<div class="payment-header-right">
+			<span class="payment-badge">
+				<i class="fa fa-clock-o"></i> Menunggu Dibayarkan
+			</span>
+		</div>
+	</div>
+
 	<div class="payment-toolbar">
 		<div class="limit-box">
 			<select id="limit">
@@ -694,89 +773,91 @@
 	</div><br>
 
 	<!-- ================= LIST PENAMPUNGAN ================= -->
-	<div class="payment-list" id="paymentData">
-		<!-- Load By Ajax -->
-	</div>
-	<div id="pagination">
-		<!-- Load By Ajax -->
+	<div id="frame-tonase">
+		<div class="payment-list" id="paymentData">
+			<!-- Load By Ajax -->
+		</div>
+		<div id="pagination">
+			<!-- Load By Ajax -->
+		</div>
 	</div>
 
 
 	<!-- ================= SUMMARY ================= -->
+	<?php if($check >= 1){ ?>
 	<div class="payment-control-panel">
-
-	<div class="row summary-row">
-		<div class="col-md-6">
-			<div class="summary-tile ko">
-				<span>ID KO</span>
-				<strong><?php echo $ko_id; ?></strong>
+		<div class="row summary-row">
+			<div class="col-md-6">
+				<div class="summary-tile ko">
+					<span>ID KO</span>
+					<strong><?php echo $ko_id; ?></strong>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="summary-tile total">
+					<span>Total Pembayaran</span>
+					<strong><?php echo format_rupiah($cost_tonase); ?></strong>
+				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="summary-tile total">
-				<span>Total Pembayaran</span>
-				<strong><?php echo format_rupiah($cost_tonase); ?></strong>
+
+		<!-- ===== FORM ACC ===== -->
+		<form action="pay_action.php?task=acc&type=ko"
+			method="POST"
+			id="accko"
+			target="_blank">
+
+			<div class="form-group payer-group">
+				<div class="select-dashboard">
+					<i class="fa fa-user"></i>
+					<select name="receiver" id="receiver" required>
+						<option value="">Pilih Penyetor</option>
+						<?php
+						$sql = mysql_query("select checker_id, checker_name from checker
+											where checker_sts='Aktif'
+											and checker_role='Checker'
+											and status_aktif='1'
+											order by checker_name");
+						while($c = mysql_fetch_array($sql)){
+						?>
+							<option value="<?php echo $c['checker_id']; ?>">
+								<?php echo $c['checker_name']; ?>
+							</option>
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+
+			<div class="row action-row">
+				<div class="col-md-12">
+					<button type="button"
+							class="btn btn-success btn-lg btn-block"
+							id="btn-acc"
+							data-toggle="modal"
+							data-target="#confirmationModal"
+							style="display:none;">
+						<i class="fa fa-check-circle"></i> BAYAR TAGIHAN
+					</button>
+				</div>
+			</div>
+		</form>
+		<!-- ===== END FORM ACC ===== -->
+
+		<!-- ===== FORM BATALKAN SEMUA (TERPISAH) ===== -->
+		<div class="row action-row">
+			<div class="col-md-12">
+				<form action="pay_action.php?task=cancelAll&type=ko"
+					method="POST"
+					>
+
+					<button type="submit" class="btn btn-danger btn-lg btn-block">
+						<i class="fa fa-times-circle"></i> BATALKAN SEMUA
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
-
-	<!-- ===== FORM ACC ===== -->
-	<form action="pay_action.php?task=acc&type=ko"
-		method="POST"
-		id="accko"
-		target="_blank">
-
-	<div class="form-group payer-group">
-		<div class="select-dashboard">
-			<i class="fa fa-user"></i>
-			<select name="receiver" id="receiver" required>
-				<option value="">Pilih Penyetor</option>
-				<?php
-				$sql = mysql_query("select checker_id, checker_name from checker
-									where checker_sts='Aktif'
-									and checker_role='Checker'
-									and status_aktif='1'
-									order by checker_name");
-				while($c = mysql_fetch_array($sql)){
-				?>
-					<option value="<?php echo $c['checker_id']; ?>">
-						<?php echo $c['checker_name']; ?>
-					</option>
-				<?php } ?>
-			</select>
-		</div>
-	</div>
-
-	<div class="row action-row">
-		<div class="col-md-12">
-			<button type="button"
-					class="btn btn-success btn-lg btn-block"
-					id="btn-acc"
-					data-toggle="modal"
-					data-target="#confirmationModal"
-					style="display:none;">
-				<i class="fa fa-check-circle"></i> BAYAR TAGIHAN
-			</button>
-		</div>
-	</div>
-	</form>
-	<!-- ===== END FORM ACC ===== -->
-
-	<!-- ===== FORM BATALKAN SEMUA (TERPISAH) ===== -->
-	<div class="row action-row">
-		<div class="col-md-12">
-			<form action="pay_action.php?task=cancelAll&type=ko"
-				method="POST"
-				>
-
-				<button type="submit" class="btn btn-danger btn-lg btn-block">
-					<i class="fa fa-times-circle"></i> BATALKAN SEMUA
-				</button>
-			</form>
-		</div>
-	</div>
-
-	</div>
+	<?php } ?>
 </div>
 
 
@@ -925,11 +1006,11 @@
 			loadData();
 		});
 
-		$(document).on('click','.page-link',function(e){
+		$('#frame-tonase').on('click','.page-link',function(e){
 			e.preventDefault();
 			page = $(this).data('page');
 			loadData();
-		});
+		})
 	});
 
 	$('#paymentData').html('<div class="loading">Memuat data</div>');

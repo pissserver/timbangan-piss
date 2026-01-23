@@ -41,14 +41,14 @@
 	}
 
 	/* LEFT PANEL */
-	.payment-left-panel {
+	.payment-left-panel-mitra {
 		width: 62%;
-		background: #f4f7ff;
+		background: #f4fff5;
 		padding: 30px;
 		height: calc(100vh - 120px);
 		overflow-y: auto;
 	}
-	.payment-left-panel::-webkit-scrollbar { display: none; }
+	.payment-left-panel-mitra::-webkit-scrollbar { display: none; }
 
 	/* RIGHT PANEL */
 	.payment-right-panel {
@@ -61,10 +61,10 @@
 		margin-bottom: 10px;
 	}
 
-	.payment-header .logo {
+	.payment-header .logo-mitra {
 		font-size: 22px;
 		font-weight: bold;
-		color: #5f4dee;
+		color: #2CC56D;
 	}
 
 	.payment-header small {
@@ -91,11 +91,11 @@
 		box-shadow: 0 18px 40px rgba(95,77,238,.25);
 	}
 
-	.item-id {
+	.item-id-mitra {
 		font-weight: bold;
-		color: #5f4dee;
+		color: #2CC56D;
 	}
-	.item-id span {
+	.item-id-mitra span {
 		display: block;
 		font-size: 11px;
 		color: #777;
@@ -608,10 +608,10 @@
 	<div class="payment-wrapper">
 
 		<!-- ================= LEFT : LIST MITRA ================= -->
-		<div class="payment-left-panel">
+		<div class="payment-left-panel-mitra">
 
 			<div class="payment-header">
-				<div class="logo">KMM Payment</div>
+				<div class="logo-mitra">KMM Payment</div>
 				<small>Daftar Setoran KOM Mitra</small>
 			</div>
 
@@ -635,7 +635,7 @@
 			?>
 				<div class="payment-item">
 
-					<div class="item-id">
+					<div class="item-id-mitra">
 						KOM-<?php echo $data['ko_id']; ?>
 						<span><?php echo date("d M Y", strtotime($data['ko_date'])); ?></span>
 					</div>
