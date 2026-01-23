@@ -109,9 +109,11 @@
 .pay-pagination{
 	display:flex;
 	justify-content:center;
+	flex-wrap:wrap;
 	gap:6px;
-	margin-top:14px;
+	margin-top:16px;
 }
+
 .pay-pagination button{
 	border:1px solid #d1d5db;
 	background:#fff;
@@ -120,10 +122,17 @@
 	font-size:12px;
 	cursor:pointer;
 }
+
 .pay-pagination button.active{
 	background:#5148E5;
 	color:#fff;
 	border-color:#5148E5;
+}
+
+.pay-pagination .dots{
+	padding:6px 8px;
+	color:#9ca3af;
+	font-size:12px;
 }
 
 /* ================= HEADER NEO ================= */
@@ -304,15 +313,52 @@ while($data = mysql_fetch_array($query)){
 
 <script>
 const payPerPage = 5;
+const maxPageShown = 5;
 let payPage = 1;
 
 function renderPayPagination(total){
 	const pages = Math.ceil(total / payPerPage);
-	let html='';
-	for(let i=1;i<=pages;i++){
-		html+=`<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
+	if(pages <= 1){
+		payPagination.innerHTML = '';
+		return;
 	}
-	document.getElementById('payPagination').innerHTML = html;
+
+	let html = '';
+
+	/* PREV */
+	if(payPage > 1){
+		html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
+	}
+
+	/* HITUNG RANGE */
+	let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
+	let end   = start + maxPageShown - 1;
+
+	if(end > pages){
+		end = pages;
+		start = Math.max(1, end - maxPageShown + 1);
+	}
+
+	if(start > 1){
+		html += `<button onclick="goPayPage(1)">1</button>`;
+		if(start > 2) html += `<span class="dots">...</span>`;
+	}
+
+	for(let i=start;i<=end;i++){
+		html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
+	}
+
+	if(end < pages){
+		if(end < pages - 1) html += `<span class="dots">...</span>`;
+		html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
+	}
+
+	/* NEXT */
+	if(payPage < pages){
+		html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
+	}
+
+	payPagination.innerHTML = html;
 }
 
 function goPayPage(p){

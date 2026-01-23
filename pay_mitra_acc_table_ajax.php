@@ -105,7 +105,7 @@ $pagination = '';
 if($totalPage > 1){
 	for($i=1;$i<=$totalPage;$i++){
 		$active = ($i==$page)?'active':'';
-		$pagination .= '<a href="#" class="page-link page-link-mitra '.$active.'" data-page="'.$i.'">'.$i.'</a>';
+		$pagination .= '<a href="#" class="page-link-mitra '.$active.'" data-page="'.$i.'">'.$i.'</a>';
 	}
 }
 
