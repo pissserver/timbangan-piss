@@ -18,6 +18,83 @@
 	$km_id  = $year.$km_id;
 	$cost 	= executeScalar("select sum(ko_total) from ko where ko_status = 'Diterima'");
 ?>
+
+<style>
+/* ===============================
+   DASHBOARD CARD
+================================ */
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(16,24,40,.08);
+    margin-top: 40px;
+    overflow: hidden;
+}
+
+/* HEADER */
+.dashboard-card-header {
+    padding: 20px 24px;
+    background: #f5f7fb;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.dashboard-card-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #4f46e5;
+}
+
+.dashboard-card-header span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* HEADER GREEN */
+.dashboard-card-header.green h4 {
+    color: #16a34a;
+}
+
+/* BODY */
+.dashboard-card-body {
+    padding: 24px;
+}
+
+/* LOADING */
+.dashboard-loading {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* INFO */
+.dashboard-info {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #475569;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* EMPTY */
+.dashboard-empty {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.dashboard-empty h4 {
+    margin-top: 15px;
+    font-weight: 700;
+    color: #334155;
+}
+
+</style>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,93 +128,65 @@
 	<?php include 'components/sidebar.php'; ?>
 
         <div id="page-wrapper">
+			<br><br><br><br>
             <div class="row">
                 <div class="col-lg-6">
-					<br><br><br><br>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data Pengajuan KM Tonase
-                        </div>
-                        <div class="panel-body">
-							<div class="row" style="overflow-x: auto; padding: 0 15px;">
-								<?php 
-									$query 		= mysql_query("select * from km where km_status = 'Diajukan' order by km_id DESC");
-
-									if (mysql_num_rows($query) != 0) { ?>
-										<div id="Area1">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
-										</div>
-										<div class="alert alert-warning" role="alert">
-												<table>
-													<tr>
-														<td style="font-size:20px; padding-right: 10px;">
-															<i class="fa fa-info"></i> 
-														</td>
-														<td>
-															<p style="font-size: 12px; padding-top:10px;"> 
-																Acc data KM Tonase untuk validasi data
-															</p>
-														</td>
-													</tr>
-												</table>
-											</div>
-									<?php } else { ?>
-										<div class="payment-notfound text-center">
-											<img src="../img/analyze.png" alt="Image Payment Not Found" width="250px">
-											<h3><b>Belum Ada Pengajuan KM Tonase</b></h3>
-										</div>
-									<?php }
-								?>
+					<div class="dashboard-card">
+						<div class="dashboard-card-header">
+							<div>
+								<h4>KM Payment</h4>
+								<span>Daftar Setoran KM Tonase</span>
 							</div>
 						</div>
-                    </div>
-                </div>
 
-				<div class="col-lg-6">
-					<br><br><br><br>
-					<div class="panel panel-primary">
-						<div class="panel-heading" style="background: green; color: #fff;">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data Pengajuan KMM Mitra
-                        </div>
-                        <div class="panel-body">
-							<div class="row" style="overflow-x: auto; padding: 0 15px;">
-								<?php 
-									$query 		= mysql_query("select * from km_mitra where km_status = 'Diajukan' order by km_id DESC");
-
-									if (mysql_num_rows($query) != 0) { ?>
-										<div id="Area3">
-											<div class="alert alert-info" onclick="clearNotif()">
-												<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-											</div>
+						<div class="dashboard-card-body">
+							<?php 
+								$query = mysql_query("select * from km where km_status = 'Diajukan' order by km_id DESC");
+								if (mysql_num_rows($query) != 0) { ?>
+									<div id="Area1">
+										<div class="dashboard-loading">
+											<i class="fa fa-spinner fa-spin"></i> Memuat data...
 										</div>
-										<div class="alert alert-warning" role="alert">
-												<table>
-													<tr>
-														<td style="font-size:20px; padding-right: 10px;">
-															<i class="fa fa-info"></i> 
-														</td>
-														<td>
-															<p style="font-size: 12px; padding-top:10px;"> 
-																Acc KMM Mitra untuk validasi data
-															</p>
-														</td>
-													</tr>
-												</table>
-											</div>
-									<?php } else { ?>
-										<div class="payment-notfound text-center">
-											<img src="../img/analyze.png" alt="Image Payment Not Found" width="250px">
-											<h3><b>Belum Ada Pengajuan KM Tonase</b></h3>
-										</div>
-									<?php }
-								?>
-							</div>
+									</div>
+							<?php } else { ?>
+								<div class="dashboard-empty">
+									<img src="../img/analyze.png" width="220">
+									<h4>Belum Ada Pengajuan KM Tonase</h4>
+								</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
-            </div>
+
+				<div class="col-lg-6">
+					<div class="dashboard-card dashboard-card-green">
+						<div class="dashboard-card-header">
+							<div>
+								<h4>KMM Payment</h4>
+								<span>Daftar Setoran KMM Mitra</span>
+							</div>
+						</div>
+
+						<div class="dashboard-card-body">
+							<?php 
+								$query = mysql_query("select * from km_mitra where km_status = 'Diajukan' order by km_id DESC");
+
+								if (mysql_num_rows($query) != 0) { ?>
+									<div id="Area3">
+										<div class="dashboard-loading">
+											<i class="fa fa-spinner fa-spin"></i> Memuat data...
+										</div>
+									</div>
+							<?php } else { ?>
+								<div class="dashboard-empty">
+									<img src="../img/analyze.png" width="220">
+									<h4>Belum Ada Pengajuan KMM Mitra</h4>
+								</div>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+            </div><br><br>
 
             <div class="row">
 				<div class="col-lg-6">
