@@ -546,7 +546,7 @@
 
 	.search-box-mitra input:focus{
 		outline:none;
-		border-color:#4f46e5;
+		border-color:#66e546;
 		box-shadow:0 0 0 3px rgba(79,70,229,.18);
 	}
 
@@ -563,7 +563,7 @@
 	}
 
 	.limit-box-mitra select:hover{
-		background:#eef2ff;
+		background: #f0ffee;
 	}
 
 	.pagination-wrapper{
@@ -994,7 +994,7 @@
 			loadMitra();
 		});
 
-		$('#frame-mitra').on('click','.page-link-mitra-mitra',function(e){
+		$('#frame-mitra').on('click','.page-link-mitra',function(e){
 			e.preventDefault();
 			pageMitra = $(this).data('page');
 			loadMitra();

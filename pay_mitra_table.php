@@ -109,9 +109,11 @@
 .pay-pagination-mitra{
 	display:flex;
 	justify-content:center;
+	flex-wrap:wrap;
 	gap:6px;
-	margin-top:14px;
+	margin-top:16px;
 }
+
 .pay-pagination-mitra button{
 	border:1px solid #d1d5db;
 	background:#fff;
@@ -120,12 +122,18 @@
 	font-size:12px;
 	cursor:pointer;
 }
+
 .pay-pagination-mitra button.active{
-	background:#16a34a;
+	background:#16A34A;
 	color:#fff;
-	border-color:#16a34a;
+	border-color:#16A34A;
 }
 
+.pay-pagination-mitra .dots{
+	padding:6px 8px;
+	color:#9ca3af;
+	font-size:12px;
+}
 
 /* ================= HEADER NEO ================= */
 .pay-header-neo-mitra{
@@ -187,7 +195,7 @@
 	font-size:13px;
 }
 
-.pay-search{
+.pay-search-mitra{
 	padding:8px 14px 8px 36px;
 	border-radius:14px;
 	border:1px solid #d1d5db;
@@ -196,9 +204,9 @@
 	transition:.2s ease;
 }
 
-.pay-search:focus{
+.pay-search-mitra:focus{
 	outline:none;
-	border-color:#4f46e5;
+	border-color: #66e546;
 	box-shadow:0 0 0 3px rgba(79,70,229,.15);
 }
 </style>
@@ -218,7 +226,7 @@
 	<div class="pay-header-right-mitra">
 		<div class="pay-search-wrap-mitra">
 			<i class="fa fa-search"></i>
-			<input type="text" id="paySearchMitra" class="pay-search" placeholder="Cari ID, pedagang, nopol...">
+			<input type="text" id="paySearchMitra" class="pay-search-mitra" placeholder="Cari ID, pedagang, nopol...">
 		</div>
 	</div>
 </div>
@@ -313,15 +321,52 @@ while($data2 = mysql_fetch_array($query2)){
 
 <script>
 const perPageMitra = 5;
+const maxPageShownMitra = 5;
 let pageMitra = 1;
 
 function renderPaginationMitra(total){
 	const pages = Math.ceil(total / perPageMitra);
-	let html='';
-	for(let i=1;i<=pages;i++){
-		html+=`<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
+	if(pages <= 1){
+		payPaginationMitra.innerHTML = '';
+		return;
 	}
-	document.getElementById('payPaginationMitra').innerHTML = html;
+
+	let html = '';
+
+	/* PREV */
+	if(pageMitra > 1){
+		html += `<button onclick="goPageMitra(${pageMitra-1})">‹ Prev</button>`;
+	}
+
+	/* RANGE */
+	let start = Math.max(1, pageMitra - Math.floor(maxPageShownMitra / 2));
+	let end   = start + maxPageShownMitra - 1;
+
+	if(end > pages){
+		end = pages;
+		start = Math.max(1, end - maxPageShownMitra + 1);
+	}
+
+	if(start > 1){
+		html += `<button onclick="goPageMitra(1)">1</button>`;
+		if(start > 2) html += `<span class="dots">...</span>`;
+	}
+
+	for(let i=start;i<=end;i++){
+		html += `<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
+	}
+
+	if(end < pages){
+		if(end < pages - 1) html += `<span class="dots">...</span>`;
+		html += `<button onclick="goPageMitra(${pages})">${pages}</button>`;
+	}
+
+	/* NEXT */
+	if(pageMitra < pages){
+		html += `<button onclick="goPageMitra(${pageMitra+1})">Next ›</button>`;
+	}
+
+	payPaginationMitra.innerHTML = html;
 }
 
 function goPageMitra(p){
@@ -337,10 +382,10 @@ function filterMitra(){
 	items.forEach(item=>{
 		const text = item.querySelector('.pay-search-text-mitra').innerText;
 		if(text.includes(key)){
-			item.style.display='grid';
+			item.style.display = 'grid';
 			visible.push(item);
 		}else{
-			item.style.display='none';
+			item.style.display = 'none';
 		}
 	});
 
@@ -363,3 +408,4 @@ paySearchMitra.addEventListener('keyup',()=>{
 
 filterMitra();
 </script>
+
