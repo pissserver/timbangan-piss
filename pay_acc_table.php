@@ -8,8 +8,13 @@
 	$ko_id 			= $ko_id+1;
 	$ko_id 			= sprintf("%06d", $ko_id);
 	$ko_id  		= $year.$ko_id;
-	$check 			= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
 	$cost_tonase 	= executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
+
+	// Search & Pagination
+	$search = isset($_GET['search']) ? mysql_real_escape_string($_GET['search']) : '';
+	$page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+	$limit  = 10;
+	$offset = ($page - 1) * $limit;
 ?>
 
 <style>
@@ -503,66 +508,201 @@
 	.btn-danger:hover i {
 		transform: rotate(90deg) scale(1.2);
 	}
+
+	/* Search & Pagination */
+	.payment-toolbar{
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+		gap:14px;
+		margin-bottom:18px;
+		padding:12px 14px;
+		background:linear-gradient(135deg,#f8f9ff,#eef2ff);
+		border-radius:16px;
+		box-shadow:0 10px 28px rgba(79,70,229,.12);
+	}
+
+	/* SEARCH */
+	.search-box{
+		position:relative;
+		max-width:340px;
+		width:100%;
+	}
+
+	.search-box i{
+		position:absolute;
+		top:50%;
+		left:14px;
+		transform:translateY(-50%);
+		color:#4f46e5;
+		font-size:14px;
+	}
+
+	.search-box input{
+		width:100%;
+		padding:12px 16px 12px 42px;
+		border-radius:14px;
+		border:1px solid #dbe0ff;
+		font-size:14px;
+		background:#fff;
+		transition:.25s ease;
+		box-shadow:inset 0 0 0 transparent;
+	}
+
+	.search-box input:focus{
+		outline:none;
+		border-color:#4f46e5;
+		box-shadow:0 0 0 3px rgba(79,70,229,.18);
+	}
+
+	/* LIMIT */
+	.limit-box select{
+		padding:10px 14px;
+		border-radius:14px;
+		border:1px solid #dbe0ff;
+		background:#fff;
+		font-weight:600;
+		color:#4f46e5;
+		cursor:pointer;
+		transition:.25s ease;
+	}
+
+	.limit-box select:hover{
+		background:#eef2ff;
+	}
+
+	.pagination-wrapper{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		gap:8px;
+		margin:26px 0 10px;
+		padding:10px 14px;
+		background:#f8f9ff;
+		border-radius:16px;
+		box-shadow:0 10px 30px rgba(0,0,0,.08);
+	}
+
+	/* PAGE BUTTON */
+	.page-link{
+		min-width:42px;
+		height:42px;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		border-radius:12px;
+		border:1px solid #dbe0ff;
+		background:#fff;
+		color:#4f46e5;
+		font-weight:600;
+		font-size:14px;
+		text-decoration:none;
+		transition:.25s ease;
+		box-shadow:0 6px 14px rgba(79,70,229,.15);
+	}
+
+	.page-link:hover{
+		background:#4f46e5;
+		color:#fff;
+		transform:translateY(-2px);
+		box-shadow:0 10px 22px rgba(79,70,229,.35);
+	}
+
+	/* ACTIVE */
+	.page-link.active{
+		background:linear-gradient(135deg,#4f46e5,#6366f1);
+		color:#fff;
+		border-color:#4f46e5;
+		box-shadow:0 12px 26px rgba(79,70,229,.45);
+		transform:scale(1.05);
+	}
+
+	.loading{
+		text-align:center;
+		padding:40px 0;
+		color:#4f46e5;
+		font-weight:600;
+	}
+
+	.loading:after{
+		content:'';
+		display:inline-block;
+		width:26px;
+		height:26px;
+		border:3px solid #c7d2fe;
+		border-top-color:#4f46e5;
+		border-radius:50%;
+		animation:spin 1s linear infinite;
+		margin-left:10px;
+	}
+
+	@keyframes spin{
+		to{transform:rotate(360deg);}
+	}
+
+	/* Empty Search */
+	.empty-state{
+		text-align:center;
+		padding:50px 20px;
+		background:linear-gradient(135deg,#f8f9ff,#eef2ff);
+		border-radius:20px;
+		box-shadow:0 14px 34px rgba(79,70,229,.15);
+		color:#4f46e5;
+	}
+
+	.empty-icon{
+		width:70px;
+		height:70px;
+		margin:0 auto 16px;
+		border-radius:50%;
+		background:#e0e7ff;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		font-size:26px;
+	}
+
+	.empty-state h4{
+		margin:0 0 8px;
+		font-weight:700;
+		color:#1e1b4b;
+	}
+
+	.empty-state p{
+		margin:0;
+		font-size:14px;
+		color:#555;
+	}
 </style>
 
-<!-- jquery -->
-<script src="dataTables/jquery.dataTables.js"></script>
-<script src="dataTables/dataTables.tableTools.js"></script>
-<script src="dataTables/dataTables.bootstrap.js"></script>
-<script>
-	$(document).ready(function() {
-	//data table
-	$('#pay_accView').dataTable({"aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "All"]]});
-	});
-</script>
 
 <div class="payment-frame">
-	<!-- ================= LIST PENAMPUNGAN ================= -->
-	<div class="payment-list">
-	<?php
-	$query = mysql_query(" select  w.weighing_id, w.merchant_id, w.nopol,
-									w.netto, w.cost_tonase, w.date_out,
-									m.merchant_type
-							from weighing w, merchant m
-							where w.merchant_id = m.merchant_id
-							and m.merchant_status='Aktif'
-							and w.weighing_sts='Keluar'
-							and w.weighing_sts3='Pending'
-							and (w.date_in between '2016-09-01' and '".$date_now."')
-							order by weighing_id desc");
-
-	while($data = mysql_fetch_array($query)) {
-		$merchant = executeScalar("select merchant_name from merchant
-								where merchant_id='".$data['merchant_id']."'");
-	?>
-		<div class="payment-card-tonase">
-			<div class="payment-left">
-				<div class="nota-id-tonase">#<?php echo $data['weighing_id']; ?></div>
-				<div class="nota-date"><?php echo date("d M Y", strtotime($data['date_out'])); ?></div>
-				<div class="nota-truck"><i class="fa fa-truck"></i> <?php echo $data['nopol']; ?></div>
-			</div>
-
-			<div class="payment-mid">
-				<div class="merchant"><i class="fa fa-user"></i>&nbsp;&nbsp;<?php echo $merchant; ?></div>
-				<div class="commodity"><?php echo $data['merchant_type']; ?></div>
-				<div class="code">Kode: <?php echo $data['merchant_id']; ?></div>
-			</div>
-
-			<div class="payment-right">
-				<div class="netto"><?php echo number_format($data['netto']); ?> Kg</div>
-				<div class="amount"><?php echo format_rupiah($data['cost_tonase']); ?></div>
-
-				<a href="pay_action.php?task=cancel&type=ko&id=<?php echo $data['weighing_id']; ?>">
-					<button class="btn-cancel"><i class="fa fa-times"></i></button>
-				</a>
-			</div>
+	<div class="payment-toolbar">
+		<div class="limit-box">
+			<select id="limit">
+				<option value="5" selected>5</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+			</select>
 		</div>
-	<?php } ?>
+
+		<div class="search-box">
+			<i class="fa fa-search"></i>
+			<input type="text" id="search" placeholder="Cari Nota / Nopol / Pedagang">
+		</div>
+	</div><br>
+
+	<!-- ================= LIST PENAMPUNGAN ================= -->
+	<div class="payment-list" id="paymentData">
+		<!-- Load By Ajax -->
+	</div>
+	<div id="pagination">
+		<!-- Load By Ajax -->
 	</div>
 
-	<!-- ================= SUMMARY ================= -->
-	<?php if($check>=1){ ?>
 
+	<!-- ================= SUMMARY ================= -->
 	<div class="payment-control-panel">
 
 	<div class="row summary-row">
@@ -637,12 +777,6 @@
 	</div>
 
 	</div>
-	 <?php } elseif ($check < 1) { ?>
-		<div class="payment-notfound text-center">
-			<img src="img/payment-tonase-notfound.png" alt="Image Payment Not Found" width="200px">
-			<h3><b>Belum Ada Pembayaran</b></h3>
-		</div>
-	<?php } ?>
 </div>
 
 
@@ -753,5 +887,53 @@
 
     });
 </script>
+
+<!-- AJAX PAY SEARCH & PAGINATION -->
+<script>
+	let page = 1;
+
+	function loadData(){
+		let search = $('#search').val();
+		let limit  = $('#limit').val();
+
+		$.ajax({
+			url: 'pay_acc_table_ajax.php',
+			type: 'POST',
+			data: {
+				search: search,
+				page: page,
+				limit: limit
+			},
+			success:function(res){
+				let data = JSON.parse(res);
+				$('#paymentData').html(data.html);
+				$('#pagination').html(data.pagination);
+			}
+		});
+	}
+
+	$(document).ready(function(){
+		loadData();
+
+		$('#search').on('keyup', function(){
+			page = 1;
+			loadData();
+		});
+
+		$('#limit').on('change', function(){
+			page = 1;
+			loadData();
+		});
+
+		$(document).on('click','.page-link',function(e){
+			e.preventDefault();
+			page = $(this).data('page');
+			loadData();
+		});
+	});
+
+	$('#paymentData').html('<div class="loading">Memuat data</div>');
+</script>
+
 
 

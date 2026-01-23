@@ -61,7 +61,7 @@
 		<div id="wrapper">
 			<?php include 'components/sidebar.php'; ?>
 
-			<div id="page-wrapper"><br><br><br>
+			<div id="page-wrapper"><br><br><br><br>
 				<div class="row">
 						<div class="col-lg-6 col-md-6 col-xs-6">
 							<div class="panel panel-primary" style="margin-bottom:-10px;">
