@@ -40,51 +40,21 @@
 	<div id="wrapper">
 	<?php include 'components/sidebar.php'; ?>
 
-        <div id="page-wrapper">
+		<div id="page-wrapper">
+			<br><br><br><br>
             <div class="row">
                 <div class="col-lg-12">
-					<br><br><br><br>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i> Data Upah Mitra
-                        </div>
-                        <div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div id="Area1">
-										<div class="alert alert-info" onclick="clearNotif()">
-											<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-										</div>
-									</div>
-								</div>
-							</div>
-                        </div>
-                    </div>
-					
+					<div id="Area1">
+						<div class="alert alert-info" onclick="clearNotif()">
+							<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
+						</div>
+					</div>
                 </div>
             </div>
+			<br><br>
         </div>
     </div>
 	
-	<!-- Modal Password -->
-	<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src='../assets/image/Delete.png' width='25' height='25'/></button>
-					<h4 id="header_password">Ganti Password</h4>
-				</div>
-				<div class="modal-body">
-					<div id="data_password" style="margin-bottom: 0px;">
-						<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
-					</div>
-					<input type="hidden" id="value_id" />
-				</div>
-				<div class="modal-footer">
-				</div>
-			</div>
-		</div>
-	</div>
 	<script>
 		$(document).ready(function(){
 			// Auto Refresh Page
