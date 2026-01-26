@@ -733,6 +733,41 @@
 		padding:8px 14px;
 		border-radius:999px;
 	}
+
+	/* Info Bar */
+	.payment-info-bar{
+		display:flex;
+		justify-content:flex-start;
+		margin:4px 0 10px;
+	}
+
+	/* DARK CARD */
+	#data-info{
+		display:none;
+		padding:8px 16px;
+		font-size:12.5px;
+		color:#e5e7eb;
+		border-radius:12px;
+
+		background:linear-gradient(
+			145deg,
+			#0f172a,
+			#020617
+		);
+
+		border:1px solid rgba(255,255,255,.08);
+		box-shadow:
+			0 8px 24px rgba(0,0,0,.6),
+			inset 0 1px 0 rgba(255,255,255,.05);
+
+		letter-spacing:.25px;
+	}
+
+	/* ANGKA */
+	#data-info b{
+		color:#ffffff;
+		font-weight:600;
+	}
 </style>
 
 
@@ -770,6 +805,11 @@
 			<i class="fa fa-search"></i>
 			<input type="text" id="search" placeholder="Cari Nota / Nopol / Pedagang">
 		</div>
+	</div><br>
+
+	<!-- INFO BAR -->
+	<div class="payment-info-bar">
+		<span id="data-info">Memuat data...</span>
 	</div><br>
 
 	<!-- ================= LIST PENAMPUNGAN ================= -->
@@ -977,6 +1017,9 @@
 		let search = $('#search').val();
 		let limit  = $('#limit').val();
 
+		$('#data-info').html('Memuat data...');
+		$('#paymentData').html('<div class="loading">Memuat data</div>');
+
 		$.ajax({
 			url: 'pay_acc_table_ajax.php',
 			type: 'POST',
@@ -989,6 +1032,12 @@
 				let data = JSON.parse(res);
 				$('#paymentData').html(data.html);
 				$('#pagination').html(data.pagination);
+
+				if(data.info && data.info.trim() !== ''){
+					$('#data-info').html(data.info).fadeIn(150);
+				}else{
+					$('#data-info').fadeOut(150);
+				}
 			}
 		});
 	}
@@ -1012,9 +1061,6 @@
 			loadData();
 		})
 	});
-
-	$('#paymentData').html('<div class="loading">Memuat data</div>');
 </script>
-
 
 

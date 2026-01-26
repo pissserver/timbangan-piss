@@ -187,7 +187,7 @@
 			<div id="page-wrapper"><br><br><br><br>
 				<div class="row">
 					<!-- TONASE -->
-					<div class="col-lg-6 col-md-6 col-xs-12">
+					<div class="col-lg-6 col-md-6 col-xs-6">
 						<div class="data-card">
 							<div class="data-card-body">
 								<div id="Area1">
@@ -204,7 +204,7 @@
 					</div>
 
 					<!-- MITRA -->
-					<div class="col-lg-6 col-md-6 col-xs-12">
+					<div class="col-lg-6 col-md-6 col-xs-6">
 						<div class="data-card">
 							<div class="data-card-body">
 								<div id="AreaMitra1">
