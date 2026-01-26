@@ -105,7 +105,15 @@ if($totalPage > 1){
 	}
 }
 
+$start = ($total > 0) ? $offset + 1 : 0;
+$end   = min($offset + $limit, $total);
+
+$info = ($total > 0)
+	? "Menampilkan <b>$start</b> – <b>$end</b> dari <b>$total</b> total data"
+	: "";
+
 echo json_encode([
 	'html' => $html,
-	'pagination' => '<div class="pagination-wrapper">'.$pagination.'</div>'
+	'pagination' => '<div class="pagination-wrapper">'.$pagination.'</div>',
+	'info'       => $info
 ]);

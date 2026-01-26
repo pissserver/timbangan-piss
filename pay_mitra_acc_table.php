@@ -727,6 +727,41 @@
 		padding:8px 14px;
 		border-radius:999px;
 	}
+
+	/* Info Bar */
+	.payment-info-bar{
+		display:flex;
+		justify-content:flex-start;
+		margin:4px 0 10px;
+	}
+
+	/* DARK CARD */
+	#data-info-mitra{
+		display: none;
+		padding:8px 16px;
+		font-size:12.5px;
+		color:#e5e7eb;
+		border-radius:12px;
+
+		background:linear-gradient(
+			145deg,
+			#0f172a,
+			#020617
+		);
+
+		border:1px solid rgba(255,255,255,.08);
+		box-shadow:
+			0 8px 24px rgba(0,0,0,.6),
+			inset 0 1px 0 rgba(255,255,255,.05);
+
+		letter-spacing:.25px;
+	}
+
+	/* ANGKA */
+	#data-info-mitra b{
+		color:#ffffff;
+		font-weight:600;
+	}
 </style>
 
 <div class="payment-frame">
@@ -763,6 +798,11 @@
 			<i class="fa fa-search"></i>
 			<input type="text" id="searchMitra" placeholder="Cari Nota / Nopol / Pedagang">
 		</div>
+	</div><br>
+
+	<!-- INFO BAR -->
+	<div class="payment-info-bar">
+		<span id="data-info-mitra">Memuat data...</span>
 	</div><br>
 
 	<!-- ================= LIST PENAMPUNGAN MITRA ================= -->
@@ -965,6 +1005,9 @@
 		let search = $('#searchMitra').val();
 		let limit  = $('#limitMitra').val();
 
+		$('#data-info-mitra').html('Memuat data...');
+		$('#paymentMitraData').html('<div class="loading">Memuat data</div>');
+
 		$.ajax({
 			url:'pay_mitra_acc_table_ajax.php',
 			type:'POST',
@@ -977,6 +1020,12 @@
 				let data = JSON.parse(res);
 				$('#paymentMitraData').html(data.html);
 				$('#paginationMitra').html(data.pagination);
+
+				if(data.info && data.info.trim() !== ''){
+					$('#data-info-mitra').html(data.info).fadeIn(150);
+				}else{
+					$('#data-info-mitra').fadeOut(150); // 🔥 HILANG TOTAL
+				}
 			}
 		});
 	}
@@ -1001,6 +1050,5 @@
 		});
 
 	});
-
-	$('#paymentMitraData').html('<div class="loading">Memuat data</div>');
 </script>
+
