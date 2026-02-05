@@ -186,6 +186,22 @@
 
 			<div id="page-wrapper"><br><br><br><br>
 				<div class="row">
+					<!-- Alert Lock -->
+					<div style="margin: 0px 15px;" class="alert alert-warning" role="alert">
+						<table>
+							<tr>
+								<td style="font-size:20px; padding-right: 10px;">
+									<i class="fa fa-exclamation-triangle"></i>
+								</td>
+								<td>
+									<p style="font-size: 14px; padding-top:10px;">
+										Jika pada pembayaran ada ikon <b><i class="fa fa-lock"></i></b>, artinya masih ada nota dengan status <b>Centeng</b> yang belum terlunaskan atas nama pedagang bersangkutan.
+									</p>
+								</td>
+							</tr>
+						</table>
+					</div><br>
+
 					<!-- TONASE -->
 					<div class="col-lg-6 col-md-6 col-xs-6">
 						<div class="data-card">

@@ -333,6 +333,30 @@
 							<div class="row">
 								<form action="weighing_action.php?task=update&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 								<fieldset>
+
+									<!-- Alert Centeng -->
+									<?php
+										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+										$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
+										if ($merchant_retail_check > 0 && $firstNotaTodayWithoutCenteng <= 1 && $c == NULL) 
+									{ ?>
+									<div style="margin: 0px 15px;" class="alert alert-warning" role="alert">
+										<table>
+											<tr>
+												<td style="font-size:20px; padding-right: 10px;">
+													<i class="fa fa-exclamation-triangle"></i>
+												</td>
+												<td>
+													<p style="font-size: 14px; padding-top:10px;">
+														Status pedagang ini adalah Centeng / Retail, dan data ini merupakan data pertama pedagang <?php echo $merchant; ?> dihari ini. <br>
+														Maka tarif tonase akan dipotong otomatis sejumlah tarif centeng atas nama pedagang <?php echo $merchant; ?>
+													</p>
+												</td>
+											</tr>
+										</table>
+									</div><br>
+									<?php } ?>
+
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:5px;">
@@ -740,11 +764,12 @@
 																	from weighing 
 																	where 	merchant_id = '".$r['merchant_id']."' and
 																			weighing_sts = 'Keluar' and 
-																			DATE(date_check) = '".$daten."'");
+																			weighing_sts2 != 'Tanpa Timbang' and
+																			DATE(date_check) = '".$daten."'" );
 									if($c == NULL || $status=='Lunas'||$status=='Batal'||$status=='Masuk'){ ?>
 										
 									<?php } elseif($exist>1 && $c != NULL) {
-										if ($jenis != 'B' || $status == 'Keluar') { ?>
+										if ($jenis != 'B' && ($status == 'Keluar' && $status2 != 'Tanpa Timbang')) { ?>
 											<div class="form-group">
 												<button onclick="merge()" type="button" class="btn btn-block btn-outline btn-primary">Gabung Data</button>
 											</div>
@@ -1129,7 +1154,7 @@
 						$s 		= $r['date_check'];
 						$dt		= new DateTime($s);
 						$daten 	= $dt->format('Y-m-d');
-						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
+						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 						while ($row = mysql_fetch_array($allDataMerge)) {
 							$cost_mitra_ref = 0;
 							$tarif			= 0;

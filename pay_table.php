@@ -241,6 +241,7 @@ $query = mysql_query("
 			w.cost,
 			w.cost_tonase, 
 			w.weighing_sts, 
+			w.weighing_sts2, 
 			w.weighing_sts3, 
 			w.date_out, 
 			w.date_check,
@@ -276,15 +277,48 @@ while($data = mysql_fetch_array($query)){
 		</div>
 
 		<div class="pay-action text-right">
-		<?php 
-			if($data['weighing_sts']!='Lunas'||$data['weighing_sts3']!='Pending'){
+		<?php
+		// cek apakah merchant punya centeng belum dibayar
+		$checkCenteng = executeScalar("
+			SELECT COUNT(weighing_id)
+			FROM weighing
+			WHERE merchant_id = '".$data['merchant_id']."'
+			AND weighing_sts != 'Batal'
+			AND weighing_sts2 = 'Tanpa Timbang'
+			AND date_pay IS NULL
+		");
+
+		// apakah nota ini centeng?
+		$isCentengNota = isset($data['weighing_sts2']) && $data['weighing_sts2'] == 'Tanpa Timbang';
+
+		// === LOGIKA FINAL ===
+		if ($checkCenteng > 0) {
+
+			if ($isCentengNota) {
+				// ✅ HANYA nota centeng yang boleh bayar
 				echo '
 				<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
-					<button class="btn btn-outline btn-primary btn-sm btn-bayar" data-id="'.$data['weighing_id'].'">
+					<button class="btn btn-outline btn-primary btn-sm btn-bayar">
 						<i class="fa fa-money"></i> Bayar
 					</button>
 				</a>';
+			} else {
+				// ❌ nota lain ditutup
+				echo '
+				<div class="btn" style="background-color: #000; color: #fff;" disabled>
+					<i class="fa fa-lock"></i>
+				</div>';
 			}
+
+		} else {
+			// ✅ tidak ada centeng → semua nota boleh bayar
+			echo '
+			<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
+				<button class="btn btn-outline btn-primary btn-sm btn-bayar">
+					<i class="fa fa-money"></i> Bayar
+				</button>
+			</a>';
+		}
 		?>
 		</div>
 
