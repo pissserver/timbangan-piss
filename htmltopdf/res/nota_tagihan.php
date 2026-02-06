@@ -548,7 +548,11 @@
 
 			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
 
-			$cutCost = $tarif_centeng * $jumlahLapak;
+            if ($r['merchant_id'] == 'L0022') {
+                $cutCost = $tarif_centeng * 2; // Khusus L0022 dapat 2 lapak
+            } else {
+                $cutCost = $tarif_centeng * $jumlahLapak;
+            }
 
             $firstCost = $r['netto'] * intval($tarif2); ?>
 	
@@ -607,7 +611,7 @@
                     <td style="width:5%; vertical-align:top;">:</td>
                     <td style="width:75%; vertical-align:top;">
                         Rp <?= number_format($tarif_centeng, 0, ',', '.'); ?>
-                        × <?= $jumlahLapak; ?> lapak
+                        × <?= $r['merchant_id'] == 'L0022' ? '2' : $totalLapak; ?> lapak
                         × <?= $totalDaysPeriod; ?> hari
                         = <b>Rp <?= number_format($cost_tonase, 0, ',', '.'); ?></b>
                     </td>

@@ -1809,25 +1809,30 @@
 		
 		// * Cek Pedagang Retail
 		// Apakah pedagang ini adalah pedagang retail dan merupakan kendaraan yang datang pertama dihari itu? kalau iya tarif kurangkan dengan centeng
-		$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$id_merchant."'");
-		$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$id_merchant."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
+		$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$_POST['merchant']."'");
+		$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
 		$weighing_sts5 = '';
 		if ($merchant_retail_check > 0 && $firstNotaTodayWithoutCenteng <= 1) {
 			$jumlahLapak = executeScalar("
 				SELECT COUNT(*) 
 				FROM rent 
-				WHERE merchant_id = '".$id_merchant."'
+				WHERE merchant_id = '".$_POST['merchant']."'
 				AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
 			");
 
 			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
 
-			$potongan = $tarif_centeng * $jumlahLapak;
+			if ($_POST['merchant'] == 'L0022') {
+				$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
+			} else {
+				$potongan = $tarif_centeng * $jumlahLapak;
+			}
 
 			$trftonase = max(0, $trftonase - $potongan);
 			$trfrealtonase = max(0, $trfrealtonase - $potongan);
 			$total1 = max(0, $total1 - $potongan);
 			$total2 = max(0, $total2 - $potongan);
+
 			$weighing_sts5 = 'Retail';
 		}
 

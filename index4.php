@@ -280,7 +280,6 @@
 								</div>
 							</div>
 
-
 							<form action="htmltopdf/nota_tagihan_retail.php?task=printAll" method="POST" target="_blank">
 								<div class="row" style="padding:10px;">
 
@@ -298,7 +297,8 @@
 									ORDER BY r.retail_id ASC
 								");
 
-								
+								$alreadyAll = 0;
+
 								while($d = mysql_fetch_array($query)) {
 									$no++;
 
@@ -359,8 +359,13 @@
 										SELECT COUNT(*) 
 										FROM merchant_retail 
 										WHERE merchant_id = '".$d['merchant_id']."'
+										AND print_status = 'iya'
 										AND DATE(print_date) BETWEEN '".$periodStartDate."' AND '".$periodEndDate."'
 									");
+
+									if ($already > 0) {
+										$alreadyAll = 1;
+									}
 								?>
 
 								<div class="col-md-3 merchant-card" data-search="<?= strtolower($d['merchant_name'].' '.$d['merchant_nick'].' '.$lpk); ?>">
@@ -480,7 +485,7 @@
 								<?php } ?>
 								</div>
 
-								<?php if ($already > 0) { ?>
+								<?php if ($alreadyAll > 0) { ?>
 									<div class="form-group" style="padding:10px; margin-bottom: 0px;">
 										<center><div id="btnCetakAll" class="btn btn-success btn-block" name="print_all">Periode <?= date('d', strtotime($periodStartDate)) . ' - ' . date('d M', strtotime($periodEndDate)); ?> Terbuat &nbsp;<i class="fa fa-check-circle"></i></div></center>
 									</div>

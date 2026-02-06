@@ -286,6 +286,58 @@
 		from {transform: scale(.8); opacity: 0;}
 		to {transform: scale(1); opacity: 1;}
 	}
+
+	/* Alert Centeng */
+	.centeng-alert{
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 10px 15px 18px;
+		padding: 14px 18px;
+		background: linear-gradient(135deg, #fff4cf, #ffe9a6);
+		border-left: 5px solid #f0ad4e;
+		border-radius: 8px;
+		box-shadow: 0 6px 18px rgba(240,173,78,0.25);
+		color: #5a4300;
+	}
+
+	.centeng-icon{
+		font-size: 26px;
+		color: #d58512;
+		animation: iconPulse 1.6s infinite;
+	}
+
+	.centeng-text{
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.centeng-text b{
+		color: #8a5b00;
+	}
+
+	.centeng-text span{
+		color: #a06b00;
+		font-style: italic;
+	}
+
+	/* 🔥 Kedip halus */
+	.blink-soft{
+		animation: softBlink 2.5s infinite;
+	}
+
+	/* Animasi */
+	@keyframes softBlink{
+		0%   { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
+		50%  { box-shadow: 0 0 18px rgba(240,173,78,0.65); }
+		100% { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
+	}
+
+	@keyframes iconPulse{
+		0%   { transform: scale(1); }
+		50%  { transform: scale(1.15); }
+		100% { transform: scale(1); }
+	}
 </style>
 
 <!DOCTYPE html>
@@ -340,21 +392,17 @@
 										$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
 										if ($merchant_retail_check > 0 && $firstNotaTodayWithoutCenteng <= 1 && $c == NULL) 
 									{ ?>
-									<div style="margin: 0px 15px;" class="alert alert-warning" role="alert">
-										<table>
-											<tr>
-												<td style="font-size:20px; padding-right: 10px;">
-													<i class="fa fa-exclamation-triangle"></i>
-												</td>
-												<td>
-													<p style="font-size: 14px; padding-top:10px;">
-														Status pedagang ini adalah Centeng / Retail, dan data ini merupakan data pertama pedagang <?php echo $merchant; ?> dihari ini. <br>
-														Maka tarif tonase akan dipotong otomatis sejumlah tarif centeng atas nama pedagang <?php echo $merchant; ?>
-													</p>
-												</td>
-											</tr>
-										</table>
-									</div><br>
+										<div class="centeng-alert blink-soft">
+											<div class="centeng-icon">
+												<i class="fa fa-exclamation-triangle"></i>
+											</div>
+											<div class="centeng-text">
+												<b>PERINGATAN CENTENG</b><br>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> dan ini merupakan
+												<u>data pertama hari ini</u>.<br>
+												<span>Tarif tonase akan dipotong otomatis sesuai tarif centeng.</span>
+											</div>
+										</div><br>
 									<?php } ?>
 
 									<div class="row">
