@@ -1807,34 +1807,6 @@
 		$cekweight	= executeScalar("select weight_in from weighing where weighing_id = '".$id."'");
 		$nopol		= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 		
-		// * Cek Pedagang Retail
-		// Apakah pedagang ini adalah pedagang retail dan merupakan kendaraan yang datang pertama dihari itu? kalau iya tarif kurangkan dengan centeng
-		$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$_POST['merchant']."'");
-		$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$_POST['merchant']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
-		$weighing_sts5 = '';
-		if ($merchant_retail_check > 0 && $firstNotaTodayWithoutCenteng <= 1) {
-			$jumlahLapak = executeScalar("
-				SELECT COUNT(*) 
-				FROM rent 
-				WHERE merchant_id = '".$_POST['merchant']."'
-				AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
-			");
-
-			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
-
-			if ($_POST['merchant'] == 'L0022') {
-				$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
-			} else {
-				$potongan = $tarif_centeng * $jumlahLapak;
-			}
-
-			$trftonase = max(0, $trftonase - $potongan);
-			$trfrealtonase = max(0, $trfrealtonase - $potongan);
-			$total1 = max(0, $total1 - $potongan);
-			$total2 = max(0, $total2 - $potongan);
-
-			$weighing_sts5 = 'Retail';
-		}
 
 		//update Table weighing
 		$update1 = mysql_query("update weighing 
@@ -1850,8 +1822,7 @@
 			cost_real_tonase	= '".$trfrealtonase."',
 			cost_bongkar		= '".$trfbongkar."',	
 			cost				= '".$total1."',
-			cost2				= '".$total2."',
-			weighing_sts5		= '".$weighing_sts5."'
+			cost2				= '".$total2."'
 		where weighing_id 		= '".$id."'") or die(mysql_error());
 		
 
@@ -2361,6 +2332,33 @@
 		}
 		$laborer_sts = $has_laborer ? 'Ya' : 'Tidak';
 		
+		// * Cek Pedagang Retail
+		// Apakah pedagang ini adalah pedagang retail
+		$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$merchant."'");
+		$weighing_sts5 = '';
+		if ($merchant_retail_check > 0) {
+			$jumlahLapak = executeScalar("
+				SELECT COUNT(*) 
+				FROM rent 
+				WHERE merchant_id = '".$merchant."'
+				AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+			");
+
+			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+
+			if ($merchant == 'L0022') {
+				$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
+			} else {
+				$potongan = $tarif_centeng * $jumlahLapak;
+			}
+
+			$cost_tonase = max(0, $cost_tonase - $potongan);
+			$totRealTonase = max(0, $totRealTonase - $potongan);
+			$cost1 = max(0, $cost1 - $potongan);
+			$cost2 = max(0, $cost2 - $potongan);
+
+			$weighing_sts5 = 'Retail';
+		}
 
 		//Membuat data transaksi timbangan baru
 		$insert = mysql_query("INSERT INTO `weighing` (	`weighing_id`, 
@@ -2385,7 +2383,8 @@
 		`cost2`, 
 		`weighing_sts`, 
 		`weighing_sts2`, 
-		`reffer`) 
+		`reffer`,
+		`weighing_sts5`) 
 		VALUES ('', 
 		'".$nopol."', 
 		'".$weight_in."', 
@@ -2408,7 +2407,8 @@
 		'".$cost2."', 
 		'Keluar', 
 		'Gabungan', 
-		'".$reffer."')");
+		'".$reffer."',
+		'".$weighing_sts5."')");
 
 
 		if($insert){
@@ -3886,4 +3886,54 @@
 		}
 	}
 
+	// Potong Tarif Centeng
+	elseif($task=='cutCenteng'){
+		$id					= $_GET['id'];
+		$merchant			= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
+		$cost_tonase		= executeScalar("select cost_tonase from weighing where weighing_id = '".$id."'");
+		$totRealTonase		= executeScalar("select cost_real_tonase from weighing where weighing_id = '".$id."'");
+		$cost1				= executeScalar("select cost from weighing where weighing_id = '".$id."'");
+		$cost2				= executeScalar("select cost2 from weighing where weighing_id = '".$id."'");
+		$weighing_sts5 = '';
+		$jumlahLapak = executeScalar("
+			SELECT COUNT(*) 
+			FROM rent 
+			WHERE merchant_id = '".$merchant."'
+			AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+		");
+		$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+
+		if ($merchant == 'L0022') {
+			$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
+		} else {
+			$potongan = $tarif_centeng * $jumlahLapak;
+		}
+
+		$cost_tonase = max(0, $cost_tonase - $potongan);
+		$totRealTonase = max(0, $totRealTonase - $potongan);
+		$cost1 = max(0, $cost1 - $potongan);
+		$cost2 = max(0, $cost2 - $potongan);
+		$weighing_sts5 = 'Retail';
+
+		$update = mysql_query("	update weighing 
+								set cost_tonase = '".$cost_tonase."',
+									cost_real_tonase = '".$totRealTonase."',
+									cost = '".$cost1."',
+									cost2 = '".$cost2."',
+									weighing_sts5 = '".$weighing_sts5."' 
+								where weighing_id 		= '".$id."'");
+
+		if($update){//jika update berhasil
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
+			$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
+			echo "<script>window.location=('check_edit.php?id=$id')</script>";
+			exit();
+		}
+		else{//Jika update gagal
+			echo "<script>window.alert('Data Gagal'); 
+			window.history.back()</script>";
+			exit();
+		}
+	}
 ?>

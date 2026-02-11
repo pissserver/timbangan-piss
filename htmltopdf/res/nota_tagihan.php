@@ -380,7 +380,7 @@
         <?php if ($r['weighing_sts2'] != 'Tanpa Timbang') { ?>
 		<tr>
 			<td>
-				<?php if ($cost_tonase <= $tarif_min) {
+				<?php if ($cost_tonase <= $tarif_min && $r['netto'] <= 210) {
                     echo "Tarif Tonase 0-210 kg";
                 } else {
                     echo "Tarif Tonase";

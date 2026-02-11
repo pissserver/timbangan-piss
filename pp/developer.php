@@ -44,7 +44,7 @@
     <meta name="author" content="">
 	<link rel="icon" href="../img/icon.png">
     <link rel="shortcut icon" href="../img/icon.png" />
-    <title>Developer | PISS</title>
+    <title>Revisi | PISS</title>
 	<?php echo headScript(); ?>
 </head>
 <body>

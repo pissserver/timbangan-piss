@@ -287,8 +287,59 @@
 		to {transform: scale(1); opacity: 1;}
 	}
 
-	/* Alert Centeng */
+	/* Alert Centeng Hijau */
 	.centeng-alert{
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 10px 15px 18px;
+		padding: 14px 18px;
+		background: linear-gradient(135deg, #e6ffed, #c9f7d8);
+		border-left: 5px solid #28a745;
+		border-radius: 8px;
+		box-shadow: 0 6px 18px rgba(40,167,69,0.25);
+		color: #0f5132;
+	}
+
+	.centeng-icon{
+		font-size: 26px;
+		color: #198754;
+		animation: iconPulse 1.6s infinite;
+	}
+
+	.centeng-text{
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.centeng-text b{
+		color: #146c43;
+	}
+
+	.centeng-text span{
+		color: #0f5132;
+		font-style: italic;
+	}
+
+	/* Kedip halus hijau */
+	.blink-soft{
+		animation: softBlink 2.5s infinite;
+	}
+
+	@keyframes softBlink{
+		0%   { box-shadow: 0 0 0 rgba(40,167,69,0.3); }
+		50%  { box-shadow: 0 0 18px rgba(40,167,69,0.65); }
+		100% { box-shadow: 0 0 0 rgba(40,167,69,0.3); }
+	}
+
+	@keyframes iconPulse{
+		0%   { transform: scale(1); }
+		50%  { transform: scale(1.15); }
+		100% { transform: scale(1); }
+	}
+
+	/* Alert Centeng Kuning */
+	.centeng-alert-before{
 		display: flex;
 		align-items: center;
 		gap: 14px;
@@ -301,39 +352,39 @@
 		color: #5a4300;
 	}
 
-	.centeng-icon{
+	.centeng-icon-before{
 		font-size: 26px;
 		color: #d58512;
-		animation: iconPulse 1.6s infinite;
+		animation: iconPulseBefore 1.6s infinite;
 	}
 
-	.centeng-text{
+	.centeng-text-before{
 		font-size: 14px;
 		line-height: 1.6;
 	}
 
-	.centeng-text b{
+	.centeng-text-before b{
 		color: #8a5b00;
 	}
 
-	.centeng-text span{
+	.centeng-text-before span{
 		color: #a06b00;
 		font-style: italic;
 	}
 
 	/* 🔥 Kedip halus */
-	.blink-soft{
-		animation: softBlink 2.5s infinite;
+	.blink-soft-before{
+		animation: softBlinkBefore 2.5s infinite;
 	}
 
 	/* Animasi */
-	@keyframes softBlink{
+	@keyframes softBlinkBefore{
 		0%   { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
 		50%  { box-shadow: 0 0 18px rgba(240,173,78,0.65); }
 		100% { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
 	}
 
-	@keyframes iconPulse{
+	@keyframes iconPulseBefore{
 		0%   { transform: scale(1); }
 		50%  { transform: scale(1.15); }
 		100% { transform: scale(1); }
@@ -386,21 +437,39 @@
 								<form action="weighing_action.php?task=update&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 								<fieldset>
 
-									<!-- Alert Centeng -->
+									<!-- Alert After Cut Centeng-->
 									<?php
 										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
-										$firstNotaTodayWithoutCenteng = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND date_in = '".date("Y-m-d")."' ");
-										if ($merchant_retail_check > 0 && $firstNotaTodayWithoutCenteng <= 1 && $c == NULL) 
+										if ($merchant_retail_check > 0 && $r['weighing_sts5'] == 'Retail') 
 									{ ?>
 										<div class="centeng-alert blink-soft">
 											<div class="centeng-icon">
-												<i class="fa fa-exclamation-triangle"></i>
+												<i class="fa fa-check-circle"></i>
 											</div>
 											<div class="centeng-text">
+												<b>INFO CENTENG</b><br>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b>.<br>
+												<span>Data ini sudah dipotong otomatis sesuai tarif centeng.</span>
+											</div>
+										</div><br>
+									<?php } ?>
+
+									<!-- Alert Before Cut Centeng -->
+									<?php
+										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 != 'Retail' AND date_in = '".date("Y-m-d")."' ");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_in = '".date("Y-m-d")."' ");
+										if ($merchant_retail_check > 0 && $checkNotaToday <= 1 && $c != NULL && $checkAfterCut == 0) 
+									{ ?>
+										<div class="centeng-alert-before blink-soft-before">
+											<div class="centeng-icon-before">
+												<i class="fa fa-exclamation-triangle"></i>
+											</div>
+											<div class="centeng-text-before">
 												<b>PERINGATAN CENTENG</b><br>
-												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> dan ini merupakan
-												<u>data pertama hari ini</u>.<br>
-												<span>Tarif tonase akan dipotong otomatis sesuai tarif centeng.</span>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> dan data
+												<u>belum terpotong centeng</u>.<br>
+												<span>Cara memotong otomatis yaitu pada proses <b>Gabung Nota</b> atau <b>Setelah Simpan Data</b> yang hanya datang 1 kali dihari itu!</span>
 											</div>
 										</div><br>
 									<?php } ?>
@@ -656,6 +725,20 @@
 
 											<div class="form-group" style="padding:10px; margin-right:5px; margin-top:30px;">
 												<?php
+													// Pedagang Centeng - Potong Centeng 
+													$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+													$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."' ");
+													$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."' ");
+													if ($merchant_retail_check > 0 && $checkNotaToday == 1 && $c != NULL && $checkAfterCut == 0) {
+														echo "
+														<a href='weighing_action.php?task=cutCenteng&id=$id' 
+														class='btn btn-block btn-warning btn-cut-centeng'
+														data-id='$id'>
+														<i class='fa fa-scissors fa-fw'></i> Potong Centeng
+														</a>
+														";
+													}
+													
 													if($status=='Lunas'||$status=='Batal'||$status2=='Digabung'||$status2=='Dipecah'||$status=='Masuk'){
 														echo '';
 													}
@@ -1757,6 +1840,7 @@
 		// }
 		function clearNotif(){$("#notifArea").html("");}
     </script>
+
 	<script>
 		const selectMC1 = document.getElementById('mc1');
 
@@ -1764,6 +1848,7 @@
 			event.preventDefault();
 		});
 	</script>
+
 	<script>
 		function postAndReload() {
 			setTimeout(function() {
@@ -1771,6 +1856,43 @@
 			}, 100);
 		}
 	</script>
+
+	<!-- Modal cut centeng -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+
+			document.querySelectorAll(".btn-cut-centeng").forEach(function(button) {
+				button.addEventListener("click", function(e) {
+					e.preventDefault();
+
+					let url = this.getAttribute("href");
+
+					Swal.fire({
+						title: 'Potong Tarif Centeng?',
+						html: `
+							<b>Perhatian!</b><br><br>
+							Tagihan akan dipotong sesuai tarif centeng.<br>
+							<span style="color:red;">Tindakan ini tidak dapat dibatalkan.</span>
+						`,
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#28a745',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '<i class="fa fa-scissors"></i> Ya, Potong Sekarang',
+						cancelButtonText: 'Batal',
+						reverseButtons: true
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = url;
+						}
+					});
+
+				});
+			});
+
+		});
+		</script>
+
 	<!-- Reload Window Tonase-->
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {

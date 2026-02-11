@@ -70,8 +70,8 @@
 		$diff1=$total-$cash; //duit krg 
 		$diff2=$cash-$total; //duit lebih
 		
-		//cek jika selisih uang diterima -+ 1000
-		if(($diff1>=0&&$diff1<=1000)||($diff2>=0&&$diff2<=1000)){
+		//cek jika selisih uang diterima -+ 500
+		if(($diff1>=0&&$diff1<=500)||($diff2>=0&&$diff2<=500)){
 			//update status pembayaran
 			// if($total==0){
 			// 	echo "<script>window.alert('Data Tampungan KO Sedang Kosong');
@@ -129,7 +129,7 @@
 			$_SESSION['success'] = true;
 			$_SESSION['icon'] = "error";
 			$_SESSION['title'] = "Maaf";
-			$_SESSION['message'] = "Toleransi uang kurang / lebih adalah Rp 1.000";
+			$_SESSION['message'] = "Toleransi uang kurang / lebih adalah Rp 500";
 			echo "<script>window.alert('ACC Gagal');
 				window.close()</script>";
 			exit();
@@ -152,8 +152,8 @@
 		$diff1=$total-$cash; //duit krg 
 		$diff2=$cash-$total; //duit lebih
 		
-		//cek jika selisih uang diterima -+ 1000
-		if(($diff1>=0&&$diff1<=1000)||($diff2>=0&&$diff2<=1000)){
+		//cek jika selisih uang diterima -+ 500
+		if(($diff1>=0&&$diff1<=500)||($diff2>=0&&$diff2<=500)){
 			//update status pembayaran
 			if($total==0){
 				echo "<script>window.alert('Data Tampungan KO Sedang Kosong');
@@ -210,7 +210,7 @@
 			$_SESSION['success'] = true;
 			$_SESSION['icon'] = "error";
 			$_SESSION['title'] = "Maaf";
-			$_SESSION['message'] = "Toleransi uang kurang / lebih adalah Rp 1.000";
+			$_SESSION['message'] = "Toleransi uang kurang / lebih adalah Rp 500";
 			echo "<script>window.alert('ACC Gagal');
 				window.close()</script>";
 			exit();
