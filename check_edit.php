@@ -415,7 +415,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							<div class="row">
-								<div class="col-md-9" style="padding-top: 10px;">
+								<div class="col-md-9" style="padding-top: 10px; margin-bottom: -5px;">
 									<?php if ($c == NULL) { ?>
 										<i class="fa fa-square-o fa-fw"></i>
 									<?php } else { ?>
@@ -424,7 +424,7 @@
 									Pengecekan Data
 								</div>
 
-								<form method="GET" action="check_edit_search.php">
+								<form method="GET" action="check_edit_search.php" style="margin-bottom: -5px;">
 									<div class="col-md-2">
 										<input type="search" class="form-control" id="search" name="search_id" placeholder="Cari No Nota" value="" required>
 									</div>
@@ -449,7 +449,7 @@
 											<div class="centeng-text">
 												<b>INFO CENTENG</b><br>
 												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b>.<br>
-												<span>Data ini sudah dipotong otomatis sesuai tarif centeng.</span>
+												<span>Data <?php echo date('d M Y', strtotime($c)); ?> ini sudah dipotong otomatis sesuai tarif centeng.</span>
 											</div>
 										</div><br>
 									<?php } ?>
@@ -459,7 +459,7 @@
 										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
 										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 != 'Retail' AND date_in = '".date("Y-m-d")."' ");
 										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_in = '".date("Y-m-d")."' ");
-										if ($merchant_retail_check > 0 && $checkNotaToday <= 1 && $c != NULL && $checkAfterCut == 0) 
+										if ($merchant_retail_check > 0 && $checkNotaToday <= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
 									{ ?>
 										<div class="centeng-alert-before blink-soft-before">
 											<div class="centeng-icon-before">
@@ -467,7 +467,7 @@
 											</div>
 											<div class="centeng-text-before">
 												<b>PERINGATAN CENTENG</b><br>
-												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> dan data
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> pada data <?php echo date('d M Y', strtotime($c)); ?>
 												<u>belum terpotong centeng</u>.<br>
 												<span>Cara memotong otomatis yaitu pada proses <b>Gabung Nota</b> atau <b>Setelah Simpan Data</b> yang hanya datang 1 kali dihari itu!</span>
 											</div>
@@ -729,7 +729,7 @@
 													$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
 													$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."' ");
 													$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."' ");
-													if ($merchant_retail_check > 0 && $checkNotaToday == 1 && $c != NULL && $checkAfterCut == 0) {
+													if ($merchant_retail_check > 0 && $checkNotaToday == 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') {
 														echo "
 														<a href='weighing_action.php?task=cutCenteng&id=$id' 
 														class='btn btn-block btn-warning btn-cut-centeng'
