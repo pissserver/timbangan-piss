@@ -887,9 +887,8 @@
 										<div></div>
 									<?php }
 													
-									$s 		= $r['date_check'];
-									$dt		= date('Y-m-d', strtotime($s));
-									$daten 	= $dt->format('Y-m-d');
+									$s     = $r['date_check'];
+									$daten = date('Y-m-d', strtotime($s));
 									//Cetak Gabung Nota
 									$exist		= executeScalar("	select count(weighing_id) 
 																	from weighing 
@@ -1282,9 +1281,8 @@
 				<div class="modal-body" style="height: 400px; overflow-y: auto;">
 					<?php 
 						$no 	= 0;
-						$s 		= $r['date_check'];
-						$dt		= date('Y-m-d', strtotime($s));
-						$daten 	= $dt->format('Y-m-d');
+						$s     = $r['date_check'];
+						$daten = date('Y-m-d', strtotime($s));
 						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 						while ($row = mysql_fetch_array($allDataMerge)) {
 							$cost_mitra_ref = 0;

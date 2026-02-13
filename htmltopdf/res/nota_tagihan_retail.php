@@ -24,10 +24,9 @@
     $dt_now = date("Y-m-d H:i:s");   
 
     // * Current time
-    $today      = date('Y-m-d');
-    $year       = (int)$today->format('Y');
-    $month      = (int)$today->format('m');
-    $day        = (int)$today->format('d');
+    $year  = (int) date('Y');
+    $month = (int) date('m');
+    $day   = (int) date('d');
     // jumlah hari dalam bulan ini
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
     // tentukan periode
