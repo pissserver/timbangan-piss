@@ -790,6 +790,13 @@
                 Tarif Bongkar merupakan "Pengembalian" Mitra Bongkar.
             </td>
         </tr>
+        <tr>
+            <td></td>
+            <td>•</td>
+            <td>
+                Pelunasan paling lambat <b>3 hari</b> dari tanggal tagihan, <br>Jika belum membayar akan ditutup sementara
+            </td>
+        </tr>
     </table><br>
 
     <table style="width:100%; border:0px; margin-top:-10px; font-size:7pt;">

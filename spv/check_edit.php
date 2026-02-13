@@ -456,14 +456,15 @@
 									<!-- Alert Before Cut Centeng -->
 									<?php
 										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
-										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 != 'Retail' AND date_in = '".date("Y-m-d")."' ");
-										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_in = '".date("Y-m-d")."' ");
-										if ($merchant_retail_check > 0 && $checkNotaToday <= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."'");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."'");
+										if ($merchant_retail_check > 0 && $checkNotaToday >= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
 									{ ?>
 										<div class="centeng-alert-before blink-soft-before">
 											<div class="centeng-icon-before">
 												<i class="fa fa-exclamation-triangle"></i>
 											</div>
+											
 											<div class="centeng-text-before">
 												<b>PERINGATAN CENTENG</b><br>
 												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> pada data <?php echo date('d M Y', strtotime($c)); ?>
@@ -1830,6 +1831,43 @@
 			}, 100);
 		}
 	</script>
+
+		<!-- Modal cut centeng -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+
+			document.querySelectorAll(".btn-cut-centeng").forEach(function(button) {
+				button.addEventListener("click", function(e) {
+					e.preventDefault();
+
+					let url = this.getAttribute("href");
+
+					Swal.fire({
+						title: 'Potong Tarif Centeng?',
+						html: `
+							<b>Perhatian!</b><br><br>
+							Tagihan akan dipotong sesuai tarif centeng.<br>
+							<span style="color:red;">Tindakan ini tidak dapat dibatalkan.</span>
+						`,
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#28a745',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '<i class="fa fa-scissors"></i> Ya, Potong Sekarang',
+						cancelButtonText: 'Batal',
+						reverseButtons: true
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = url;
+						}
+					});
+
+				});
+			});
+
+		});
+	</script>
+	
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->

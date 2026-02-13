@@ -534,6 +534,15 @@
 				Tarif Bongkar merupakan "Pengembalian" Mitra Bongkar.
 			</td>
 		</tr>
+        <?php if ($r['weighing_sts2'] == 'Tanpa Timbang') { ?>
+        <tr>
+            <td></td>
+            <td>•</td>
+            <td>
+                Pelunasan paling lambat <b>3 hari</b> dari tanggal tagihan, <br>Jika belum membayar akan ditutup sementara
+            </td>
+        </tr>
+        <?php } ?>
 	</table>
 
     <!-- Cek apakah termasuk tonase pertama dihari itu dengan potongan centeng -->
@@ -577,10 +586,9 @@
 			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
 
             // * Current time
-            $today = new DateTime();
-            $year       = (int)$today->format('Y');
-            $month      = (int)$today->format('m');
-            $day        = (int)$today->format('d');
+            $year  = (int) date('Y');
+            $month = (int) date('m');
+            $day   = (int) date('d');
             // jumlah hari dalam bulan ini
             $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             // tentukan periode

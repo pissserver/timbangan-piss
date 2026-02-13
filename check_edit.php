@@ -457,9 +457,9 @@
 									<!-- Alert Before Cut Centeng -->
 									<?php
 										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
-										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 != 'Retail' AND date_in = '".date("Y-m-d")."' ");
-										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_in = '".date("Y-m-d")."' ");
-										if ($merchant_retail_check > 0 && $checkNotaToday <= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."'");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."'");
+										if ($merchant_retail_check > 0 && $checkNotaToday >= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
 									{ ?>
 										<div class="centeng-alert-before blink-soft-before">
 											<div class="centeng-icon-before">
@@ -1686,7 +1686,7 @@
 					<br />
 					<button onclick="submitMerge()" class="btn btn-block btn-primary"><i class="fa fa-object-group"></i>&nbsp;Gabungkan</button>
 				</div>
-				
+
 				<div class="modal-footer">
 				</div>
 			</div>
@@ -1890,7 +1890,7 @@
 			});
 
 		});
-		</script>
+	</script>
 
 	<!-- Reload Window Tonase-->
 	<script>
