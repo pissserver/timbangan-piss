@@ -1,6 +1,4 @@
 <?php
-	use DateTime;
-	
 	session_start();
 	include "connection.php";
 	//Validasi role
@@ -890,7 +888,7 @@
 									<?php }
 													
 									$s 		= $r['date_check'];
-									$dt		= new DateTime($s);
+									$dt		= date('Y-m-d', strtotime($s));
 									$daten 	= $dt->format('Y-m-d');
 									//Cetak Gabung Nota
 									$exist		= executeScalar("	select count(weighing_id) 
@@ -1285,7 +1283,7 @@
 					<?php 
 						$no 	= 0;
 						$s 		= $r['date_check'];
-						$dt		= new DateTime($s);
+						$dt		= date('Y-m-d', strtotime($s));
 						$daten 	= $dt->format('Y-m-d');
 						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 						while ($row = mysql_fetch_array($allDataMerge)) {

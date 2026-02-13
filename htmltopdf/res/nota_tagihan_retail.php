@@ -1,7 +1,4 @@
 <?php
-
-    use DateTime;
-    
     session_start();
     include "../connection.php";
 
@@ -27,7 +24,7 @@
     $dt_now = date("Y-m-d H:i:s");   
 
     // * Current time
-    $today = new DateTime();
+    $today      = date('Y-m-d');
     $year       = (int)$today->format('Y');
     $month      = (int)$today->format('m');
     $day        = (int)$today->format('d');
