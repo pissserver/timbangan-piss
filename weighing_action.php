@@ -44,8 +44,8 @@
 		if($_POST['merchant'] !='' && $_POST['goods'] !=''){
 			//$date2 	= date('Y-m-d', strtotime($date_now . "-3 days")); 
 			//Hitung Umur Tagihan
-			$date3 	= new DateTime(date("Y-m-d", strtotime($last_date)));
-			$date4 	= new DateTime(date("Y-m-d", strtotime($date_now)));
+			$date3 	= date("Y-m-d", strtotime($last_date));
+			$date4 	= date("Y-m-d", strtotime($date_now));
 			$diff 	= $date4->diff($date3)->format("%a");
 			if($diff<3||($last_date==0)){
 				//cara mendapatkan data 1 menit yg lalu
@@ -2226,8 +2226,7 @@
 		$nopol 					= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 		$date_check 			= executeScalar("select date_check from weighing where weighing_id = '".$id."'");
 		// $s 						= $date_check;
-		$dt						= new DateTime($date_check);
-		$daten 					= $dt->format('Y-m-d');
+		$daten = date('Y-m-d', strtotime($date_check));
 		$date_in 				= executeScalar("select date_in from weighing where weighing_id = '".$id."'");
 		$date_out 				= executeScalar("select date_out from weighing where weighing_id = '".$id."'");
 		$time_in 				= executeScalar("select time_in from weighing where weighing_id = '".$id."'");

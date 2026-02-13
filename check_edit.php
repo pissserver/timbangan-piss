@@ -1686,6 +1686,7 @@
 					<br />
 					<button onclick="submitMerge()" class="btn btn-block btn-primary"><i class="fa fa-object-group"></i>&nbsp;Gabungkan</button>
 				</div>
+				
 				<div class="modal-footer">
 				</div>
 			</div>

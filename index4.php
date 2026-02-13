@@ -150,7 +150,6 @@
 		margin-bottom: 5px;
 		font-weight: bold;
 	}
-
 </style>
 
 
@@ -325,10 +324,9 @@
 									}
 
 									// current date
-									$todayObj = new DateTime();
-									$year  = $todayObj->format('Y');
-									$month = $todayObj->format('m');
-									$day   = (int)$todayObj->format('d');
+									$year  = date('Y');
+									$month = date('m');
+									$day   = (int) date('d');
 
 									// jumlah hari dalam bulan
 									$daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
@@ -632,7 +630,7 @@
 	</script>
 
 	<!-- Search -->
-	 <script>
+	<script>
 	document.getElementById('searchMerchant').addEventListener('keyup', function () {
 		let keyword = this.value.toLowerCase();
 		let cards = document.querySelectorAll('.merchant-card');

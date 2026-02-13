@@ -12,8 +12,7 @@
     } 
     elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
         $spv_name = executeScalar("SELECT name FROM admin WHERE username = '".$_SESSION['username']."'");
-        $checker = executeScalar("SELECT checker_id FROM weighing WHERE  date_in >= CURDATE()
-                AND weighing_sts2 = 'Tanpa Timbang' LIMIT 1 ");
+        $checker = isset($_POST['checker']) ? $_POST['checker'] : '13';
     } 
     else {
         header("Location: login.html");
