@@ -2579,7 +2579,8 @@
 		$nopol 					= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 		$date_check 			= executeScalar("select date_check from weighing where weighing_id = '".$id."'");
 		// $s 						= $date_check;
-		$daten = date('Y-m-d', strtotime($date_check));
+		$dt						= new DateTime($date_check);
+		$daten 					= $dt->format('Y-m-d');
 		$date_in 				= executeScalar("select date_in from weighing where weighing_id = '".$id."'");
 		$date_out 				= executeScalar("select date_out from weighing where weighing_id = '".$id."'");
 		$time_in 				= executeScalar("select time_in from weighing where weighing_id = '".$id."'");
