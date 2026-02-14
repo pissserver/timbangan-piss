@@ -198,6 +198,198 @@
 			$c = '';
 		}
 ?>
+
+<style>
+	/* Dark glass background */
+	.modal-backdrop.modern-alert-backdrop {
+		opacity: 0.55;
+	}
+
+
+	/* Centering */
+	.modern-alert .modal-dialog {
+		margin-top: 12vh;
+	}
+
+	/* Glass box */
+	.modern-box {
+		border-radius: 14px;
+		overflow: hidden;
+		border: none;
+		box-shadow: 0 30px 60px rgba(0,0,0,.35);
+		background: rgba(255,255,255,.95);
+		backdrop-filter: blur(6px);
+		animation: popIn .35s cubic-bezier(.4,0,.2,1);
+	}
+
+	/* Header */
+	.modern-header {
+		background: linear-gradient(135deg,#f59e0b,#fbbf24);
+		padding: 22px;
+		text-align: center;
+		color: #fff;
+	}
+
+	.modern-icon {
+		width: 52px;
+		height: 52px;
+		background: rgba(255,255,255,.25);
+		border-radius: 50%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		margin-bottom: 8px;
+	}
+
+	.modern-header h4 {
+		margin: 6px 0 0;
+		font-weight: 600;
+	}
+
+	/* Body */
+	.modern-body {
+		padding: 22px;
+		text-align: center;
+		color: #374151;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	/* Footer */
+	.modern-footer {
+		padding: 16px;
+		text-align: center;
+		background: #f9fafb;
+	}
+
+	/* Button */
+	.modern-btn {
+		background: linear-gradient(135deg,#f59e0b,#fbbf24);
+		border: none;
+		color: #fff;
+		padding: 10px 28px;
+		border-radius: 30px;
+		font-weight: 600;
+		box-shadow: 0 6px 15px rgba(245,158,11,.35);
+		transition: all .2s ease;
+	}
+
+	.modern-btn:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 25px rgba(245,158,11,.45);
+	}
+
+	/* Animation */
+	@keyframes popIn {
+		from {transform: scale(.8); opacity: 0;}
+		to {transform: scale(1); opacity: 1;}
+	}
+
+	/* Alert Centeng Hijau */
+	.centeng-alert{
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 10px 15px 18px;
+		padding: 14px 18px;
+		background: linear-gradient(135deg, #e6ffed, #c9f7d8);
+		border-left: 5px solid #28a745;
+		border-radius: 8px;
+		box-shadow: 0 6px 18px rgba(40,167,69,0.25);
+		color: #0f5132;
+	}
+
+	.centeng-icon{
+		font-size: 26px;
+		color: #198754;
+		animation: iconPulse 1.6s infinite;
+	}
+
+	.centeng-text{
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.centeng-text b{
+		color: #146c43;
+	}
+
+	.centeng-text span{
+		color: #0f5132;
+		font-style: italic;
+	}
+
+	/* Kedip halus hijau */
+	.blink-soft{
+		animation: softBlink 2.5s infinite;
+	}
+
+	@keyframes softBlink{
+		0%   { box-shadow: 0 0 0 rgba(40,167,69,0.3); }
+		50%  { box-shadow: 0 0 18px rgba(40,167,69,0.65); }
+		100% { box-shadow: 0 0 0 rgba(40,167,69,0.3); }
+	}
+
+	@keyframes iconPulse{
+		0%   { transform: scale(1); }
+		50%  { transform: scale(1.15); }
+		100% { transform: scale(1); }
+	}
+
+	/* Alert Centeng Kuning */
+	.centeng-alert-before{
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 10px 15px 18px;
+		padding: 14px 18px;
+		background: linear-gradient(135deg, #fff4cf, #ffe9a6);
+		border-left: 5px solid #f0ad4e;
+		border-radius: 8px;
+		box-shadow: 0 6px 18px rgba(240,173,78,0.25);
+		color: #5a4300;
+	}
+
+	.centeng-icon-before{
+		font-size: 26px;
+		color: #d58512;
+		animation: iconPulseBefore 1.6s infinite;
+	}
+
+	.centeng-text-before{
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.centeng-text-before b{
+		color: #8a5b00;
+	}
+
+	.centeng-text-before span{
+		color: #a06b00;
+		font-style: italic;
+	}
+
+	/* 🔥 Kedip halus */
+	.blink-soft-before{
+		animation: softBlinkBefore 2.5s infinite;
+	}
+
+	/* Animasi */
+	@keyframes softBlinkBefore{
+		0%   { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
+		50%  { box-shadow: 0 0 18px rgba(240,173,78,0.65); }
+		100% { box-shadow: 0 0 0 rgba(240,173,78,0.3); }
+	}
+
+	@keyframes iconPulseBefore{
+		0%   { transform: scale(1); }
+		50%  { transform: scale(1.15); }
+		100% { transform: scale(1); }
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,6 +435,45 @@
 							<div class="row">
 								<form action="weighing_action.php?task=update&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 								<fieldset>
+
+								<!-- Alert After Cut Centeng-->
+									<?php
+										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+										if ($merchant_retail_check > 0 && $r['weighing_sts5'] == 'Retail') 
+									{ ?>
+										<div class="centeng-alert blink-soft">
+											<div class="centeng-icon">
+												<i class="fa fa-check-circle"></i>
+											</div>
+											<div class="centeng-text">
+												<b>INFO CENTENG</b><br>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b>.<br>
+												<span>Data <?php echo date('d M Y', strtotime($c)); ?> ini sudah dipotong otomatis sesuai tarif centeng.</span>
+											</div>
+										</div><br>
+									<?php } ?>
+
+									<!-- Alert Before Cut Centeng -->
+									<?php
+										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."'");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."'");
+										if ($merchant_retail_check > 0 && $checkNotaToday >= 1 && $c != NULL && $checkAfterCut == 0 && $r['weighing_sts2'] != 'Tanpa Timbang') 
+									{ ?>
+										<div class="centeng-alert-before blink-soft-before">
+											<div class="centeng-icon-before">
+												<i class="fa fa-exclamation-triangle"></i>
+											</div>
+											
+											<div class="centeng-text-before">
+												<b>PERINGATAN CENTENG</b><br>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> pada data <?php echo date('d M Y', strtotime($c)); ?>
+												<u>belum terpotong centeng</u>.<br>
+												<span>Cara memotong otomatis yaitu pada proses <b>Gabung Nota</b> atau <b>Setelah Simpan Data</b> yang hanya datang 1 kali dihari itu!</span>
+											</div>
+										</div><br>
+									<?php } ?>
+
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:5px;">
@@ -472,7 +703,29 @@
 												<input id="reason" name="reason" placeholder="Keterangan simpan data" type="text" class="form-control" required>                  
 											</div>
 										</div>
-										<div class="form-group" style="padding:10px; margin-right:20px; margin-left: 20px; margin-top:30px;">
+										
+										<?php 
+										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".date("Y-m-d")."' ");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".date("Y-m-d")."' ");
+										if (
+											$merchant_retail_check > 0 &&
+											$checkNotaToday == 1 &&
+											$c != NULL &&
+											$checkAfterCut == 0 &&
+											$r['weighing_sts2'] != 'Tanpa Timbang'
+										) { ?>
+											
+											<div class="form-group text-right" style="padding:10px; margin-right:20px; margin-left:20px;">
+												<a href="weighing_action.php?task=cutCenteng&id=<?php echo $id; ?>"
+												class="btn btn-warning btn-cut-centeng"
+												data-id="<?php echo $id; ?>">
+													<i class="fa fa-scissors fa-fw"></i> Potong Centeng
+												</a>
+											</div>
+										<?php } ?>
+
+										<div class="form-group" style="padding:10px; margin-right:20px; margin-left:20px; margin-top:-10px;">
 											<button type="button" id="btnModal" class="btn btn-block btn-primary">
 												<i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Simpan
 											</button> 
@@ -616,14 +869,14 @@
 										<div></div>
 									<?php }
 													
-									$s 		= $r['date_check'];
-									$dt		= new DateTime($s);
-									$daten 	= $dt->format('Y-m-d');
+									$s     = $r['date_check'];
+									$daten = date('Y-m-d', strtotime($s));
 									//Cetak Gabung Nota
 									$exist		= executeScalar("	select count(weighing_id) 
 																	from weighing 
 																	where 	merchant_id = '".$r['merchant_id']."' and
 																			weighing_sts = 'Keluar' and 
+																			weighing_sts2 != 'Tanpa Timbang' and
 																			DATE(date_check) = '".$daten."'");
 									if($c == NULL || $status=='Lunas'||$status=='Batal'||$status=='Masuk'){ ?>
 										
@@ -1060,10 +1313,9 @@
 				<div class="modal-body" style="height: 400px; overflow-y: auto;">
 					<?php 
 						$no 	= 0;
-						$s 		= $r['date_check'];
-						$dt		= new DateTime($s);
-						$daten 	= $dt->format('Y-m-d');
-						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
+						$s     = $r['date_check'];
+						$daten = date('Y-m-d', strtotime($s));
+						$allDataMerge = mysql_query("select * from weighing where merchant_id = '".$r['merchant_id']."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 						while ($row = mysql_fetch_array($allDataMerge)) {
 							$cost_mitra_ref = 0;
 							$tarif			= 0;
@@ -1579,6 +1831,43 @@
 			}, 100);
 		}
 	</script>
+
+		<!-- Modal cut centeng -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+
+			document.querySelectorAll(".btn-cut-centeng").forEach(function(button) {
+				button.addEventListener("click", function(e) {
+					e.preventDefault();
+
+					let url = this.getAttribute("href");
+
+					Swal.fire({
+						title: 'Potong Tarif Centeng?',
+						html: `
+							<b>Perhatian!</b><br><br>
+							Tagihan akan dipotong sesuai tarif centeng.<br>
+							<span style="color:red;">Tindakan ini tidak dapat dibatalkan.</span>
+						`,
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#28a745',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '<i class="fa fa-scissors"></i> Ya, Potong Sekarang',
+						cancelButtonText: 'Batal',
+						reverseButtons: true
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = url;
+						}
+					});
+
+				});
+			});
+
+		});
+	</script>
+	
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->

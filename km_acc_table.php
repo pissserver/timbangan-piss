@@ -749,7 +749,7 @@
 				<div class="amount-alert" id="amountAlert">
 					<i class="fa fa-exclamation-circle"></i>
 					Nominal fisik tidak sesuai dengan sistem.<br>
-					<small>Selisih maksimal ± Rp 2.000</small>
+					<small>Selisih maksimal ± Rp 500</small>
 				</div>
 
                 <button type="button"
@@ -878,7 +878,7 @@
 <!-- Reload Window Tonase-->
 <script>
 	const SYSTEM_TOTAL = <?php echo (int)$cost; ?>;
-	const TOLERANCE    = 2000;
+	const TOLERANCE    = 500;
 
 	const cashInput = document.getElementById('cash');
 	const btnAcc    = document.getElementById('btn-acc');

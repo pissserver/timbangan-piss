@@ -1,5 +1,4 @@
 <?php
-
     session_start();
     include "../connection.php";
 
@@ -13,8 +12,7 @@
     } 
     elseif (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'spv')) {
         $spv_name = executeScalar("SELECT name FROM admin WHERE username = '".$_SESSION['username']."'");
-        $checker = executeScalar("SELECT checker_id FROM weighing WHERE  date_in >= CURDATE()
-                AND weighing_sts2 = 'Tanpa Timbang' LIMIT 1 ");
+        $checker = isset($_POST['checker']) ? $_POST['checker'] : '13';
     } 
     else {
         header("Location: login.html");
@@ -23,6 +21,34 @@
 
 	date_default_timezone_set('Asia/Jakarta');
     $dt_now = date("Y-m-d H:i:s");   
+
+    // * Current time
+    $year  = (int) date('Y');
+    $month = (int) date('m');
+    $day   = (int) date('d');
+    // jumlah hari dalam bulan ini
+    $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+    // tentukan periode
+    if ($day >= 1 && $day <= 7) {
+        $periodStart = 1;
+        $periodEnd   = 7;
+    } elseif ($day >= 8 && $day <= 14) {
+        $periodStart = 8;
+        $periodEnd   = 14;
+    } elseif ($day >= 15 && $day <= 21) {
+        $periodStart = 15;
+        $periodEnd   = 21;
+    } elseif ($day >= 22 && $day <= 28) {
+        $periodStart = 22;
+        $periodEnd   = 28;
+    } else {
+        // sisa bulan (29, 30, 31)
+        $periodStart = 29;
+        $periodEnd   = $daysInMonth;
+    }
+    // jumlah hari periode
+    $totalDaysPeriod = ($periodEnd - $periodStart) + 1;
+
 
     // Query for create weighing
 	$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
@@ -33,6 +59,21 @@
     if (isset($_GET['task']) && $_GET['task'] == 'printAll') {
         
         foreach ($_POST['merchant'] as $i => $merchant_id) {
+
+            // * Jumlah lapak
+            $jumlahLapak = executeScalar("
+                SELECT COUNT(*) 
+                FROM rent 
+                WHERE merchant_id = '".$merchant_id."'
+                AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+            ");
+            
+            // * Total biaya retail
+            if ($merchant_id == 'L0022') {
+                $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
+            } else {
+                $totalRetailCost = $tarifretail * $totalDaysPeriod * $jumlahLapak;
+            }
 
             // toggle ON = iya, toggle OFF = tidak
             $printStatus = isset($_POST['cetak'][$merchant_id]) ? 'iya' : 'tidak';
@@ -91,8 +132,8 @@
                     '".$checker."', '".$merchant_id."', '".$goods_id."',
                     '".$dt_now."', '".$dt_now."', '".$time_now."', '".$time_now."', '".$dt_now."',
                     'Tidak',
-                    '".$tarifretail."', '".$tarifretail."', 
-                    '".$tarifretail."', '".$tarifretail."',
+                    '".$totalRetailCost."', '".$totalRetailCost."', 
+                    '".$totalRetailCost."', '".$totalRetailCost."',
                     'Keluar', 'Tanpa Timbang')
                 ");
 
@@ -141,6 +182,21 @@
         $merchant_id = $_GET['merchant_id'];
         $goods_id = $_GET['goods'];
 
+        // * Jumlah lapak
+        $jumlahLapak = executeScalar("
+            SELECT COUNT(*) 
+            FROM rent 
+            WHERE merchant_id = '".$merchant_id."'
+            AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+        ");
+            
+        // * Total biaya retail
+        if ($merchant_id == 'L0022') {
+            $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
+        } else {
+            $totalRetailCost = $tarifretail * $totalDaysPeriod * $jumlahLapak;
+        }
+
         // generate ID
 		$year 	= date("y");
 		$year2 	= date("Y");    
@@ -175,8 +231,8 @@
                     '".$checker."', '".$merchant_id."', '".$goods_id."',
                     '".$dt_now."', '".$dt_now."', '".$time_now."', '".$time_now."', '".$dt_now."',
                     'Tidak',
-                    '".$tarifretail."', '".$tarifretail."', 
-                    '".$tarifretail."', '".$tarifretail."',
+                    '".$totalRetailCost."', '".$totalRetailCost."', 
+                    '".$totalRetailCost."', '".$totalRetailCost."',
                     'Keluar', 'Tanpa Timbang')
                 ");
 
@@ -246,8 +302,8 @@
             $nick			= executeScalar("select merchant_nick from merchant where merchant_id = '".$r['merchant_id']."'");
             $checker		= executeScalar("select checker_code from checker where checker_id = '".$r['checker_id']."'");
             $checkerName	= executeScalar("select checker_name from checker where checker_id = '".$r['checker_id']."'");
-            $lapak 			= executeScalar("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
-											r.merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')) limit 1");
+            $lapak 			= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
+											r.merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
             $goods			= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
             $nc				= executeScalar("select noncommodity_name from noncommodity where noncommodity_id = '".$r['noncommodity_id']."'");
             $time1			= executeScalar("select TIME_FORMAT(`time_in`, '%H:%i') from weighing where weighing_id = '".$r['weighing_id']."'");
@@ -263,6 +319,19 @@
             $reffer_array   = [];
             // Periksa apa kah termasuk komoditi khusus
             $cekseasonalcommodity 	= executeScalar("select count(id_sc) from seasonalcommodity where goods_id = '".$r['goods_id']."' AND status_aktif = '1'");
+
+            // Loop untuk menampilkan semua lapak
+            $string	= "";
+			$counter= 0;
+            while($row=mysql_fetch_array($lapak)){
+				if($counter!=0){
+					$string = ", ".$string;
+				}
+				$string = $row['lapak_name'].$string;
+				$counter++;
+			}
+			$lpk 	= "".$string;
+            $totalLapak = $counter;
 
             // Check reffer query
             while ($row = mysql_fetch_array($reffer_query)) {
@@ -430,7 +499,7 @@
 	</table>
 	<br />
 	<div style="font-size: 12px; font-weight: bold; text-align: center; margin-top:0px;">
-		NOTA TAGIHAN TONASE
+		NOTA TAGIHAN CENTENG
 	</div>
     <p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<br />
@@ -451,10 +520,10 @@
             <td>:</td>
 			<td>
                 <?php 
-                    if ($lapak == NULL) {
+                    if ($lpk == NULL) {
                         echo '-';
                     } else {
-                        echo $lapak;
+                        echo $lpk;
                     }
                 ?>
             </td>
@@ -566,7 +635,7 @@
             //     echo "</tr>";
             // }
         ?>
-		<tr>
+		<!-- <tr>
 			<td>
 				<?php if ($cost_tonase <= $tarif_min) {
                     echo "Tarif Tonase 0-210 kg";
@@ -583,8 +652,8 @@
                     <b style="font-size: 14px; font-weight: bold;"><?php echo format_rupiah($cost_tonase); ?></b><?php
                 } ?>
 			</td>
-		</tr>
-            <?php
+		</tr> -->
+            <!-- <?php
                 if ($r['cost_bongkar'] > 0 && $r['laborer_sts'] == 'Ya' && $jenis == 'B') {
                     echo "<tr>";
                     echo "<td>Tarif Bongkar</td>";
@@ -606,7 +675,7 @@
                         echo "</tr>";
                     }
                 }
-            ?>
+            ?> -->
 		<tr>
 			<td>
                 <?php if ($r['cost_bongkar'] > 0 && $r['laborer_sts'] == 'Ya' || $cost_tonase > $tarif_min) {
@@ -706,22 +775,42 @@
             <?php }?>
     </table><br />
 
-	<table style="width:95%; border:0px; margin-top: -15px; font-size:7pt;">
-		<tr>
-			<td style="text-align: left; width: 10%; vertical-align: top;"><b>NB :</b></td>
-			<td style="text-align: left; width: 5%; vertical-align: top;">•</td>
-			<td style="text-align: left; width: 85%; vertical-align: top;">
-				Nota harap disimpan untuk bukti bayar. Cek Kembali.
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: left; width: 10%; vertical-align: top;"></td>
-			<td style="text-align: left; width: 5%; vertical-align: top;">•</td>
-			<td style="text-align: left; width: 85%; vertical-align: top;">
-				Tarif Bongkar merupakan "Pengembalian" Mitra Bongkar.
-			</td>
-		</tr>
-	</table>
+	<table style="width:95%; border:0px; margin-top:-15px; font-size:7pt;">
+        <tr>
+            <td style="width:10%; vertical-align:top;"><b>NB :</b></td>
+            <td style="width:5%; vertical-align:top;">•</td>
+            <td style="width:85%; vertical-align:top;">
+                Nota harap disimpan untuk bukti bayar. Cek Kembali.
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>•</td>
+            <td>
+                Tarif Bongkar merupakan "Pengembalian" Mitra Bongkar.
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>•</td>
+            <td>
+                Pelunasan paling lambat <b>3 hari</b> dari tanggal tagihan, <br>Jika belum membayar akan ditutup sementara
+            </td>
+        </tr>
+    </table><br>
+
+    <table style="width:100%; border:0px; margin-top:-10px; font-size:7pt;">
+        <tr>
+            <td style="width:20%; vertical-align:top;"><b>Perhitungan</b></td>
+            <td style="width:5%; vertical-align:top;">:</td>
+            <td style="width:75%; vertical-align:top;">
+                Rp <?= number_format($tarifretail, 0, ',', '.'); ?>
+                × <?= $r['merchant_id'] == 'L0022' ? '2' : $totalLapak; ?> lapak
+                × <?= $totalDaysPeriod; ?> hari
+                = <b>Rp <?= number_format($cost_tonase, 0, ',', '.'); ?></b>
+            </td>
+        </tr>
+    </table>
     <!-- <hr style="border: 1px dashed #525659; height: 1px;"> -->
      <br>
 	<page_footer>

@@ -44,8 +44,8 @@
 		if($_POST['merchant'] !='' && $_POST['goods'] !=''){
 			//$date2 	= date('Y-m-d', strtotime($date_now . "-3 days")); 
 			//Hitung Umur Tagihan
-			$date3 	= new DateTime(date("Y-m-d", strtotime($last_date)));
-			$date4 	= new DateTime(date("Y-m-d", strtotime($date_now)));
+			$date3 	= date("Y-m-d", strtotime($last_date));
+			$date4 	= date("Y-m-d", strtotime($date_now));
 			$diff 	= $date4->diff($date3)->format("%a");
 			if($diff<3||($last_date==0)){
 				//cara mendapatkan data 1 menit yg lalu
@@ -515,6 +515,7 @@
 		}
 	}
 	// End Edit Kendaraan Masuk ================================================================================================================================
+	
 	// Start Kendaraan Keluar ==================================================================================================================================
 	elseif($task=='keluar'){
 		$id						= $_GET['id'];
@@ -683,6 +684,7 @@
 					}
 				}
 			}
+
 			$update1 = mysql_query("update weighing set nopol = '".$_POST['nopol']."',
 											weight_out		= '".$weight_out."',
 											netto			= '".$netto."',
@@ -736,6 +738,7 @@
 		}
 	}
 	// End Kendaraan Keluar Normal ==========================================================================================================================
+	
 	// Start Kendaraan Keluar dengan kir ====================================================================================================================
 	elseif($task =='kir'){
 		$id						= $_GET['id'];
@@ -1820,7 +1823,7 @@
 			cost_bongkar		= '".$trfbongkar."',	
 			cost				= '".$total1."',
 			cost2				= '".$total2."'
-		where weighing_id 		= '".$id."'");
+		where weighing_id 		= '".$id."'") or die(mysql_error());
 		
 
 		$update2 = mysql_query("update 	weighing_mitra 
@@ -2223,28 +2226,27 @@
 		$nopol 					= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
 		$date_check 			= executeScalar("select date_check from weighing where weighing_id = '".$id."'");
 		// $s 						= $date_check;
-		$dt						= new DateTime($date_check);
-		$daten 					= $dt->format('Y-m-d');
+		$daten = date('Y-m-d', strtotime($date_check));
 		$date_in 				= executeScalar("select date_in from weighing where weighing_id = '".$id."'");
 		$date_out 				= executeScalar("select date_out from weighing where weighing_id = '".$id."'");
 		$time_in 				= executeScalar("select time_in from weighing where weighing_id = '".$id."'");
 		$time_out 				= executeScalar("select time_out from weighing where weighing_id = '".$id."'");
 		$goods 					= executeScalar("select goods_id from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		// $laborer 				= executeScalar("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
-		$laborer 				= mysql_query("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$weighing_sts2			= mysql_query("select weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
+		$laborer 				= mysql_query("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$weighing_sts2			= mysql_query("select weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$name	 				= executeScalar("select merchant_name from merchant where merchant_id = '".$merchant."'");
-		$weight_in				= executeScalar("select sum(weight_in) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$weight_out 			= executeScalar("select sum(weight_out) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$noncommodity 			= executeScalar("select sum(noncommodity) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$netto					= executeScalar("select sum(netto) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$total 					= executeScalar("select sum(cost2) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$cost_bongkar 			= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
+		$weight_in				= executeScalar("select sum(weight_in) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$weight_out 			= executeScalar("select sum(weight_out) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$noncommodity 			= executeScalar("select sum(noncommodity) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$netto					= executeScalar("select sum(netto) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$total 					= executeScalar("select sum(cost2) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$cost_bongkar 			= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$cekseasonalcommodity 	= executeScalar("select count(id_sc) from seasonalcommodity where goods_id = '".$goods."'");
 		$kat_merchant 			= executeScalar("select kat_merchant from merchant where merchant_id = '".$merchant."'");
-		$totRealTonase			= executeScalar("select sum(cost_real_tonase) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$totBongkar				= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
-		$totTonase				= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and DATE(date_check) = '".$daten."'");
+		$totRealTonase			= executeScalar("select sum(cost_real_tonase) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$totBongkar				= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$totTonase				= executeScalar("select sum(cost_bongkar) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		
 		//Jika Jenis pedangang sayur / buar harga berbeda
 		$jenis		= mb_substr($merchant, 0, 1, 'utf-8');
@@ -2329,6 +2331,33 @@
 		}
 		$laborer_sts = $has_laborer ? 'Ya' : 'Tidak';
 		
+		// * Cek Pedagang Retail
+		// Apakah pedagang ini adalah pedagang retail
+		$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$merchant."'");
+		$weighing_sts5 = '';
+		if ($merchant_retail_check > 0) {
+			$jumlahLapak = executeScalar("
+				SELECT COUNT(*) 
+				FROM rent 
+				WHERE merchant_id = '".$merchant."'
+				AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+			");
+
+			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+
+			if ($merchant == 'L0022') {
+				$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
+			} else {
+				$potongan = $tarif_centeng * $jumlahLapak;
+			}
+
+			$cost_tonase = max(0, $cost_tonase - $potongan);
+			$totRealTonase = max(0, $totRealTonase - $potongan);
+			$cost1 = max(0, $cost1 - $potongan);
+			$cost2 = max(0, $cost2 - $potongan);
+
+			$weighing_sts5 = 'Retail';
+		}
 
 		//Membuat data transaksi timbangan baru
 		$insert = mysql_query("INSERT INTO `weighing` (	`weighing_id`, 
@@ -2353,7 +2382,8 @@
 		`cost2`, 
 		`weighing_sts`, 
 		`weighing_sts2`, 
-		`reffer`) 
+		`reffer`,
+		`weighing_sts5`) 
 		VALUES ('', 
 		'".$nopol."', 
 		'".$weight_in."', 
@@ -2376,7 +2406,8 @@
 		'".$cost2."', 
 		'Keluar', 
 		'Gabungan', 
-		'".$reffer."')");
+		'".$reffer."',
+		'".$weighing_sts5."')");
 
 
 		if($insert){
@@ -2410,6 +2441,7 @@
 					WHERE 
 						merchant_id = '".$merchant."' AND
 						weighing_sts = 'Keluar' AND
+						weighing_sts2 != 'Tanpa Timbang' AND
 						DATE(date_check) = '".$daten."' AND
 						weighing_id != '".$wid."'
 				");
@@ -3853,4 +3885,54 @@
 		}
 	}
 
+	// Potong Tarif Centeng
+	elseif($task=='cutCenteng'){
+		$id					= $_GET['id'];
+		$merchant			= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
+		$cost_tonase		= executeScalar("select cost_tonase from weighing where weighing_id = '".$id."'");
+		$totRealTonase		= executeScalar("select cost_real_tonase from weighing where weighing_id = '".$id."'");
+		$cost1				= executeScalar("select cost from weighing where weighing_id = '".$id."'");
+		$cost2				= executeScalar("select cost2 from weighing where weighing_id = '".$id."'");
+		$weighing_sts5 = '';
+		$jumlahLapak = executeScalar("
+			SELECT COUNT(*) 
+			FROM rent 
+			WHERE merchant_id = '".$merchant."'
+			AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
+		");
+		$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
+
+		if ($merchant == 'L0022') {
+			$potongan = $tarif_centeng * 2; // Khusus L0022 (Lapak Jalan)
+		} else {
+			$potongan = $tarif_centeng * $jumlahLapak;
+		}
+
+		$cost_tonase = max(0, $cost_tonase - $potongan);
+		$totRealTonase = max(0, $totRealTonase - $potongan);
+		$cost1 = max(0, $cost1 - $potongan);
+		$cost2 = max(0, $cost2 - $potongan);
+		$weighing_sts5 = 'Retail';
+
+		$update = mysql_query("	update weighing 
+								set cost_tonase = '".$cost_tonase."',
+									cost_real_tonase = '".$totRealTonase."',
+									cost = '".$cost1."',
+									cost2 = '".$cost2."',
+									weighing_sts5 = '".$weighing_sts5."' 
+								where weighing_id 		= '".$id."'");
+
+		if($update){//jika update berhasil
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
+			$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
+			echo "<script>window.location=('check_edit.php?id=$id')</script>";
+			exit();
+		}
+		else{//Jika update gagal
+			echo "<script>window.alert('Data Gagal'); 
+			window.history.back()</script>";
+			exit();
+		}
+	}
 ?>

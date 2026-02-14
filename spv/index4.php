@@ -108,6 +108,45 @@
 		pointer-events: none;
 		background-color: #e9ecef;
 	}
+
+	/* SEARCH */
+	.search-wrapper {
+		position: relative;
+	}
+
+	.search-wrapper i {
+		position: absolute;
+		top: 50%;
+		left: 15px;
+		transform: translateY(-50%);
+		color: #aaa;
+	}
+
+	.search-wrapper input {
+		padding-left: 40px;
+		border-radius: 30px;
+		height: 42px;
+	}
+
+	/* EMPTY STATE */
+	.empty-box {
+		text-align: center;
+		background: #f9f9f9;
+		padding: 40px;
+		border-radius: 12px;
+		color: #777;
+	}
+
+	.empty-box i {
+		font-size: 40px;
+		margin-bottom: 10px;
+		color: #ccc;
+	}
+
+	.empty-box h4 {
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
 </style>
 
 <!DOCTYPE html>
@@ -216,6 +255,26 @@
 							</div>
                         </div>
                         <div class="panel-body">
+							<div class="row" style="padding:10px;">
+								<div class="col-md-12">
+									<div class="search-wrapper">
+										<i class="fa fa-search"></i>
+										<input type="text"
+											id="searchMerchant"
+											class="form-control"
+											placeholder="Cari nama pedagang, atau lapak...">
+									</div>
+								</div>
+							</div>
+
+							<div id="emptyState" style="display:none; padding:30px;">
+								<div class="empty-box">
+									<i class="fa fa-search-minus"></i>
+									<h4>Data tidak ditemukan</h4>
+									<p>Coba gunakan kata kunci lain</p>
+								</div>
+							</div>
+
 							<form action="../htmltopdf/nota_tagihan_retail.php?task=printAll" method="POST" target="_blank">
 								<div class="row" style="padding:10px;">
 
@@ -233,33 +292,77 @@
 									ORDER BY r.retail_id ASC
 								");
 
-								
+								$alreadyAll = 0;
+
 								while($d = mysql_fetch_array($query)) {
 									$no++;
-									$lpk 	= executeScalar("select 	l.lapak_name 
-																					from 	rent r, 
-																							lapak l 
-																					where 	r.lapak_id = l.lapak_id and 
-																							r.merchant_id = '".$d['merchant_id']."' 
-																							and (r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) limit 1");
-														$nick	= $d['merchant_nick'];
-														if($nick!=''){
-															$nick = $nick.' / ';
-														}else{
-															$nick = '';
-														}
 
-									$today = date("Y-m-d");
-									$labelToday = date("d M Y");
+									// query lapak
+									$string	= "";
+									$counter= 0;
+									$sql2 	= mysql_query("select l.lapak_name from rent r, lapak l
+											where r.lapak_id = l.lapak_id and r.merchant_id = '".$d['merchant_id']."' and
+											(r.rent_sts != 'Batal' and r.rent_sts2 not in ('Batal', 'Pindah')) order by l.lapak_name");
+									while($row=mysql_fetch_array($sql2)){
+										if($counter!=0){
+											$string = ", ".$string;
+										}
+										$string = $row['lapak_name'].$string;
+										$counter++;
+									}
+									$lpk 	= "".$string;
+									
+									$nick	= $d['merchant_nick'];
+									if($nick!=''){
+										$nick = $nick.' / ';
+									}else{
+										$nick = '';
+									}
+
+									// current date
+									$year  = date('Y');
+									$month = date('m');
+									$day   = (int) date('d');
+
+									// jumlah hari dalam bulan
+									$daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+									// tentukan periode
+									if ($day <= 7) {
+										$periodStart = 1;
+										$periodEnd   = 7;
+									} elseif ($day <= 14) {
+										$periodStart = 8;
+										$periodEnd   = 14;
+									} elseif ($day <= 21) {
+										$periodStart = 15;
+										$periodEnd   = 21;
+									} elseif ($day <= 28) {
+										$periodStart = 22;
+										$periodEnd   = 28;
+									} else {
+										$periodStart = 29;
+										$periodEnd   = $daysInMonth;
+									}
+
+									// tanggal range
+									$periodStartDate = $year.'-'.$month.'-'.str_pad($periodStart, 2, '0', STR_PAD_LEFT);
+									$periodEndDate   = $year.'-'.$month.'-'.str_pad($periodEnd, 2, '0', STR_PAD_LEFT);
+
 									$already = executeScalar("
 										SELECT COUNT(*) 
-										FROM weighing 
-										WHERE merchant_id = '".$d['merchant_id']."' 
-										AND DATE(date_in) = '".$today."' AND weighing_sts2 = 'Tanpa Timbang'
+										FROM merchant_retail 
+										WHERE merchant_id = '".$d['merchant_id']."'
+										AND print_status = 'iya'
+										AND DATE(print_date) BETWEEN '".$periodStartDate."' AND '".$periodEndDate."'
 									");
+
+									if ($already > 0) {
+										$alreadyAll = 1;
+									}
 								?>
 
-								<div class="col-md-4">
+								<div class="col-md-3 merchant-card" data-search="<?= strtolower($d['merchant_name'].' '.$d['merchant_nick'].' '.$lpk); ?>">
 									<div class="card-box">
 										<div class="label-body" style="position:absolute; top:-15px; right:-20px;">
 											<span style="
@@ -279,18 +382,22 @@
 											</span>
 										</div>
 
-
 										<input type="hidden" name="merchant[]" value="<?php echo $d['merchant_id']; ?>">
 										<input type="text" class="form-control"
-											value="<?php echo $d['merchant_name'] . ' (' . $lpk . ')'; ?>" 
-											style="font-weight:bold; font-size:16px; text-align:center;"
+											value="<?php echo $d['merchant_name']; ?>" 
+											style="font-weight:bold; font-size:14px; text-align:center;"
 											readonly>
 
+										<input type="text" class="form-control"
+											value="<?php echo $lpk; ?>" 
+											style="font-weight: bold; font-size:12px; text-align:center; margin-top:10px; margin-bottom: 10px;"
+											readonly>
+										
 										<div class="form-group" style="margin-top:10px; margin-bottom: 10px;">
 											<select class="form-control no-open"
 												name="goods[]"
 												id="goods_<?= $d['merchant_id']; ?>"
-												style="text-align:center;"
+												style="text-align:center; display: none;"
 												required
 												<?php echo ($already > 0) ? 'data-readonly="true"' : ''; ?>>
 
@@ -343,7 +450,7 @@
 														class="btn btn-success btn-block btn-sm"
 														style="opacity:0.9; cursor:not-allowed; border-radius:20px;"
 														disabled>
-														<?= $labelToday ?> Sudah Terbuat&nbsp;&nbsp;<i class="fa fa-check-circle"></i>
+														<?= date('d', strtotime($periodStartDate)) . ' - ' . date('d M', strtotime($periodEndDate)); ?> Terbuat&nbsp;&nbsp;<i class="fa fa-check-circle"></i>
 													</button>
 												<?php } else { ?>
 													<a  href="javascript:void(0)"
@@ -372,21 +479,10 @@
 								<?php } ?>
 								</div>
 
-								<!-- Check Total Weighing Today == Merchant -->
-								<?php
-									$totalMerchants = executeScalar("SELECT COUNT(*) FROM merchant_retail");
-									$totalWeighingToday = executeScalar("
-										SELECT COUNT(DISTINCT merchant_id) 
-										FROM weighing 
-										WHERE DATE(date_in) = '".date("Y-m-d")."' 
-										AND weighing_sts2 = 'Tanpa Timbang'
-									");
-								?>
-
 								<div class="form-group" style="padding:10px; margin-top:-10px;">
 									<label>Kasir</label>
-									<select class="form-control" name="checker" id="checker" required <?php echo $totalWeighingToday == $totalMerchants ? 'readonly' : ''?>>
-										<option value="<?php echo $totalWeighingToday == $totalMerchants ? 'sudah terbuat' : ''?>" <?php echo $totalWeighingToday == $totalMerchants ? 'selected' : ''?> ><?php echo $totalWeighingToday == $totalMerchants ? 'Semua Data Sudah Terbuat' : '- Pilih Kasir -' ?></option>
+									<select class="form-control" name="checker" id="checker" required <?php echo $already > 0 ? 'disabled' : ''?>>
+										<option value="<?php echo $already > 0 ? 'sudah terbuat' : ''?>" <?php echo $already > 0 ? 'selected' : ''?> ><?php echo $already > 0 ? 'Semua Data Sudah Terbuat' : '- Pilih Kasir -' ?></option>
 										<?php 
 											$sql 		= mysql_query("select checker_id, checker_name from checker 
 											where checker_role = 'Cashier' and checker_sts = 'Aktif' and status_aktif = 1 order by checker_name");
@@ -397,9 +493,15 @@
 									</select>
 								</div>
 
-								<div class="form-group" style="padding:10px; margin-bottom: 0px;">
-									<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" name="print_all" onclick="postAndReload('all')">Buat Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
-								</div>
+								<?php if ($alreadyAll > 0) { ?>
+									<div class="form-group" style="padding:10px; margin-bottom: 0px;">
+										<center><div id="btnCetakAll" class="btn btn-success btn-block" name="print_all">Periode <?= date('d', strtotime($periodStartDate)) . ' - ' . date('d M', strtotime($periodEndDate)); ?> Terbuat &nbsp;<i class="fa fa-check-circle"></i></div></center>
+									</div>
+								<?php } else { ?>
+									<div class="form-group" style="padding:10px; margin-bottom: 0px;">
+										<center><button type="submit" id="btnCetakAll" class="btn btn-primary btn-block" name="print_all" onclick="return postAndReload('all')">Buat Tagihan Retail Keseluruhan &nbsp;<i class="fa fa-print"></i></button></center>
+									</div>
+								<?php } ?>
 							</form>
 						</div>
                     </div>
@@ -539,6 +641,29 @@
 
 			return true;
 		}
+	</script>
+
+	<!-- Search -->
+	<script>
+	document.getElementById('searchMerchant').addEventListener('keyup', function () {
+		let keyword = this.value.toLowerCase();
+		let cards = document.querySelectorAll('.merchant-card');
+		let found = 0;
+
+		cards.forEach(function(card) {
+			let text = card.getAttribute('data-search');
+
+			if (text.includes(keyword)) {
+				card.style.display = '';
+				found++;
+			} else {
+				card.style.display = 'none';
+			}
+		});
+
+		// EMPTY STATE
+		document.getElementById('emptyState').style.display = (found === 0) ? 'block' : 'none';
+	});
 	</script>
 
 	<script>
