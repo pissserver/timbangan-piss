@@ -3942,17 +3942,17 @@
 									weighing_sts5 = '".$weighing_sts5."' 
 								where weighing_id 		= '".$id."'");
 
-		// if($update){//jika update berhasil
-		// 	$_SESSION['success'] = true;
-		// 	$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
-		// 	$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
-		// 	echo "<script>window.location=('check_edit.php?id=$id')</script>";
-		// 	exit();
-		// }
-		// else{//Jika update gagal
-		// 	echo "<script>window.alert('Data Gagal'); 
-		// 	window.history.back()</script>";
-		// 	exit();
-		// }
+		if($update){//jika update berhasil
+			$_SESSION['success'] = true;
+			$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
+			$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
+			echo "<script>window.location=('check_edit.php?id=$id')</script>";
+			exit();
+		}
+		else{//Jika update gagal
+			echo "<script>window.alert('Data Gagal'); 
+			window.history.back()</script>";
+			exit();
+		}
 	}
 ?>

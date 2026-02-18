@@ -4050,12 +4050,21 @@
 		$cost1				= executeScalar("select cost from weighing where weighing_id = '".$id."'");
 		$cost2				= executeScalar("select cost2 from weighing where weighing_id = '".$id."'");
 		$weighing_sts5 = '';
-		$jumlahLapak = executeScalar("
-			SELECT COUNT(*) 
-			FROM rent 
-			WHERE merchant_id = '".$merchant."'
-			AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
-		");
+		// * Jumlah lapak
+		$lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
+								r.merchant_id = '".$merchant."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+		// Loop untuk menampilkan semua lapak
+		$string	= "";
+		$counter= 0;
+		while($row=mysql_fetch_array($lapak)){
+			if($counter!=0){
+				$string = ", ".$string;
+			}
+			$string = $row['lapak_name'].$string;
+			$counter++;
+		}
+		$lpk 	= "".$string;
+		$jumlahLapak = $counter;
 		$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
 
 		if ($merchant == 'L0022') {
