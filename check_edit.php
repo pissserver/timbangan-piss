@@ -457,8 +457,8 @@
 									<!-- Alert Before Cut Centeng -->
 									<?php
 										$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
-										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".$r['date_in']."'");
-										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".$r['date_in']."'");
+										$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND date_check = '".$r['date_check']."'");
+										$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_check = '".$r['date_check']."'");
 										if ($merchant_retail_check > 0 && $checkNotaToday >= 1 && $c != NULL && $checkAfterCut == 0 && ($r['weighing_sts'] != 'Batal' && $r['weighing_sts2'] != 'Tanpa Timbang')) 
 									{ ?>
 										<div class="centeng-alert-before blink-soft-before">
@@ -727,8 +727,8 @@
 												<?php
 													// Pedagang Centeng - Potong Centeng 
 													$merchant_retail_check = executeScalar("SELECT COUNT(retail_id) FROM merchant_retail WHERE merchant_id = '".$r['merchant_id']."'");
-													$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND DATE(date_in) = '".$r['date_in']."' ");
-													$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND DATE(date_in) = '".$r['date_in']."' ");
+													$checkNotaToday = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND (weighing_sts5 IS NULL OR weighing_sts5 != 'Retail') AND date_check = '".$r['date_check']."' ");
+													$checkAfterCut = executeScalar("select count(weighing_id) from weighing where merchant_id = '".$r['merchant_id']."' AND weighing_sts != 'Batal' AND weighing_sts2 != 'Tanpa Timbang' AND weighing_sts5 = 'Retail' AND date_check = '".$r['date_check']."' ");
 													if ($merchant_retail_check > 0 && $checkNotaToday == 1 && $c != NULL && $checkAfterCut == 0 && ($r['weighing_sts'] != 'Batal' && $r['weighing_sts2'] != 'Tanpa Timbang')) {
 														echo "
 														<a href='weighing_action.php?task=cutCenteng&id=$id' 

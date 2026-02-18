@@ -3906,7 +3906,7 @@
 		$weighing_sts5 = '';
 		// * Jumlah lapak
 		$lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
-								r.merchant_id = '".$merchant_id."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+								r.merchant_id = '".$merchant."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
 		// Loop untuk menampilkan semua lapak
 		$string	= "";
 		$counter= 0;
@@ -3942,17 +3942,17 @@
 									weighing_sts5 = '".$weighing_sts5."' 
 								where weighing_id 		= '".$id."'");
 
-		if($update){//jika update berhasil
-			$_SESSION['success'] = true;
-			$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
-			$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
-			echo "<script>window.location=('check_edit.php?id=$id')</script>";
-			exit();
-		}
-		else{//Jika update gagal
-			echo "<script>window.alert('Data Gagal'); 
-			window.history.back()</script>";
-			exit();
-		}
+		// if($update){//jika update berhasil
+		// 	$_SESSION['success'] = true;
+		// 	$_SESSION['title'] = 'Berhasil Potong Tarif Centeng';
+		// 	$_SESSION['message'] = "Total tagihan telah dipotong centeng sebesar Rp ".number_format($potongan,0,",",".");
+		// 	echo "<script>window.location=('check_edit.php?id=$id')</script>";
+		// 	exit();
+		// }
+		// else{//Jika update gagal
+		// 	echo "<script>window.alert('Data Gagal'); 
+		// 	window.history.back()</script>";
+		// 	exit();
+		// }
 	}
 ?>
