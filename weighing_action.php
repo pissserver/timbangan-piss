@@ -2339,7 +2339,7 @@
 		if ($merchant_retail_check > 0) {
 			// * Jumlah lapak
 			$lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
-									r.merchant_id = '".$merchant_id."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+									r.merchant_id = '".$merchant."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
 			// Loop untuk menampilkan semua lapak
 			$string	= "";
 			$counter= 0;
