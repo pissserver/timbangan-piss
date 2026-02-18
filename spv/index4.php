@@ -539,6 +539,45 @@
 		</div>
 	</div>
 
+	<!-- Modal konfirmasi hapus -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				
+				<div class="modal-header bg-primary text-white">
+					<h5 class="modal-title"><b>KONFIRMASI HAPUS</b></h5>
+					<button type="button" class="close text-white" data-dismiss="modal">
+						<span>&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+
+					<p>Anda yakin ingin menghapus pedagang berikut dari Retail?</p>
+
+					<!-- BOX NAMA PEDAGANG -->
+					<input id="namaPedagangBox"
+						type="text"
+						class="form-control p-3 mb-3"
+						style="border:2px solid #dc3545; border-radius:8px; background:#fff5f5; 
+							font-size:16px; font-weight:bold; text-align:center;"
+						readonly
+						value="">
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					
+					<a id="confirmDeleteBtn" href="#" class="btn btn-danger">
+						Hapus
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
     <!-- Single Print -->
 	<script>
 		function printNota(merchantId) {
