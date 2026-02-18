@@ -54,6 +54,7 @@
 	$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
     $shownIds = [];
     $allSuccess = false;
+    $totalRetailCost = 0;
 
     // If print all
     if (isset($_GET['task']) && $_GET['task'] == 'printAll') {
@@ -61,12 +62,20 @@
         foreach ($_POST['merchant'] as $i => $merchant_id) {
 
             // * Jumlah lapak
-            $jumlahLapak = executeScalar("
-                SELECT COUNT(*) 
-                FROM rent 
-                WHERE merchant_id = '".$merchant_id."'
-                AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
-            ");
+            $lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
+                                    r.merchant_id = '".$merchant_id."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+            // Loop untuk menampilkan semua lapak
+            $string	= "";
+            $counter= 0;
+            while($row=mysql_fetch_array($lapak)){
+                if($counter!=0){
+                    $string = ", ".$string;
+                }
+                $string = $row['lapak_name'].$string;
+                $counter++;
+            }
+            $lpk 	= "".$string;
+            $jumlahLapak = $counter;
             
             // * Total biaya retail
             if ($merchant_id == 'L0022') {
@@ -183,12 +192,20 @@
         $goods_id = $_GET['goods'];
 
         // * Jumlah lapak
-        $jumlahLapak = executeScalar("
-            SELECT COUNT(*) 
-            FROM rent 
-            WHERE merchant_id = '".$merchant_id."'
-            AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
-        ");
+        $lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
+								r.merchant_id = '".$merchant_id."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+        // Loop untuk menampilkan semua lapak
+        $string	= "";
+		$counter= 0;
+        while($row=mysql_fetch_array($lapak)){
+			if($counter!=0){
+			    $string = ", ".$string;
+			}
+			$string = $row['lapak_name'].$string;
+			$counter++;
+		}
+		$lpk 	= "".$string;
+        $jumlahLapak = $counter;
             
         // * Total biaya retail
         if ($merchant_id == 'L0022') {
