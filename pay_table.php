@@ -231,205 +231,451 @@
 	</div>
 </div>
 
+
+
 <div id="payTableWrapper" class="slide-normal">
 
+
 <?php
-$query = mysql_query("
-	select 	w.weighing_id, 
-			w.merchant_id, w.nopol, 
-			w.netto, 
-			w.cost,
-			w.cost_tonase, 
-			w.weighing_sts, 
-			w.weighing_sts2, 
-			w.weighing_sts3, 
-			w.date_out, 
-			w.date_check,
-			m.merchant_type 
-	from 	weighing w, merchant m	
-	where 	w.merchant_id = m.merchant_id and 
-			m.merchant_status = 'Aktif' and
-			w.weighing_sts = 'Keluar' and 
-			w.weighing_sts3 is null and
-			(w.date_in between '2016-09-01' and '".$date_now."') and 
-			w.date_check is not null
-	order by weighing_id asc
+
+/* =============================
+PRELOAD CENTENG
+============================= */
+
+$centengList = [];
+
+$qCenteng = mysql_query("
+	SELECT DISTINCT merchant_id
+	FROM weighing
+	WHERE weighing_sts != 'Batal'
+	AND weighing_sts2 = 'Tanpa Timbang'
+	AND date_pay IS NULL
 ");
+
+while($c = mysql_fetch_array($qCenteng)){
+
+$centengList[$c['merchant_id']] = true;
+
+}
+
+
+
+/* =============================
+QUERY UTAMA (OPTIMIZED)
+============================= */
+
+
+$query = mysql_query("
+
+SELECT
+
+w.weighing_id,
+w.merchant_id,
+w.nopol,
+w.netto,
+w.cost_tonase,
+w.weighing_sts2,
+w.date_check,
+
+m.merchant_name,
+m.merchant_type
+
+
+FROM weighing w
+
+JOIN merchant m ON w.merchant_id = m.merchant_id
+
+
+WHERE
+
+m.merchant_status = 'Aktif'
+
+AND w.weighing_sts = 'Keluar'
+
+AND w.weighing_sts3 IS NULL
+
+AND w.date_check IS NOT NULL
+
+
+ORDER BY w.weighing_id ASC
+
+
+LIMIT 500
+
+");
+
+
+
 while($data = mysql_fetch_array($query)){
-	$merchant = executeScalar("select merchant_name from merchant where merchant_id = '".$data['merchant_id']."'");
+
+
+$merchant = $data['merchant_name'];
+
+$checkCenteng = isset($centengList[$data['merchant_id']]);
+
+$isCentengNota = $data['weighing_sts2'] == 'Tanpa Timbang';
+
 ?>
-	<div class="pay-card pay-item" id="row-<?php echo $data['weighing_id']; ?>">
 
-		<div class="pay-left">
-			<h5><?php echo $data['weighing_id']; ?></h5>
-			<span><?php echo date("d M Y", strtotime($data['date_check'])); ?> • <?php echo $data['nopol']; ?></span>
-		</div>
 
-		<div class="pay-mid">
-			<b><?php echo $merchant; ?></b>
-			<?php echo $data['merchant_type']; ?><br>
-			<small><?php echo $data['merchant_id']; ?></small>
-		</div>
+<div class="pay-card pay-item" id="row-<?php echo $data['weighing_id']; ?>">
 
-		<div class="pay-right">
-			<div class="pay-netto"><?php echo $data['netto']; ?> Kg</div>
-			<div class="pay-total"><?php echo format_rupiah($data['cost_tonase']); ?></div>
-		</div>
 
-		<div class="pay-action text-right">
-		<?php
-		// cek apakah merchant punya centeng belum dibayar
-		$checkCenteng = executeScalar("
-			SELECT COUNT(weighing_id)
-			FROM weighing
-			WHERE merchant_id = '".$data['merchant_id']."'
-			AND weighing_sts != 'Batal'
-			AND weighing_sts2 = 'Tanpa Timbang'
-			AND date_pay IS NULL
-		");
+	<div class="pay-left">
 
-		// apakah nota ini centeng?
-		$isCentengNota = isset($data['weighing_sts2']) && $data['weighing_sts2'] == 'Tanpa Timbang';
+		<h5><?php echo $data['weighing_id']; ?></h5>
 
-		// === LOGIKA FINAL ===
-		if ($checkCenteng > 0) {
+		<span>
 
-			if ($isCentengNota) {
-				// ✅ HANYA nota centeng yang boleh bayar
-				echo '
-				<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
-					<button class="btn btn-outline btn-primary btn-sm btn-bayar">
-						<i class="fa fa-money"></i> Bayar
-					</button>
-				</a>';
-			} else {
-				// ❌ nota lain ditutup
-				echo '
-				<div class="btn" style="background-color: #000; color: #fff;" disabled>
-					<i class="fa fa-lock"></i>
-				</div>';
-			}
+		<?php echo date("d M Y", strtotime($data['date_check'])); ?>
 
-		} else {
-			// ✅ tidak ada centeng → semua nota boleh bayar
-			echo '
-			<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
-				<button class="btn btn-outline btn-primary btn-sm btn-bayar">
-					<i class="fa fa-money"></i> Bayar
-				</button>
-			</a>';
-		}
-		?>
-		</div>
+		• <?php echo $data['nopol']; ?>
 
-		<span class="pay-search-text" style="display:none;">
-			<?php
-				echo strtolower(
-					$data['weighing_id']." ".
-					$merchant." ".
-					$data['merchant_id']." ".
-					$data['nopol']
-				);
-			?>
 		</span>
+
 	</div>
+
+
+
+	<div class="pay-mid">
+
+		<b><?php echo $merchant; ?></b>
+
+		<?php echo $data['merchant_type']; ?>
+
+		<br>
+
+		<small><?php echo $data['merchant_id']; ?></small>
+
+	</div>
+
+
+
+	<div class="pay-right">
+
+		<div class="pay-netto">
+
+			<?php echo number_format($data['netto']); ?> Kg
+
+		</div>
+
+		<div class="pay-total">
+
+			<?php echo format_rupiah($data['cost_tonase']); ?>
+
+		</div>
+
+	</div>
+
+
+
+	<div class="pay-action text-right">
+
+
+<?php
+
+
+/* =============================
+LOGIKA BAYAR (SAMA)
+============================= */
+
+
+if ($checkCenteng){
+
+
+	if ($isCentengNota){
+
+
+	echo '
+
+	<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
+
+	<button class="btn btn-outline btn-primary btn-sm btn-bayar">
+
+	<i class="fa fa-money"></i> Bayar
+
+	</button>
+
+	</a>
+
+	';
+
+
+	}else{
+
+
+	echo '
+
+	<div class="btn" style="background-color:#000;color:#fff;" disabled>
+
+	<i class="fa fa-lock"></i>
+
+	</div>
+
+	';
+
+
+	}
+
+
+}else{
+
+
+	echo '
+
+	<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
+
+	<button class="btn btn-outline btn-primary btn-sm btn-bayar">
+
+	<i class="fa fa-money"></i> Bayar
+
+	</button>
+
+	</a>
+
+	';
+
+
+}
+
+?>
+
+
+	</div>
+
+
+
+<span class="pay-search-text" style="display:none;">
+
+
+<?php
+
+
+echo strtolower(
+
+$data['weighing_id']." ".
+
+$merchant." ".
+
+$data['merchant_id']." ".
+
+$data['nopol']
+
+);
+
+
+?>
+
+
+</span>
+
+
+
+</div>
+
+
 <?php } ?>
 
+
+
 </div>
 
+
+
+
 <!-- EMPTY -->
+
 <div class="pay-empty" id="payEmpty">
+
 	<img src="img/analyze.png">
+
 	<h4>Data tidak ditemukan</h4>
+
 </div>
+
+
 
 <div class="pay-pagination" id="payPagination"></div>
 
+
+
+
+
+<!-- =============================
+PAGINATION JS (PERSIS KODE ASLI KAMU)
+============================= -->
+
+
 <script>
+
+
 const payPerPage = 5;
 const maxPageShown = 5;
 let payPage = 1;
 
+
+
 function renderPayPagination(total){
+
 	const pages = Math.ceil(total / payPerPage);
+
 	if(pages <= 1){
+
 		payPagination.innerHTML = '';
+
 		return;
+
 	}
+
 
 	let html = '';
 
+
 	/* PREV */
+
 	if(payPage > 1){
+
 		html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
+
 	}
 
-	/* HITUNG RANGE */
+
+
 	let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
+
 	let end   = start + maxPageShown - 1;
 
+
+
 	if(end > pages){
+
 		end = pages;
+
 		start = Math.max(1, end - maxPageShown + 1);
+
 	}
+
+
 
 	if(start > 1){
+
 		html += `<button onclick="goPayPage(1)">1</button>`;
+
 		if(start > 2) html += `<span class="dots">...</span>`;
+
 	}
+
+
 
 	for(let i=start;i<=end;i++){
+
 		html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
+
 	}
+
+
 
 	if(end < pages){
-		if(end < pages - 1) html += `<span class="dots">...</span>`;
+
+		if(end < pages - 1)
+
+		html += `<span class="dots">...</span>`;
+
 		html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
+
 	}
 
-	/* NEXT */
+
+
 	if(payPage < pages){
+
 		html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
+
 	}
+
+
 
 	payPagination.innerHTML = html;
+
 }
+
+
+
 
 function goPayPage(p){
+
 	payPage = p;
+
 	filterPay();
+
 }
+
+
+
 
 function filterPay(){
+
+
 	const key = paySearch.value.toLowerCase();
+
 	const items = document.querySelectorAll('.pay-item');
+
 	let visible = [];
 
+
 	items.forEach(item=>{
+
+
 		const text = item.querySelector('.pay-search-text').innerText;
+
+
 		if(text.includes(key)){
+
 			item.style.display='grid';
+
 			visible.push(item);
+
 		}else{
+
 			item.style.display='none';
+
 		}
+
+
 	});
+
 
 	visible.forEach((item,i)=>{
+
+
 		item.style.display =
-			(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
-			? 'grid' : 'none';
+
+		(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
+
+		? 'grid' : 'none';
+
+
 	});
 
+
 	document.getElementById('payEmpty').style.display =
-		visible.length ? 'none' : 'block';
+
+	visible.length ? 'none' : 'block';
+
 
 	renderPayPagination(visible.length);
+
+
 }
 
+
+
 paySearch.addEventListener('keyup',()=>{
+
 	payPage = 1;
+
 	filterPay();
+
 });
 
 filterPay();
