@@ -150,8 +150,200 @@
 		margin-bottom: 5px;
 		font-weight: bold;
 	}
-</style>
 
+	.btn-centeng-modern {
+		width: 100%;
+		height: 45px;
+		border: none;
+		border-radius: 30px;
+		background: linear-gradient(135deg,#667eea,#764ba2);
+		color: white;
+		font-weight: 600;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		transition: 0.3s;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.btn-centeng-modern i {
+		margin-right: 8px;
+	}
+
+	.btn-centeng-modern:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+	}
+
+	.btn-centeng-modern:before {
+		content: "";
+		position: absolute;
+		left: -100%;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);
+		transition: 0.5s;
+	}
+
+	.btn-centeng-modern:hover:before {
+		left: 100%;
+	}
+
+	.modal-centeng-modern{
+		border:none;
+		border-radius:20px;
+		overflow:hidden;
+		background:linear-gradient(135deg,#eef2ff,#ffffff);
+	}
+
+	.header-centeng{
+		background:linear-gradient(135deg,#667eea,#764ba2);
+		color:white;
+		border:none;
+		padding:18px;
+	}
+
+	.header-centeng .close{
+		color:white;
+		opacity:1;
+		font-size:22px;
+	}
+
+	.body-centeng{
+		max-height:75vh;
+		overflow-y:auto;
+		padding: 20px;
+	}
+
+	/* scrollbar modern */
+	.body-centeng::-webkit-scrollbar{
+		width:8px;
+	}
+
+	.body-centeng::-webkit-scrollbar-track{
+		background:#f1f1f1;
+		border-radius:10px;
+	}
+
+	.body-centeng::-webkit-scrollbar-thumb{
+		background:linear-gradient(180deg,#667eea,#764ba2);
+		border-radius:10px;
+	}
+
+	.body-centeng::-webkit-scrollbar-thumb:hover{
+		background:linear-gradient(180deg,#5a6fd8,#6a4190);
+	}
+
+	.card-summary-centeng{
+		display:flex;
+		align-items:center;
+		background:linear-gradient(135deg,#667eea,#764ba2);
+		color:#fff;
+		padding:18px;
+		border-radius:18px;
+		margin-bottom:20px;
+		box-shadow:0 6px 20px rgba(0,0,0,.2);
+	}
+	.card-summary-centeng .icon{
+		font-size:28px;
+		margin-right:15px;
+	}
+	.card-summary-centeng .periode{
+		font-size:16px;
+		font-weight:bold;
+		margin-bottom:4px;
+	}
+	.card-summary-centeng .row-total{
+		display:flex;
+		gap:20px;
+	}
+	.card-summary-centeng .belum span{
+		color:#ffb3b3;
+		font-weight:bold;
+	}
+	.card-summary-centeng .sudah span{
+		color:#8cffc1;
+		font-weight:bold;
+	}
+
+	.card-centeng{
+		display:flex;
+		align-items:center;
+		background:white;
+		border-radius:15px;
+		padding:15px;
+		margin-bottom:15px;
+		box-shadow:0 8px 25px rgba(0,0,0,0.08);
+		transition:0.3s;
+		position:relative;
+		overflow:hidden;
+	}
+
+	.card-centeng:hover{
+		transform:translateY(-5px);
+		box-shadow:0 15px 35px rgba(0,0,0,0.15);
+	}
+
+	.card-centeng:before{
+		content:"";
+		position:absolute;
+		left:-100%;
+		top:0;
+		width:100%;
+		height:100%;
+		background:linear-gradient(90deg,transparent,rgba(102,126,234,0.2),transparent);
+		transition:0.5s;
+	}
+
+	.card-centeng:hover:before{
+		left:100%;
+	}
+
+	.icon{
+		width:45px;
+		height:45px;
+		border-radius:12px;
+		background:linear-gradient(135deg,#36d1dc,#5b86e5);
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:white;
+		font-size:18px;
+		margin-right:12px;
+	}
+
+	.content{
+		flex:1;
+	}
+
+	.nama{
+		font-weight:bold;
+		font-size:13px;
+		color:#333;
+	}
+
+	.lapak{
+		font-size:11px;
+		color:#888;
+		margin-top:3px;
+	}
+
+	.right{
+		text-align:right;
+	}
+
+	.tagihan{
+		font-weight:bold;
+		color:#667eea;
+		font-size:13px;
+	}
+
+	.tanggal{
+		font-size:11px;
+		color:#999;
+		margin-top:3px;
+	}
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -248,19 +440,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-users fa-fw"></i> Data Pedagang Retail &nbsp;
-							<div class="label-header" style="display: inline-block;">
-								<span class="label label-warning" style="font-size:14px; border-radius:20px; padding:8px 10px;"> 
-									<?php 
-										$totalRetail = executeScalar("SELECT COUNT(*) FROM merchant_retail");
-										echo $totalRetail; 
-									?>
-								</span>
-							</div>
+                            <i class="fa fa-users fa-fw"></i> Data Pedagang Retail
                         </div>
                         <div class="panel-body">
 							<div class="row" style="padding:10px;">
-								<div class="col-md-12">
+								<div class="col-md-10">
 									<div class="search-wrapper">
 										<i class="fa fa-search"></i>
 										<input type="text"
@@ -268,6 +452,17 @@
 											class="form-control"
 											placeholder="Cari nama pedagang, atau lapak...">
 									</div>
+								</div>
+
+								<div class="col-md-2 text-right">
+									<?php 
+										$totalRetail = executeScalar("SELECT COUNT(*) FROM merchant_retail");
+									?>
+									<button class="btn-centeng-modern"
+											data-toggle="modal"
+											data-target="#modalCenteng">
+										<i class="fa fa-users"></i>&nbsp; <?php echo $totalRetail; ?>&nbsp; Retail
+									</button>
 								</div>
 							</div>
 
@@ -277,7 +472,7 @@
 									<h4>Data tidak ditemukan</h4>
 									<p>Coba gunakan kata kunci lain</p>
 								</div>
-							</div>
+							</div><br>
 
 							<form action="htmltopdf/nota_tagihan_retail.php?task=printAll" method="POST" target="_blank">
 								<div class="row" style="padding:10px;">
@@ -499,6 +694,172 @@
             </div>
         </div>
     </div>
+
+	<!-- Modal List -->
+	<div class="modal fade" id="modalCenteng">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content modal-modern">
+
+				<div class="modal-header modal-header-modern">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4><i class="fa fa-users"></i>&nbsp; Daftar Pedagang Centeng</h4>
+				</div>
+
+				<div class="modal-body body-centeng">
+
+					<?php
+
+					/* ================= SUMMARY ================= */
+
+					$summary=mysql_fetch_array(mysql_query("
+						SELECT
+							SUM(CASE WHEN date_pay IS NULL THEN 1 ELSE 0 END) AS belum,
+							SUM(CASE WHEN date_pay IS NOT NULL THEN 1 ELSE 0 END) AS sudah
+						FROM weighing
+						WHERE weighing_sts2='Tanpa Timbang'
+						AND date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
+					"));
+
+					?>
+
+					<div class="card-summary-centeng">
+
+						<div class="icon">
+							<i class="fa fa-calendar"></i>
+						</div>
+
+						<div class="content">
+
+							<div class="periode">
+								<?= date('d M Y',strtotime($periodStartDate)); ?>
+								-
+								<?= date('d M Y',strtotime($periodEndDate)); ?>
+							</div>
+
+							<div class="row-total">
+
+								<div class="belum">
+									Belum Bayar :
+									<span><?= number_format($summary['belum']); ?> Pedagang</span>
+								</div>
+
+								<div class="sudah">
+									Sudah Bayar :
+									<span><?= number_format($summary['sudah']); ?> Pedagang</span>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+
+					<div class="row">
+
+					<?php
+
+					$query=mysql_query("
+
+					SELECT
+
+						m.merchant_id,
+						m.merchant_name,
+
+						w.cost_tonase AS total_tagihan,
+
+						MAX(w.date_pay) AS date_pay,
+
+						GROUP_CONCAT(
+							DISTINCT l.lapak_name
+							ORDER BY l.lapak_name
+							SEPARATOR ', '
+						) AS lapak
+
+					FROM merchant m
+
+					JOIN merchant_retail mr ON mr.merchant_id=m.merchant_id
+
+					LEFT JOIN weighing w ON
+						w.merchant_id=m.merchant_id
+						AND w.weighing_sts2='Tanpa Timbang'
+						AND w.date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
+
+					LEFT JOIN rent r ON r.merchant_id=m.merchant_id
+						AND r.rent_sts!='Batal'
+						AND r.rent_sts2 NOT IN('Batal','Pindah')
+
+					LEFT JOIN lapak l ON l.lapak_id=r.lapak_id
+
+					GROUP BY m.merchant_id
+
+					ORDER BY m.merchant_name
+
+					");
+
+					while($d=mysql_fetch_array($query)){
+
+					?>
+
+
+
+						<div class="col-md-6">
+
+							<div class="card-centeng">
+
+								<div class="icon">
+									<i class="fa fa-user"></i>
+								</div>
+
+
+
+								<div class="content">
+
+									<div class="nama">
+										<?= $d['merchant_name']; ?>
+									</div>
+
+									<div class="lapak">
+										<?= $d['lapak']; ?>
+									</div>
+
+								</div>
+
+
+
+								<div class="right">
+
+									<div class="tagihan">
+										Rp <?= number_format($d['total_tagihan'],0,',','.'); ?>
+									</div>
+
+									<div class="tanggal" style="color:<?= $d['date_pay']?'#28a745':'#dc3545'; ?>">
+
+										<i class="fa <?= $d['date_pay']?'fa-check-circle':'fa-times-circle'; ?>"></i>
+
+										<?= $d['date_pay']
+											?date('d M Y',strtotime($d['date_pay']))
+											:'Belum Terbayar'; ?>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+
+
+					<?php } ?>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal konfirmasi hapus -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
