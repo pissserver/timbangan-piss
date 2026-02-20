@@ -299,7 +299,7 @@
 		left:100%;
 	}
 
-	.icon{
+	.icon-retail{
 		width:45px;
 		height:45px;
 		border-radius:12px;
@@ -724,7 +724,7 @@
 
 					<div class="card-summary-centeng">
 
-						<div class="icon">
+						<div class="icon-retail">
 							<i class="fa fa-calendar"></i>
 						</div>
 
@@ -808,7 +808,7 @@
 
 							<div class="card-centeng">
 
-								<div class="icon">
+								<div class="icon-retail">
 									<i class="fa fa-user"></i>
 								</div>
 
