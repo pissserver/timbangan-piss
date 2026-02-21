@@ -8,6 +8,7 @@
 				SUM(CASE WHEN date_pay IS NOT NULL THEN 1 ELSE 0 END) AS sudah
 			FROM weighing
 			WHERE weighing_sts2='Tanpa Timbang'
+                AND weighing_sts != 'Batal'
 				AND date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
 			"));
 
