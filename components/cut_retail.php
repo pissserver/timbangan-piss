@@ -298,6 +298,21 @@
 
 
 <?php
+/* ================= PERIODE ================= */
+
+$year=date('Y');
+$month=date('m');
+$day=date('d');
+
+if($day<=7){$periodStart=1;$periodEnd=7;}
+elseif($day<=14){$periodStart=8;$periodEnd=14;}
+elseif($day<=21){$periodStart=15;$periodEnd=21;}
+elseif($day<=28){$periodStart=22;$periodEnd=28;}
+else{$periodStart=29;$periodEnd=date('t');}
+
+$periodStartDate="$year-$month-".str_pad($periodStart,2,'0',STR_PAD_LEFT)." 00:00:00";
+$periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT)." 23:59:59";
+
 
 /* ================= CEK BLINK ================= */
 
@@ -313,29 +328,13 @@ $blinkQuery=mysql_query("
 		w.weighing_sts NOT IN ('Batal','Lunas')
 		AND w.weighing_sts2!='Tanpa Timbang'
 		AND w.weighing_sts5 IS NULL
-
+        AND w.date_check
+		BETWEEN '$periodStartDate' AND '$periodEndDate'
 ");
 
 $blinkData=mysql_fetch_array($blinkQuery);
 
 $blinkClass=($blinkData['total']>0)?"blink":"";
-
-
-/* ================= PERIODE ================= */
-
-$year=date('Y');
-$month=date('m');
-$day=date('d');
-
-if($day<=7){$periodStart=1;$periodEnd=7;}
-elseif($day<=14){$periodStart=8;$periodEnd=14;}
-elseif($day<=21){$periodStart=15;$periodEnd=21;}
-elseif($day<=28){$periodStart=22;$periodEnd=28;}
-else{$periodStart=29;$periodEnd=date('t');}
-
-$periodStartDate="$year-$month-".str_pad($periodStart,2,'0',STR_PAD_LEFT);
-$periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
-
 ?>
 
 
@@ -424,7 +423,6 @@ $periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
 									w.weighing_sts NOT IN ('Batal','Lunas')
 									AND w.weighing_sts2!='Tanpa Timbang'
 									AND w.weighing_sts5 IS NULL
-
 									AND w.date_check
 									BETWEEN '$periodStartDate' AND '$periodEndDate'
 
@@ -522,7 +520,7 @@ $periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
 					ON w.merchant_id=m.merchant_id
 					AND w.weighing_sts NOT IN ('Batal','Lunas')
 					AND w.weighing_sts2!='Tanpa Timbang'
-					AND w.weighing_sts5 IS NULL
+                    AND w.weighing_sts5 IS NULL
 					AND w.date_check
 					BETWEEN '$periodStartDate' AND '$periodEndDate'
 
@@ -654,46 +652,76 @@ $periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
 
 <script>
 
-$("#search").keyup(function(){
+	$("#search").keyup(function(){
 
-	let value=$(this).val().toLowerCase();
+		let value = $(this).val().toLowerCase();
 
-	let total=0;
+		let totalCard = $(".centeng-card").length;
+		let totalFound = 0;
 
-	$(".centeng-card").each(function(){
 
-		let found=$(this).text().toLowerCase().indexOf(value)>-1;
+		/* ================= FILTER CARD ================= */
 
-		$(this).toggle(found);
+		$(".centeng-card").each(function(){
 
-		if(found) total++;
+			let found = $(this).text().toLowerCase().indexOf(value) > -1;
+
+			$(this).toggle(found);
+
+			if(found) totalFound++;
+
+		});
+
+
+		/* ================= CLEAR BUTTON ================= */
+
+		if(value!='')
+			$("#clearSearch").show();
+		else
+			$("#clearSearch").hide();
+
+
+		/* ================= EMPTY STATE CONTROL ================= */
+
+		if(totalCard == 0){
+
+			/* DATA MEMANG KOSONG */
+
+			$("#emptyData").show();
+			$("#emptySearch").hide();
+
+		}
+		else if(totalFound == 0){
+
+			/* DATA ADA TAPI SEARCH TIDAK DITEMUKAN */
+
+			$("#emptyData").hide();
+			$("#emptySearch").show();
+
+		}
+		else{
+
+			/* DATA ADA DAN DITEMUKAN */
+
+			$("#emptyData").hide();
+			$("#emptySearch").hide();
+
+		}
 
 	});
 
-	if(total==0)
-		$("#emptySearch").show();
-	else
-		$("#emptySearch").hide();
-
-});
 
 
-$("#clearSearch").click(function(){
+	/* ================= CLEAR SEARCH ================= */
 
-	$("#search").val('').keyup();
+	$("#clearSearch").click(function(){
 
-	$(this).hide();
+		$("#search").val('');
 
-});
-
-
-$("#search").keyup(function(){
-
-	if($(this).val()!='')
-		$("#clearSearch").show();
-	else
 		$("#clearSearch").hide();
 
-});
+		$("#search").keyup();
+
+	});
 
 </script>
