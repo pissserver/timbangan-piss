@@ -548,12 +548,21 @@
     <!-- Cek apakah termasuk tonase pertama dihari itu dengan potongan centeng -->
     <?php
         if ($r['weighing_sts5'] == 'Retail') {
-			$jumlahLapak = executeScalar("
-				SELECT COUNT(*) 
-				FROM rent 
-				WHERE merchant_id = '".$r['merchant_id']."'
-				AND rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah')
-			");
+            // * Jumlah lapak
+            $lapak 	= mysql_query("select l.lapak_name from rent r, lapak l where r.lapak_id = l.lapak_id and 
+                                    r.merchant_id = '".$r['merchant_id']."' and (rent_sts != 'Batal' and rent_sts2 not in ('Batal', 'Pindah'))");
+            // Loop untuk menampilkan semua lapak
+            $string	= "";
+            $counter= 0;
+            while($row=mysql_fetch_array($lapak)){
+                if($counter!=0){
+                    $string = ", ".$string;
+                }
+                $string = $row['lapak_name'].$string;
+                $counter++;
+            }
+            $lpk 	= "".$string;
+            $jumlahLapak = $counter;
 
 			$tarif_centeng = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
 

@@ -500,6 +500,7 @@ $periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
 						GROUP_CONCAT(
 
 							DISTINCT CONCAT(
+                                'TG',
 								w.weighing_id,
 								' (',
 								DATE_FORMAT(w.date_check,'%d %b %Y'),
@@ -610,7 +611,7 @@ $periodEndDate="$year-$month-".str_pad($periodEnd,2,'0',STR_PAD_LEFT);
 
 							<div class="centeng-info">
 
-								Nota : TG<?=$d['weighing_id']?>
+								Nota : <?=$d['weighing_id']?>
 
 							</div>
 
