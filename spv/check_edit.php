@@ -448,7 +448,7 @@
 											<div class="centeng-text">
 												<b>INFO CENTENG</b><br>
 												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b>.<br>
-												<span>Data <?php echo date('d M Y', strtotime($c)); ?> ini sudah dipotong otomatis sesuai tarif centeng.</span>
+												<span>Data <?php echo date('d M Y', strtotime($r['date_check'])); ?> ini sudah dipotong otomatis sesuai tarif centeng.</span>
 											</div>
 										</div><br>
 									<?php } ?>
@@ -467,7 +467,7 @@
 											
 											<div class="centeng-text-before">
 												<b>PERINGATAN CENTENG</b><br>
-												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> pada data <?php echo date('d M Y', strtotime($c)); ?>
+												Pedagang <b><?php echo $merchant; ?></b> berstatus <b>Centeng / Retail</b> pada data <?php echo date('d M Y', strtotime($r['date_check'])); ?>
 												<u>belum terpotong centeng</u>.<br>
 												<span>Cara memotong otomatis yaitu pada proses <b>Gabung Nota</b> atau <b>Setelah Simpan Data</b> yang hanya datang 1 kali dihari itu!</span>
 											</div>
