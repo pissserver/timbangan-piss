@@ -340,6 +340,166 @@
 		color:#999;
 		margin-top:3px;
 	}
+
+	/* ================= LOADING CENTENG ENTERPRISE ================= */
+	.loading-centeng{
+		padding:30px 10px 40px;
+		animation:fadeInCenteng 0.3s ease;
+	}
+
+	@keyframes fadeInCenteng{
+		from{
+			opacity:0;
+			transform:translateY(10px);
+		}
+		to{
+			opacity:1;
+			transform:translateY(0);
+		}
+	}
+
+	/* spinner */
+	.spinner-centeng{
+		width:55px;
+		height:55px;
+		margin:10px auto 25px;
+		border-radius:50%;
+		background:conic-gradient(
+			#4e73df,
+			#36b9cc,
+			#1cc88a,
+			#4e73df
+		);
+		animation:spinCenteng 0.8s linear infinite;
+		position:relative;
+	}
+
+	.spinner-centeng:before{
+		content:'';
+		position:absolute;
+		top:6px;
+		left:6px;
+		right:6px;
+		bottom:6px;
+		background:#fff;
+		border-radius:50%;
+	}
+
+	@keyframes spinCenteng{
+		100%{
+			transform:rotate(360deg);
+		}
+	}
+
+	/* skeleton */
+	.skeleton-centeng{
+		height:80px;
+		border-radius:14px;
+		margin-bottom:15px;
+		background:linear-gradient(
+			90deg,
+			#f1f3f5,
+			#e2e6ea,
+			#f1f3f5
+		);
+		background-size:200% 100%;
+		animation:skeletonCenteng 1.2s infinite;
+	}
+
+	@keyframes skeletonCenteng{
+		0%{
+			background-position:200% 0;
+		}
+
+		100%{
+			background-position:-200% 0;
+		}
+	}
+
+	/* text */
+	.loading-text-centeng{
+		text-align:center;
+		color:#6c757d;
+		font-weight:500;
+		margin-bottom:15px;
+		font-size:14px;
+	}
+
+	.search-centeng-wrap{
+		position:relative;
+		display:inline-block;
+		margin-right:10px;
+		margin-top:5px;
+	}
+
+	.search-centeng{
+		border:none;
+		background:#ffffff;
+		padding:7px 35px 7px 35px;
+		border-radius:20px;
+		outline:none;
+		width:200px;
+		transition:0.3s;
+		font-size:13px;
+		color:#333 !important;
+		box-shadow:0 2px 6px rgba(0,0,0,0.08);
+	}
+
+	.search-centeng::placeholder{
+		color:#999 !important;
+	}
+
+	.search-centeng:focus{
+		width:260px;
+		background:#fff;
+		color:#333 !important;
+		box-shadow:0 0 0 3px rgba(78,115,223,0.15);
+	}
+
+
+	.icon-search{
+		position:absolute;
+		left:12px;
+		top:8px;
+		color:#999;
+		font-size:13px;
+	}
+
+	.icon-clear{
+		position:absolute;
+		right:12px;
+		top:8px;
+		color:#bbb;
+		cursor:pointer;
+		display:none;
+	}
+
+	.icon-clear:hover{
+		color:#dc3545;
+	}
+
+	.empty-centeng{
+		text-align:center;
+		padding:60px 20px;
+		color:#999;
+	}
+
+	.empty-centeng .icon{
+		font-size:50px;
+		color:#ddd;
+		margin-bottom:10px;
+	}
+
+	.empty-centeng .title{
+		font-size:18px;
+		font-weight:600;
+		color:#666;
+	}
+
+	.empty-centeng .desc{
+		font-size:13px;
+		color:#aaa;
+	}
 </style>
 
 <!DOCTYPE html>
@@ -706,167 +866,40 @@
         </div>
     </div>
 
-		<!-- Modal List -->
+	<!-- Modal List -->
 	<div class="modal fade" id="modalCenteng">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content modal-modern">
-
 				<div class="modal-header modal-header-modern">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4><i class="fa fa-users"></i>&nbsp; Daftar Pedagang Centeng</h4>
+					<button type="button" class="close" data-dismiss="modal" style="margin-top: 10px;">&times;</button>
+					<h4 style="display:inline-block;">
+						<i class="fa fa-users"></i>&nbsp; Daftar Pedagang Centeng
+					</h4>
+
+					<button id="btnFilterTanggal"
+						class="btn btn-xs btn-warning pull-right"
+						style="margin-top: 5px; margin-right:30px;border-radius:20px;padding:6px 15px;">
+						<i class="fa fa-calendar"></i>&nbsp; Filter
+						<!-- Input Range -->
+						<input type="text" id="filterTanggal" style="position:absolute;opacity:0;width:1px;height:1px;border:0;top:40px;right:90px;">
+					</button>
+
+					<div class="search-centeng-wrap pull-right">
+
+						<i class="fa fa-search icon-search"></i>
+
+						<input type="text"
+							id="searchCenteng"
+							class="search-centeng"
+							placeholder="Cari pedagang...">
+
+						<i class="fa fa-times icon-clear" id="clearSearch"></i>
+
+					</div>
 				</div>
 
 				<div class="modal-body body-centeng">
-
-					<?php
-
-					/* ================= SUMMARY ================= */
-
-					$summary=mysql_fetch_array(mysql_query("
-						SELECT
-							SUM(CASE WHEN date_pay IS NULL THEN 1 ELSE 0 END) AS belum,
-							SUM(CASE WHEN date_pay IS NOT NULL THEN 1 ELSE 0 END) AS sudah
-						FROM weighing
-						WHERE weighing_sts2='Tanpa Timbang'
-						AND date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
-					"));
-
-					?>
-
-					<div class="card-summary-centeng">
-
-						<div class="icon-retail">
-							<i class="fa fa-calendar"></i>
-						</div>
-
-						<div class="content">
-
-							<div class="periode">
-								<?= date('d M Y',strtotime($periodStartDate)); ?>
-								-
-								<?= date('d M Y',strtotime($periodEndDate)); ?>
-							</div>
-
-							<div class="row-total">
-
-								<div class="belum">
-									Belum Bayar :
-									<span><?= number_format($summary['belum']); ?> Pedagang</span>
-								</div>
-
-								<div class="sudah">
-									Sudah Bayar :
-									<span><?= number_format($summary['sudah']); ?> Pedagang</span>
-								</div>
-
-							</div>
-
-						</div>
-
-					</div>
-
-
-
-					<div class="row">
-
-					<?php
-
-					$query=mysql_query("
-
-					SELECT
-
-						m.merchant_id,
-						m.merchant_name,
-
-						w.cost_tonase AS total_tagihan,
-
-						MAX(w.date_pay) AS date_pay,
-
-						GROUP_CONCAT(
-							DISTINCT l.lapak_name
-							ORDER BY l.lapak_name
-							SEPARATOR ', '
-						) AS lapak
-
-					FROM merchant m
-
-					JOIN merchant_retail mr ON mr.merchant_id=m.merchant_id
-
-					LEFT JOIN weighing w ON
-						w.merchant_id=m.merchant_id
-						AND w.weighing_sts2='Tanpa Timbang'
-						AND w.date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
-
-					LEFT JOIN rent r ON r.merchant_id=m.merchant_id
-						AND r.rent_sts!='Batal'
-						AND r.rent_sts2 NOT IN('Batal','Pindah')
-
-					LEFT JOIN lapak l ON l.lapak_id=r.lapak_id
-
-					GROUP BY m.merchant_id
-
-					ORDER BY m.merchant_name
-
-					");
-
-					while($d=mysql_fetch_array($query)){
-
-					?>
-
-
-
-						<div class="col-md-6">
-
-							<div class="card-centeng">
-
-								<div class="icon-retail">
-									<i class="fa fa-user"></i>
-								</div>
-
-
-
-								<div class="content">
-
-									<div class="nama">
-										<?= $d['merchant_name']; ?>
-									</div>
-
-									<div class="lapak">
-										<?= $d['lapak']; ?>
-									</div>
-
-								</div>
-
-
-
-								<div class="right">
-
-									<div class="tagihan">
-										Rp <?= number_format($d['total_tagihan'],0,',','.'); ?>
-									</div>
-
-									<div class="tanggal" style="color:<?= $d['date_pay']?'#28a745':'#dc3545'; ?>">
-
-										<i class="fa <?= $d['date_pay']?'fa-check-circle':'fa-times-circle'; ?>"></i>
-
-										<?= $d['date_pay']
-											?date('d M Y',strtotime($d['date_pay']))
-											:'Belum Terbayar'; ?>
-
-									</div>
-
-								</div>
-
-							</div>
-
-						</div>
-
-
-
-					<?php } ?>
-
-					</div>
-
+					<!-- File data_modal_retail.php -->
 				</div>
 			</div>
 		</div>
@@ -879,7 +912,7 @@
 				
 				<div class="modal-header bg-primary text-white">
 					<h5 class="modal-title"><b>KONFIRMASI HAPUS</b></h5>
-					<button type="button" class="close text-white" data-dismiss="modal">
+					<button type="button" class="close text-white" data-dismiss="modal" style="margin-top: -20px;">
 						<span>&times;</span>
 					</button>
 				</div>
@@ -910,6 +943,122 @@
 			</div>
 		</div>
 	</div>
+
+
+
+	<!-- Ajax data modal -->
+	<script>
+		$(document).ready(function(){
+
+			let start='<?= $periodStartDate ?>';
+			let end='<?= $periodEndDate ?>';
+
+			$('#filterTanggal').daterangepicker({
+				startDate:moment(start),
+				endDate:moment(end),
+
+				parentEl: '#modalCenteng',
+				autoApply: true,
+				opens: 'center',
+				drops: 'down',
+
+				locale:{
+					format:'YYYY-MM-DD'
+				}
+
+			},function(s,e){
+				start=s.format('YYYY-MM-DD');
+				end=e.format('YYYY-MM-DD');
+
+				loadData(start,end);
+			});
+
+			$('#btnFilterTanggal').click(function(){
+				$('#filterTanggal').data('daterangepicker').show();
+			});
+
+			/* LOAD SAAT MODAL DIBUKA */
+			$('#modalCenteng').on('shown.bs.modal', function(){
+				loadData(start,end);
+			});
+
+			function loadData(start,end){
+				$('.body-centeng').html(
+
+					'<div class="loading-centeng">'+
+						'<div class="spinner-centeng"></div>'+
+
+						'<div class="loading-text-centeng">'+
+							'Memuat data pedagang...'+
+						'</div>'+
+
+						'<div class="row">'+
+							'<div class="col-md-6">'+
+								'<div class="skeleton-centeng"></div>'+
+							'</div>'+
+
+							'<div class="col-md-6">'+
+								'<div class="skeleton-centeng"></div>'+
+							'</div>'+
+
+							'<div class="col-md-6">'+
+								'<div class="skeleton-centeng"></div>'+
+							'</div>'+
+
+							'<div class="col-md-6">'+
+								'<div class="skeleton-centeng"></div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'
+				);
+
+				$.ajax({
+					url:'ajax_modal_retail.php',
+					type:'POST',
+					data:{
+						start:start,
+						end:end
+					},
+
+					success:function(res){
+						$('.body-centeng').html(res);
+					}
+				});
+			}
+		});
+	</script>
+
+	<!-- Search Modal -->
+	<script>
+		$('#searchCenteng').on('keyup',function(){
+			let value=$(this).val().toLowerCase();
+			let total=0;
+
+			// tombol clear
+			if(value!='')
+				$('#clearSearch').show();
+			else
+				$('#clearSearch').hide();
+
+			// filter data
+			$('.body-centeng .col-md-6').each(function(){
+				let found=$(this).text().toLowerCase().indexOf(value)>-1;
+				$(this).toggle(found);
+				if(found) total++;
+			});
+
+			// empty state
+			if(total==0){
+				$('#emptySearch').fadeIn(200);
+			}else{
+				$('#emptySearch').hide();
+			}
+		});
+
+		$('#clearSearch').click(function(){
+			$('#searchCenteng').val('').keyup().focus();
+		});
+	</script>
 
     <!-- Single Print -->
 	<script>
@@ -977,19 +1126,19 @@
 
     <!-- Script delete merchant retail -->
 	<script>
-	$(document).ready(function (){
-		$('#deleteModal').on('show.bs.modal', function (event) {
-			var button   = $(event.relatedTarget); 
-			var nama     = button.data('nama'); 
-			var retailId = button.data('id');
-			var lapak    = button.data('lapak');
+		$(document).ready(function (){
+			$('#deleteModal').on('show.bs.modal', function (event) {
+				var button   = $(event.relatedTarget); 
+				var nama     = button.data('nama'); 
+				var retailId = button.data('id');
+				var lapak    = button.data('lapak');
 
-			$('#namaPedagangBox').val(nama + ' (' + lapak + ')');
-			$('#confirmDeleteBtn').attr("href", 
-				"weighing_action.php?task=deleteMerchantRetail&retail_id=" + retailId
-			);
+				$('#namaPedagangBox').val(nama + ' (' + lapak + ')');
+				$('#confirmDeleteBtn').attr("href", 
+					"weighing_action.php?task=deleteMerchantRetail&retail_id=" + retailId
+				);
+			});
 		});
-	});
 	</script>
 
 	<!-- Post & reload -->
@@ -1017,25 +1166,25 @@
 
 	<!-- Search -->
 	<script>
-	document.getElementById('searchMerchant').addEventListener('keyup', function () {
-		let keyword = this.value.toLowerCase();
-		let cards = document.querySelectorAll('.merchant-card');
-		let found = 0;
+		document.getElementById('searchMerchant').addEventListener('keyup', function () {
+			let keyword = this.value.toLowerCase();
+			let cards = document.querySelectorAll('.merchant-card');
+			let found = 0;
 
-		cards.forEach(function(card) {
-			let text = card.getAttribute('data-search');
+			cards.forEach(function(card) {
+				let text = card.getAttribute('data-search');
 
-			if (text.includes(keyword)) {
-				card.style.display = '';
-				found++;
-			} else {
-				card.style.display = 'none';
-			}
+				if (text.includes(keyword)) {
+					card.style.display = '';
+					found++;
+				} else {
+					card.style.display = 'none';
+				}
+			});
+
+			// EMPTY STATE
+			document.getElementById('emptyState').style.display = (found === 0) ? 'block' : 'none';
 		});
-
-		// EMPTY STATE
-		document.getElementById('emptyState').style.display = (found === 0) ? 'block' : 'none';
-	});
 	</script>
 
 	<script>
@@ -1060,6 +1209,10 @@
     </script>
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
+	<!-- Date Range Picker -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
