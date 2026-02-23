@@ -5,7 +5,7 @@
 		margin-left:8px;
 		background:#ec9841;
 		border-radius:50%;
-		padding:9px;
+		padding:8px 9px;
 		cursor:pointer;
 		box-shadow:0 4px 15px rgba(0,0,0,0.2);
 		transition:all 0.3s;
@@ -33,11 +33,11 @@
 	@keyframes blinkBg{
 
 		0%{
-			background:linear-gradient(135deg,#ff9800,#ff5722);
+			background:#ec9841;
 		}
 
 		50%{
-			background:linear-gradient(135deg,#ff0000,#b30000);
+			background:rgba(255,0,0,0.9);
 			box-shadow:
 				0 0 0 3px rgba(255,0,0,0.3),
 				0 0 20px rgba(255,0,0,0.9),
@@ -45,7 +45,7 @@
 		}
 
 		100%{
-			background:linear-gradient(135deg,#ff9800,#ff5722);
+			background:#ec9841;
 		}
 
 	}
@@ -327,7 +327,7 @@ $blinkQuery=mysql_query("
 	WHERE
 		w.weighing_sts NOT IN ('Batal','Lunas')
 		AND w.weighing_sts2!='Tanpa Timbang'
-		AND w.weighing_sts5 IS NULL
+		AND COALESCE(w.weighing_sts5,'') = ''
         AND w.date_check
 		BETWEEN '$periodStartDate' AND '$periodEndDate'
 ");
@@ -393,7 +393,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 								placeholder="Search pedagang atau nota..."
 							>
 
-							<i class="fa fa-times centeng-search-clear" id="clearSearch" style="display:none"></i>
+							<i class="fa fa-times centeng-search-clear" id="clearSearchData" style="display:none"></i>
 
 						</div>
 
@@ -422,7 +422,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 
 									w.weighing_sts NOT IN ('Batal','Lunas')
 									AND w.weighing_sts2!='Tanpa Timbang'
-									AND w.weighing_sts5 IS NULL
+									AND COALESCE(w.weighing_sts5,'') = ''
 									AND w.date_check
 									BETWEEN '$periodStartDate' AND '$periodEndDate'
 
@@ -520,7 +520,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 					ON w.merchant_id=m.merchant_id
 					AND w.weighing_sts NOT IN ('Batal','Lunas')
 					AND w.weighing_sts2!='Tanpa Timbang'
-                    AND w.weighing_sts5 IS NULL
+                    AND COALESCE(w.weighing_sts5,'') = ''
 					AND w.date_check
 					BETWEEN '$periodStartDate' AND '$periodEndDate'
 
@@ -626,7 +626,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 				<?php } ?>
 
 
-                <div class="centeng-empty" id="emptySearch" style="display:none">
+                <div class="centeng-empty" id="emptySearchData" style="display:none">
 
                     <i class="fa fa-search"></i>
 
@@ -676,9 +676,9 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 		/* ================= CLEAR BUTTON ================= */
 
 		if(value!='')
-			$("#clearSearch").show();
+			$("#clearSearchData").show();
 		else
-			$("#clearSearch").hide();
+			$("#clearSearchData").hide();
 
 
 		/* ================= EMPTY STATE CONTROL ================= */
@@ -688,7 +688,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 			/* DATA MEMANG KOSONG */
 
 			$("#emptyData").show();
-			$("#emptySearch").hide();
+			$("#emptySearchData").hide();
 
 		}
 		else if(totalFound == 0){
@@ -696,7 +696,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 			/* DATA ADA TAPI SEARCH TIDAK DITEMUKAN */
 
 			$("#emptyData").hide();
-			$("#emptySearch").show();
+			$("#emptySearchData").show();
 
 		}
 		else{
@@ -704,7 +704,7 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 			/* DATA ADA DAN DITEMUKAN */
 
 			$("#emptyData").hide();
-			$("#emptySearch").hide();
+			$("#emptySearchData").hide();
 
 		}
 
@@ -714,14 +714,25 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 
 	/* ================= CLEAR SEARCH ================= */
 
-	$("#clearSearch").click(function(){
+	$("#clearSearchData").click(function(){
 
+		// kosongkan input
 		$("#search").val('');
 
-		$("#clearSearch").hide();
+		// sembunyikan tombol clear
+		$(this).hide();
 
-		$("#search").keyup();
+		// tampilkan semua card kembali
+		$(".centeng-card").show();
+
+		// sembunyikan empty state
+		$("#emptySearchData").hide();
+		$("#emptyData").hide();
+
+		// fokus kembali ke input
+		$("#search").focus();
 
 	});
+
 
 </script>

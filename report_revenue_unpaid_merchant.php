@@ -55,7 +55,7 @@
 									<div class="col-md-6" style="margin-top:-10px;margin-bottom:-10px;">
 										<div class="form-group" style="padding:10px 15px; margin-top:0px;">
 											<label>Pedagang</label>
-											<select class="form-control chzn-select" name="merchant" id="merchant">
+											<select class="form-control chzn-select" name="merchant" id="merchant" required>
 												<option value="" selected disabled>- Pilih Pedagang -</option>
 												<?php 
 													$sql1 	= mysql_query("select merchant_id, merchant_name, merchant_nick from merchant order by merchant_name");

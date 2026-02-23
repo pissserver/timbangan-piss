@@ -16,6 +16,8 @@
         /* margin-top: 40px; */
         /* margin-bottom: 100px; */
         /* margin-left: 40px; */
+        margin-left: 8px;
+        padding: 8px 10px;
         color: #fff;
         border: none;
         border-radius: 20px;
