@@ -1031,14 +1031,22 @@
 	<!-- Search Modal -->
 	<script>
 		$('#searchCenteng').on('keyup',function(){
+
 			let value=$(this).val().toLowerCase();
 			let total=0;
 
 			// tombol clear
-			if(value!='')
+			if(value!=''){
 				$('#clearSearch').show();
-			else
+			}else{
 				$('#clearSearch').hide();
+				// tampilkan semua data kembali
+				$('.body-centeng .col-md-6').show();
+				// sembunyikan empty state
+				$('#emptySearch').hide();
+
+				return;
+			}
 
 			// filter data
 			$('.body-centeng .col-md-6').each(function(){
@@ -1056,8 +1064,16 @@
 		});
 
 		$('#clearSearch').click(function(){
-			$('#searchCenteng').val('').keyup().focus();
-		});
+			$('#searchCenteng').val('');
+			// tampilkan semua
+			$('.body-centeng .col-md-6').show();
+			// sembunyikan empty
+			$('#emptySearch').hide();
+			// sembunyikan tombol clear
+			$(this).hide();
+			// fokus kembali
+			$('#searchCenteng').focus();
+		})
 	</script>
 
     <!-- Single Print -->
