@@ -5,7 +5,7 @@
 		margin-left:8px;
 		background:#ec9841;
 		border-radius:50%;
-		padding:9px;
+		padding:8px 9px;
 		cursor:pointer;
 		box-shadow:0 4px 15px rgba(0,0,0,0.2);
 		transition:all 0.3s;

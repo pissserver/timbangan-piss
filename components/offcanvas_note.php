@@ -18,7 +18,7 @@
         /* margin-left: 40px; */
         color: #fff;
         border: none;
-        padding: 9px 10px;
+        padding: 8px 10px;
         margin-left: 8px;
         border-radius: 20px;
         font-size: 14px;

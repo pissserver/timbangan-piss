@@ -2,7 +2,7 @@
     .btn.btn-calc {
         background-color: #EC9841;
         border-radius: 20px;
-        padding: 9px 9px;
+        padding: 8px 10px;
         margin-left: 8px;
         transition: background-color 0.3s ease, transform 0.15s ease;
         cursor: pointer;
