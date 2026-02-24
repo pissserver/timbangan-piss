@@ -268,7 +268,26 @@ while($data2 = mysql_fetch_array($query2)){
 
 		<div class="pay-left-mitra">
 			<h5><?php echo $data2['weighing_id']; ?></h5>
-			<span><?php echo date("d M Y", strtotime($data2['date_check'])); ?> • <?php echo $data2['nopol']; ?></span>
+			<span><?php echo date("d M Y", strtotime($data2['date_check'])); ?> • <?php echo $data2['nopol']; ?></span><br>
+
+		<?php
+			$dateCheck = new DateTime($data2['date_check']);
+			$today     = new DateTime();
+			$diff      = $today->diff($dateCheck)->days;
+
+			// opsional: warna beda sesuai umur
+			$color = '#16a34a'; // hijau default
+
+			if($diff >= 3 && $diff < 7){
+				$color = '#f59e0b'; // kuning
+			}elseif($diff >= 7){
+				$color = '#dc2626'; // merah
+			}
+		?>
+
+		<span style="color: <?php echo $color; ?>; font-size:11px;">
+			Umur tagihan <?php echo $diff; ?> hari
+		</span>
 		</div>
 
 		<div class="pay-mid-mitra">
