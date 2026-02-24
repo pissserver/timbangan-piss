@@ -23,7 +23,7 @@
 		$username		= $_POST['username'];
 		$name		= ucwords(strtolower(trim($_POST['name'])));
 		$pass 		= $_POST['pass'];
-		$position 	= ucwords(strtolower(trim($_POST['position'])));
+		$position 	= strtolower(trim($_POST['position']));
 		$exist 		= executeScalar("select count(username) from admin where username = '".$_POST['username']."'");
 		if($exist>0){
 			// Alert Information
@@ -33,8 +33,8 @@
 			echo "<script>window.location=('admin.php')</script>";
 		}
 		else{
-			$insert = mysql_query("INSERT INTO `admin` (`id_admin`, `username`, `name`, `password`, `role`) 
-			VALUES ('', '".$username."', '".$name."', '".$pass."', '".$position."')");
+			$insert = mysql_query("INSERT INTO `admin` (`id_admin`, `username`, `name`, `password`, `role`, `lapak`, `timbangan`, `listrik`) 
+			VALUES ('', '".$username."', '".$name."', '".$pass."', '".$position."', 'Yes', 'Yes', 'Yes')");
 			
 			if($insert){
 				// Alert Information
