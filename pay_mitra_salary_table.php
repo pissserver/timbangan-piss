@@ -134,7 +134,7 @@
 	.salary-summary{
 		position:relative;
 		flex:1;
-		max-width:720px;
+		max-width:420px;
 		display:flex;
 		align-items:center;
 		background:linear-gradient(135deg,#ffffff,#f9fafb);
@@ -327,6 +327,13 @@
 		}
 	}
 </style>
+
+<div class="alert alert-warning d-flex align-items-center" role="alert" style="margin: 0 0;">
+	<i class="fa fa-warning me-2" style="font-size: 18px;"></i>
+	<span style="font-size: 14px;">
+		Pembagian & pembulatan upah mitra dilakukan setelah <b>pergantian hari</b> agar tidak terjadi kesalahan pembagian!
+	</span>
+</div><br>
 
 <div class="salary-wrapper">
 	<div class="salary-header luxury-header">
@@ -589,14 +596,14 @@
 						</div>
 					</div>
 
-					<div class="salary-block">
+					<!-- <div class="salary-block">
 						<span class="label-title">Upah Disimpan</span>
 						<div class="salary-flow">
 							<span class="badge badge-red"><?php echo format_rupiah($total2); ?></span>
 							<i class="fa fa-angle-double-right flow-icon"></i>
 							<span class="badge badge-green"><?php echo format_rupiah($save); ?></span>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="summary-icon">
