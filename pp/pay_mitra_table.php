@@ -423,7 +423,7 @@
 									FROM laborer_fee lf
 									JOIN weighing_mitra wm ON wm.weighing_id = lf.weighing_id 
 									where wm.weighing_sts != 'Batal' and laborer_fee_sts = 'Baru'
-									group by date(date_check) desc limit 50");
+									group by date(date_check) desc limit 30");
 			while($r	= mysql_fetch_array($query)) { 
 				$no++;
 				$share	= executeScalar("	select (sum(fee_B001)+
