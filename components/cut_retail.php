@@ -482,66 +482,72 @@ $blinkClass=($blinkData['total']>0)?"blink":"";
 
 				<?php
 
-				$query=mysql_query("
+					$query=mysql_query("
 
 					SELECT
 
 						m.merchant_id,
 						m.merchant_name,
 
-						GROUP_CONCAT(
-							DISTINCT l.lapak_name
-							ORDER BY l.lapak_name
-							SEPARATOR ', '
-						) AS lapak,
+						w.lapak,
 
-						GROUP_CONCAT(
-
-							DISTINCT CONCAT(
-                                'TG',
-								w.weighing_id,
-								' (',
-								DATE_FORMAT(w.date_check,'%d %b %Y'),
-								')'
-							)
-
-							ORDER BY w.date_check
-							SEPARATOR ', '
-
-						) AS weighing_id
+						w.weighing_id
 
 					FROM merchant m
 
 					JOIN merchant_retail mr
 					ON mr.merchant_id=m.merchant_id
 
+					JOIN
+					(
+						SELECT
 
-					LEFT JOIN weighing w
+							w.merchant_id,
+
+							GROUP_CONCAT(
+								DISTINCT l.lapak_name
+								ORDER BY l.lapak_name
+								SEPARATOR ', '
+							) AS lapak,
+
+							GROUP_CONCAT(
+								DISTINCT CONCAT(
+									'TG',
+									w.weighing_id,
+									' (',
+									DATE_FORMAT(w.date_check,'%d %b %Y'),
+									')'
+								)
+								ORDER BY w.date_check
+								SEPARATOR ', '
+							) AS weighing_id
+
+						FROM weighing w
+
+						LEFT JOIN rent r
+						ON r.merchant_id=w.merchant_id
+						AND r.rent_sts!='Batal'
+						AND r.rent_sts2 NOT IN ('Batal','Pindah')
+
+						LEFT JOIN lapak l
+						ON l.lapak_id=r.lapak_id
+
+						WHERE
+
+							w.weighing_sts NOT IN ('Batal','Lunas')
+							AND w.weighing_sts2!='Tanpa Timbang'
+							AND COALESCE(w.weighing_sts5,'')=''
+							AND w.date_check BETWEEN '$periodStartDate' AND '$periodEndDate'
+
+						GROUP BY w.merchant_id
+
+					) w
+
 					ON w.merchant_id=m.merchant_id
-					AND w.weighing_sts NOT IN ('Batal','Lunas')
-					AND w.weighing_sts2!='Tanpa Timbang'
-                    AND COALESCE(w.weighing_sts5,'') = ''
-					AND w.date_check
-					BETWEEN '$periodStartDate' AND '$periodEndDate'
-
-
-					LEFT JOIN rent r
-					ON r.merchant_id=m.merchant_id
-					AND r.rent_sts!='Batal'
-					AND r.rent_sts2 NOT IN ('Batal','Pindah')
-
-
-					LEFT JOIN lapak l
-					ON l.lapak_id=r.lapak_id
-
-
-					GROUP BY m.merchant_id
-
-					HAVING weighing_id IS NOT NULL
 
 					ORDER BY m.merchant_name
 
-				");
+					");
 
                 $totalData = mysql_num_rows($query);
 
