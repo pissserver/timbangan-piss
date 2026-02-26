@@ -277,7 +277,7 @@
 	/* assign */
 
 	function round500($value){
-		return round($value / 500) * 500;
+		return ceil($value / 500) * 500;
 	}
 
 	// Value total share
@@ -424,6 +424,12 @@
         <div id="page-wrapper">
 			<div class="row">
 				<br /><br><br><br>
+				<div class="alert alert-info d-flex align-items-center" role="alert" style="margin: 0 0;">
+					<i class="fa fa-warning me-2" style="font-size: 18px;"></i>&nbsp;
+					<span style="font-size: 14px;">
+						Pembulatan upah mitra sudah <b>secara otomatis sistem</b>, dan pembulatan terdekat adalah <b>dinaikkan kelipatan 500</b>. Cek kembali sebelum melakukan simpan!
+					</span>
+				</div><br>
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
 						<div class="panel-heading">
@@ -437,13 +443,13 @@
 								<div class="col-md-6">
 									<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:10px; margin-right:10px;">
 										<label>Total Upah Mitra</label>
-										<input type="text" class="form-control" id="" name="" value="<?php echo format_rupiah($share); ?>" disabled />
+										<input style="font-weight: bold;" type="text" class="form-control" id="" name="" value="<?php echo format_rupiah($share); ?>" disabled />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group" style="padding:10px; margin-top:-10px; margin-left:10px; margin-right:10px;">
 										<label>Total Dibagi</label>
-										<input type="text" class="form-control" id="" name="" value="<?php echo format_rupiah($share2); ?>" disabled />
+										<input  style="font-weight: bold;" type="text" class="form-control" id="" name="" value="<?php echo format_rupiah($share2); ?>" disabled />
 									</div>
 								</div>
 								<!-- <div class="col-md-3">
