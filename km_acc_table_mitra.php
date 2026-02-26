@@ -695,7 +695,7 @@
 				<div class="amount-alert" id="amountAlertMitra">
 					<i class="fa fa-exclamation-circle"></i>
 					Nominal fisik tidak sesuai sistem<br>
-					<small>Toleransi maksimal ± Rp 2.000</small>
+					<small>Toleransi maksimal ± Rp 500</small>
 				</div>
 
 				<button type="button"
@@ -814,7 +814,7 @@
 <!-- Reload Window Mitra-->
 <script>
 	const SYSTEM_TOTAL = <?php echo (int)$cost_mitra; ?>;
-	const TOLERANCE    = 2000;
+	const TOLERANCE    = 500;
 
 	const cashInput = document.getElementById('cashMitra');
 	const btnAcc    = document.getElementById('btn-acc-mitra');
@@ -822,22 +822,31 @@
 
 	// === INPUT HANDLER (MODIFIKASI TANPA MERUSAK LOGIC) ===
 	cashInput.addEventListener('input', function() {
-		const receiverValue = parseInt(this.value || 0);
-		const diff = Math.abs(receiverValue - SYSTEM_TOTAL);
 
-		if (receiverValue === 0) {
+		// jika kosong → sembunyikan semua
+		if (this.value.trim() === '') {
+
 			btnAcc.style.display   = "none";
 			alertBox.style.display = "none";
 			return;
+
 		}
 
+		const receiverValue = Number(this.value);
+		const diff = Math.abs(receiverValue - SYSTEM_TOTAL);
+
 		if (diff <= TOLERANCE) {
+
 			btnAcc.style.display   = "block";
 			alertBox.style.display = "none";
+
 		} else {
+
 			btnAcc.style.display   = "none";
 			alertBox.style.display = "block";
+
 		}
+
 	});
 
 	// === ALERT DIKLIK → RELOAD ===

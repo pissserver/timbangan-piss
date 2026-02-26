@@ -886,22 +886,31 @@
 
 	// === INPUT HANDLER (MODIFIKASI TANPA MERUSAK LOGIC) ===
 	cashInput.addEventListener('input', function() {
-		const receiverValue = parseInt(this.value || 0);
-		const diff = Math.abs(receiverValue - SYSTEM_TOTAL);
 
-		if (receiverValue === 0) {
+		// jika kosong → sembunyikan semua
+		if (this.value.trim() === '') {
+
 			btnAcc.style.display   = "none";
 			alertBox.style.display = "none";
 			return;
+
 		}
 
+		const receiverValue = Number(this.value);
+		const diff = Math.abs(receiverValue - SYSTEM_TOTAL);
+
 		if (diff <= TOLERANCE) {
+
 			btnAcc.style.display   = "block";
 			alertBox.style.display = "none";
+
 		} else {
+
 			btnAcc.style.display   = "none";
 			alertBox.style.display = "block";
+
 		}
+
 	});
 
 	// === ALERT DIKLIK → RELOAD ===
