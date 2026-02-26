@@ -309,8 +309,7 @@
 				}
 			}else{
 				//Insert pembayaran mitra
-				$insert1 = mysql_query("	insert into laborer_fee2(`fee_id`, 
-																	`fee_date`, 
+				$insert1 = mysql_query("	insert into laborer_fee2(`fee_date`, 
 																	`fee_user`, 
 																	`fee_B001`, 
 																	`fee_B002`, 
@@ -380,8 +379,7 @@
 																	`save_M02`, 
 																	`save_M03`, 
 																	`save_M04`) 
-										values(	'', 
-												'".$date."', 
+										values(	'".$date."', 
 												'".$checker."', 
 												'".$_POST['B001']."',
 												'".$_POST['B002']."',
@@ -452,8 +450,7 @@
 												'0',
 												'0')");
 
-				$insert2 = mysql_query("insert into laborer_fee2_before(`fee_id`, 
-																	`fee_date`, 
+				$insert2 = mysql_query("insert into laborer_fee2_before(`fee_date`, 
 																	`fee_user`, 
 																	`fee_B001`, 
 																	`fee_B002`, 
@@ -523,8 +520,7 @@
 																	`save_M02`, 
 																	`save_M03`, 
 																	`save_M04`) 
-										values(	'', 
-												'".$date."', 
+										values(	'".$date."', 
 												'".$checker."', 
 												'".$B001."',
 												'".$B002."',
@@ -560,6 +556,7 @@
 												'".$M02."',
 												'".$M03."',
 												'".$M04."',
+												'0',
 												'0',
 												'0',
 												'0',

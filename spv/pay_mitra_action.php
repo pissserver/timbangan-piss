@@ -145,7 +145,7 @@
 		$SM02 = $data['SM02'];
 		$SM03 = $data['SM03'];
 		$SM04 = $data['SM04'];
-		
+
 			//Cek apakah tgl pembayaran sdh ada di DB
 			$ada	= executeScalar("SELECT count(fee_id) FROM laborer_fee2 where fee_date = '".$date."'");
 			$ada2	= executeScalar("SELECT count(fee_id) FROM laborer_fee2_before where fee_date = '".$date."'");
@@ -310,8 +310,7 @@
 				}
 			}else{
 				//Insert pembayaran mitra
-				$insert1 = mysql_query("	insert into laborer_fee2(`fee_id`, 
-																	`fee_date`, 
+				$insert1 = mysql_query("	insert into laborer_fee2(`fee_date`, 
 																	`fee_user`, 
 																	`fee_B001`, 
 																	`fee_B002`, 
@@ -381,8 +380,7 @@
 																	`save_M02`, 
 																	`save_M03`, 
 																	`save_M04`) 
-										values(	'', 
-												'".$date."', 
+										values(	'".$date."', 
 												'".$admin."', 
 												'".$_POST['B001']."',
 												'".$_POST['B002']."',
@@ -453,8 +451,7 @@
 												'0',
 												'0')");
 
-				$insert2 = mysql_query("insert into laborer_fee2_before(`fee_id`, 
-																	`fee_date`, 
+				$insert2 = mysql_query("insert into laborer_fee2_before(`fee_date`, 
 																	`fee_user`, 
 																	`fee_B001`, 
 																	`fee_B002`, 
@@ -524,8 +521,7 @@
 																	`save_M02`, 
 																	`save_M03`, 
 																	`save_M04`) 
-										values(	'', 
-												'".$date."', 
+										values(	'".$date."', 
 												'".$admin."', 
 												'".$B001."',
 												'".$B002."',
@@ -561,6 +557,7 @@
 												'".$M02."',
 												'".$M03."',
 												'".$M04."',
+												'0',
 												'0',
 												'0',
 												'0',
