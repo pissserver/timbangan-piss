@@ -424,7 +424,7 @@
         <div id="page-wrapper">
 			<div class="row">
 				<br /><br><br><br>
-				<div class="alert alert-info d-flex align-items-center" role="alert" style="margin: 0 0;">
+				<div class="alert alert-info d-flex align-items-center" role="alert" style="margin: 0 15px;">
 					<i class="fa fa-warning me-2" style="font-size: 18px;"></i>&nbsp;
 					<span style="font-size: 14px;">
 						Pembulatan upah mitra sudah <b>secara otomatis sistem</b>, dan pembulatan terdekat adalah <b>dinaikkan kelipatan 500</b>. Cek kembali sebelum melakukan simpan!
