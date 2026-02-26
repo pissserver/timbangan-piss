@@ -680,7 +680,6 @@
 									<i class="fa fa-angle-double-right flow-icon"></i>
 									<span class="badge badge-green"><?php echo format_rupiah($share); ?></span>
 									<i class="fa <?php echo $icon; ?> flow-icon"></i>
-
 									<span class="badge <?php echo $badgeClass; ?>">
 										<?php echo $prefix . format_rupiah(abs($gapShare)); ?>
 									</span>

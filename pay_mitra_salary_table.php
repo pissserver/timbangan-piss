@@ -635,6 +635,27 @@
 									$r['SM02s']+
 									$r['SM03s']+
 									$r['SM04s'];
+					
+					// Gap
+					$gapShare = $share - $total1;
+
+					if ($share == 0) {
+						$gapShare = 0;
+					}
+
+					if ($gapShare > 0) {
+						$prefix = '+ ';
+						$icon = 'fa-arrow-up';
+						$badgeClass = 'badge-green';
+					} elseif ($gapShare < 0) {
+						$prefix = '- ';
+						$icon = 'fa-arrow-down';
+						$badgeClass = 'badge-red';
+					} else {
+						$prefix = '';
+						$icon = 'fa-minus';
+						$badgeClass = 'badge-secondary';
+					}
 				?>
 
 				<div class="salary-card salary-item">
@@ -657,6 +678,10 @@
 									<span class="badge badge-red"><?php echo format_rupiah($total1); ?></span>
 									<i class="fa fa-angle-double-right flow-icon"></i>
 									<span class="badge badge-green"><?php echo format_rupiah($share); ?></span>
+									<i class="fa <?php echo $icon; ?> flow-icon"></i>
+									<span class="badge <?php echo $badgeClass; ?>">
+										<?php echo $prefix . format_rupiah(abs($gapShare)); ?>
+									</span>
 								</div>
 							</div>
 

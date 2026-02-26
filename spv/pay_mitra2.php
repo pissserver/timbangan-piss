@@ -271,31 +271,37 @@
 
 	/* assign */
 
-	$xB001=$d2['xB001'];
-	$xB002=$d2['xB002'];
-	$xB003=$d2['xB003'];
-	$xB004=$d2['xB004'];
-	$xB005=$d2['xB005'];
-	$xB006=$d2['xB006'];
+	function round500($value){
+		return round($value / 500) * 500;
+	}
 
-	$xS001=$d2['xS001'];
-	$xS002=$d2['xS002'];
-	$xS003=$d2['xS003'];
-	$xS004=$d2['xS004'];
-	$xS005=$d2['xS005'];
-	$xS006=$d2['xS006'];
-	$xS007=$d2['xS007'];
-	$xS008=$d2['xS008'];
-	$xS009=$d2['xS009'];
-	$xS010=$d2['xS010'];
-	$xS011=$d2['xS011'];
-	$xS012=$d2['xS012'];
+	// Value total share
+	$xB001 = $d2['xB001'] != null ? $d2['xB001'] : round500($B001);
+	$xB002 = $d2['xB002'] != null ? $d2['xB002'] : round500($B002);
+	$xB003 = $d2['xB003'] != null ? $d2['xB003'] : round500($B003);
+	$xB004 = $d2['xB004'] != null ? $d2['xB004'] : round500($B004);
+	$xB005 = $d2['xB005'] != null ? $d2['xB005'] : round500($B005);
+	$xB006 = $d2['xB006'] != null ? $d2['xB006'] : round500($B006);
 
-	$xM01=$d2['xM01'];
-	$xM02=$d2['xM02'];
-	$xM03=$d2['xM03'];
-	$xM04=$d2['xM04'];
+	$xS001 = $d2['xS001'] != null ? $d2['xS001'] : round500($S001);
+	$xS002 = $d2['xS002'] != null ? $d2['xS002'] : round500($S002);
+	$xS003 = $d2['xS003'] != null ? $d2['xS003'] : round500($S003);
+	$xS004 = $d2['xS004'] != null ? $d2['xS004'] : round500($S004);
+	$xS005 = $d2['xS005'] != null ? $d2['xS005'] : round500($S005);
+	$xS006 = $d2['xS006'] != null ? $d2['xS006'] : round500($S006);
+	$xS007 = $d2['xS007'] != null ? $d2['xS007'] : round500($S007);
+	$xS008 = $d2['xS008'] != null ? $d2['xS008'] : round500($S008);
+	$xS009 = $d2['xS009'] != null ? $d2['xS009'] : round500($S009);
+	$xS010 = $d2['xS010'] != null ? $d2['xS010'] : round500($S010);
+	$xS011 = $d2['xS011'] != null ? $d2['xS011'] : round500($S011);
+	$xS012 = $d2['xS012'] != null ? $d2['xS012'] : round500($S012);
 
+	$xM01 = $d2['xM01'] != null ? $d2['xM01'] : round500($M01);
+	$xM02 = $d2['xM02'] != null ? $d2['xM02'] : round500($M02);
+	$xM03 = $d2['xM03'] != null ? $d2['xM03'] : round500($M03);
+	$xM04 = $d2['xM04'] != null ? $d2['xM04'] : round500($M04);
+
+	// Value total save
 	$yB001=$d2['yB001'];
 	$yB002=$d2['yB002'];
 	$yB003=$d2['yB003'];

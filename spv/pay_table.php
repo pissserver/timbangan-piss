@@ -1,5 +1,27 @@
 <?php
 	include "../connection.php";
+
+	$limit = 5;
+
+	$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+	if($page < 1) $page = 1;
+
+	$offset = ($page-1)*$limit;
+
+	$self = $_SERVER['PHP_SELF'];
+
+	$totalQuery = mysql_query("select count(*) total from km where km_status='Diajukan'");
+	$totalData  = mysql_fetch_array($totalQuery);
+
+	$totalPage  = ceil($totalData['total']/$limit);
+
+	$query = mysql_query("
+		select *
+		from km
+		where km_status='Diajukan'
+		order by km_id DESC
+		limit $offset,$limit
+	");
 ?>
 
 <style>
@@ -46,7 +68,6 @@
 		align-items:center;
 		gap:30px;
 	}
-
 
 	.kmc-user{
 		display:flex;
@@ -102,7 +123,7 @@
 		border-radius:999px;
 		background:linear-gradient(135deg,#4f46e5,#6366f1);
 		color:#fff;
-		text-decoration:none;
+		text-decoration:none !important;
 		box-shadow:0 8px 18px rgba(79,70,229,.35);
 		transition:.25s ease;
 	}
@@ -111,25 +132,61 @@
 		box-shadow:0 8px 18px rgba(79,70,229,.45);
 		color:#fff;
 	}
+
+
+	/* PAGINATION TAMBAHAN */
+
+	.kmc-pagination{
+		display:flex;
+		justify-content:center;
+		gap:6px;
+		margin-top:20px;
+	}
+
+	.kmc-pagination button{
+		padding:6px 12px;
+		border:none;
+		background:#eef2ff;
+		color:#4f46e5;
+		cursor:pointer;
+		border-radius:6px;
+		font-weight:600;
+	}
+
+	.kmc-pagination button.active{
+		background:#4f46e5;
+		color:#fff;
+	}
+
+	.kmc-pagination button.nav{
+		background:#4f46e5;
+		color:#fff;
+	}
+
+	.kmc-pagination span{
+		padding:6px 10px;
+	}
+
 </style>
+
+
+
+<div id="kmc-area">
 
 
 <div class="kmc-wrapper">
 
 <?php
-	$no = 0;
-	$query = mysql_query("select * from km where km_status = 'Diajukan' order by km_id DESC");
 
 	while($data = mysql_fetch_array($query)) {
 
-		$cashier_id = executeScalar("select cashier_id from ko where km_id = '".$data['km_id']."'");
-		$cashier    = executeScalar("select checker_name from checker where checker_id = '".$cashier_id."'");
-		$no++;
+		$cashier_id = executeScalar("select cashier_id from ko where km_id='".$data['km_id']."'");
+		$cashier    = executeScalar("select checker_name from checker where checker_id='".$cashier_id."'");
+
 ?>
 
 	<div class="kmc-card">
 
-		<!-- LEFT -->
 		<div class="kmc-left">
 			<h4 class="kmc-id">KMM-<?php echo $data['km_id']; ?></h4>
 			<span class="kmc-date">
@@ -138,34 +195,146 @@
 			</span>
 		</div>
 
-		<!-- CENTER -->
 		<div class="kmc-center">
+
 			<div class="kmc-user">
+
 				<i class="fa fa-user"></i>
+
 				<div>
+
 					<strong><?php echo $cashier; ?></strong><br>
+
 					<span>Kasir</span>
+
 				</div>
+
 			</div>
 
 			<div class="kmc-status kmc-status-wait">
+
 				<i class="fa fa-spinner fa-spin"></i> Menunggu ACC
+
 			</div>
+
 		</div>
 
-		<!-- RIGHT -->
+
 		<div class="kmc-right">
+
 			<div class="kmc-amount">
+
 				<?php echo format_rupiah($data['km_total']); ?>
+
 			</div>
 
-			<a href="pay_action.php?task=acc&id=<?php echo $data['km_id']; ?>" class="kmc-btn-acc" style="text-decoration: none;">
+
+			<a href="pay_action.php?task=acc&id=<?php echo $data['km_id']; ?>" class="kmc-btn-acc">
+
 				<i class="fa fa-check"></i> ACC
+
 			</a>
+
 		</div>
+
 
 	</div>
 
 <?php } ?>
 
 </div>
+
+
+
+
+<div class="kmc-pagination">
+
+
+<?php if($page>1){ ?>
+
+<button class="nav" onclick="loadPage(<?php echo $page-1; ?>)">Previous</button>
+
+<?php } ?>
+
+
+
+<?php
+
+$start=max(1,$page-1);
+$end=min($totalPage,$page+1);
+
+if($start>1){
+
+	echo "<button onclick='loadPage(1)'>1</button>";
+
+	if($start>2)
+	echo "<span>...</span>";
+
+}
+
+
+for($i=$start;$i<=$end;$i++){
+
+	$class=($i==$page)?"active":"";
+
+	echo "<button onclick='loadPage($i)' class='$class'>$i</button>";
+
+}
+
+
+if($end<$totalPage){
+
+	if($end<$totalPage-1)
+	echo "<span>...</span>";
+
+	echo "<button onclick='loadPage($totalPage)'>$totalPage</button>";
+
+}
+
+?>
+
+
+<?php if($page<$totalPage){ ?>
+
+<button class="nav" onclick="loadPage(<?php echo $page+1; ?>)">Next</button>
+
+<?php } ?>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+function loadPage(page){
+
+	var xhr=new XMLHttpRequest();
+
+	xhr.open("GET","<?php echo $self; ?>?page="+page,true);
+
+	xhr.onreadystatechange=function(){
+
+		if(xhr.readyState==4 && xhr.status==200){
+
+			var parser=new DOMParser();
+
+			var doc=parser.parseFromString(xhr.responseText,"text/html");
+
+			document.getElementById("kmc-area").innerHTML=
+			doc.getElementById("kmc-area").innerHTML;
+
+		}
+
+	};
+
+	xhr.send();
+
+}
+
+</script>
