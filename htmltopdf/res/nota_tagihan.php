@@ -246,7 +246,7 @@
     <p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<br />
 	<!-- <div style="font-size: 12px; font-weight: bold; margin-top: -5px;">Data timbangan akhir adalah sebagai berikut:</div> -->
-	<table style="width: 100%; border:0px; margin-top: -5px; margin-bottom: 5px; font-size:11px;" id="tableCheckout;">
+	<table style="width: 100%; border:0px; margin-top: -5px; margin-bottom: 5px; font-size:10px;" id="tableCheckout;">
 		<tr>
 			<td>Nama / Alias / Kode</td>
             <td>:</td>
@@ -509,7 +509,7 @@
                     <td style="vertical-align: top;">
                         :
                     </td>
-                    <td width="190" style="vertical-align: top;"> 
+                    <td width="190" style="vertical-align: top; font-size: 8px;"> 
                         <?php
                             $finalReffer = implode(", ", $reffer_array);
                             echo $finalReffer;
@@ -620,6 +620,23 @@
             }
             // jumlah hari periode
             $totalDaysPeriod = ($periodEnd - $periodStart) + 1;
+
+            $bulanIndo = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember'
+            ];
+
+            $namaBulan = $bulanIndo[(int)date('m')];
             ?>
 	
             <table style="width:100%; border:0px; margin-top:5px; font-size:7pt;">
@@ -633,12 +650,22 @@
                         = <b>Rp <?= number_format($cost_tonase, 0, ',', '.'); ?></b>
                     </td>
                 </tr>
+            </table>
+
+            <table style="width:100%; border:0px; font-size:7pt;">
+                <tr>
+                    <td style="width:20%; vertical-align:top;"><b>Periode</b></td>
+                    <td style="width:5%; vertical-align:top;">:</td>
+                    <td style="width:75%; vertical-align:top;">
+                        <?= $periodStart; ?> - <?= $periodEnd; ?> <?= $namaBulan . ' ' . date('Y'); ?>
+                    </td>
+                </tr>
             </table>    
     <?php } ?>
 
     <!-- <hr style="border: 1px dashed #525659; height: 1px;"> -->
      <br>
-	<page_footer>
+	<page_footer style="margin-top:20px;">
         <table style="width: 100%; high: 50px; border: solid 0px black; border-collapse: collapse; margin-top:5px; font-size:7pt;">
             <tr>
                 <th style="text-align: center;width: 33%;">Kasir</th>

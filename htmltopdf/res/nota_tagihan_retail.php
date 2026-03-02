@@ -49,6 +49,23 @@
     // jumlah hari periode
     $totalDaysPeriod = ($periodEnd - $periodStart) + 1;
 
+    $bulanIndo = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember'
+    ];
+
+    $namaBulan = $bulanIndo[(int)date('m')];
+
 
     // Query for create weighing
 	$tarifretail = executeScalar("SELECT pay_total FROM payment WHERE pay_id = '1'");
@@ -828,6 +845,16 @@
             </td>
         </tr>
     </table>
+
+    <table style="width:100%; border:0px; font-size:7pt;">
+        <tr>
+            <td style="width:20%; vertical-align:top;"><b>Periode</b></td>
+            <td style="width:5%; vertical-align:top;">:</td>
+            <td style="width:75%; vertical-align:top;">
+                <?= $periodStart; ?> - <?= $periodEnd; ?> <?= $namaBulan . ' ' . date('Y'); ?>
+            </td>
+        </tr>
+    </table>   
     <!-- <hr style="border: 1px dashed #525659; height: 1px;"> -->
      <br>
 	<page_footer>
