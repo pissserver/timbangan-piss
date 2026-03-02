@@ -246,7 +246,7 @@
     <p style="font-size: 10px; font-weight: bold; text-align: center; margin-top:0px;">(PASAR INDUK SURABAYA SIDOTOPO)</p>
 	<br />
 	<!-- <div style="font-size: 12px; font-weight: bold; margin-top: -5px;">Data timbangan akhir adalah sebagai berikut:</div> -->
-	<table style="width: 100%; border:0px; margin-top: -5px; margin-bottom: 5px; font-size:10px;" id="tableCheckout;">
+	<table style="width: 100%; border:0px; margin-top: -10px; margin-bottom: 5px; font-size:10px;" id="tableCheckout;">
 		<tr>
 			<td>Nama / Alias / Kode</td>
             <td>:</td>
@@ -665,7 +665,7 @@
 
     <!-- <hr style="border: 1px dashed #525659; height: 1px;"> -->
      <br>
-	<page_footer style="margin-top:20px;">
+	<page_footer style="margin-top:10px;">
         <table style="width: 100%; high: 50px; border: solid 0px black; border-collapse: collapse; margin-top:5px; font-size:7pt;">
             <tr>
                 <th style="text-align: center;width: 33%;">Kasir</th>
