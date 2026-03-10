@@ -27,7 +27,7 @@
     background: #ffffff;
     border-radius: 18px;
     box-shadow: 0 20px 40px rgba(16,24,40,.08);
-    margin-top: 40px;
+    margin-top: 20px;
     overflow: hidden;
 }
 
@@ -191,7 +191,14 @@
 	<?php include 'components/sidebar.php'; ?>
 
         <div id="page-wrapper">
-			<br><br>
+			<br><br><br><br>
+			<div class="alert alert-warning d-flex align-items-center" role="alert" style="margin: 0 0;">
+				<i class="fa fa-warning me-2" style="font-size: 18px;"></i>
+				<span style="font-size: 14px;">
+					Data KM Tonase dan KMM Mitra yang muncul pada halaman ini adalah data yang berstatus "Diajukan". Pastikan untuk melakukan proses ACC setiap harinya!
+				</span>
+			</div>
+			
             <div class="row">
                 <div class="col-lg-6">
 					<div class="dashboard-card">

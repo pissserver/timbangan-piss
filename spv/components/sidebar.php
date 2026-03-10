@@ -26,6 +26,8 @@
 	$photoUrl	= executeScalar("select photo from admin where username = '".$_SESSION['username']."'");
 
 	$countRevision = executeScalar("SELECT COUNT(revision_id) FROM revision WHERE status1 != 'Ditolak' AND status2 IS NULL");
+	$countKmAcc = executeScalar("SELECT COUNT(km_id) FROM km WHERE km_status = 'Diajukan'");
+	$countKmMitraAcc = executeScalar("SELECT COUNT(km_id) FROM km_mitra WHERE km_status = 'Diajukan'");
 
 	// Trophy Query
 	$monthNames = [
@@ -940,7 +942,20 @@
 						<li class="<?= isParentActive(['pay_tonase_mitra.php', 'pay_acc_tonase_mitra.php', 'pay.php', 'pay_km_mitra.php', 'pay_mitra.php', 'pay_mitra2.php']); ?>">
 							<a href="#"><i class="fa fa-credit-card fa-fw"></i> <span>ACC & Pembulatan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a class="<?= isActive(['pay.php']); ?>" href="pay.php"><i class="fa fa-check-square fa-fw"></i> ACC KM </a></li>
+								<li>
+									<a class="<?= isActive(['pay.php']); ?>" href="pay.php">
+										<?php 
+											if ($countKmAcc != 0) {
+												echo '<span class="notification-revision">' . $countKmAcc . '</span>';
+											} if ($countKmMitraAcc != 0) {
+												echo '<span class="notification-revision">' . $countKmMitraAcc . '</span>';
+											} else {
+												echo '<span class="notification-revision-hidden"></span>';
+											}
+										?>
+										<i class="fa fa-check-square fa-fw"></i> ACC KM 
+									</a>
+								</li>
 								<!-- <li><a class="<?= isActive(['pay_km_mitra.php']); ?>" href="pay_km_mitra.php"><i class="fa fa-users fa-fw"></i> ACC Setoran KM Mitra </a></li> -->
 								<li><a class="<?= isActive(['pay_mitra.php', 'pay_mitra2.php']); ?>" href="pay_mitra.php" style="display:flex; align-items:center;"><i class="fa fa-mail-forward fa-fw"></i></i> Pembulatan Upah Mitra </a></li>
 							</ul>
