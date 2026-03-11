@@ -13,8 +13,9 @@ $offset = ($page - 1) * $limit;
 $totalQ = mysql_query("
 	select count(*) as total
 	from weighing w
-	join merchant m on w.merchant_id = m.merchant_id
-	where m.merchant_status='Aktif'
+	INNER JOIN merchant m on w.merchant_id = m.merchant_id
+	where 
+	m.merchant_status='Aktif'
 	and w.weighing_sts='Keluar'
 	and w.weighing_sts3='Pending'
 	and (
@@ -42,7 +43,7 @@ $q = mysql_query("
 		m.merchant_type like '%$search%' OR
 		m.merchant_name like '%$search%'
 	)
-	order by weighing_id desc
+	order by w.weighing_id desc
 	limit $offset,$limit
 ");
 
@@ -54,7 +55,7 @@ while($d = mysql_fetch_array($q)){
 	<div class="payment-card-tonase">
 		<div class="payment-left">
 			<div class="nota-id-tonase">#'.$d['weighing_id'].'</div>
-			<div class="nota-date">'.date("d M Y", strtotime($d['date_out'])).'</div>
+			<div class="nota-date">'.date("d M Y", strtotime($d['date_check'])).'</div>
 			<div class="nota-truck"><i class="fa fa-truck"></i> '.$d['nopol'].'</div>
 		</div>
 

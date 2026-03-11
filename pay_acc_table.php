@@ -10,12 +10,6 @@
 	$ko_id  		= $year.$ko_id;
 	$check 			= executeScalar("select count(weighing_id) from weighing where weighing_sts3 = 'Pending'");
 	$cost_tonase 	= executeScalar("select sum(cost_tonase) from weighing where weighing_sts3 = 'Pending'");
-
-	// Search & Pagination
-	$search = isset($_GET['search']) ? mysql_real_escape_string($_GET['search']) : '';
-	$page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-	$limit  = 10;
-	$offset = ($page - 1) * $limit;
 ?>
 
 <style>
@@ -803,7 +797,7 @@
 
 		<div class="search-box">
 			<i class="fa fa-search"></i>
-			<input type="text" id="search" placeholder="Cari Nota / Nopol / Pedagang">
+			<input type="text" id="searchACC" placeholder="Cari Nota / Nopol / Pedagang">
 		</div>
 	</div><br>
 
@@ -1014,7 +1008,7 @@
 	let page = 1;
 
 	function loadData(){
-		let search = $('#search').val();
+		let search = $('#searchACC').val();
 		let limit  = $('#limit').val();
 
 		$('#data-info').html('Memuat data...');
@@ -1045,7 +1039,7 @@
 	$(document).ready(function(){
 		loadData();
 
-		$('#search').on('keyup', function(){
+		$('#searchACC').on('keyup', function(){
 			page = 1;
 			loadData();
 		});
