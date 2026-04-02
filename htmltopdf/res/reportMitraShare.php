@@ -125,9 +125,10 @@
 			$PISSTOTAL 	= 0;
 			while($r= mysql_fetch_array($query)){
 				$PISS = executeScalar("SELECT SUM(pios_fee) 
-						FROM laborer_fee 
+						FROM laborer_fee lf
+						JOIN weighing_mitra wm ON wm.weighing_id = lf.weighing_id
 						WHERE laborer_fee_sts = 'Baru' 
-						AND DATE(laborer_fee_date) = '".$r['date']."'");
+						AND DATE(date_check) = '".$r['date']."'");
 				$total = 0;
 				$total = 	$r['B001']+
 							$r['B002']+
