@@ -816,39 +816,104 @@ while ($r 	= mysql_fetch_array($edit)) {
 				</div>
 
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<i class="fa fa-wrench fa-fw"></i> NonKomoditi & Mitra
+							<div class="panel-heading" style="padding:5px 20px; display:flex; justify-content:space-between; align-items:center;">
+								<div style="font-weight:600; font-size:14px;">
+									<i class="fa fa-cube fa-fw"></i> NonKomoditi
+								</div>
+
+								<span style="
+									background: #f0f3ff;
+									color: #428bca;
+									font-size: 11px;
+									padding: 6px 14px;
+									border-radius: 20px;
+									font-weight: 600;
+									border: 1px solid #d6dcff;
+								">
+									Step 1
+								</span>
 							</div>
 							<div class="panel-body">
 								<div class="form-group">
-									<!-- <?php
-											// if ($kat_merchant != 'Tetap') {
-											// 	echo '';
-											// } else {
-											if ($status == 'Lunas' || $status == 'Batal' || $status2 == 'Digabung' || $status2 == 'Dipecah' || $status2 == 'Pecahan') {
-												echo ''; //Input Berat NonKomoditi
-											} else {
-												// zs
-											}
-											//}
-											?> -->
-									<?php if ($c != NULL && ($status2 != 'Gabungan' && $status4 != 'FromGabungan')) {
+									<?php if ($c == NULL && $status2 != 'Pecahan') { ?>
+										<button type="button" class="btn btn-block btn-outline btn-primary" onclick="nonkomoditi()">
+											Input Berat NonKomoditi
+										</button>
+									<?php } elseif ($c == NULL && $status2 == 'Pecahan') { ?>
+										<div class="alert alert-warning" role="alert">
+											<table>
+												<tr>
+													<td style="font-size:20px; padding-right: 10px;">
+														<i class="fa fa-info"></i>
+													</td>
+													<td>
+														<p style="font-size: 12px; padding-top:10px;">
+															Status pecahan tidak bisa diinput NonKomoditi
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+									<?php } elseif ($c != NULL && ($status2 != 'Gabungan' && $status4 != 'FromGabungan')) {
 										if ($r['noncommodity'] != 0) { ?>
 											<button type="button" class="btn btn-block btn-outline btn-success" onclick="nonkomoditi()">
 												<i class="fa fa-check"></i>&nbsp;Lihat Berat NonKomoditi
 											</button>
-										<?php } elseif ($r['noncommodity'] == 0) { ?>
+										<?php } else { ?>
 											<div style="margin-top: -15px;"></div>
 										<?php } ?>
-									<?php } elseif ($c == NULL && $status2 != 'Pecahan') { ?>
-										<button type="button" class="btn btn-block btn-outline btn-primary" onclick="nonkomoditi()">
-											Input Berat NonKomoditi
-										</button>
 									<?php } ?>
 								</div>
 
+								<?php if (($c != NULL && $r['noncommodity'] == 0) || ($c != NULL && ($status2 == 'Gabungan' || $status4 == 'FromGabungan'))) { ?>
+									<div class="alert alert-warning" role="alert" style="margin-top:-15px;">
+										<table>
+											<tr>
+												<td style="font-size:20px; padding-right: 10px;">
+													<i class="fa fa-info"></i>
+												</td>
+												<td>
+													<p style="font-size: 12px; padding-top:10px;">
+														<?php
+														$message = ($status2 == 'Gabungan' || $status4 == 'FromGabungan')
+															? 'Di nota Gabungan/Digabung (yang awalnya Gabungan) jika ada Berat NonKomoditi, lihat di nota referensi'
+															: 'Tidak ada Berat NonKomoditi';
+
+														echo $message;
+														?>
+													</p>
+												</td>
+											</tr>
+										</table>
+									</div>
+								<?php }
+								?>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="panel panel-primary">
+							<div class="panel-heading" style="padding:5px 20px; display:flex; justify-content:space-between; align-items:center;">
+								<div style="font-weight:600; font-size:14px;">
+									<i class="fa fa-users fa-fw"></i> Mitra
+								</div>
+
+								<span style="
+									background: #f0f3ff;
+									color: #428bca;
+									font-size: 11px;
+									padding: 6px 14px;
+									border-radius: 20px;
+									font-weight: 600;
+									border: 1px solid #d6dcff;
+								">
+									Step 2
+								</span>
+							</div>
+							<div class="panel-body">
 								<div class="form-group">
 									<a style="text-decoration: none;" href="mitra.php?id=<?php echo $id; ?>" data-toggle="modal" data-target="#modalMitra">
 										<?php if ($c != NULL && ($status2 != 'Gabungan' && $status4 != 'FromGabungan')) : ?>
@@ -870,26 +935,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 								</div>
 
 								<?php
-								if ($c == NULL) { ?>
-									<div class="alert alert-warning" role="alert" style="margin-top:0px;">
-										<table>
-											<tr>
-												<td style="font-size:20px; padding-right: 10px;">
-													<i class="fa fa-info" style="color: #8A6D3B;"></i>
-												</td>
-												<td>
-													<p style="font-size: 12px; padding-top:10px; color: #8A6D3B;">
-														Jika ada nonkomoditi, maka input nonkomoditi terlebih dahulu lalu mitra.
-													</p>
-												</td>
-											</tr>
-										</table>
-									</div>
-								<?php }
-								?>
-
-								<?php
-								if (($c != NULL && $r['laborer_sts'] == 'Tidak' && $r['noncommodity'] == 0) || ($c != NULL && $status2 == 'Gabungan') || ($c != NULL && $status2 == 'Dipecah' && $r['laborer_sts'] == 'Tidak' && $r['noncommodity'] == 0) || ($c != NULL && $status2 == 'Digabung' && $status4 == 'FromGabungan')) { ?>
+								if (($c != NULL && $r['laborer_sts'] == 'Tidak') || ($c != NULL && $status2 == 'Gabungan') || ($c != NULL && $status2 == 'Dipecah' && $r['laborer_sts'] == 'Tidak') || ($c != NULL && $status2 == 'Digabung' && $status4 == 'FromGabungan')) { ?>
 									<div class="alert alert-warning" role="alert" style="margin-top:-15px;">
 										<table>
 											<tr>
@@ -900,8 +946,8 @@ while ($r 	= mysql_fetch_array($edit)) {
 													<p style="font-size: 12px; padding-top:10px;">
 														<?php
 														$message = ($status2 == 'Gabungan' || $status4 == 'FromGabungan')
-															? 'Di nota Gabungan/Digabung (yang awalnya Gabungan) jika ada Berat NonKomoditi atau Mitra, lihat di nota referensi'
-															: 'Tidak ada Berat NonKomoditi dan Mitra';
+															? 'Di nota Gabungan/Digabung (yang awalnya Gabungan) jika ada Mitra, lihat di nota referensi'
+															: 'Tidak ada Mitra';
 
 														echo $message;
 														?>
@@ -916,10 +962,24 @@ while ($r 	= mysql_fetch_array($edit)) {
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<i class="fa fa-object-ungroup fa-fw"></i> Pecah & Gabung
+							<div class="panel-heading" style="padding:5px 20px; display:flex; justify-content:space-between; align-items:center;">
+								<div style="font-weight:600; font-size:14px;">
+									<i class="fa fa-object-ungroup fa-fw"></i> Pecah & Gabung
+								</div>
+
+								<span style="
+									background: #f0f3ff;
+									color: #428bca;
+									font-size: 11px;
+									padding: 6px 14px;
+									border-radius: 20px;
+									font-weight: 600;
+									border: 1px solid #d6dcff;
+								">
+									Step 3
+								</span>
 							</div>
 							<div class="panel-body">
 								<?php
@@ -984,10 +1044,24 @@ while ($r 	= mysql_fetch_array($edit)) {
 						</div>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<i class="fa fa-print fa-fw"></i> Print Nota
+							<div class="panel-heading" style="padding:5px 20px; display:flex; justify-content:space-between; align-items:center;">
+								<div style="font-weight:600; font-size:14px;">
+									<i class="fa fa-print fa-fw"></i> Print Nota
+								</div>
+
+								<span style="
+									background: #f0f3ff;
+									color: #428bca;
+									font-size: 11px;
+									padding: 6px 14px;
+									border-radius: 20px;
+									font-weight: 600;
+									border: 1px solid #d6dcff;
+								">
+									Step 4
+								</span>
 							</div>
 							<div class="panel-body">
 								<div class="form-group">
