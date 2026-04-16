@@ -814,7 +814,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 						</div>
 					</div>
 				</div>
-
+ 
 				<div class="row">
 					<div class="col-lg-3">
 						<div class="panel panel-primary">
@@ -1856,7 +1856,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 		</div>
 
 		<!-- Modal alert process mitra & save data -->
-		<?php if ($c == NULL) { ?>
+		<!-- <?php if ($c == NULL) { ?>
 			<div id="alertMitraModal" class="modal fade modern-alert" tabindex="-1">
 				<div class="modal-dialog modal-sm modal-dialog-centered">
 					<div class="modal-content modern-box">
@@ -1881,11 +1881,11 @@ while ($r 	= mysql_fetch_array($edit)) {
 					</div>
 				</div>
 			</div>
-		<?php } ?>
+		<?php } ?> -->
 
 
 		<!-- Script auto load modal -->
-		<?php if ($c == NULL) { ?>
+		<!-- <?php if ($c == NULL) { ?>
 			<script>
 				$(function() {
 					$('#alertMitraModal').modal({
@@ -1909,7 +1909,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 					});
 				});
 			</script>
-		<?php } ?>
+		<?php } ?> -->
 
 
 		<script>
