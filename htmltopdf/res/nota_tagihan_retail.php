@@ -95,11 +95,11 @@
             $jumlahLapak = $counter;
             
             // * Total biaya retail
-            if ($merchant_id == 'L0022') {
-                $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
-            } else {
+            // if ($merchant_id == 'L0022') {
+            //     $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
+            // } else {
                 $totalRetailCost = $tarifretail * $totalDaysPeriod * $jumlahLapak;
-            }
+            // }
 
             // toggle ON = iya, toggle OFF = tidak
             $printStatus = isset($_POST['cetak'][$merchant_id]) ? 'iya' : 'tidak';
@@ -225,11 +225,11 @@
         $jumlahLapak = $counter;
             
         // * Total biaya retail
-        if ($merchant_id == 'L0022') {
-            $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
-        } else {
+        // if ($merchant_id == 'L0022') {
+        //     $totalRetailCost = $tarifretail * $totalDaysPeriod * 2;
+        // } else {
             $totalRetailCost = $tarifretail * $totalDaysPeriod * $jumlahLapak;
-        }
+        // }
 
         // generate ID
 		$year 	= date("y");
@@ -839,7 +839,8 @@
             <td style="width:5%; vertical-align:top;">:</td>
             <td style="width:75%; vertical-align:top;">
                 Rp <?= number_format($tarifretail, 0, ',', '.'); ?>
-                × <?= $r['merchant_id'] == 'L0022' ? '2' : $totalLapak; ?> lapak
+                <!-- × <?= $r['merchant_id'] == 'L0022' ? '2' : $totalLapak; ?> lapak -->
+                × <?= $totalLapak; ?> lapak
                 × <?= $totalDaysPeriod; ?> hari
                 = <b>Rp <?= number_format($cost_tonase, 0, ',', '.'); ?></b>
             </td>
