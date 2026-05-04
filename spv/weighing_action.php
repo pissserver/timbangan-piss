@@ -2588,7 +2588,7 @@
 		$goods 					= executeScalar("select goods_id from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		// $laborer 				= executeScalar("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		$laborer 				= mysql_query("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
-		$weighing_sts2			= mysql_query("select weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$weighing_sts2			= mysql_query("select weighing_id,weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$name_merchant	 		= executeScalar("select merchant_name from merchant where merchant_id = '".$merchant."'");
 		$weight_in				= executeScalar("select sum(weight_in) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$weight_out 			= executeScalar("select sum(weight_out) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
@@ -2776,6 +2776,7 @@
 		if($insert){
 			//Ambil weighing_id dr query yg dilakukan sebelumnya
 			$wid	= mysql_insert_id();
+
 			//update status transaksi yg telah digabung
 			while ($row = mysql_fetch_array($weighing_sts2)) {
 				if ($row['weighing_sts2'] == 'Gabungan') {
@@ -2806,7 +2807,29 @@
 						weighing_sts2 != 'Tanpa Timbang' AND
 						DATE(date_check) = '".$daten."' AND
 						weighing_id != '".$wid."'
+					");
+				}
+
+				// Insert, check, and update Reffer Weighing
+				// 1. Insert relasi langsung
+				mysql_query("
+					INSERT INTO reffer_weighing (parent_id, child_id) 
+					VALUES ('".$wid."', '".$row['weighing_id']."')
 				");
+
+				// 2. Ambil semua child dari parent lama
+				$getChild = mysql_query("
+					SELECT child_id 
+					FROM reffer_weighing 
+					WHERE parent_id = '".$row['weighing_id']."'
+				");
+
+				while ($child = mysql_fetch_assoc($getChild)) {
+					// 3. Insert semua child lama ke parent baru
+					mysql_query("
+						INSERT INTO reffer_weighing (parent_id, child_id) 
+						VALUES ('".$wid."', '".$child['child_id']."')
+					");
 				}
 			}
 									
@@ -4050,7 +4073,7 @@
 		}
 	}
 
-		// Potong Tarif Centeng
+	// Potong Tarif Centeng
 	elseif($task=='cutCenteng'){
 		$id					= $_GET['id'];
 		$merchant			= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
