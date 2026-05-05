@@ -12,6 +12,216 @@
 	$edit		= mysql_query("select * from weighing where weighing_id = '".$id."'");
 ?>
 
+<style>
+	/* Reference Cards */
+		/* CARD BASE */
+		.ref-card-active {
+			width: 100%;
+			background: linear-gradient(135deg, #eef2ff, #f8fafc);
+			border: 1px solid #e0e7ff;
+			border-radius: 14px;
+			padding: 5px 16px;
+
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			transition: 0.2s;
+		}
+
+		.ref-card-active:hover {
+			transform: translateY(-2px);
+		}
+
+		/* EMPTY */
+		.ref-card-empty {
+			width: 100%;
+			background: #f8fafc;
+			border: 1px dashed #e2e8f0;
+			border-radius: 14px;
+			padding: 5px 16px;
+
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		/* CONTENT */
+		.ref-content {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		/* ICON */
+		.ref-icon {
+			width: 30px;
+			height: 30px;
+			background: #4f46e5;
+			color: white;
+			border-radius: 10px;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.ref-icon-empty {
+			width: 30px;
+			height: 30px;
+			background: #e2e8f0;
+			color: #64748b;
+			border-radius: 10px;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		/* TEXT */
+		.ref-title {
+			font-weight: 600;
+			font-size: 14px;
+		}
+
+		/* BUTTON */
+		.btn-ref {
+			background: #4f46e5;
+			color: #fff;
+			border: none;
+			border-radius: 20px !important;
+		}
+
+		.btn-ref:hover {
+			background: #4338ca;
+		}
+
+		/* Modal Reference */
+		.modal-modern-ref {
+			border-radius: 16px;
+			overflow: hidden;
+			border: none;
+		}
+
+		/* HEADER */
+		.modal-ref-header {
+			background: linear-gradient(135deg, #1e293b, #0f172a);
+			color: #fff;
+			padding: 18px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.header-left {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.text {
+			display: flex;
+			flex-direction: column;
+			line-height: 1.2;
+		}
+
+		.modal-ref-header .title {
+			font-weight: 600;
+			font-size: 16px;
+		}
+
+		/* ICON */
+		.icon-box {
+			width: 38px;
+			height: 38px;
+			background: rgba(255,255,255,0.12);
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.btn-close-custom {
+			width: 32px;
+			height: 32px;
+			border-radius: 8px;
+			background: rgba(255,255,255,0.15);
+			border: none;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: 0.2s;
+		}
+
+		.btn-close-custom:hover {
+			background: rgba(255,255,255,0.25);
+		}
+
+		/* BODY */
+		#modalBody {
+			padding: 22px;
+		}
+
+		/* SECTION CARD */
+		.ref-card {
+			background: #f8fafc;
+			border-radius: 12px;
+			padding: 15px;
+			margin-bottom: 15px;
+		}
+
+		/* TITLE */
+		.ref-title {
+			font-weight: 600;
+			font-size: 14px;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* BADGE MODERN */
+		.ref-badge {
+			display: inline-block;
+			padding: 6px 12px;
+			border-radius: 999px;
+			font-size: 13px;
+			margin: 5px;
+			cursor: pointer;
+			transition: 0.2s;
+			font-weight: 500;
+		}
+
+		/* COLORS */
+		.badge-parent {
+			background: #dbeafe;
+			color: #1d4ed8;
+		}
+
+		.badge-child {
+			background: #dcfce7;
+			color: #15803d;
+		}
+
+		.badge-chain {
+			background: #fef3c7;
+			color: #b45309;
+		}
+
+		/* HOVER */
+		.ref-badge:hover {
+			transform: scale(1.05);
+		}
+
+		/* BUTTON */
+		.btn-soft {
+			background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+			color: #fff;
+			border-radius: 10px;
+		}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -204,7 +414,8 @@
 												<input type="text" class="form-control" value="<?php echo $r['weighing_sts2']; ?>" disabled>  
 												</select>
 											</div>
-											<div class="form-group" style="margin-bottom:20px;">
+											<!-- Old reffer ui -->
+											<!-- <div class="form-group" style="margin-bottom:20px;">
 												<label>Nota Refrensi</label>
 												<input type="text" class="form-control" id="reff" name="reff" value="<?php 
 												if($r['reffer']!=NULL && ($r['weighing_sts2'] == 'Gabungan' || $r['weighing_sts2'] == 'Dipecah')){
@@ -218,7 +429,95 @@
 												} else{
 													echo 'Tidak Ada';
 												} ?>" disabled>
+											</div> -->
+
+											<!-- New reffer UI -->
+											<div class="form-group mt-2">
+
+												<label class="mb-2">Nota Referensi</label>
+
+												<?php if ($r['reffer'] != NULL) { ?>
+															
+													<div class="ref-card-active">
+														<div class="ref-content">
+																	
+															<div class="ref-icon">
+																<i class="fa fa-link"></i>
+															</div>
+
+															<div class="ref-text">
+																<small>Klik untuk melihat detail relasi nota</small>
+															</div>
+
+														</div>
+
+														<button 
+															class="btn-sm btn-ref"
+															data-toggle="modal" 
+															data-target="#modalReffer"
+															onclick="loadRefferDetail('<?php echo $r['weighing_id']; ?>')"
+														>
+															<i class="fa fa-search me-1"></i> Lihat
+														</button>
+													</div>
+
+												<?php } else { ?>
+
+													<div class="ref-card-empty">
+														<div class="ref-icon-empty">
+															<i class="fa fa-unlink"></i>
+														</div>
+
+														<div>
+															<small class="text-muted">Nota ini tidak memiliki relasi</small>
+														</div>
+													</div>
+
+												<?php } ?>
+
 											</div>
+
+											<!-- Modal reffer -->
+												<div class="modal fade" id="modalReffer" tabindex="-1">
+													<div class="modal-dialog modal-lg modal-dialog-centered">
+														<div class="modal-content modal-modern-ref">
+
+															<!-- HEADER -->
+															<div class="modal-ref-header">
+
+																<!-- KIRI (ICON + TITLE HARUS DALAM 1 FLEX) -->
+																<div class="header-left">
+																	<div class="icon-box">
+																		<i class="fa fa-link"></i>
+																	</div>
+
+																	<div class="text">
+																		<div class="title">Detail Relasi Nota</div>
+																		<small id="modalTitle"></small>
+																	</div>
+																</div>
+
+																<!-- KANAN (CLOSE) -->
+																<button type="button" class="btn-close-custom" data-dismiss="modal">
+																	<i class="fa fa-times"></i>
+																</button>
+
+															</div>
+
+															<!-- BODY -->
+															<div class="modal-body" id="modalBody">
+																<div class="text-center text-muted">Loading...</div>
+															</div>
+
+															<!-- FOOTER -->
+															<div class="modal-footer border-0">
+																<button class="btn btn-soft" data-dismiss="modal">Tutup</button>
+															</div>
+
+														</div>
+													</div>
+												</div>
+
 											<div class="form-group" style="margin-bottom:20px;">
 												<label>Status Print & Pengecekan Nota</label>
 												<input type="text" class="form-control" value="<?php 
@@ -392,6 +691,23 @@
 		}
 		function clearNotif(){$("#notifArea").html("");}
     </script>
+
+	<!-- Ajax reffer -->
+	<script>
+		function loadRefferDetail(id) {
+			$('#modalBody').html('<div class="text-center text-muted">Loading...</div>');
+
+			$.ajax({
+				url: 'get_reffer_detail_listing.php',
+				method: 'POST',
+				data: { id: id },
+				success: function(res) {
+					$('#modalBody').html(res);
+				}
+			});
+		}
+	</script>
+
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
