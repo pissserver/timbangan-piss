@@ -2588,7 +2588,7 @@
 		$goods 					= executeScalar("select goods_id from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		// $laborer 				= executeScalar("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		$laborer 				= mysql_query("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
-		$weighing_sts2			= mysql_query("select weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$weighing_sts2			= mysql_query("select weighing_id,weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$name_merchant	 		= executeScalar("select merchant_name from merchant where merchant_id = '".$merchant."'");
 		$weight_in				= executeScalar("select sum(weight_in) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$weight_out 			= executeScalar("select sum(weight_out) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
@@ -2776,6 +2776,7 @@
 		if($insert){
 			//Ambil weighing_id dr query yg dilakukan sebelumnya
 			$wid	= mysql_insert_id();
+
 			//update status transaksi yg telah digabung
 			while ($row = mysql_fetch_array($weighing_sts2)) {
 				if ($row['weighing_sts2'] == 'Gabungan') {
@@ -2793,7 +2794,23 @@
 							DATE(date_check) = '".$daten."' AND
 							weighing_id != '".$wid."'
 					");
-				} else {
+				} elseif ($row['weighing_sts2'] == 'Pecahan') {
+					$update = mysql_query("
+						UPDATE weighing 
+						SET 
+							weighing_sts = 'Batal',
+							weighing_sts2 = 'Digabung',
+							reffer = '".$wid."',
+							weighing_sts4 = 'FromPecahan'
+						WHERE 
+							merchant_id = '".$merchant."' AND
+							weighing_sts = 'Keluar' AND
+							weighing_sts2 = 'Pecahan' AND
+							DATE(date_check) = '".$daten."' AND
+							weighing_id != '".$wid."'
+					");
+				}
+				else {
 					$update = mysql_query("
 					UPDATE weighing 
 					SET 
@@ -2806,7 +2823,29 @@
 						weighing_sts2 != 'Tanpa Timbang' AND
 						DATE(date_check) = '".$daten."' AND
 						weighing_id != '".$wid."'
+					");
+				}
+
+				// Insert, check Reffer Weighing
+				// 1. Insert relasi langsung
+				mysql_query("
+					INSERT INTO reffer_weighing (parent_id, child_id) 
+					VALUES ('".$wid."', '".$row['weighing_id']."')
 				");
+
+				// 2. Ambil semua child dari parent lama
+				$getChild = mysql_query("
+					SELECT child_id 
+					FROM reffer_weighing 
+					WHERE parent_id = '".$row['weighing_id']."'
+				");
+
+				while ($child = mysql_fetch_assoc($getChild)) {
+					// 3. Insert semua child lama ke parent baru
+					mysql_query("
+						INSERT INTO reffer_weighing (parent_id, child_id) 
+						VALUES ('".$wid."', '".$child['child_id']."')
+					");
 				}
 			}
 									
@@ -3048,6 +3087,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."', 
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 2 ======================================================================================================================
@@ -3091,6 +3138,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 3 ======================================================================================================================
@@ -3134,6 +3189,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 4 ======================================================================================================================
@@ -3177,7 +3240,16 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
+
 					// PISAH NOTA KE 5 ======================================================================================================================
 					if($mc5!=''&&$n5!=''){
 						if($laborer == "Ya"){
@@ -3219,6 +3291,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 6 ======================================================================================================================
@@ -3262,6 +3342,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 7 ======================================================================================================================
@@ -3305,6 +3393,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 8 ======================================================================================================================
@@ -3348,6 +3444,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 9 ======================================================================================================================
@@ -3391,6 +3495,14 @@
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					// PISAH NOTA KE 10 ======================================================================================================================
@@ -3429,10 +3541,18 @@
 						`checker_id`, `merchant_id`, `goods_id`, `date_in`, `date_out`, `time_in`, `time_out`, `laborer_sts`, 
 						`cost_tonase`, `cost_real_tonase`, `cost_bongkar`, `cost`, `cost2`,  
 						`weighing_sts`, `weighing_sts2`, `reffer`) 
-						VALUES ('', '".$nopol."', '".$weight_in."', '".$weight_out."', '".$rafa."', '".$n10."', '".$checker."', '".$mc."', '".$goods."', 
+						VALUES ('', '".$nopol."', '".$weight_in."', '".$weight_out."', '".$rafa."', '".$n10."', '".$checker."', '".$mc10."', '".$goods."', 
 						'".$date_in."', '".$date_out."', '".$time_in."', '".$time_out."', '".$laborer."', 
 						'".$cost_tonase."', '".$cost_real_tonase."', '".$cost_bongkar."',  '".$cost1."', '".$cost2."',
 						'Keluar', 'Pecahan', '".$id."')");
+
+						// Insert, check Reffer Weighing
+						// 1. Insert relasi langsung
+						$child_id	= mysql_insert_id();
+						mysql_query("
+							INSERT INTO reffer_weighing (parent_id, child_id) 
+							VALUES ('".$id."', '".$child_id."')
+						");
 					}
 
 					//update status transaksi yg lama
@@ -4050,7 +4170,7 @@
 		}
 	}
 
-		// Potong Tarif Centeng
+	// Potong Tarif Centeng
 	elseif($task=='cutCenteng'){
 		$id					= $_GET['id'];
 		$merchant			= executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
