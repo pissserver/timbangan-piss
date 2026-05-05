@@ -433,9 +433,7 @@
 
 											<!-- New reffer UI -->
 											<div class="form-group mt-2">
-
 												<label class="mb-2">Nota Referensi</label>
-
 												<?php if ($r['reffer'] != NULL) { ?>
 															
 													<div class="ref-card-active">
@@ -452,6 +450,7 @@
 														</div>
 
 														<button 
+															type="button"
 															class="btn-sm btn-ref"
 															data-toggle="modal" 
 															data-target="#modalReffer"
@@ -460,9 +459,7 @@
 															<i class="fa fa-search me-1"></i> Lihat
 														</button>
 													</div>
-
 												<?php } else { ?>
-
 													<div class="ref-card-empty">
 														<div class="ref-icon-empty">
 															<i class="fa fa-unlink"></i>
@@ -472,51 +469,49 @@
 															<small class="text-muted">Nota ini tidak memiliki relasi</small>
 														</div>
 													</div>
-
 												<?php } ?>
-
 											</div>
 
 											<!-- Modal reffer -->
-												<div class="modal fade" id="modalReffer" tabindex="-1">
-													<div class="modal-dialog modal-lg modal-dialog-centered">
-														<div class="modal-content modal-modern-ref">
+											<div class="modal fade" id="modalReffer" tabindex="-1">
+												<div class="modal-dialog modal-lg modal-dialog-centered">
+													<div class="modal-content modal-modern-ref">
 
-															<!-- HEADER -->
-															<div class="modal-ref-header">
+														<!-- HEADER -->
+														<div class="modal-ref-header">
 
-																<!-- KIRI (ICON + TITLE HARUS DALAM 1 FLEX) -->
-																<div class="header-left">
-																	<div class="icon-box">
-																		<i class="fa fa-link"></i>
-																	</div>
-
-																	<div class="text">
-																		<div class="title">Detail Relasi Nota</div>
-																		<small id="modalTitle"></small>
-																	</div>
+															<!-- KIRI (ICON + TITLE HARUS DALAM 1 FLEX) -->
+															<div class="header-left">
+																<div class="icon-box">
+																	<i class="fa fa-link"></i>
 																</div>
 
-																<!-- KANAN (CLOSE) -->
-																<button type="button" class="btn-close-custom" data-dismiss="modal">
-																	<i class="fa fa-times"></i>
-																</button>
-
+																<div class="text">
+																	<div class="title">Detail Relasi Nota</div>
+																	<small id="modalTitle"></small>
+																</div>
 															</div>
 
-															<!-- BODY -->
-															<div class="modal-body" id="modalBody">
-																<div class="text-center text-muted">Loading...</div>
-															</div>
-
-															<!-- FOOTER -->
-															<div class="modal-footer border-0">
-																<button class="btn btn-soft" data-dismiss="modal">Tutup</button>
-															</div>
+															<!-- KANAN (CLOSE) -->
+															<button type="button" class="btn-close-custom" data-dismiss="modal">
+																<i class="fa fa-times"></i>
+															</button>
 
 														</div>
+
+														<!-- BODY -->
+														<div class="modal-body" id="modalBody">
+															<div class="text-center text-muted">Loading...</div>
+														</div>
+
+														<!-- FOOTER -->
+														<div class="modal-footer border-0">
+															<button class="btn btn-soft" data-dismiss="modal">Tutup</button>
+														</div>
+
 													</div>
 												</div>
+											</div>
 
 											<div class="form-group" style="margin-bottom:20px;">
 												<label>Status Print & Pengecekan Nota</label>
@@ -547,6 +542,7 @@
 													}
 												?>" disabled>
 											</div>
+
 											<div class="form-group" style="margin-bottom:20px;">
 												<label>Tanggal Bayar</label>
 												<input type="text" class="form-control" id="date_out" name="date_out" value="<?php 
@@ -558,6 +554,7 @@
 												?>" disabled >
 											</div>
 										</div>
+
 										<div class="col-md-3">
 											<div class="form-group" style="margin-bottom:20px;">
 												<label>Kasir</label>

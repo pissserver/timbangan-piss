@@ -918,6 +918,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 																</div>
 
 																<button 
+																	type="button"
 																	class="btn-sm btn-ref"
 																	data-toggle="modal" 
 																	data-target="#modalReffer"
