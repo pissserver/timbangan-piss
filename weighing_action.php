@@ -2235,7 +2235,7 @@
 		$goods 					= executeScalar("select goods_id from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		// $laborer 				= executeScalar("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_id = '".$id."'");
 		$laborer 				= mysql_query("select laborer_sts from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
-		$weighing_sts2			= mysql_query("select weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
+		$weighing_sts2			= mysql_query("select weighing_id, weighing_sts2 from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$name	 				= executeScalar("select merchant_name from merchant where merchant_id = '".$merchant."'");
 		$weight_in				= executeScalar("select sum(weight_in) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
 		$weight_out 			= executeScalar("select sum(weight_out) from weighing where merchant_id = '".$merchant."' and weighing_sts = 'Keluar' and weighing_sts2 != 'Tanpa Timbang' and DATE(date_check) = '".$daten."'");
