@@ -151,7 +151,7 @@
 				$tot_other 	= $tot_other+$other;
 				$tot_vegie 	= $tot_vegie+$vegie;
 				$tot_fruit 	= $tot_fruit+$fruit;
-				$tot_cost 	= $tot_cost+$vegie+$fruit;
+				$tot_cost 	= $tot_cost+$vegie+$fruit+$other;
 		?>
 		<tr>
 			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
@@ -159,7 +159,7 @@
 			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($other); ?></td>
 			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($vegie); ?></td>
 			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($fruit); ?></td>
-			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($vegie + $fruit); ?></td>
+			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($vegie + $fruit +$other); ?></td>
 		</tr>
 		<?php 
 			$no++;
