@@ -309,7 +309,21 @@ while($data2 = mysql_fetch_array($query2)){
 					<button class="btn btn-outline btn-success btn-sm">
 						<i class="fa fa-money"></i> Bayar
 					</button>
-				</a>';
+				</a>
+				<button 
+					class="btn btn-outline btn-warning btn-sm btn-transfer"
+					data-id="'.$data2['weighing_id'].'"
+					data-total="'.$data2['cost_bayar'].'"
+					data-merchant="'.$merchant.'"
+					data-type="'.$data2['merchant_type'].'"
+					data-id-merchant="'.$data2['merchant_id'].'"
+					data-netto="'.$data2['netto'].'"
+					data-payment="mitra"
+				>
+
+					<i class="fa fa-qrcode"></i> QRIS
+
+				</button>';
 			}
 		?>
 		</div>
@@ -339,92 +353,189 @@ while($data2 = mysql_fetch_array($query2)){
 
 
 <script>
-const perPageMitra = 5;
-const maxPageShownMitra = 5;
-let pageMitra = 1;
+	const perPageMitra = 5;
+	const maxPageShownMitra = 5;
+	let pageMitra = 1;
 
-function renderPaginationMitra(total){
-	const pages = Math.ceil(total / perPageMitra);
-	if(pages <= 1){
-		payPaginationMitra.innerHTML = '';
-		return;
-	}
-
-	let html = '';
-
-	/* PREV */
-	if(pageMitra > 1){
-		html += `<button onclick="goPageMitra(${pageMitra-1})">‹ Prev</button>`;
-	}
-
-	/* RANGE */
-	let start = Math.max(1, pageMitra - Math.floor(maxPageShownMitra / 2));
-	let end   = start + maxPageShownMitra - 1;
-
-	if(end > pages){
-		end = pages;
-		start = Math.max(1, end - maxPageShownMitra + 1);
-	}
-
-	if(start > 1){
-		html += `<button onclick="goPageMitra(1)">1</button>`;
-		if(start > 2) html += `<span class="dots">...</span>`;
-	}
-
-	for(let i=start;i<=end;i++){
-		html += `<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
-	}
-
-	if(end < pages){
-		if(end < pages - 1) html += `<span class="dots">...</span>`;
-		html += `<button onclick="goPageMitra(${pages})">${pages}</button>`;
-	}
-
-	/* NEXT */
-	if(pageMitra < pages){
-		html += `<button onclick="goPageMitra(${pageMitra+1})">Next ›</button>`;
-	}
-
-	payPaginationMitra.innerHTML = html;
-}
-
-function goPageMitra(p){
-	pageMitra = p;
-	filterMitra();
-}
-
-function filterMitra(){
-	const key = paySearchMitra.value.toLowerCase();
-	const items = document.querySelectorAll('.pay-item-mitra');
-	let visible = [];
-
-	items.forEach(item=>{
-		const text = item.querySelector('.pay-search-text-mitra').innerText;
-		if(text.includes(key)){
-			item.style.display = 'grid';
-			visible.push(item);
-		}else{
-			item.style.display = 'none';
+	function renderPaginationMitra(total){
+		const pages = Math.ceil(total / perPageMitra);
+		if(pages <= 1){
+			payPaginationMitra.innerHTML = '';
+			return;
 		}
+
+		let html = '';
+
+		/* PREV */
+		if(pageMitra > 1){
+			html += `<button onclick="goPageMitra(${pageMitra-1})">‹ Prev</button>`;
+		}
+
+		/* RANGE */
+		let start = Math.max(1, pageMitra - Math.floor(maxPageShownMitra / 2));
+		let end   = start + maxPageShownMitra - 1;
+
+		if(end > pages){
+			end = pages;
+			start = Math.max(1, end - maxPageShownMitra + 1);
+		}
+
+		if(start > 1){
+			html += `<button onclick="goPageMitra(1)">1</button>`;
+			if(start > 2) html += `<span class="dots">...</span>`;
+		}
+
+		for(let i=start;i<=end;i++){
+			html += `<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
+		}
+
+		if(end < pages){
+			if(end < pages - 1) html += `<span class="dots">...</span>`;
+			html += `<button onclick="goPageMitra(${pages})">${pages}</button>`;
+		}
+
+		/* NEXT */
+		if(pageMitra < pages){
+			html += `<button onclick="goPageMitra(${pageMitra+1})">Next ›</button>`;
+		}
+
+		payPaginationMitra.innerHTML = html;
+	}
+
+	function goPageMitra(p){
+		pageMitra = p;
+		filterMitra();
+	}
+
+	function filterMitra(){
+		const key = paySearchMitra.value.toLowerCase();
+		const items = document.querySelectorAll('.pay-item-mitra');
+		let visible = [];
+
+		items.forEach(item=>{
+			const text = item.querySelector('.pay-search-text-mitra').innerText;
+			if(text.includes(key)){
+				item.style.display = 'grid';
+				visible.push(item);
+			}else{
+				item.style.display = 'none';
+			}
+		});
+
+		visible.forEach((item,i)=>{
+			item.style.display =
+				(i >= (pageMitra-1)*perPageMitra && i < pageMitra*perPageMitra)
+				? 'grid' : 'none';
+		});
+
+		document.getElementById('payEmptyMitra').style.display =
+			visible.length ? 'none' : 'block';
+
+		renderPaginationMitra(visible.length);
+	}
+
+	paySearchMitra.addEventListener('keyup',()=>{
+		pageMitra = 1;
+		filterMitra();
 	});
 
-	visible.forEach((item,i)=>{
-		item.style.display =
-			(i >= (pageMitra-1)*perPageMitra && i < pageMitra*perPageMitra)
-			? 'grid' : 'none';
-	});
-
-	document.getElementById('payEmptyMitra').style.display =
-		visible.length ? 'none' : 'block';
-
-	renderPaginationMitra(visible.length);
-}
-
-paySearchMitra.addEventListener('keyup',()=>{
-	pageMitra = 1;
 	filterMitra();
-});
-
-filterMitra();
 </script>
+
+
+<!-- Midtrans -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
+
+<script>
+	document.querySelectorAll('.btn-transfer').forEach(button => {
+
+		button.addEventListener('click', async function(){
+
+			const weighing_id = this.dataset.id;
+			const total       = this.dataset.total;
+			const merchant    = this.dataset.merchant;
+			const type        = this.dataset.type;
+			const merchant_id = this.dataset.idMerchant;
+			const netto       = this.dataset.netto;
+			const payment     = this.dataset.payment;
+
+			try{
+
+				const response = await fetch('configMidTrans.php', {
+
+					method: 'POST',
+
+					headers:{
+						'Content-Type':'application/x-www-form-urlencoded'
+					},
+
+					body: new URLSearchParams({
+						weighing_id : weighing_id,
+						total       : total,
+						merchant    : merchant,
+						type        : type,
+						merchant_id : merchant_id,
+						netto       : netto,	
+						payment	 	: payment
+					})
+
+				});
+
+				const snapToken = await response.text();
+
+				console.log(snapToken);
+
+				snap.pay(snapToken, {
+
+					onSuccess: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Mitra Berhasil',
+							text: 'Terima kasih telah melakukan pembayaran.',
+							icon: 'success'
+						}).then(()=>{
+							location.reload();
+						});
+					},
+
+					onPending: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Mitra Pending',
+							text: 'Pembayaran sedang diproses.',
+							icon: 'warning'
+						});
+
+					},
+
+					onError: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Mitra Gagal',
+							text: 'Terjadi kesalahan dalam proses pembayaran.',
+							icon: 'error'
+						});
+
+					}
+
+				});
+
+			}catch(error){
+
+				console.log(error);
+
+				swal.fire({
+					title: 'Gagal Koneksi',
+					text: 'Terjadi kesalahan dalam koneksi ke server.',
+					icon: 'error'
+				});
+
+			}
+
+		});
+
+	});
+</script>
+<!-- End Midtrans -->
 

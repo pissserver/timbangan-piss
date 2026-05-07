@@ -449,8 +449,23 @@ if ($checkCenteng){
 	<i class="fa fa-money"></i> Bayar
 
 	</button>
-
+	
 	</a>
+
+	<button 
+		class="btn btn-outline btn-warning btn-sm btn-transfer"
+		data-id="'.$data['weighing_id'].'"
+		data-total="'.$data['cost_tonase'].'"
+		data-merchant="'.$merchant.'"
+		data-type="'.$data['merchant_type'].'"
+		data-id-merchant="'.$data['merchant_id'].'"
+		data-netto="'.$data['netto'].'"
+		data-payment="tonase"
+	>
+
+		<i class="fa fa-qrcode"></i> QRIS
+
+	</button>
 
 	';
 
@@ -526,176 +541,260 @@ PAGINATION JS (PERSIS KODE ASLI KAMU)
 
 
 <script>
+	const payPerPage = 5;
+	const maxPageShown = 5;
+	let payPage = 1;
 
+	function renderPayPagination(total){
 
-const payPerPage = 5;
-const maxPageShown = 5;
-let payPage = 1;
+		const pages = Math.ceil(total / payPerPage);
 
+		if(pages <= 1){
 
+			payPagination.innerHTML = '';
 
-function renderPayPagination(total){
-
-	const pages = Math.ceil(total / payPerPage);
-
-	if(pages <= 1){
-
-		payPagination.innerHTML = '';
-
-		return;
-
-	}
-
-
-	let html = '';
-
-
-	/* PREV */
-
-	if(payPage > 1){
-
-		html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
-
-	}
-
-
-
-	let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
-
-	let end   = start + maxPageShown - 1;
-
-
-
-	if(end > pages){
-
-		end = pages;
-
-		start = Math.max(1, end - maxPageShown + 1);
-
-	}
-
-
-
-	if(start > 1){
-
-		html += `<button onclick="goPayPage(1)">1</button>`;
-
-		if(start > 2) html += `<span class="dots">...</span>`;
-
-	}
-
-
-
-	for(let i=start;i<=end;i++){
-
-		html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
-
-	}
-
-
-
-	if(end < pages){
-
-		if(end < pages - 1)
-
-		html += `<span class="dots">...</span>`;
-
-		html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
-
-	}
-
-
-
-	if(payPage < pages){
-
-		html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
-
-	}
-
-
-
-	payPagination.innerHTML = html;
-
-}
-
-
-
-
-function goPayPage(p){
-
-	payPage = p;
-
-	filterPay();
-
-}
-
-
-
-
-function filterPay(){
-
-
-	const key = paySearch.value.toLowerCase();
-
-	const items = document.querySelectorAll('.pay-item');
-
-	let visible = [];
-
-
-	items.forEach(item=>{
-
-
-		const text = item.querySelector('.pay-search-text').innerText;
-
-
-		if(text.includes(key)){
-
-			item.style.display='grid';
-
-			visible.push(item);
-
-		}else{
-
-			item.style.display='none';
+			return;
 
 		}
 
 
+		let html = '';
+
+
+		/* PREV */
+
+		if(payPage > 1){
+
+			html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
+
+		}
+
+
+
+		let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
+
+		let end   = start + maxPageShown - 1;
+
+
+
+		if(end > pages){
+
+			end = pages;
+
+			start = Math.max(1, end - maxPageShown + 1);
+
+		}
+
+
+
+		if(start > 1){
+
+			html += `<button onclick="goPayPage(1)">1</button>`;
+
+			if(start > 2) html += `<span class="dots">...</span>`;
+
+		}
+
+
+
+		for(let i=start;i<=end;i++){
+
+			html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
+
+		}
+
+
+
+		if(end < pages){
+
+			if(end < pages - 1)
+
+			html += `<span class="dots">...</span>`;
+
+			html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
+
+		}
+
+
+
+		if(payPage < pages){
+
+			html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
+
+		}
+
+
+
+		payPagination.innerHTML = html;
+
+	}
+
+	function goPayPage(p){
+
+		payPage = p;
+
+		filterPay();
+
+	}
+
+	function filterPay(){
+
+
+		const key = paySearch.value.toLowerCase();
+
+		const items = document.querySelectorAll('.pay-item');
+
+		let visible = [];
+
+
+		items.forEach(item=>{
+
+
+			const text = item.querySelector('.pay-search-text').innerText;
+
+
+			if(text.includes(key)){
+
+				item.style.display='grid';
+
+				visible.push(item);
+
+			}else{
+
+				item.style.display='none';
+
+			}
+
+
+		});
+
+
+		visible.forEach((item,i)=>{
+
+
+			item.style.display =
+
+			(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
+
+			? 'grid' : 'none';
+
+
+		});
+
+
+		document.getElementById('payEmpty').style.display =
+
+		visible.length ? 'none' : 'block';
+
+
+		renderPayPagination(visible.length);
+
+
+	}
+
+	paySearch.addEventListener('keyup',()=>{
+
+		payPage = 1;
+
+		filterPay();
+
 	});
-
-
-	visible.forEach((item,i)=>{
-
-
-		item.style.display =
-
-		(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
-
-		? 'grid' : 'none';
-
-
-	});
-
-
-	document.getElementById('payEmpty').style.display =
-
-	visible.length ? 'none' : 'block';
-
-
-	renderPayPagination(visible.length);
-
-
-}
-
-
-
-paySearch.addEventListener('keyup',()=>{
-
-	payPage = 1;
 
 	filterPay();
-
-});
-
-filterPay();
 </script>
+
+<!-- Midtrans -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
+
+<script>
+	document.querySelectorAll('.btn-transfer').forEach(button => {
+
+		button.addEventListener('click', async function(){
+
+			const weighing_id = this.dataset.id;
+			const total       = this.dataset.total;
+			const merchant    = this.dataset.merchant;
+			const type        = this.dataset.type;
+			const merchant_id = this.dataset.idMerchant;
+			const netto       = this.dataset.netto;
+			const payment     = this.dataset.payment;
+
+			try{
+
+				const response = await fetch('configMidTrans.php', {
+
+					method: 'POST',
+
+					headers:{
+						'Content-Type':'application/x-www-form-urlencoded'
+					},
+
+					body: new URLSearchParams({
+						weighing_id : weighing_id,
+						total       : total,
+						merchant    : merchant,
+						type        : type,
+						merchant_id : merchant_id,
+						netto       : netto,	
+						payment	 	: payment
+					})
+
+				});
+
+				const snapToken = await response.text();
+
+				console.log(snapToken);
+
+				snap.pay(snapToken, {
+
+					onSuccess: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Tonase Berhasil',
+							text: 'Terima kasih telah melakukan pembayaran.',
+							icon: 'success'
+						}).then(()=>{
+							location.reload();
+						});
+					},
+
+					onPending: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Tonase Pending',
+							text: 'Pembayaran sedang diproses.',
+							icon: 'warning'
+						});
+
+					},
+
+					onError: function(result){
+
+						swal.fire({
+							title: 'Pembayaran Tonase Gagal',
+							text: 'Terjadi kesalahan dalam proses pembayaran.',
+							icon: 'error'
+						});
+
+					}
+
+				});
+
+			}catch(error){
+
+				console.log(error);
+
+				swal.fire({
+					title: 'Gagal Koneksi',
+					text: 'Terjadi kesalahan dalam koneksi ke server.',
+					icon: 'error'
+				});
+
+			}
+
+		});
+
+	});
+</script>
+<!-- End Midtrans -->
