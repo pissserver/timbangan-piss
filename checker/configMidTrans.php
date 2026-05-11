@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname(__FILE__) . '/vendor/midtrans/midtrans-php/Midtrans.php';
+require_once dirname(__FILE__) . '/../vendor/midtrans/midtrans-php/Midtrans.php';
 
-include "connection.php";
+include "../connection.php";
 
 \Midtrans\Config::$serverKey = 'Mid-server-KKefOwR1i3NTPI7EheVlXOrr';
 \Midtrans\Config::$isProduction = false;

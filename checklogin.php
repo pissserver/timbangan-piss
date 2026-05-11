@@ -21,13 +21,19 @@ $pass = mysql_real_escape_string(trim($_POST["pass"]));
 
 $login = mysql_query("SELECT checker_name, checker_code, checker_role FROM checker 
                       WHERE checker_code = '$user' AND checker_pass = '$pass' 
-                      AND checker_sts = 'Aktif' AND status_aktif = 1 AND checker_role = 'Cashier'");
+                      AND checker_sts = 'Aktif' AND status_aktif = 1");
 
 if (mysql_num_rows($login) == 1) {
     $r = mysql_fetch_array($login);
     $_SESSION['checker'] = $r['checker_code'];
     $_SESSION['role'] = $r['checker_role'];
     $_SESSION['show_welcome_modal'] = true;
+
+    if ($r['checker_role'] == 'Checker') {
+        include "checker/components/welcome_animation.php";
+        echo "<script>setTimeout(function() { window.location.href = 'checker/dashboard.php'; }, 3250);</script>";
+        exit();
+    }
 
     include "components/welcome_animation.php";
     echo "<script>setTimeout(function() { window.location.href = 'dashboard.php'; }, 3250);</script>";

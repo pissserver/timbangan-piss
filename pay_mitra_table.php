@@ -309,21 +309,7 @@ while($data2 = mysql_fetch_array($query2)){
 					<button class="btn btn-outline btn-success btn-sm">
 						<i class="fa fa-money"></i> Bayar
 					</button>
-				</a>
-				<button 
-					class="btn btn-outline btn-warning btn-sm btn-transfer"
-					data-id="'.$data2['weighing_id'].'"
-					data-total="'.$data2['cost_bayar'].'"
-					data-merchant="'.$merchant.'"
-					data-type="'.$data2['merchant_type'].'"
-					data-id-merchant="'.$data2['merchant_id'].'"
-					data-netto="'.$data2['netto'].'"
-					data-payment="mitra"
-				>
-
-					<i class="fa fa-qrcode"></i> QRIS
-
-				</button>';
+				</a>';
 			}
 		?>
 		</div>
@@ -441,101 +427,4 @@ while($data2 = mysql_fetch_array($query2)){
 
 	filterMitra();
 </script>
-
-
-<!-- Midtrans -->
-<script src="https://app.sandbox.midtrans.com/snap/snap.js"
-data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
-
-<script>
-	document.querySelectorAll('.btn-transfer').forEach(button => {
-
-		button.addEventListener('click', async function(){
-
-			const weighing_id = this.dataset.id;
-			const total       = this.dataset.total;
-			const merchant    = this.dataset.merchant;
-			const type        = this.dataset.type;
-			const merchant_id = this.dataset.idMerchant;
-			const netto       = this.dataset.netto;
-			const payment     = this.dataset.payment;
-
-			try{
-
-				const response = await fetch('configMidTrans.php', {
-
-					method: 'POST',
-
-					headers:{
-						'Content-Type':'application/x-www-form-urlencoded'
-					},
-
-					body: new URLSearchParams({
-						weighing_id : weighing_id,
-						total       : total,
-						merchant    : merchant,
-						type        : type,
-						merchant_id : merchant_id,
-						netto       : netto,	
-						payment	 	: payment
-					})
-
-				});
-
-				const snapToken = await response.text();
-
-				console.log(snapToken);
-
-				snap.pay(snapToken, {
-
-					onSuccess: function(result){
-
-						swal.fire({
-							title: 'Pembayaran Mitra Berhasil',
-							text: 'Terima kasih telah melakukan pembayaran.',
-							icon: 'success'
-						}).then(()=>{
-							location.reload();
-						});
-					},
-
-					onPending: function(result){
-
-						swal.fire({
-							title: 'Pembayaran Mitra Pending',
-							text: 'Pembayaran sedang diproses.',
-							icon: 'warning'
-						});
-
-					},
-
-					onError: function(result){
-
-						swal.fire({
-							title: 'Pembayaran Mitra Gagal',
-							text: 'Terjadi kesalahan dalam proses pembayaran.',
-							icon: 'error'
-						});
-
-					}
-
-				});
-
-			}catch(error){
-
-				console.log(error);
-
-				swal.fire({
-					title: 'Gagal Koneksi',
-					text: 'Terjadi kesalahan dalam koneksi ke server.',
-					icon: 'error'
-				});
-
-			}
-
-		});
-
-	});
-</script>
-<!-- End Midtrans -->
 

@@ -1,6 +1,6 @@
 <?php
-    include "connection.php";
-    require_once dirname(__FILE__) . '/vendor/midtrans/midtrans-php/Midtrans.php';
+    include "../connection.php";
+    require_once dirname(__FILE__) . '/../vendor/midtrans/midtrans-php/Midtrans.php';
 
     /* =========================
     CONFIG MIDTRANS
