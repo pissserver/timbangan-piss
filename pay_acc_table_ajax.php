@@ -50,6 +50,13 @@ $q = mysql_query("
 $html = '';
 
 while($d = mysql_fetch_array($q)){
+	$q_payment = mysql_query("
+		SELECT *
+		FROM payment_log
+		WHERE weighing_id = '".$d['weighing_id']."'
+	");
+
+	$check_payment = mysql_num_rows($q_payment);
 
 	$html .= '
 	<div class="payment-card-tonase">
@@ -67,11 +74,31 @@ while($d = mysql_fetch_array($q)){
 
 		<div class="payment-right">
 			<div class="netto">'.number_format($d['netto']).' Kg</div>
-			<div class="amount">'.format_rupiah($d['cost_tonase']).'</div>
-			<a href="pay_action.php?task=cancel&type=ko&id='.$d['weighing_id'].'">
-				<button class="btn-cancel"><i class="fa fa-times"></i></button>
-			</a>
-		</div>
+			<div class="amount">'.format_rupiah($d['cost_tonase']).'</div>';
+			// CEK ADA PEMBAYARAN
+			if($check_payment > 0){
+
+				$html .= '
+					<div class="payment-status success">
+						<div class="status-icon">
+							<i class="fa fa-check"></i>
+						</div>
+
+						<div class="status-info">
+							<span class="status-method">
+								Transfer Berhasil
+							</span>
+						</div>
+					</div>';
+
+			} else {
+				$html .= '
+					<a href="pay_action.php?task=cancel&type=ko&id='.$d['weighing_id'].'">
+						<button class="btn-cancel"><i class="fa fa-times"></i></button>
+					</a>
+				';
+			}	
+		$html .= '</div>
 	</div>';
 }
 

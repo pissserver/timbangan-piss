@@ -50,6 +50,13 @@ $q = mysql_query("
 $html = '';
 
 while($d = mysql_fetch_array($q)){
+	$q_payment = mysql_query("
+		SELECT *
+		FROM payment_log
+		WHERE weighing_id = '".$d['weighing_id']."'
+	");
+
+	$check_payment = mysql_num_rows($q_payment);
 
 	$html .= '
 	<div class="payment-card-tonase">
@@ -67,9 +74,29 @@ while($d = mysql_fetch_array($q)){
 
 		<div class="payment-right">
 			<div class="netto">'.number_format($d['netto']).' Kg</div>
-			<div class="amount">'.format_rupiah($d['cost_tonase']).'</div>
-		</div>
-	</div>';
+			<div class="amount">'.format_rupiah($d['cost_tonase']).'</div>';
+				// CEK ADA PEMBAYARAN
+				if($check_payment > 0){
+
+					$html .= '
+					<div class="payment-status success">
+						<div class="status-icon">
+							<i class="fa fa-check"></i>
+						</div>
+
+						<div class="status-info">
+							<span class="status-method">
+								Transfer Berhasil
+							</span>
+						</div>
+					</div>';
+
+				}
+
+		$html .= '
+			</div>
+
+		</div>';
 }
 
 if(mysql_num_rows($q) < 1 && $check > 0){

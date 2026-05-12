@@ -389,81 +389,70 @@ $isCentengNota = $data['weighing_sts2'] == 'Tanpa Timbang';
 
 
 	<div class="pay-action text-right">
+	<?php
+	/* =============================
+	LOGIKA BAYAR (SAMA)
+	============================= */
+	if ($checkCenteng){
+		if ($isCentengNota){
+			echo '
+
+			<button 
+				class="btn btn-outline btn-warning btn-sm btn-transfer"
+				data-id="'.$data['weighing_id'].'"
+				data-total="'.$data['cost_tonase'].'"
+				data-merchant="'.$merchant.'"
+				data-type="'.$data['merchant_type'].'"
+				data-id-merchant="'.$data['merchant_id'].'"
+				data-netto="'.$data['netto'].'"
+				data-payment="tonase"
+			>
+
+				<i class="fa fa-qrcode"></i> QRIS
+
+			</button>
+
+			';
+		}else{
+			echo '
+
+			<div class="btn" style="background-color:#000;color:#fff;" disabled>
+
+			<i class="fa fa-lock"></i>
+
+			</div>
+
+		';
 
 
-<?php
-
-
-/* =============================
-LOGIKA BAYAR (SAMA)
-============================= */
-
-
-if ($checkCenteng){
-
-
-	if ($isCentengNota){
-
-
-	echo '
-
-	<a href="pay_action.php?task=pay&type=ko&id='.$data['weighing_id'].'" style="text-decoration:none;">
-
-	<button class="btn btn-outline btn-primary btn-sm btn-bayar">
-
-	<i class="fa fa-money"></i> Bayar
-
-	</button>
-
-	</a>
-
-	';
+		}
 
 
 	}else{
 
 
-	echo '
+		echo '
+		<button 
+			class="btn btn-outline btn-warning btn-sm btn-transfer"
+			data-id="'.$data['weighing_id'].'"
+			data-total="'.$data['cost_tonase'].'"
+			data-merchant="'.$merchant.'"
+			data-type="'.$data['merchant_type'].'"
+			data-id-merchant="'.$data['merchant_id'].'"
+			data-netto="'.$data['netto'].'"
+			data-payment="tonase"
+		>
 
-	<div class="btn" style="background-color:#000;color:#fff;" disabled>
+			<i class="fa fa-qrcode"></i> QRIS
 
-	<i class="fa fa-lock"></i>
+		</button>
 
-	</div>
-
-	';
+		';
 
 
 	}
 
-
-}else{
-
-
-	echo '
-	<button 
-		class="btn btn-outline btn-warning btn-sm btn-transfer"
-		data-id="'.$data['weighing_id'].'"
-		data-total="'.$data['cost_tonase'].'"
-		data-merchant="'.$merchant.'"
-		data-type="'.$data['merchant_type'].'"
-		data-id-merchant="'.$data['merchant_id'].'"
-		data-netto="'.$data['netto'].'"
-		data-payment="tonase"
-	>
-
-		<i class="fa fa-qrcode"></i> QRIS
-
-	</button>
-
-	';
-
-
-}
-
-?>
-
-
+	?>
 	</div>
 
 

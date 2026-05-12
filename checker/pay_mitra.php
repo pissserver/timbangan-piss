@@ -145,6 +145,57 @@
 	font-size:14px;
 }
 
+
+/* Status Payment */
+.payment-status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    margin-top:8px;
+    padding:5px 10px;
+
+    border-radius:999px;
+
+    background:rgba(34,197,94,0.10);
+    border:1px solid rgba(34,197,94,0.18);
+
+    width:auto;
+}
+
+.payment-status .status-icon{
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+
+    color:#fff;
+    font-size:9px;
+
+    box-shadow:0 2px 6px rgba(34,197,94,0.25);
+}
+
+.payment-status .status-info{
+    display:flex;
+    align-items:center;
+}
+
+.payment-status .status-label{
+    display:none;
+}
+
+.payment-status .status-method{
+    font-size:11px;
+    font-weight:600;
+    color:#15803d;
+    letter-spacing:.2px;
+}
 </style>
 
 <!DOCTYPE html>
@@ -202,25 +253,8 @@
 						</table>
 					</div><br>
 
-					<!-- TONASE -->
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div class="data-card">
-							<div class="data-card-body">
-								<div id="Area1">
-									<div class="loading-ui">
-										<i class="fa fa-spinner fa-spin"></i> Loading data...
-									</div>
-								</div>
-							</div>
-
-							<div class="data-card-footer">
-								<div id="pagination-tonase"></div>
-							</div>
-						</div>
-					</div>
-
 					<!-- MITRA -->
-					<div class="col-lg-6 col-md-6 col-xs-6">
+					<div class="col-lg-12 col-md-12 col-xs-12">
 						<div class="data-card">
 							<div class="data-card-body">
 								<div id="AreaMitra1">
@@ -239,15 +273,7 @@
 				<br><br>
 
 				<div class="row">
-					<div class="col-lg-6 col-md-6 col-xs-6">
-						<div id="Area2">
-							<div class="alert alert-info" onclick="clearNotif()">
-								<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-6 col-md-6 col-xs-6">
+					<div class="col-lg-12 col-md-12 col-xs-12">
 						<div id="AreaMitra2">
 							<div class="alert alert-info" onclick="clearNotif()">
 								<center><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></center>
@@ -264,8 +290,6 @@
 			$(document).ready(function(){
 				// Auto Refresh Page
 				$("#notifArea").html(alertLoadProcess);
-				$('#Area1').load("pay_table.php",function(){clearNotif();});
-				$('#Area2').load("pay_acc_table.php",function(){clearNotif();});
 				$('#AreaMitra1').load("pay_mitra_table.php",function(){clearNotif();});
 				$('#AreaMitra2').load("pay_mitra_acc_table.php",function(){clearNotif();});
 				setTimeout('$("html").removeClass("js")',1000); 
@@ -279,88 +303,6 @@
 			function clearNotif(){$("#notifArea").html("");}
 		</script>
 
-		// * TONASE
-		<!-- Ajax Tonase -->
-		<script>
-			function reloadPaymentArea(){
-				$("#Area1").load("pay_table.php");
-				$("#Area2").load("pay_acc_table.php");
-			}
-
-			/* ================= BAYAR TONASE (ANIMATED) ================= */
-			$(document).on('click', 'a[href*="pay_action.php?task=pay&type=ko"]', function(e){
-				e.preventDefault();
-
-				const url = $(this).attr('href');
-				const card = $(this).closest('.payment-card-tonase');
-
-				// Animasi geser keluar
-				card.addClass('card-slide-out');
-
-				setTimeout(function(){
-
-					$.get(url, function(){
-
-						// Reload kedua area
-						$('#Area1').load('pay_table.php');
-						$('#Area2').load('pay_acc_table.php', function(){
-
-							// Animasi masuk untuk kartu baru di panel bawah
-							$('#Area2 .payment-card-tonase').first().addClass('card-slide-in');
-
-						});
-
-					}).fail(function(){
-						alert('Gagal memproses pembayaran');
-						card.removeClass('card-slide-out');
-					});
-
-				}, 350);
-			});
-
-			/* ================= CANCEL TONASE (ANIMATED) ================= */
-			$(document).on('click', 'a[href*="pay_action.php?task=cancel&type=ko"]', function(e){
-				e.preventDefault();
-
-				const url = $(this).attr('href');
-				const card = $(this).closest('.payment-card-tonase');
-
-				card.addClass('card-slide-out');
-
-				setTimeout(function(){
-
-					$.get(url, function(){
-
-						$('#Area1').load('pay_table.php', function(){
-							$('#Area1 .payment-card-tonase').first().addClass('card-slide-in');
-						});
-
-						$('#Area2').load('pay_acc_table.php');
-
-					}).fail(function(){
-						alert('Gagal membatalkan pembayaran');
-						card.removeClass('card-slide-out');
-					});
-
-				}, 350);
-			});
-
-			/* ================= CANCEL ALL TONASE ================= */
-			$(document).on('submit', 'form[action*="pay_action.php?task=cancelAll&type=ko"]', function(e){
-				e.preventDefault();
-
-				const form = $(this);
-
-				$.post(form.attr('action'), form.serialize(), function(){
-					reloadPaymentArea();
-				}).fail(function(){
-					alert('Gagal membatalkan semua pembayaran');
-				});
-			});
-		</script>
-
-
-		// * MITRA
 		<!-- Ajax Mitra -->
 		<script>
 			function reloadMitraArea(){

@@ -54,25 +54,69 @@ $q = mysql_query("
 $html = '';
 
 while($d = mysql_fetch_array($q)){
+	$q_payment = mysql_query("
+		SELECT *
+		FROM payment_log
+		WHERE weighing_id = '".$d['weighing_id']."'
+	");
+
+	$check_payment = mysql_num_rows($q_payment);
+
 	$html .= '
-	<div class="payment-card-mitra mitra">
-		<div class="payment-left">
-			<div class="nota-id-mitra">#'.$d['weighing_id'].'</div>
-			<div class="nota-date">'.date("d M Y", strtotime($d['date_check'])).'</div>
-			<div class="nota-truck"><i class="fa fa-truck"></i> '.$d['nopol'].'</div>
-		</div>
+		<div class="payment-card-mitra mitra">
 
-		<div class="payment-mid">
-			<div class="merchant"><i class="fa fa-user"></i> '.$d['merchant_name'].'</div>
-			<div class="commodity">'.$d['merchant_type'].'</div>
-			<div class="code">Kode: '.$d['merchant_id'].'</div>
-		</div>
+			<div class="payment-left">
+				<div class="nota-id-mitra">#'.$d['weighing_id'].'</div>
+				<div class="nota-date">'.date("d M Y", strtotime($d['date_check'])).'</div>
+				<div class="nota-truck">
+					<i class="fa fa-truck"></i> '.$d['nopol'].'
+				</div>
+			</div>
 
-		<div class="payment-right">
-			<div class="netto">'.number_format($d['netto']).' Kg</div>
-			<div class="amount">'.format_rupiah($d['cost_bayar']).'</div>
-		</div>
-	</div>';
+			<div class="payment-mid">
+				<div class="merchant">
+					<i class="fa fa-user"></i> '.$d['merchant_name'].'
+				</div>
+
+				<div class="commodity">'.$d['merchant_type'].'</div>
+
+				<div class="code">
+					Kode: '.$d['merchant_id'].'
+				</div>
+			</div>
+
+			<div class="payment-right">
+
+				<div class="netto">
+					'.number_format($d['netto']).' Kg
+				</div>
+
+				<div class="amount">
+					'.format_rupiah($d['cost_bayar']).'
+				</div>';
+
+				// CEK ADA PEMBAYARAN
+				if($check_payment > 0){
+
+					$html .= '
+					<div class="payment-status success">
+						<div class="status-icon">
+							<i class="fa fa-check"></i>
+						</div>
+
+						<div class="status-info">
+							<span class="status-method">
+								Transfer Berhasil
+							</span>
+						</div>
+					</div>';
+
+				}
+
+		$html .= '
+			</div>
+
+		</div>';
 }
 
 if(mysql_num_rows($q) < 1 && $check_mitra > 0){

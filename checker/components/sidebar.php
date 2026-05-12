@@ -1059,10 +1059,11 @@
 						<!-- Navigation -->
 						<li><a class="<?= isActive(['dashboard.php']); ?>" href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> <span>Dashboard</span> </a></li>
 
-						<li class="<?= isParentActive(['pay.php', 'pay_mitra.php', 'pay_mitra_salary.php', 'pay_mitra_salary2.php', 'pay_acc.php', 'pay_acc_mitra.php', 'pay_tonase_mitra.php', 'pay_acc_tonase_mitra.php']); ?>">
+						<li class="<?= isParentActive(['pay_tonase.php', 'pay_mitra.php']); ?>">
 							<a href="#"><i class="fa fa-credit-card fa-fw"></i> <span>Pembayaran</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a class="<?= isActive(['pay_tonase_mitra.php']); ?>" href="pay_tonase_mitra.php"><i class="fa fa-money fa-fw"></i> Pembayaran</a></li>
+								<li><a class="<?= isActive(['pay_tonase.php']); ?>" href="pay_tonase.php"><i class="fa fa-money fa-fw"></i> Pembayaran Tonase</a></li>
+								<li><a class="<?= isActive(['pay_mitra.php']); ?>" href="pay_mitra.php"><i class="fa fa-users fa-fw"></i> Pembayaran Mitra</a></li>
 							</ul>
 						</li>
 

@@ -145,6 +145,56 @@
 	font-size:14px;
 }
 
+/* Status Payment */
+.payment-status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    margin-top:8px;
+    padding:5px 10px;
+
+    border-radius:999px;
+
+    background:rgba(34,197,94,0.10);
+    border:1px solid rgba(34,197,94,0.18);
+
+    width:auto;
+}
+
+.payment-status .status-icon{
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+
+    color:#fff;
+    font-size:9px;
+
+    box-shadow:0 2px 6px rgba(34,197,94,0.25);
+}
+
+.payment-status .status-info{
+    display:flex;
+    align-items:center;
+}
+
+.payment-status .status-label{
+    display:none;
+}
+
+.payment-status .status-method{
+    font-size:11px;
+    font-weight:600;
+    color:#15803d;
+    letter-spacing:.2px;
+}
 </style>
 
 <!DOCTYPE html>
