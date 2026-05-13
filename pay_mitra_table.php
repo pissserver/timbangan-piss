@@ -234,6 +234,28 @@
 <div id="payTableWrapperMitra">
 
 <?php
+
+/* =============================
+PRELOAD CENTENG
+============================= */
+
+$centengList = [];
+
+$qCenteng = mysql_query("
+	SELECT DISTINCT merchant_id
+	FROM weighing
+	WHERE weighing_sts != 'Batal'
+	AND weighing_sts2 = 'Tanpa Timbang'
+	AND date_pay IS NULL
+");
+
+while($c = mysql_fetch_array($qCenteng)){
+
+	$centengList[$c['merchant_id']] = true;
+
+}
+
+// Query utama untuk menampilkan data tagihan mitra
 $query2 = mysql_query("
 	select 	w.weighing_id, 
 			w.merchant_id, 
@@ -263,6 +285,7 @@ $query2 = mysql_query("
 
 while($data2 = mysql_fetch_array($query2)){
 	$merchant = executeScalar("select merchant_name from merchant where merchant_id = '".$data2['merchant_id']."'");
+	$checkCenteng = isset($centengList[$data2['merchant_id']]);
 ?>
 	<div class="pay-card-mitra pay-item-mitra" id="row-<?php echo $data2['weighing_id']; ?>-mitra">
 
@@ -303,7 +326,13 @@ while($data2 = mysql_fetch_array($query2)){
 
 		<div class="pay-action-mitra text-right">
 		<?php 
-			if($data2['weighing_sts']!='Lunas'||$data2['weighing_sts3']!='Pending'){
+			if ($checkCenteng) {
+				echo '
+					<div class="btn" style="background-color:#000;color:#fff;" disabled>
+						<i class="fa fa-lock"></i>	
+					</div>
+				';
+			} elseif ($data2['weighing_sts']!='Lunas'||$data2['weighing_sts3']!='Pending'){
 				echo '
 				<a href="pay_action.php?task=pay_mitra&type=ko&id='.$data2['weighing_id'].'" style="text-decoration:none;">
 					<button class="btn btn-outline btn-success btn-sm">
