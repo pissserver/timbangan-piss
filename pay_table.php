@@ -449,9 +449,8 @@ if ($checkCenteng){
 	<i class="fa fa-money"></i> Bayar
 
 	</button>
-
+	
 	</a>
-
 	';
 
 
@@ -526,176 +525,165 @@ PAGINATION JS (PERSIS KODE ASLI KAMU)
 
 
 <script>
+	const payPerPage = 5;
+	const maxPageShown = 5;
+	let payPage = 1;
 
+	function renderPayPagination(total){
 
-const payPerPage = 5;
-const maxPageShown = 5;
-let payPage = 1;
+		const pages = Math.ceil(total / payPerPage);
 
+		if(pages <= 1){
 
+			payPagination.innerHTML = '';
 
-function renderPayPagination(total){
-
-	const pages = Math.ceil(total / payPerPage);
-
-	if(pages <= 1){
-
-		payPagination.innerHTML = '';
-
-		return;
-
-	}
-
-
-	let html = '';
-
-
-	/* PREV */
-
-	if(payPage > 1){
-
-		html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
-
-	}
-
-
-
-	let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
-
-	let end   = start + maxPageShown - 1;
-
-
-
-	if(end > pages){
-
-		end = pages;
-
-		start = Math.max(1, end - maxPageShown + 1);
-
-	}
-
-
-
-	if(start > 1){
-
-		html += `<button onclick="goPayPage(1)">1</button>`;
-
-		if(start > 2) html += `<span class="dots">...</span>`;
-
-	}
-
-
-
-	for(let i=start;i<=end;i++){
-
-		html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
-
-	}
-
-
-
-	if(end < pages){
-
-		if(end < pages - 1)
-
-		html += `<span class="dots">...</span>`;
-
-		html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
-
-	}
-
-
-
-	if(payPage < pages){
-
-		html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
-
-	}
-
-
-
-	payPagination.innerHTML = html;
-
-}
-
-
-
-
-function goPayPage(p){
-
-	payPage = p;
-
-	filterPay();
-
-}
-
-
-
-
-function filterPay(){
-
-
-	const key = paySearch.value.toLowerCase();
-
-	const items = document.querySelectorAll('.pay-item');
-
-	let visible = [];
-
-
-	items.forEach(item=>{
-
-
-		const text = item.querySelector('.pay-search-text').innerText;
-
-
-		if(text.includes(key)){
-
-			item.style.display='grid';
-
-			visible.push(item);
-
-		}else{
-
-			item.style.display='none';
+			return;
 
 		}
 
 
+		let html = '';
+
+
+		/* PREV */
+
+		if(payPage > 1){
+
+			html += `<button onclick="goPayPage(${payPage-1})">‹ Prev</button>`;
+
+		}
+
+
+
+		let start = Math.max(1, payPage - Math.floor(maxPageShown / 2));
+
+		let end   = start + maxPageShown - 1;
+
+
+
+		if(end > pages){
+
+			end = pages;
+
+			start = Math.max(1, end - maxPageShown + 1);
+
+		}
+
+
+
+		if(start > 1){
+
+			html += `<button onclick="goPayPage(1)">1</button>`;
+
+			if(start > 2) html += `<span class="dots">...</span>`;
+
+		}
+
+
+
+		for(let i=start;i<=end;i++){
+
+			html += `<button class="${i===payPage?'active':''}" onclick="goPayPage(${i})">${i}</button>`;
+
+		}
+
+
+
+		if(end < pages){
+
+			if(end < pages - 1)
+
+			html += `<span class="dots">...</span>`;
+
+			html += `<button onclick="goPayPage(${pages})">${pages}</button>`;
+
+		}
+
+
+
+		if(payPage < pages){
+
+			html += `<button onclick="goPayPage(${payPage+1})">Next ›</button>`;
+
+		}
+
+
+
+		payPagination.innerHTML = html;
+
+	}
+
+	function goPayPage(p){
+
+		payPage = p;
+
+		filterPay();
+
+	}
+
+	function filterPay(){
+
+
+		const key = paySearch.value.toLowerCase();
+
+		const items = document.querySelectorAll('.pay-item');
+
+		let visible = [];
+
+
+		items.forEach(item=>{
+
+
+			const text = item.querySelector('.pay-search-text').innerText;
+
+
+			if(text.includes(key)){
+
+				item.style.display='grid';
+
+				visible.push(item);
+
+			}else{
+
+				item.style.display='none';
+
+			}
+
+
+		});
+
+
+		visible.forEach((item,i)=>{
+
+
+			item.style.display =
+
+			(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
+
+			? 'grid' : 'none';
+
+
+		});
+
+
+		document.getElementById('payEmpty').style.display =
+
+		visible.length ? 'none' : 'block';
+
+
+		renderPayPagination(visible.length);
+
+
+	}
+
+	paySearch.addEventListener('keyup',()=>{
+
+		payPage = 1;
+
+		filterPay();
+
 	});
-
-
-	visible.forEach((item,i)=>{
-
-
-		item.style.display =
-
-		(i >= (payPage-1)*payPerPage && i < payPage*payPerPage)
-
-		? 'grid' : 'none';
-
-
-	});
-
-
-	document.getElementById('payEmpty').style.display =
-
-	visible.length ? 'none' : 'block';
-
-
-	renderPayPagination(visible.length);
-
-
-}
-
-
-
-paySearch.addEventListener('keyup',()=>{
-
-	payPage = 1;
 
 	filterPay();
-
-});
-
-filterPay();
 </script>
+

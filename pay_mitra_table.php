@@ -234,6 +234,28 @@
 <div id="payTableWrapperMitra">
 
 <?php
+
+/* =============================
+PRELOAD CENTENG
+============================= */
+
+$centengList = [];
+
+$qCenteng = mysql_query("
+	SELECT DISTINCT merchant_id
+	FROM weighing
+	WHERE weighing_sts != 'Batal'
+	AND weighing_sts2 = 'Tanpa Timbang'
+	AND date_pay IS NULL
+");
+
+while($c = mysql_fetch_array($qCenteng)){
+
+	$centengList[$c['merchant_id']] = true;
+
+}
+
+// Query utama untuk menampilkan data tagihan mitra
 $query2 = mysql_query("
 	select 	w.weighing_id, 
 			w.merchant_id, 
@@ -263,6 +285,7 @@ $query2 = mysql_query("
 
 while($data2 = mysql_fetch_array($query2)){
 	$merchant = executeScalar("select merchant_name from merchant where merchant_id = '".$data2['merchant_id']."'");
+	$checkCenteng = isset($centengList[$data2['merchant_id']]);
 ?>
 	<div class="pay-card-mitra pay-item-mitra" id="row-<?php echo $data2['weighing_id']; ?>-mitra">
 
@@ -303,7 +326,13 @@ while($data2 = mysql_fetch_array($query2)){
 
 		<div class="pay-action-mitra text-right">
 		<?php 
-			if($data2['weighing_sts']!='Lunas'||$data2['weighing_sts3']!='Pending'){
+			if ($checkCenteng) {
+				echo '
+					<div class="btn" style="background-color:#000;color:#fff;" disabled>
+						<i class="fa fa-lock"></i>	
+					</div>
+				';
+			} elseif ($data2['weighing_sts']!='Lunas'||$data2['weighing_sts3']!='Pending'){
 				echo '
 				<a href="pay_action.php?task=pay_mitra&type=ko&id='.$data2['weighing_id'].'" style="text-decoration:none;">
 					<button class="btn btn-outline btn-success btn-sm">
@@ -339,92 +368,92 @@ while($data2 = mysql_fetch_array($query2)){
 
 
 <script>
-const perPageMitra = 5;
-const maxPageShownMitra = 5;
-let pageMitra = 1;
+	const perPageMitra = 5;
+	const maxPageShownMitra = 5;
+	let pageMitra = 1;
 
-function renderPaginationMitra(total){
-	const pages = Math.ceil(total / perPageMitra);
-	if(pages <= 1){
-		payPaginationMitra.innerHTML = '';
-		return;
-	}
-
-	let html = '';
-
-	/* PREV */
-	if(pageMitra > 1){
-		html += `<button onclick="goPageMitra(${pageMitra-1})">‹ Prev</button>`;
-	}
-
-	/* RANGE */
-	let start = Math.max(1, pageMitra - Math.floor(maxPageShownMitra / 2));
-	let end   = start + maxPageShownMitra - 1;
-
-	if(end > pages){
-		end = pages;
-		start = Math.max(1, end - maxPageShownMitra + 1);
-	}
-
-	if(start > 1){
-		html += `<button onclick="goPageMitra(1)">1</button>`;
-		if(start > 2) html += `<span class="dots">...</span>`;
-	}
-
-	for(let i=start;i<=end;i++){
-		html += `<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
-	}
-
-	if(end < pages){
-		if(end < pages - 1) html += `<span class="dots">...</span>`;
-		html += `<button onclick="goPageMitra(${pages})">${pages}</button>`;
-	}
-
-	/* NEXT */
-	if(pageMitra < pages){
-		html += `<button onclick="goPageMitra(${pageMitra+1})">Next ›</button>`;
-	}
-
-	payPaginationMitra.innerHTML = html;
-}
-
-function goPageMitra(p){
-	pageMitra = p;
-	filterMitra();
-}
-
-function filterMitra(){
-	const key = paySearchMitra.value.toLowerCase();
-	const items = document.querySelectorAll('.pay-item-mitra');
-	let visible = [];
-
-	items.forEach(item=>{
-		const text = item.querySelector('.pay-search-text-mitra').innerText;
-		if(text.includes(key)){
-			item.style.display = 'grid';
-			visible.push(item);
-		}else{
-			item.style.display = 'none';
+	function renderPaginationMitra(total){
+		const pages = Math.ceil(total / perPageMitra);
+		if(pages <= 1){
+			payPaginationMitra.innerHTML = '';
+			return;
 		}
+
+		let html = '';
+
+		/* PREV */
+		if(pageMitra > 1){
+			html += `<button onclick="goPageMitra(${pageMitra-1})">‹ Prev</button>`;
+		}
+
+		/* RANGE */
+		let start = Math.max(1, pageMitra - Math.floor(maxPageShownMitra / 2));
+		let end   = start + maxPageShownMitra - 1;
+
+		if(end > pages){
+			end = pages;
+			start = Math.max(1, end - maxPageShownMitra + 1);
+		}
+
+		if(start > 1){
+			html += `<button onclick="goPageMitra(1)">1</button>`;
+			if(start > 2) html += `<span class="dots">...</span>`;
+		}
+
+		for(let i=start;i<=end;i++){
+			html += `<button class="${i===pageMitra?'active':''}" onclick="goPageMitra(${i})">${i}</button>`;
+		}
+
+		if(end < pages){
+			if(end < pages - 1) html += `<span class="dots">...</span>`;
+			html += `<button onclick="goPageMitra(${pages})">${pages}</button>`;
+		}
+
+		/* NEXT */
+		if(pageMitra < pages){
+			html += `<button onclick="goPageMitra(${pageMitra+1})">Next ›</button>`;
+		}
+
+		payPaginationMitra.innerHTML = html;
+	}
+
+	function goPageMitra(p){
+		pageMitra = p;
+		filterMitra();
+	}
+
+	function filterMitra(){
+		const key = paySearchMitra.value.toLowerCase();
+		const items = document.querySelectorAll('.pay-item-mitra');
+		let visible = [];
+
+		items.forEach(item=>{
+			const text = item.querySelector('.pay-search-text-mitra').innerText;
+			if(text.includes(key)){
+				item.style.display = 'grid';
+				visible.push(item);
+			}else{
+				item.style.display = 'none';
+			}
+		});
+
+		visible.forEach((item,i)=>{
+			item.style.display =
+				(i >= (pageMitra-1)*perPageMitra && i < pageMitra*perPageMitra)
+				? 'grid' : 'none';
+		});
+
+		document.getElementById('payEmptyMitra').style.display =
+			visible.length ? 'none' : 'block';
+
+		renderPaginationMitra(visible.length);
+	}
+
+	paySearchMitra.addEventListener('keyup',()=>{
+		pageMitra = 1;
+		filterMitra();
 	});
 
-	visible.forEach((item,i)=>{
-		item.style.display =
-			(i >= (pageMitra-1)*perPageMitra && i < pageMitra*perPageMitra)
-			? 'grid' : 'none';
-	});
-
-	document.getElementById('payEmptyMitra').style.display =
-		visible.length ? 'none' : 'block';
-
-	renderPaginationMitra(visible.length);
-}
-
-paySearchMitra.addEventListener('keyup',()=>{
-	pageMitra = 1;
 	filterMitra();
-});
-
-filterMitra();
 </script>
 

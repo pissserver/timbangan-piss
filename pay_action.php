@@ -61,7 +61,16 @@
 	// Cancel All Pembayaran Tonase
 	if ($type == 'ko' && $task=='cancelAll'){
 		//update status pembayaran
-		$cancel = mysql_query("update weighing set weighing_sts3 = null where weighing_sts3 = 'Pending'");
+		$cancel = mysql_query("
+			UPDATE weighing w
+			SET w.weighing_sts3 = NULL
+			WHERE w.weighing_sts3 = 'Pending'
+			AND NOT EXISTS (
+				SELECT 1
+				FROM payment_log p
+				WHERE p.weighing_id = w.weighing_id
+			)
+		");
 		if($cancel){
 			// echo "<script>window.location=('pay.php')</script>";
 			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
@@ -224,7 +233,16 @@
 	// Cancel All Pembayaran Mitra
 	if ($type == 'ko' && $task=='cancelAll_mitra'){
 		//update status pembayaran
-		$cancel = mysql_query("update weighing_mitra set weighing_sts3 = null where weighing_sts3 = 'Pending'");
+		$cancel = mysql_query("
+			UPDATE weighing_mitra wm
+			SET wm.weighing_sts3 = NULL
+			WHERE wm.weighing_sts3 = 'Pending'
+			AND NOT EXISTS (
+				SELECT 1
+				FROM payment_log p
+				WHERE p.weighing_id = wm.weighing_id
+			)
+		");
 		if($cancel){
 			// echo "<script>window.location=('pay_mitra.php')</script>";
 			echo "<script>window.location=('pay_tonase_mitra.php')</script>";
