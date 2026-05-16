@@ -48,7 +48,7 @@
                             <i class="fa fa-truck fa-fw"></i> Kir Kendaraan Keluar
                         </div>
                         <div class="panel-body">
-							<div class="row">
+							<div class="row" style="margin-bottom: -20px;">
 								<form action="weighing_action.php?task=kir&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 								<fieldset>
 									<div class="row">
@@ -94,13 +94,13 @@
 											</div>
 											<div class="form-group" style="padding:10px; margin-top:-10px;">
 												<label>Berat Kendaraan Masuk</label>
-												<input id="weight_in" name="weight_in" value="<?php echo $r['weight_in']; ?> Kg" type="text" style="text-align: right;" class="form-control"  disabled>
+												<input id="weight_in" name="weight_in" value="<?php echo $r['weight_in']; ?> Kg" type="text" style="text-align: left;" class="form-control"  disabled>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group" style="padding:10px; margin-top:-10px; margin-right:10px;">
 												<label>Berat Kir Kendaraan</label>
-												<input id="weight_out" name="weight_out" value="<?php echo $kir; ?> Kg" type="text" style="text-align: right;" class="form-control" disabled>       
+												<input id="weight_out" name="weight_out" value="<?php echo $kir; ?> Kg" type="text" style="text-align: left;" class="form-control" disabled>       
 											</div>
 											<div class="form-group" style="padding:10px; margin-right:10px; margin-top:30px;">
 												<button type="submit" class="btn btn-block btn-primary">

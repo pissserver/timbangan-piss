@@ -6,7 +6,7 @@
 		<i class="fa fa-truck fa-fw"></i> Kendaraan Masuk & Keluar
 	</div>
 	<div class="panel-body">
-		<div class="row">
+		<div class="row" style="margin-bottom: -30px;">
 			<form class="form-horizontal" id="formWeighingOut" name="formWeighingOut" method="POST" action="weighing_action.php?task=out">
 			<fieldset>
 				<div class="col-md-3">

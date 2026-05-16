@@ -8,6 +8,25 @@
 		return $headScript;
 	}
 ?>
+
+<style>
+	.payment-notfound{
+		min-height: 420px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		margin-top: -90px;
+	}
+
+	.payment-notfound dotlottie-wc{
+		width: 420px !important;
+		height: 420px !important;
+		margin-bottom: -90px;
+	}
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,9 +102,16 @@
 														</div>
 													</div>
 												<?php } else { ?>
-													<div class="payment-notfound text-center">
-														<img src="../img/logistic.png" alt="Image Payment Not Found" width="250px">
-														<h3><b>Belum Ada Kendaraan Masuk</b></h3>
+													<div class="payment-notfound">
+														<dotlottie-wc
+															src="https://lottie.host/37c6dc2e-7bcc-43ae-a7ce-ef1bcd4b9e8e/DEKZ2wYgU8.lottie"
+															autoplay
+															loop>
+														</dotlottie-wc>
+
+														<h3>
+															<b>Belum Ada Kendaraan Masuk</b>
+														</h3>
 													</div>
 												<?php }
 											?>
