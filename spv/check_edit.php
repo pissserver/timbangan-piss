@@ -898,7 +898,7 @@ while ($r 	= mysql_fetch_array($edit)) {
 													</div> -->
 
 													<!-- New reffer UI -->
-													<div class="form-group mt-2">
+													<div class="form-group mt-2" style="padding:10px; margin-top:-10px;">
 
 														<label class="mb-2">Nota Referensi</label>
 

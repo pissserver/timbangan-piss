@@ -48,6 +48,203 @@
 		height: 420px !important;
 		margin-bottom: -90px;
 	}
+
+	/* Smart Tips */
+	#smartTips{
+
+		position:relative;
+
+		height:58px;
+
+		border-radius:18px;
+
+		margin-bottom:18px;
+		padding:0 22px;
+
+		display:flex;
+		align-items:center;
+
+		overflow:hidden;
+
+		background:
+			linear-gradient(
+				135deg,
+				rgba(37,99,235,0.95),
+				rgba(29,78,216,0.88),
+				rgba(15,23,42,0.92)
+			);
+
+		backdrop-filter:blur(14px);
+
+		box-shadow:
+			0 10px 30px rgba(37,99,235,0.25),
+			inset 0 1px 0 rgba(255,255,255,0.15);
+
+	}
+
+	#smartTips::before{
+
+		content:'';
+
+		position:absolute;
+
+		top:0;
+		left:-150%;
+
+		width:60%;
+		height:100%;
+
+		background:
+			linear-gradient(
+				90deg,
+				transparent,
+				rgba(255,255,255,0.15),
+				transparent
+			);
+
+		animation:shineMove 5s infinite;
+	}
+
+	.smartTips-icon{
+
+		min-width:38px;
+		height:38px;
+
+		border-radius:12px;
+
+		background:rgba(255,255,255,0.12);
+
+		display:flex;
+		align-items:center;
+		justify-content:center;
+
+		margin-right:16px;
+
+		font-size:18px;
+		color:#fff;
+
+		box-shadow:
+			inset 0 1px 0 rgba(255,255,255,0.2);
+
+	}
+
+	.smartTips-wrapper{
+
+		position:relative;
+
+		height:24px;
+
+		overflow:hidden;
+
+		flex:1;
+	}
+
+	.smartTips-slider{
+
+		position:absolute;
+
+		width:100%;
+
+		transition:transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+	}
+
+	.tip-item{
+
+		height:24px;
+		line-height:24px;
+
+		color:#fff;
+
+		font-size:14px;
+		font-weight:600;
+
+		letter-spacing:0.3px;
+
+		opacity:0.96;
+	}
+
+	@keyframes shineMove{
+
+		0%{
+			left:-150%;
+		}
+
+		100%{
+			left:150%;
+		}
+	}
+
+	/* LIVE LABEL */
+	#smartTips .smart-label{
+		position:absolute;
+		right:16px;
+		top:50%;
+		transform:translateY(-50%);
+		font-size:11px;
+		padding:6px 13px;
+		border-radius:40px;
+		background:
+			linear-gradient(
+				135deg,
+				#f59e0b,
+				#ea580c
+			);
+		color:#fff;
+		letter-spacing:1px;
+		font-weight:800;
+		box-shadow:
+			0 0 0 rgba(245,158,11,0.7);
+		animation:pulseLive 1.8s infinite;
+		display:flex;
+		align-items:center;
+	}
+
+	/* RED DOT */
+	#smartTips .smart-label::before{
+		content:'';
+		width:7px;
+		height:7px;
+		border-radius:50%;
+		background:#fff;
+		margin-right:7px;
+		animation:blinkDot 1s infinite;
+	}
+
+	/* PULSE */
+	@keyframes pulseLive{
+
+		0%{
+			transform:translateY(-50%) scale(1);
+			box-shadow:
+				0 0 0 0 rgba(245,158,11,0.6);
+		}
+
+		70%{
+			transform:translateY(-50%) scale(1.05);
+			box-shadow:
+				0 0 0 12px rgba(245,158,11,0);
+		}
+
+		100%{
+			transform:translateY(-50%) scale(1);
+			box-shadow:
+				0 0 0 0 rgba(245,158,11,0);
+		}
+	}
+
+	/* BLINK */
+	@keyframes blinkDot{
+
+		0%,100%{
+			opacity:1;
+			transform:scale(1);
+		}
+
+		50%{
+			opacity:0.3;
+			transform:scale(0.7);
+		}
+	}
 </style>
 
 <!DOCTYPE html>
@@ -71,6 +268,48 @@
             <div class="row">
                 <div class="col-lg-12">
 					<br /><br><br><br>
+					<div id="smartTips">
+						<div class="smartTips-icon">
+							<i class="fa fa-lightbulb-o"></i>
+						</div>
+
+						<div class="smartTips-wrapper">
+							<div class="smartTips-slider" id="smartTipsSlider">
+								<div class="tip-item">
+									Klik tombol "Masuk" hanya sekali untuk menyimpan data, agar tidak terjadi duplikasi data kendaraan
+								</div>
+
+								<div class="tip-item">
+									Ketika pedagang terblokir dan tidak bisa diinput, konsultasikan dengan pendamping pedagang untuk melakukan pembukaan blokir
+								</div>
+
+								<div class="tip-item">
+									Pastikan mitra sudah dipilih dengan benar sebelum dijadikan nota tagihan
+								</div>
+
+								<div class="tip-item">
+									Hindari banyak kesalahan saat input data, karena akan mempengaruhi laporan dan analisis data
+								</div>
+
+								<div class="tip-item">
+									Saat akan cut off perhari di jam 23.45, pastikan semua data yang belum digabungkan sudah digabung semua
+								</div>
+
+								<div class="tip-item">
+									Untuk nota dengan pedagang berstatus "CENTENG", jangan lupa untuk potong tarif dengan tarif centeng
+								</div>
+
+								<div class="tip-item">
+									Lakukan pengajuan revisi di menu "Revisi" jika terjadi kesalahan input data, jangan lupa untuk menyertakan bukti yang jelas
+								</div>
+							</div>
+
+							<div class="smart-label">
+								Smart Tips
+							</div>
+						</div>
+					</div>
+				
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							<div class="row">
@@ -250,25 +489,31 @@
 		</div>
 	</div>
 
-	<!-- Modal Password -->
-	<!-- <div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img src='assets/image/Delete.png' width='25' height='25'/></button>
-					<h4 id="header_password">Ganti Password</h4>
-				</div>
-				<div class="modal-body">
-					<div id="data_password" style="margin-bottom: 0px;">
-						<div class="alert alert-info" onclick="clearNotif()"><h3><i class="fa fa-spinner fa-spin"></i> Loading...</h3></div>
-					</div>
-					<input type="hidden" id="value_id" />
-				</div>
-				<div class="modal-footer">
-				</div>
-			</div>
-		</div>
-	</div> -->
+	<!-- Smart Tips -->
+	<script>
+		const slider = document.getElementById('smartTipsSlider');
+		const firstItem = slider.children[0].cloneNode(true);
+		slider.appendChild(firstItem);
+		const totalItems = slider.children.length;
+		let currentIndex = 0;
+		const itemHeight = 24;
+
+		setInterval(() => {
+			currentIndex++;
+			slider.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+			slider.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+
+			// jika sudah clone terakhir
+			if(currentIndex === totalItems - 1){
+				setTimeout(() => {
+					slider.style.transition = 'none';
+					slider.style.transform = 'translateY(0px)';
+					currentIndex = 0;
+				}, 900);
+			}
+		}, 7000);
+	</script>
+
 	<script>
 		$(document).ready(function(){
 			$("#notifArea").html(alertLoadProcess);
