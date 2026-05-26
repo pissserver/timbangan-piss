@@ -65,7 +65,7 @@
 							?>) -->
                         </div>
                         <div class="panel-body">
-							<div class="row">
+							<div class="row" style="margin-bottom: -30px;">
 								<form action="weighing_action.php?task=keluar&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 									<div class="row">
 										<div class="col-md-4">

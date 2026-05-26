@@ -128,8 +128,8 @@
 						<?php } ?>
 					</td>
 				</tr>
+				<?php $no++; } ?>
 			</tbody>
-		<?php $no++; } ?>
 </table>
 
 <script>

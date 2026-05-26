@@ -47,7 +47,7 @@
                             <i class="fa fa-truck fa-fw"></i> Kir Kendaraan Keluar
                         </div>
                         <div class="panel-body">
-							<div class="row">
+							<div class="row" style="margin-bottom: -30px;">
 								<form action="weighing_action.php?task=kir&id=<?php echo $id; ?>" class="form-horizontal" id="formTransOut" name = "formTransOut" method="POST" >
 								<fieldset>
 									<div class="row">
