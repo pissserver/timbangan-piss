@@ -127,7 +127,7 @@
 
 			<?php if($kode_jenis == 'B') { ?>
 				<td style="text-align: right; border: solid 1px black;"><?php echo format_no($r['cost_bayar']); ?></td>
-			<?php } elseif($kode_jenis == 'S') { ?>
+			<?php } elseif($kode_jenis == 'S' || $kode_jenis == 'L') { ?>
 				<td style="text-align: right; border: solid 1px black;"><?php echo format_no($r['cost']); ?></td>
 			<?php } ?>
 
@@ -136,10 +136,10 @@
 			$no++;
 
 			if ($kode_jenis == 'B') {
-				$grandTotal = $grandTotal + $r['cost_bayar'];
-			} elseif ($kode_jenis == 'S') {
-				$grandTotal = $grandTotal + $r['cost'];
-			}
+				$grandTotal += $r['cost_bayar'];
+			} elseif ($kode_jenis == 'S' || $kode_jenis == 'L') {
+				$grandTotal += $r['cost'];
+			} 
 			}
 			// $cost 		= executeScalar("	select 	sum(cost) 
 			// 								from 	weighing_mitra 
