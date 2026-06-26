@@ -875,7 +875,7 @@
 					</a>
 				</li> -->
 				<li class="divider"></li>
-				<li>
+				<!-- <li>
 					<a data-toggle="modal" data-target="#modalAccount" href="#" 
 					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"
 					onmouseover="this.style.backgroundColor='rgb(103, 165, 218)'; this.style.color='#ffffff';"
@@ -888,7 +888,7 @@
 						</div>
 					</a>
 				</li>
-				<li class="divider"></li>
+				<li class="divider"></li> -->
 				<li>
 					<a data-toggle="modal" data-target="#modalLogout" href="#" 
 					style="color: #ffffff; font-size: 15px; display: block; padding: 10px; text-decoration: none;"

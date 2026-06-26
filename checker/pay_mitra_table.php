@@ -485,6 +485,31 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 			const netto       = this.dataset.netto;
 			const payment     = this.dataset.payment;
 
+			const { value: method } = await Swal.fire({
+
+				title: 'Pilih Metode Pembayaran',
+
+				input: 'select',
+
+				inputOptions: {
+
+					qris   : 'QRIS (+0.7%)',
+					va : 'Virtual Account (+Rp4.440)'
+
+				},
+
+				inputPlaceholder: 'Pilih metode pembayaran',
+
+				showCancelButton: true,
+
+				confirmButtonText: 'Lanjutkan'
+
+			});
+
+			if(!method){
+				return;
+			}
+
 			try{
 
 				const response = await fetch('configMidTrans.php', {
@@ -496,50 +521,49 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 					},
 
 					body: new URLSearchParams({
+
 						weighing_id : weighing_id,
 						total       : total,
 						merchant    : merchant,
 						type        : type,
 						merchant_id : merchant_id,
-						netto       : netto,	
-						payment	 	: payment
+						netto       : netto,
+						payment     : payment,
+						method      : method
+
 					})
 
 				});
 
 				const snapToken = await response.text();
 
-				console.log(snapToken);
-
 				snap.pay(snapToken, {
 
 					onSuccess: function(result){
 
-						swal.fire({
-							title: 'Pembayaran Mitra Berhasil',
-							text: 'Terima kasih telah melakukan pembayaran.',
-							icon: 'success'
+						Swal.fire({
+							icon: 'success',
+							title: 'Pembayaran Berhasil'
 						}).then(()=>{
 							location.reload();
 						});
+
 					},
 
 					onPending: function(result){
 
-						swal.fire({
-							title: 'Pembayaran Mitra Pending',
-							text: 'Pembayaran sedang diproses.',
-							icon: 'warning'
+						Swal.fire({
+							icon: 'warning',
+							title: 'Pembayaran Pending'
 						});
 
 					},
 
 					onError: function(result){
 
-						swal.fire({
-							title: 'Pembayaran Mitra Gagal',
-							text: 'Terjadi kesalahan dalam proses pembayaran.',
-							icon: 'error'
+						Swal.fire({
+							icon: 'error',
+							title: 'Pembayaran Gagal'
 						});
 
 					}
@@ -550,10 +574,9 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 
 				console.log(error);
 
-				swal.fire({
-					title: 'Gagal Koneksi',
-					text: 'Terjadi kesalahan dalam koneksi ke server.',
-					icon: 'error'
+				Swal.fire({
+					icon: 'error',
+					title: 'Gagal Terhubung Ke Server'
 				});
 
 			}
