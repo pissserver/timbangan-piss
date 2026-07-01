@@ -777,6 +777,7 @@
     </div>
 
 	<ul class="nav navbar-top-links navbar-right">
+		
 		<?php include 'components/clock.php'; ?>
 		<?php include 'components/calculator.php'; ?>
 		<?php include 'components/offcanvas_note.php'; ?>
