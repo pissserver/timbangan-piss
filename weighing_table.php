@@ -133,20 +133,22 @@
 </table>
 
 <script>
-	$(document).ready(function() {
-		$('.modalUbah').on('click', function() {
-			var weighingId = $(this).data('id'); 
+	$(document).on('click', '.modalUbah', function() {
 
-			$.ajax({
-				url: 'components/modal_edit_weightin.php',
-				type: 'GET',
-				data: { id: weighingId }, 
-				success: function(response) {
-					$('#modalUbah .modal-content').html(response);
-					$('#modalUbah').modal('show');
-				}
-			});
+		var weighingId = $(this).data('id');
+
+		$.ajax({
+			url: 'components/modal_edit_weightin.php',
+			type: 'GET',
+			data: {
+				id: weighingId
+			},
+			success: function(response) {
+				$('#modalUbah .modal-content').html(response);
+				$('#modalUbah').modal('show');
+			}
 		});
+
 	});
 </script>
 
