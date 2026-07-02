@@ -32,7 +32,7 @@
 	<tbody>
 		<?php
 			$no		= 1;
-			$date_plus 	= strtotime('-30 day', strtotime($date_now));
+			$date_plus 	= strtotime('-90 day', strtotime($date_now));
 			$yesterday	= date('Y-m-j' , $date_plus);
 			$query 	= mysql_query("select * from weighing where (date_in  between '$yesterday' and '$date_now') and weighing_sts = 'Keluar' order by weighing_id desc");
 			while($data=mysql_fetch_array($query)){
