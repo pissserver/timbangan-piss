@@ -1,0 +1,12 @@
+2026-08-18 15:21:30
+METHOD: POST
+URI: /timbangan-piss/checker/callbackDoku.php
+HEADERS: {"Host":"7a10-146-196-109-65.ngrok-free.app","User-Agent":"curl\/8.21.0","Content-Length":"2","Accept":"*\/*","Content-Type":"application\/json","X-Forwarded-For":"146.196.109.65","X-Forwarded-Host":"7a10-146-196-109-65.ngrok-free.app","X-Forwarded-Proto":"https","Accept-Encoding":"gzip"}
+BODY: {\
+
+2026-08-18 15:21:30
+METHOD: GET
+URI: /timbangan-piss/checker/callbackDoku.php
+HEADERS: {"Host":"7a10-146-196-109-65.ngrok-free.app","User-Agent":"curl\/8.21.0","Accept":"*\/*","X-Forwarded-For":"146.196.109.65","X-Forwarded-Host":"7a10-146-196-109-65.ngrok-free.app","X-Forwarded-Proto":"https","Accept-Encoding":"gzip"}
+BODY: 
+

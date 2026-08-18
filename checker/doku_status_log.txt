@@ -1,0 +1,805 @@
+2026-08-18 15:31:04
+ORDER: MITRA-260000008-1787041859
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:31:08
+ORDER: MITRA-260000008-1787041859
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:31:12
+ORDER: MITRA-260000008-1787041859
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:31:16
+ORDER: MITRA-260000008-1787041859
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:31:24
+ORDER: MITRA-260000008-1787041879
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:31:28
+ORDER: MITRA-260000008-1787041879
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:32:40
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:32:44
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:32:48
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:32:53
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:32:57
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:33:01
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:33:04
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:33:08
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:33:12
+ORDER: MITRA-260000006-1787041955
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:34:10
+ORDER: MITRA-260000008-1787042045
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:34:14
+ORDER: MITRA-260000008-1787042045
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:34:19
+ORDER: MITRA-260000008-1787042045
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:34:23
+ORDER: MITRA-260000008-1787042045
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:34:26
+ORDER: MITRA-260000008-1787042045
+HTTP: 400
+RESPONSE: {"error":{"code":"invalid_client_id","message":"Invalid Client-Id","type":"invalid_request_error"}}
+
+2026-08-18 15:41:39
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:41:34Z","original_request_id":"doku-6a841abec16ce9.82186040","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:41:43
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:41:34Z","original_request_id":"doku-6a841abec16ce9.82186040","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:41:48
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841abec16ce9.82186040"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235613","created_date":"20260818154155","expired_date":"20260818164055","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:41:51
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841abec16ce9.82186040"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235613","created_date":"20260818154155","expired_date":"20260818164055","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:41:56
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841abec16ce9.82186040"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235613","created_date":"20260818154155","expired_date":"20260818164055","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:42:00
+ORDER: MITRA-260000008-1787042494
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042494","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841abec16ce9.82186040"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235613","created_date":"20260818154155","expired_date":"20260818164055","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:42:14
+ORDER: MITRA-260000006-1787042530
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042530","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:42:10Z","original_request_id":"doku-6a841ae201c4f7.94418730","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:42:18
+ORDER: MITRA-260000006-1787042530
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042530","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841ae201c4f7.94418730"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235614","created_date":"20260818154224","expired_date":"20260818164124","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:42:23
+ORDER: MITRA-260000006-1787042530
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042530","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841ae201c4f7.94418730"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235614","created_date":"20260818154224","expired_date":"20260818164124","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:42:27
+ORDER: MITRA-260000006-1787042530
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042530","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841ae201c4f7.94418730"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235614","created_date":"20260818154224","expired_date":"20260818164124","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:42:30
+ORDER: MITRA-260000006-1787042530
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042530","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841ae201c4f7.94418730"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235614","created_date":"20260818154224","expired_date":"20260818164124","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:43:48
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:43:43Z","original_request_id":"doku-6a841b3f71f248.16021015","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:43:52
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:43:57
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:01
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:05
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:08
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:13
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:17
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:44:21
+ORDER: MITRA-260000006-1787042623
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787042623","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841b3f71f248.16021015"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235623","created_date":"20260818154359","expired_date":"20260818164259","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:46:15
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:46:11Z","original_request_id":"doku-6a841bd3120bc3.09409972","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:46:19
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:46:11Z","original_request_id":"doku-6a841bd3120bc3.09409972","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:46:24
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841bd3120bc3.09409972"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235624","created_date":"20260818154631","expired_date":"20260818164531","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"85500","name":"Tonase 260000005 (900) Kg"}]}}
+
+2026-08-18 15:46:27
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841bd3120bc3.09409972"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235624","created_date":"20260818154631","expired_date":"20260818164531","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"85500","name":"Tonase 260000005 (900) Kg"}]}}
+
+2026-08-18 15:46:32
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841bd3120bc3.09409972"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235624","created_date":"20260818154631","expired_date":"20260818164531","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"85500","name":"Tonase 260000005 (900) Kg"}]}}
+
+2026-08-18 15:46:36
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841bd3120bc3.09409972"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235624","created_date":"20260818154631","expired_date":"20260818164531","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"85500","name":"Tonase 260000005 (900) Kg"}]}}
+
+2026-08-18 15:46:39
+ORDER: TONASE-260000005-1787042771
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000005-1787042771","amount":85500,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T08:46:46Z","original_request_id":"doku-6a841bd3120bc3.09409972"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235624","created_date":"20260818154646","expired_date":"20260818161644","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818154644","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"5663220"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"5663220","date":"20260818154646","status":"SUCCESS","payment_request_id":"5663220"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"85500","name":"Tonase 260000005 (900) Kg"}]}}
+
+2026-08-18 15:47:03
+ORDER: MITRA-260000008-1787042818
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042818","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:46:58Z","original_request_id":"doku-6a841c025e4c53.92089754","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:47:07
+ORDER: MITRA-260000008-1787042818
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042818","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c025e4c53.92089754"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235625","created_date":"20260818154713","expired_date":"20260818164613","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:47:12
+ORDER: MITRA-260000008-1787042818
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042818","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c025e4c53.92089754"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235625","created_date":"20260818154713","expired_date":"20260818164613","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:47:16
+ORDER: MITRA-260000008-1787042818
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042818","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c025e4c53.92089754"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235625","created_date":"20260818154713","expired_date":"20260818164613","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:47:19
+ORDER: MITRA-260000008-1787042818
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787042818","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T08:47:25Z","original_request_id":"doku-6a841c025e4c53.92089754"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235625","created_date":"20260818154725","expired_date":"20260818161722","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818154722","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"4070832"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"4070832","date":"20260818154725","status":"SUCCESS","payment_request_id":"4070832"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 15:47:37
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:47:32Z","original_request_id":"doku-6a841c24954809.07549419","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:47:41
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:47:45
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:47:50
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:47:54
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:47:57
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:48:01
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:48:05
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154750","expired_date":"20260818164650","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:48:09
+ORDER: MITRA-260000007-1787042852
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787042852","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T08:48:03Z","original_request_id":"doku-6a841c24954809.07549419"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_PERMATA","name":"Bank Permata"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_PERMATA"},"virtual_account_info":{"virtual_account_number":"8124600000113766","created_date":"20260818154805","expired_date":"20260818161803","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818154803","channel_code":"1234567890"},"virtual_account_payment":{"identifier":[{"name":"VI_TRACENO","value":"741829"},{"name":"VI_DELCHANNEL","value":"1234567890"}],"reference_number":"741829","date":"20260818154803","status":"SUCCESS"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 15:54:52
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T08:54:47Z","original_request_id":"doku-6a841dd7b86581.79006386","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 15:54:56
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:00
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:05
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:08
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:13
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:17
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:21
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:25
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155505","expired_date":"20260818165405","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 15:55:29
+ORDER: MITRA-260000006-1787043287
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787043287","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T08:55:36Z","original_request_id":"doku-6a841dd7b86581.79006386"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235628","created_date":"20260818155536","expired_date":"20260818162535","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818155535","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"2857181"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"2857181","date":"20260818155536","status":"SUCCESS","payment_request_id":"2857181"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:00:37
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:00:32Z","original_request_id":"doku-6a841f304c3b66.92267537","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:00:41
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BCA","name":"BCA"},"channel":{"id":"VIRTUAL_ACCOUNT_BCA"},"virtual_account_info":{"virtual_account_number":"1900800000325416","created_date":"20260818160050","expired_date":"20260818165950","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:00:45
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BCA","name":"BCA"},"channel":{"id":"VIRTUAL_ACCOUNT_BCA"},"virtual_account_info":{"virtual_account_number":"1900800000325416","created_date":"20260818160050","expired_date":"20260818165950","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:00:49
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BCA","name":"BCA"},"channel":{"id":"VIRTUAL_ACCOUNT_BCA"},"virtual_account_info":{"virtual_account_number":"1900800000325416","created_date":"20260818160050","expired_date":"20260818165950","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:00:53
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160101","expired_date":"20260818170001","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:00:57
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160101","expired_date":"20260818170001","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:01:01
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160101","expired_date":"20260818170001","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:01:06
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160101","expired_date":"20260818170001","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:01:10
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160101","expired_date":"20260818170001","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:01:13
+ORDER: TONASE-260000007-1787043632
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"TONASE-260000007-1787043632","amount":20000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:01:19Z","original_request_id":"doku-6a841f304c3b66.92267537"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235629","created_date":"20260818160119","expired_date":"20260818163117","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818160117","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"9630487"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"9630487","date":"20260818160119","status":"SUCCESS","payment_request_id":"9630487"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"20000","name":"Tonase 260000007 (30) Kg"}]}}
+
+2026-08-18 16:06:56
+ORDER: MITRA-260000005-1787044011
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044011","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:06:51Z","original_request_id":"doku-6a8420ab2cf7e6.74915660","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:07:00
+ORDER: MITRA-260000005-1787044011
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044011","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8420ab2cf7e6.74915660"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235631","created_date":"20260818160708","expired_date":"20260818170608","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:07:04
+ORDER: MITRA-260000005-1787044011
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044011","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8420ab2cf7e6.74915660"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235631","created_date":"20260818160708","expired_date":"20260818170608","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:07:09
+ORDER: MITRA-260000005-1787044011
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044011","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8420ab2cf7e6.74915660"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235631","created_date":"20260818160708","expired_date":"20260818170608","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:07:12
+ORDER: MITRA-260000005-1787044011
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044011","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:07:19Z","original_request_id":"doku-6a8420ab2cf7e6.74915660"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235631","created_date":"20260818160719","expired_date":"20260818163717","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818160717","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"9064895"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"9064895","date":"20260818160719","status":"SUCCESS","payment_request_id":"9064895"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:13:19
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:13:14Z","original_request_id":"doku-6a84222a8a76d9.81608002","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:13:23
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161331","expired_date":"20260818171231","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:28
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161331","expired_date":"20260818171231","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:31
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161331","expired_date":"20260818171231","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:35
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161331","expired_date":"20260818171231","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:39
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161331","expired_date":"20260818171231","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:43
+ORDER: MITRA-260000006-1787044394
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044394","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:13:39Z","original_request_id":"doku-6a84222a8a76d9.81608002"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235633","created_date":"20260818161339","expired_date":"20260818164337","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161337","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"2297253"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"2297253","date":"20260818161339","status":"SUCCESS","payment_request_id":"2297253"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:13:55
+ORDER: MITRA-260000007-1787044431
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044431","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:13:51Z","original_request_id":"doku-6a84224f19dc23.56988553","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:13:59
+ORDER: MITRA-260000007-1787044431
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044431","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84224f19dc23.56988553"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235634","created_date":"20260818161406","expired_date":"20260818171306","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:14:04
+ORDER: MITRA-260000007-1787044431
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044431","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84224f19dc23.56988553"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235634","created_date":"20260818161406","expired_date":"20260818171306","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:14:08
+ORDER: MITRA-260000007-1787044431
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044431","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:14:17Z","original_request_id":"doku-6a84224f19dc23.56988553"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235634","created_date":"20260818161417","expired_date":"20260818164415","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161415","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"5900606"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"5900606","date":"20260818161417","status":"SUCCESS","payment_request_id":"5900606"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:14:49
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:14:44Z","original_request_id":"doku-6a84228454c534.26045927","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:14:53
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:14:57
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:01
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:05
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:09
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:13
+ORDER: MITRA-260000008-1787044484
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044484","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84228454c534.26045927"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235635","created_date":"20260818161500","expired_date":"20260818171400","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:38
+ORDER: MITRA-260000008-1787044533
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044533","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:15:33Z","original_request_id":"doku-6a8422b505be38.13268509","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:15:42
+ORDER: MITRA-260000008-1787044533
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044533","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8422b505be38.13268509"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235636","created_date":"20260818161548","expired_date":"20260818171448","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:46
+ORDER: MITRA-260000008-1787044533
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044533","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8422b505be38.13268509"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235636","created_date":"20260818161548","expired_date":"20260818171448","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:50
+ORDER: MITRA-260000008-1787044533
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044533","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8422b505be38.13268509"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235636","created_date":"20260818161548","expired_date":"20260818171448","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:15:54
+ORDER: MITRA-260000008-1787044533
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000008-1787044533","amount":10000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:15:59Z","original_request_id":"doku-6a8422b505be38.13268509"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235636","created_date":"20260818161559","expired_date":"20260818164556","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161556","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"7792832"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"7792832","date":"20260818161559","status":"SUCCESS","payment_request_id":"7792832"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"10000","name":"Mitra 260000008 80 Kg"}]}}
+
+2026-08-18 16:17:54
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:17:49Z","original_request_id":"doku-6a84233de7c5d3.59449786","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:17:58
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161805","expired_date":"20260818171705","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:02
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161805","expired_date":"20260818171705","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:06
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161805","expired_date":"20260818171705","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:11
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161805","expired_date":"20260818171705","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:15
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161805","expired_date":"20260818171705","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:18
+ORDER: MITRA-260000005-1787044669
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044669","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:18:25Z","original_request_id":"doku-6a84233de7c5d3.59449786"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235637","created_date":"20260818161825","expired_date":"20260818164822","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161822","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"5811068"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"5811068","date":"20260818161825","status":"SUCCESS","payment_request_id":"5811068"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:18:34
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:18:30Z","original_request_id":"doku-6a8423660f98d7.19652535","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:18:38
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8423660f98d7.19652535"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235638","created_date":"20260818161845","expired_date":"20260818171745","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:18:42
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8423660f98d7.19652535"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235638","created_date":"20260818161845","expired_date":"20260818171745","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:18:47
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8423660f98d7.19652535"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235638","created_date":"20260818161845","expired_date":"20260818171745","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:18:51
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8423660f98d7.19652535"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235638","created_date":"20260818161845","expired_date":"20260818171745","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:18:55
+ORDER: MITRA-260000006-1787044710
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044710","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:19:01Z","original_request_id":"doku-6a8423660f98d7.19652535"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235638","created_date":"20260818161901","expired_date":"20260818164859","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161859","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"5231299"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"5231299","date":"20260818161901","status":"SUCCESS","payment_request_id":"5231299"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:19:21
+ORDER: MITRA-260000007-1787044756
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044756","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:19:16Z","original_request_id":"doku-6a842394080197.84415829","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:19:25
+ORDER: MITRA-260000007-1787044756
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044756","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842394080197.84415829"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235639","created_date":"20260818161932","expired_date":"20260818171832","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:19:30
+ORDER: MITRA-260000007-1787044756
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044756","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842394080197.84415829"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235639","created_date":"20260818161932","expired_date":"20260818171832","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:19:33
+ORDER: MITRA-260000007-1787044756
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787044756","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:19:41Z","original_request_id":"doku-6a842394080197.84415829"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235639","created_date":"20260818161941","expired_date":"20260818164939","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818161939","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"4922971"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"4922971","date":"20260818161941","status":"SUCCESS","payment_request_id":"4922971"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:22:31
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:22:25Z","original_request_id":"doku-6a842451e14539.15507432","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:22:35
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:22:25Z","original_request_id":"doku-6a842451e14539.15507432","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:22:39
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:22:25Z","original_request_id":"doku-6a842451e14539.15507432","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:22:43
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:22:25Z","original_request_id":"doku-6a842451e14539.15507432","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:22:47
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:22:25Z","original_request_id":"doku-6a842451e14539.15507432","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:22:51
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162256","expired_date":"20260818172156","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:22:55
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162256","expired_date":"20260818172156","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:22:59
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162256","expired_date":"20260818172156","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:23:03
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162256","expired_date":"20260818172156","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:23:07
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162256","expired_date":"20260818172156","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:23:11
+ORDER: MITRA-260000005-1787044945
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000005-1787044945","amount":22500,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:23:13Z","original_request_id":"doku-6a842451e14539.15507432"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235640","created_date":"20260818162313","expired_date":"20260818165307","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818162307","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"1639340"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"1639340","date":"20260818162313","status":"SUCCESS","payment_request_id":"1639340"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"22500","name":"Mitra 260000005 900 Kg"}]}}
+
+2026-08-18 16:23:22
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:23:17Z","original_request_id":"doku-6a8424857cdcd0.61037485","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:23:26
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:30
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:35
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:39
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:43
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:46
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:50
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:54
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:23:58
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:24:02
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:24:06
+ORDER: MITRA-260000006-1787044997
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787044997","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424857cdcd0.61037485"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235641","created_date":"20260818162333","expired_date":"20260818172233","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:24:15
+ORDER: MITRA-260000006-1787045050
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787045050","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:24:10Z","original_request_id":"doku-6a8424ba84e2e0.12129256","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:24:19
+ORDER: MITRA-260000006-1787045050
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787045050","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424ba84e2e0.12129256"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235642","created_date":"20260818162426","expired_date":"20260818172326","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:24:24
+ORDER: MITRA-260000006-1787045050
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787045050","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424ba84e2e0.12129256"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235642","created_date":"20260818162426","expired_date":"20260818172326","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:24:27
+ORDER: MITRA-260000006-1787045050
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000006-1787045050","amount":225000,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:24:34Z","original_request_id":"doku-6a8424ba84e2e0.12129256"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235642","created_date":"20260818162434","expired_date":"20260818165432","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818162432","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"6951265"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"6951265","date":"20260818162434","status":"SUCCESS","payment_request_id":"6951265"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"225000","name":"Mitra 260000006 9000 Kg"}]}}
+
+2026-08-18 16:25:17
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:21
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:25
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:29
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:33
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:37
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","date":"2026-08-18T09:25:12Z","original_request_id":"doku-6a8424f83d3262.85684747","amount_details":{"currency":"IDR"}},"service":{"id":""},"acquirer":{"id":""},"channel":{"id":""}}
+
+2026-08-18 16:25:41
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"PENDING","original_request_id":"doku-6a8424f83d3262.85684747"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235644","created_date":"20260818162546","expired_date":"20260818172446","reusable_status":false},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
+2026-08-18 16:25:45
+ORDER: MITRA-260000007-1787045112
+HTTP: 200
+RESPONSE: {"order":{"invoice_number":"MITRA-260000007-1787045112","amount":750,"status":"ORDER_GENERATED"},"transaction":{"status":"SUCCESS","type":"PAYMENT","date":"2026-08-18T09:25:54Z","original_request_id":"doku-6a8424f83d3262.85684747"},"service":{"id":"VIRTUAL_ACCOUNT"},"acquirer":{"id":"BANK_MANDIRI","name":"Bank Mandiri"},"channel":{"id":"VIRTUAL_ACCOUNT_BANK_MANDIRI"},"virtual_account_info":{"virtual_account_number":"8889940000235644","created_date":"20260818162554","expired_date":"20260818165552","reusable_status":false},"virtual_account_inquiry":{"status":"USED","date":"20260818162552","channel_code":"1"},"virtual_account_payment":{"identifier":[{"name":"TRANSACTION_ID","value":"7851071"},{"name":"CHANNEL_ID","value":"001"}],"reference_number":"7851071","date":"20260818162554","status":"SUCCESS","payment_request_id":"7851071"},"additional_info":{"override_notification_url":"https://7a10-146-196-109-65.ngrok-free.app/timbangan-piss/checker/callbackDoku.php","origin":{"product":"CHECKOUT","system":"mid-jokul-checkout-system","api_format":"JOKUL","source":"direct"},"line_items":[{"quantity":1.0,"price":"750","name":"Mitra 260000007 30 Kg"}]}}
+
