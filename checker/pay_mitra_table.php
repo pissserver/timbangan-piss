@@ -209,6 +209,52 @@
 	border-color: #66e546;
 	box-shadow:0 0 0 3px rgba(79,70,229,.15);
 }
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px){
+	.pay-header-neo-mitra{
+		flex-direction:column;
+		align-items:stretch;
+		gap:12px;
+		padding:14px;
+	}
+	.pay-header-right-mitra{
+		width:100%;
+	}
+	.pay-search-wrap-mitra{
+		width:100%;
+	}
+	.pay-search-mitra{
+		width:100%;
+	}
+
+	.pay-card-mitra{
+		grid-template-columns:1fr 1fr;
+		gap:10px 12px;
+		padding:14px;
+		row-gap:12px;
+	}
+	.pay-left-mitra{
+		grid-column:1 / -1;
+	}
+	.pay-right-mitra{
+		text-align:left;
+	}
+	.pay-action-mitra{
+		grid-column:1 / -1;
+		text-align:left !important;
+	}
+	.pay-action-mitra button,
+	.pay-action-mitra .btn{
+		width:100%;
+	}
+	.pay-empty-mitra img{
+		width:150px;
+	}
+	.pay-pagination-mitra button{
+		padding:6px 10px;
+	}
+}
 </style>
 
 <!-- ================= HEADER ================= -->

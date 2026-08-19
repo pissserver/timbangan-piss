@@ -96,8 +96,16 @@
 
     /* Tampilkan offcanvas */
     .offcanvas.show {
-        transform: translate(-50%, -50%) scale(1); 
-        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    @media (max-width: 767px) {
+        .offcanvas {
+            width: 92%;
+            height: 80%;
+            padding: 15px;
+        }
     }
 
     /* Tampilan gambar ketika tidak ada update sistem */

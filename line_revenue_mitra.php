@@ -43,7 +43,7 @@
 <script type="text/javascript">
 	(function($){ // encapsulate jQuery
 		$(function () {
-			$('#revenue').highcharts({
+			$('#revenueMitra').highcharts({
 				chart: {
 					type: 'spline'
 				},
@@ -136,6 +136,6 @@
 </script>
 <div class="panel panel-primary">
 	<div class="panel-body">
-		<div id="revenue" style="max-width: 1000px; height: 300px; margin: 0 auto"></div>
+		<div id="revenueMitra" style="width: 100%; max-width: 1000px; height: 300px; margin: 0 auto"></div>
 	</div>
 </div>

@@ -133,6 +133,6 @@
 </script>
 <div class="panel panel-primary">
 	<div class="panel-body">
-		<div id="revenue2" style="max-width: 1000px; height: 300px; margin: 0 auto"></div>
+		<div id="revenue2" style="width: 100%; max-width: 1000px; height: 300px; margin: 0 auto"></div>
 	</div>
 </div>

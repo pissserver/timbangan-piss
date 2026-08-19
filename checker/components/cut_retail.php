@@ -58,6 +58,21 @@
 		margin-top:40px;
 	}
 
+	@media (max-width: 767px){
+		.centeng-modal .modal-dialog{
+			width:auto;
+			max-width:calc(100% - 20px);
+			margin:10px auto;
+		}
+		.centeng-header-row{
+			flex-wrap:wrap;
+			gap:10px;
+		}
+		.centeng-search-wrapper{
+			width:100%;
+		}
+	}
+
 	.centeng-modal .modal-content{
 		border-radius:20px;
 		border:none;

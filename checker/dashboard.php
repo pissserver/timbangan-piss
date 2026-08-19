@@ -428,6 +428,13 @@
                 $("#Area6").load("../line_revenue_unpaid_mitra.php",function(){clearNotif();});
             }
             function clearNotif(){$("#notifArea").html("");}
+
+            // Reflow chart Highcharts saat tab ditampilkan agar ukuran pas (tidak terpotong/overflow)
+            $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
+                if (window.Highcharts && Highcharts.charts) {
+                    Highcharts.charts.forEach(function (c) { if (c) { c.reflow(); } });
+                }
+            });
         </script>
         <script>
             function animateValue(id, start, end, duration, isCurrency = false) {

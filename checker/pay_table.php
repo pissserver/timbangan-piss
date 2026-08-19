@@ -209,6 +209,52 @@
 	border-color:#4f46e5;
 	box-shadow:0 0 0 3px rgba(79,70,229,.15);
 }
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px){
+	.pay-header-neo{
+		flex-direction:column;
+		align-items:stretch;
+		gap:12px;
+		padding:14px;
+	}
+	.pay-header-right{
+		width:100%;
+	}
+	.pay-search-wrap{
+		width:100%;
+	}
+	.pay-search{
+		width:100%;
+	}
+
+	.pay-card{
+		grid-template-columns:1fr 1fr;
+		gap:10px 12px;
+		padding:14px;
+		row-gap:12px;
+	}
+	.pay-left{
+		grid-column:1 / -1;
+	}
+	.pay-right{
+		text-align:left;
+	}
+	.pay-action{
+		grid-column:1 / -1;
+		text-align:left !important;
+	}
+	.pay-action button,
+	.pay-action .btn{
+		width:100%;
+	}
+	.pay-empty img{
+		width:150px;
+	}
+	.pay-pagination button{
+		padding:6px 10px;
+	}
+}
 </style>
 
 <!-- ================= HEADER ================= -->
