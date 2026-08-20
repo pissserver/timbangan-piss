@@ -50,7 +50,7 @@
 					type: 'spline'
 				},
 				title: {
-					text: 'Outstanding Timbangan PISS',
+					text: 'Outstanding Transaksi Timbang',
 					x: -20 //center
 				},
 				xAxis: {

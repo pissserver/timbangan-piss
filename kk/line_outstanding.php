@@ -48,7 +48,7 @@
 					type: 'spline'
 				},
 				title: {
-					text: 'Transaksi Outstanding Timbang',
+					text: 'Outstanding Transaksi Timbang',
 					x: -20 //center
 				},
 				xAxis: {
