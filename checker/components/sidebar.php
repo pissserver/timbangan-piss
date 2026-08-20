@@ -1332,7 +1332,7 @@
 							<div class="profile-info">
 								<b><?php echo $checkerName; ?></b>
 								<div class="profile-meta">
-									<span class="role-badge">Kasir</span>
+									<span class="role-badge">Checker</span>
 									<span class="meta-separator">|</span>
 									<span class="shift-badge <?php echo $shiftClass; ?>" data-tooltip="<?php echo $shiftTime; ?>">
 										<?php echo $shiftText; ?>
