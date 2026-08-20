@@ -209,6 +209,52 @@
 	border-color: #66e546;
 	box-shadow:0 0 0 3px rgba(79,70,229,.15);
 }
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px){
+	.pay-header-neo-mitra{
+		flex-direction:column;
+		align-items:stretch;
+		gap:12px;
+		padding:14px;
+	}
+	.pay-header-right-mitra{
+		width:100%;
+	}
+	.pay-search-wrap-mitra{
+		width:100%;
+	}
+	.pay-search-mitra{
+		width:100%;
+	}
+
+	.pay-card-mitra{
+		grid-template-columns:1fr 1fr;
+		gap:10px 12px;
+		padding:14px;
+		row-gap:12px;
+	}
+	.pay-left-mitra{
+		grid-column:1 / -1;
+	}
+	.pay-right-mitra{
+		text-align:left;
+	}
+	.pay-action-mitra{
+		grid-column:1 / -1;
+		text-align:left !important;
+	}
+	.pay-action-mitra button,
+	.pay-action-mitra .btn{
+		width:100%;
+	}
+	.pay-empty-mitra img{
+		width:150px;
+	}
+	.pay-pagination-mitra button{
+		padding:6px 10px;
+	}
+}
 </style>
 
 <!-- ================= HEADER ================= -->
@@ -468,9 +514,8 @@ while($data2 = mysql_fetch_array($query2)){
 </script>
 
 
-<!-- Midtrans -->
-<script src="https://app.sandbox.midtrans.com/snap/snap.js"
-data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
+<!-- DOKU Checkout -->
+<script src="https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js"></script>
 
 <script>
 	document.querySelectorAll('.btn-transfer').forEach(button => {
@@ -485,34 +530,9 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 			const netto       = this.dataset.netto;
 			const payment     = this.dataset.payment;
 
-			const { value: method } = await Swal.fire({
-
-				title: 'Pilih Metode Pembayaran',
-
-				input: 'select',
-
-				inputOptions: {
-
-					qris   : 'QRIS (+0.7%)',
-					va : 'Virtual Account (+Rp4.440)'
-
-				},
-
-				inputPlaceholder: 'Pilih metode pembayaran',
-
-				showCancelButton: true,
-
-				confirmButtonText: 'Lanjutkan'
-
-			});
-
-			if(!method){
-				return;
-			}
-
 			try{
 
-				const response = await fetch('configMidTrans.php', {
+				const response = await fetch('configDoku.php', {
 
 					method: 'POST',
 
@@ -529,46 +549,22 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 						merchant_id : merchant_id,
 						netto       : netto,
 						payment     : payment,
-						method      : method
+						return_url  : window.location.href
 
 					})
 
 				});
 
-				const snapToken = await response.text();
+				const data = await response.json();
 
-				snap.pay(snapToken, {
+				if(!response.ok || !data.payment_url){
+					throw new Error(data.message || 'Gagal membuat pembayaran DOKU');
+				}
 
-					onSuccess: function(result){
+				loadJokulCheckout(data.payment_url);
 
-						Swal.fire({
-							icon: 'success',
-							title: 'Pembayaran Berhasil'
-						}).then(()=>{
-							location.reload();
-						});
-
-					},
-
-					onPending: function(result){
-
-						Swal.fire({
-							icon: 'warning',
-							title: 'Pembayaran Pending'
-						});
-
-					},
-
-					onError: function(result){
-
-						Swal.fire({
-							icon: 'error',
-							title: 'Pembayaran Gagal'
-						});
-
-					}
-
-				});
+				localStorage.setItem('doku_pending_mitra', data.invoice_number);
+				startCheckPaymentMitra(data.invoice_number);
 
 			}catch(error){
 
@@ -576,7 +572,8 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 
 				Swal.fire({
 					icon: 'error',
-					title: 'Gagal Terhubung Ke Server'
+					title: 'Gagal Terhubung Ke Server',
+					text: error.message
 				});
 
 			}
@@ -584,6 +581,68 @@ data-client-key="Mid-client-_O7ZTklyuDSYOHzY"></script>
 		});
 
 	});
+
+	let payPollMitra = null;
+
+	async function checkPaymentMitraOnce(orderId){
+
+		try{
+
+			const res  = await fetch('checkStatusDoku.php?order_id='+encodeURIComponent(orderId));
+			const info = await res.json();
+
+			if(info.status === 'paid'){
+
+				if(payPollMitra){
+					clearInterval(payPollMitra);
+					payPollMitra = null;
+				}
+
+				localStorage.removeItem('doku_pending_mitra');
+
+				setTimeout(()=>{
+					location.reload();
+				}, 8000);
+
+				return true;
+			}
+
+		}catch(e){
+			console.log(e);
+		}
+
+		return false;
+	}
+
+	function startCheckPaymentMitra(orderId){
+
+		if(payPollMitra){
+			clearInterval(payPollMitra);
+		}
+
+		payPollMitra = setInterval(()=>{
+			checkPaymentMitraOnce(orderId);
+		}, 4000);
+
+		setTimeout(()=>{
+			if(payPollMitra){
+				clearInterval(payPollMitra);
+				payPollMitra = null;
+			}
+		}, 900000);
+	}
+
+	document.addEventListener('DOMContentLoaded', ()=>{
+		const pending = localStorage.getItem('doku_pending_mitra');
+		if(pending){
+			checkPaymentMitraOnce(pending).then(paid=>{
+				if(!paid){
+					startCheckPaymentMitra(pending);
+				}
+			});
+		}
+	});
+
 </script>
-<!-- End Midtrans -->
+<!-- End DOKU Checkout -->
 

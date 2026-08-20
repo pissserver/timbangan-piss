@@ -814,12 +814,303 @@
 				0 0 36px rgba(250, 204, 21, 0.8);
 		}
 	}
+		/* ======================================================
+		MOBILE & TABLET LAYOUT
+		====================================================== */
+		@media (max-width: 1024px) {
+			html, body {
+				overflow-x: hidden;
+				max-width: 100%;
+			}
+
+			#wrapper {
+				overflow-x: hidden;
+				width: 100%;
+			}
+
+			.navbar-fixed-top {
+				min-height: 50px;
+				display: flex;
+				align-items: center;
+				flex-wrap: nowrap;
+				z-index: 1046;
+			}
+
+			.navbar-header {
+				display: flex;
+				align-items: center;
+				flex: 1 1 auto;
+				width: auto;
+				min-width: 0;
+				float: none;
+			}
+
+			.navbar-brand {
+				flex: 1 1 auto;
+				width: auto !important;
+				min-width: 0;
+				height: auto;
+				padding: 12px 10px !important;
+				font-size: 13px !important;
+				line-height: 1.3;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				background-color: #428bca !important;
+			}
+
+			.sidebar-toggle-btn {
+				display: none !important;
+			}
+
+			.navbar-toggle {
+				display: block;
+				float: none;
+				margin: 8px 4px 8px 8px;
+			}
+
+			.navbar-top-links {
+				flex: 0 0 auto;
+				float: none !important;
+				display: flex;
+				align-items: center;
+				width: auto;
+				margin: 0;
+				padding: 0 6px;
+				background: transparent;
+			}
+
+			.navbar-top-links > li {
+				float: none !important;
+				display: inline-flex;
+				align-items: center;
+			}
+
+			.navbar-top-links li:last-child {
+				margin-right: 0;
+			}
+
+			.navbar-top-links li a {
+				min-height: 0;
+				padding: 8px 10px;
+			}
+
+			.navbar-top-links .dropdown-toggle b {
+				display: none;
+			}
+
+			.navbar-top-links .dropdown-menu {
+				right: 8px;
+				left: auto;
+				width: calc(100vw - 24px);
+				max-width: 280px;
+			}
+
+			.sidebar,
+			.navbar-default.sidebar {
+				position: fixed !important;
+				top: 50px;
+				left: 0;
+				width: 82% !important;
+				max-width: 300px;
+				height: calc(100% - 50px);
+				margin: 0 !important;
+				z-index: 1046;
+				overflow-y: auto;
+				-webkit-transform: translateX(-100%);
+				transform: translateX(-100%) !important;
+				transition: transform .3s ease, -webkit-transform .3s ease;
+				box-shadow: 2px 0 18px rgba(0,0,0,.35);
+			}
+
+			body.sidebar-open .sidebar,
+			body.sidebar-open .navbar-default.sidebar {
+				-webkit-transform: translateX(0);
+				transform: translateX(0) !important;
+			}
+
+			.sidebar .sidebar-nav.navbar-collapse {
+				display: block !important;
+				visibility: visible !important;
+				height: auto !important;
+				max-height: none !important;
+				min-height: 100% !important;
+				width: 100% !important;
+				overflow: visible !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				border-top: 0 !important;
+				box-shadow: none !important;
+			}
+
+			.sidebar #side-menu {
+				display: block !important;
+			}
+
+			/* Overlay gelap saat drawer terbuka */
+			#sidebarOverlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,.45);
+				z-index: 1040;
+			}
+
+			body.sidebar-open #sidebarOverlay {
+				display: block;
+			}
+
+			body.sidebar-open {
+				overflow: hidden;
+			}
+
+			/* Reset sisa aturan collapse lama agar tidak bentrok */
+			body.sidebar-collapse .sidebar,
+			body.sidebar-collapse .navbar-default.sidebar {
+				width: 260px !important;
+			}
+
+			body.sidebar-collapse .profile-card-sidebar {
+				width: auto;
+				height: auto;
+				border-radius: 14px;
+				justify-content: flex-start;
+				padding: 12px;
+				margin: 15px;
+			}
+
+			body.sidebar-collapse .profile-info {
+				display: block;
+			}
+
+			body.sidebar-collapse .sidebar .nav > li > a span,
+			body.sidebar-collapse .sidebar .nav-second-level {
+				display: block;
+			}
+
+			body.sidebar-collapse .sidebar .nav > li > a {
+				text-align: left;
+				padding-left: 14px;
+				padding-right: 14px;
+			}
+
+			#page-wrapper,
+			body.sidebar-collapse #page-wrapper {
+				margin-left: 0 !important;
+				padding: 8px 4px 90px !important;
+				width: 100%;
+				border-left: none;
+			}
+
+			/* Kolom & row full width tanpa sisa padding bootstrap */
+			#page-wrapper .row {
+				margin-left: 0 !important;
+				margin-right: 0 !important;
+			}
+
+			#page-wrapper [class*="col-"] {
+				padding-left: 6px !important;
+				padding-right: 6px !important;
+			}
+
+			/* Cegah chart Highcharts overflow keluar layar */
+			#page-wrapper .panel-body,
+			#page-wrapper .data-card-body {
+				overflow-x: hidden;
+			}
+
+			#page-wrapper [id^="omzet"],
+			#page-wrapper #outstanding,
+			#page-wrapper #revenue,
+			#page-wrapper #revenue2,
+			#page-wrapper #tonaseMerchant,
+			#page-wrapper .highcharts-container {
+				min-width: 0 !important;
+				max-width: 100% !important;
+				width: 100% !important;
+			}
+
+			.floating-trophy {
+				width: 48px;
+				height: 48px;
+				font-size: 20px;
+				bottom: 16px;
+				right: 16px;
+			}
+
+			.modal-dialog {
+				width: auto !important;
+				max-width: calc(100% - 20px);
+				margin: 10px auto;
+			}
+
+			.modal-congrats-box {
+				padding: 18px 12px;
+			}
+
+			.modal-congrats-title {
+				font-size: 18px;
+			}
+
+			.modal-congrats-photo {
+				width: 96px;
+				height: 96px;
+			}
+
+			.slide-btn {
+				width: 28px;
+				height: 28px;
+				font-size: 14px;
+				line-height: 28px;
+			}
+
+			.prev-btn { left: 6px; }
+			.next-btn { right: 6px; }
+
+			.profile-card-sidebar {
+				margin: 12px;
+			}
+
+			/* ===== DASHBOARD STAT CARD ===== */
+			#page-wrapper .row {
+				margin-left: 0;
+				margin-right: 0;
+			}
+
+			.huge {
+				font-size: 26px;
+			}
+
+			.panel .fa-5x {
+				font-size: 2.6em;
+			}
+
+			.panel-heading .col-xs-3,
+			.panel-heading .col-xs-9 {
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+
+			/* Tab dashboard biar tidak mepet */
+			.nav-tabs.nav-justified > li > a {
+				padding: 8px 6px;
+				font-size: 12px;
+			}
+
+			/* Kolom kembar (ID KO / Total) beri jarak saat menumpuk */
+			.summary-row .col-md-6 + .col-md-6 {
+				margin-top: 14px;
+			}
+		}
 </style>
 
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #428bca;">
 	<div class="navbar-header bg-primary">
-    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+    	<button type="button" class="navbar-toggle" onclick="toggleSidebarDrawer()">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -833,10 +1124,6 @@
     </div>
 	
 	<ul class="nav navbar-top-links navbar-right">
-		<?php include 'components/clock.php'; ?>
-		<?php include 'components/cut_retail.php'; ?>
-		<?php include 'components/calculator.php'; ?>
-		<?php include 'components/offcanvas_note.php'; ?>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#" 
 			style="color: #ffffff !important; background-color: transparent !important;"
@@ -1045,7 +1332,7 @@
 							<div class="profile-info">
 								<b><?php echo $checkerName; ?></b>
 								<div class="profile-meta">
-									<span class="role-badge">Kasir</span>
+									<span class="role-badge">Checker</span>
 									<span class="meta-separator">|</span>
 									<span class="shift-badge <?php echo $shiftClass; ?>" data-tooltip="<?php echo $shiftTime; ?>">
 										<?php echo $shiftText; ?>
@@ -1074,6 +1361,28 @@
                 </div>
             </div>
 </nav>
+
+<!-- Overlay untuk drawer sidebar (mobile) -->
+<div id="sidebarOverlay" onclick="closeSidebarDrawer()"></div>
+
+<script>
+	function toggleSidebarDrawer() {
+		document.body.classList.toggle("sidebar-open");
+	}
+	function closeSidebarDrawer() {
+		document.body.classList.remove("sidebar-open");
+	}
+	// Tutup drawer saat salah satu menu navigasi diklik
+	document.addEventListener("DOMContentLoaded", function () {
+		document.querySelectorAll("#side-menu a").forEach(function (link) {
+			link.addEventListener("click", function () {
+				if (this.getAttribute("href") && this.getAttribute("href") !== "#") {
+					closeSidebarDrawer();
+				}
+			});
+		});
+	});
+</script>
 
 <!-- Floating Trophy -->
 <div class="floating-trophy" onclick="openCongrats()">

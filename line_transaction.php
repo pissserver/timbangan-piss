@@ -133,6 +133,6 @@
 </script>
 <div class="panel panel-primary">
 	<div class="panel-body">
-		<div id="omzetBlockAll" style="min-width: 400px; max-width: 900px; height: 300px; margin: 0 auto"></div>
+		<div id="omzetBlockAll" style="width: 100%; max-width: 900px; height: 300px; margin: 0 auto"></div>
 	</div>
 </div>

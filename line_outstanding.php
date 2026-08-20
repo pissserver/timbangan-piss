@@ -50,7 +50,7 @@
 					type: 'spline'
 				},
 				title: {
-					text: 'Outstanding Timbangan PISS',
+					text: 'Outstanding Transaksi Timbang',
 					x: -20 //center
 				},
 				xAxis: {
@@ -142,6 +142,6 @@
 </script>
 <div class="panel panel-primary">
 	<div class="panel-body">
-		<div id="outstanding" style="min-width: 400px; max-width: 900px; height: 300px; margin: 0 auto"></div>
+		<div id="outstanding" style="width: 100%; max-width: 900px; height: 300px; margin: 0 auto"></div>
 	</div>
 </div>

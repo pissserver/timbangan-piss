@@ -762,6 +762,52 @@
 		color:#ffffff;
 		font-weight:600;
 	}
+
+	/* ================= MOBILE ================= */
+	@media (max-width: 767px){
+		.payment-frame{
+			padding:14px;
+		}
+		.payment-header-mitra{
+			flex-direction:column;
+			align-items:flex-start;
+			gap:12px;
+			padding:14px;
+		}
+		.payment-header-mitra-left{
+			gap:12px;
+		}
+		.payment-header-mitra-right{
+			width:100%;
+		}
+		.payment-toolbar-mitra{
+			flex-direction:column;
+			align-items:stretch;
+			gap:10px;
+		}
+		.search-box-mitra{
+			max-width:none;
+		}
+		.payment-card-mitra{
+			flex-direction:column;
+			align-items:stretch;
+			gap:10px;
+			padding:16px 16px 16px 20px;
+		}
+		.payment-left,
+		.payment-mid,
+		.payment-right{
+			width:100%;
+			text-align:left;
+		}
+		.pagination-wrapper{
+			flex-wrap:wrap;
+			gap:6px;
+		}
+		.summary-tile strong{
+			font-size:22px;
+		}
+	}
 </style>
 
 <div class="payment-frame">

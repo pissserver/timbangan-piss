@@ -85,14 +85,14 @@
 		border: 1px solid #ddd;
 
 		/* Default background */
-		background-image: url('img/bg-profile.png');
+		background-image: url('../img/bg-profile.png');
 
 		/* Smooth transition */
 		transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
 	}
 
 	.bg2 {
-		background-image: url('img/bg-profile2.png') !important;
+		background-image: url('../img/bg-profile2.png') !important;
 	}
 
 	.profile-card {
@@ -162,6 +162,7 @@
 
 	#cropModal .modal-dialog {
 		width: 500px;
+		max-width: calc(100% - 20px);
 	}
 
 	.crop-container {
@@ -315,6 +316,80 @@
 		height: 4px;
 		background:#999;
 		border-radius: 10px;
+	}
+
+	/* ============================================
+	   RESPONSIVE MOBILE & TABLET (<= 1024px)
+	   ============================================ */
+	@media (max-width: 1024px) {
+		/* Kurangi padding dalam panel agar konten tidak mepet/overflow */
+		#page-wrapper .panel-group {
+			padding: 5px 8px 0 !important;
+		}
+
+		/* Reset margin samping form-group (inline) agar kolom rapi & sejajar */
+		#profile .form-group {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		/* Input & panel tidak melebihi kontainer */
+		#page-wrapper .form-control,
+		#page-wrapper .panel {
+			max-width: 100%;
+		}
+
+		/* Roadmap badge diperkecil agar muat satu baris */
+		.level-roadmap {
+			gap: 5px;
+			flex-wrap: nowrap;
+			margin: 18px 0;
+		}
+		.road-badge {
+			width: 32px;
+			height: 32px;
+			font-size: 14px;
+		}
+		.road-line {
+			width: 18px;
+		}
+
+		/* Label batas level: bungkus rapi 2 kolom, tidak saling tumpuk */
+		.level-line {
+			flex-wrap: wrap;
+			font-size: 11px;
+			gap: 4px 0;
+		}
+		.level-line span {
+			flex: 1 1 50%;
+			text-align: center;
+		}
+
+		.achievement-box {
+			padding: 18px 12px;
+		}
+
+		/* Foto profil sedikit dikecilkan di layar kecil */
+		.profile-card {
+			padding: 18px 12px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.profile-card img {
+			width: 100px;
+			height: 100px;
+		}
+		.level-badge {
+			font-size: 13px;
+			padding: 8px 14px;
+		}
+		.level-line {
+			font-size: 10px;
+		}
+		#cropModal .modal-dialog {
+			width: auto;
+		}
 	}
 
 </style>
