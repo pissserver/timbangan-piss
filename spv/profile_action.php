@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include "connection.php";
+	include "../connection.php";
 
 	$name          = $_POST['name'];
 	$username      = $_POST['username'];        // username baru
