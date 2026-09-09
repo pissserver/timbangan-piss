@@ -1325,7 +1325,7 @@
 						<div class="profile-card-sidebar" id="photoContainer" style="margin-bottom: 30px;">
 							<div class="profile-avatar">
 								<img id="previewPhoto"
-									src="<?php echo $photoUrl ? '../uploads/' . $photoUrl : '../uploads/profile-default.png'; ?>">
+									src="<?php echo $photoUrl ? '../../uploads/' . $photoUrl : '../../uploads/profile-default.png'; ?>">
 								<span class="status-online"></span>
 							</div>
 
