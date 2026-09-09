@@ -243,7 +243,7 @@
 				form.action = "htmltopdf/reportRevenue_mitra.php";
 				form.target = "_blank";
 			} else if (type === 'excel') {
-				form.action = "exportExcel/exportReportRevenuemitra.php";
+				form.action = "exportExcel/exportReportRevenueMitra.php";
 				form.target = "_self";
 			}
 		}
