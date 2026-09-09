@@ -56,7 +56,7 @@
 										from 	weighing w, 
 												merchant m 
 										where 	w.merchant_id = m.merchant_id and 
-												W.weighing_sts != 'Batal' and 
+												w.weighing_sts != 'Batal' and 
 												(w.date_check between '".$date1." 00:00:00' and '".$date1." 23:59:59')");
 				
 			}else{
@@ -74,10 +74,14 @@
 										from 	weighing w, 
 												merchant m 
 										where 	w.merchant_id = m.merchant_id and 
-												W.weighing_sts != 'Batal' and 
+												w.weighing_sts != 'Batal' and 
 												m.merchant_type = '".$commodity."' and 
 												(w.date_check between '".$date1." 00:00:00' and '".$date1." 23:59:59')");
 			}
+
+			if ($query === false) {
+    die("<pre>MYSQL ERROR:\n" . mysql_error() . "</pre>");
+}
 			
 			$no 	= 1;
 			while($r= mysql_fetch_array($query)){
