@@ -5,6 +5,7 @@
 	if($_SESSION['checker']==''){
 		header("Location:login.html");
 	}
+	
 	//$date_now	= date("Y-m-d");
 	$checker 		= executeScalar("select checker_name from checker where checker_code = '".$_SESSION['checker']."'");
 	function headScript(){
