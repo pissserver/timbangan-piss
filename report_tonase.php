@@ -87,7 +87,6 @@ function headScript()
 							</form>
 						</div>
 					</div>
-
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<i class="fa fa-line-chart fa-fw"></i> Laporan Omzet Timbangan Harian
