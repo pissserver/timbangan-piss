@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include "../connection.php";
+    
 	//Validasi role
 	if($_SESSION['checker']==''){
 		header("Location:login.html");
