@@ -920,11 +920,12 @@
 							</ul>
 						</li>
 
-						<li class="<?= isParentActive(['cancel1.php', 'cancel2.php', 'cancel3.php']); ?>"> 
+						<li class="<?= isParentActive(['cancel1.php', 'cancel2.php', 'cancel3.php', 'cancel4.php']); ?>"> 
 							<a href="#"><i class="fa fa-close fa-fw"></i> <span>Pembatalan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a class="<?= isActive(['cancel1.php']); ?>" href="cancel1.php"><i class="fa fa-truck fa-fw"></i> Kendaraan Masuk </a></li>
 								<li><a class="<?= isActive(['cancel2.php']); ?>" href="cancel2.php"><i class="fa fa-truck fa-fw"></i> Kendaraan Keluar </a></li>
+								<li><a class="<?= isActive(['cancel4.php']); ?>" href="cancel4.php"><i class="fa fa-file-text fa-fw"></i> Tagihan/Nota </a></li>
 								<li><a class="<?= isActive(['cancel3.php']); ?>" href="cancel3.php"><i class="fa fa-money fa-fw"></i> Pembayaran </a></li>
 							</ul>
 						</li>

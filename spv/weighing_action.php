@@ -1877,6 +1877,100 @@
 			exit();
 		}
 	}
+
+	//Penangguhan Tagihan/Nota
+	if($task == 'Tangguhkan') {
+		$id		= $_GET['id'];
+		$reason = $_POST['reason'];
+		$nopol 	= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
+		$merchant = executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
+
+		$tangguhkan 	= mysql_query("	update 	weighing 
+								set 	weighing_sts6		= 'Ditangguhkan'
+								where 	weighing_id 		= '".$id."'");
+		
+		if($tangguhkan){
+			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
+											spv_user, 
+											spv_action, 
+											spv_target, 
+											spv_nopol, 
+											spv_merchant_id, 
+											spv_reason, 
+											action_time) 
+										values (	'', 
+											'".$name."', 
+											'Penangguhan tagihan/nota',
+											'".$id."', 
+											'".$nopol."', 
+											'".$merchant."', 
+											'".$reason."', 
+											'".$dt_now."')");
+			if($insert_spv){
+				// Alert Information
+				$_SESSION['success'] = true;
+				$_SESSION['title'] = 'Berhasil';
+				$_SESSION['message'] = "Berhasil menangguhkan tagihan/nota";
+				echo "<script>window.location=('cancel4.php')</script>";
+				exit();
+			}else{
+				echo "<script>window.alert('Data log spv gagal Masuk, Silahkan dicoba lagi')</script>;
+				<script>window.history.back()</script>";
+				exit();
+			}
+		}else{
+			echo "<script>window.alert('Proses Penangguhan gagal, Silahkan dicoba lagi')</script>;
+			<script>window.history.back()</script>";
+			exit();
+		}
+	}
+
+	//Aktifkan Tagihan/Nota
+	if($task == 'Aktifkan') {
+		$id		= $_GET['id'];
+		$reason = $_POST['reason'];
+		$nopol 	= executeScalar("select nopol from weighing where weighing_id = '".$id."'");
+		$merchant = executeScalar("select merchant_id from weighing where weighing_id = '".$id."'");
+
+		$tangguhkan 	= mysql_query("	update 	weighing 
+								set 	weighing_sts6		= NULL
+								where 	weighing_id 		= '".$id."'");
+		
+		if($tangguhkan){
+			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
+											spv_user, 
+											spv_action, 
+											spv_target, 
+											spv_nopol, 
+											spv_merchant_id, 
+											spv_reason, 
+											action_time) 
+										values (	'', 
+											'".$name."', 
+											'Penangguhan tagihan/nota',
+											'".$id."', 
+											'".$nopol."', 
+											'".$merchant."', 
+											'".$reason."', 
+											'".$dt_now."')");
+			if($insert_spv){
+				// Alert Information
+				$_SESSION['success'] = true;
+				$_SESSION['title'] = 'Berhasil';
+				$_SESSION['message'] = "Berhasil mengaktifkan tagihan/nota";
+				echo "<script>window.location=('cancel4.php')</script>";
+				exit();
+			}else{
+				echo "<script>window.alert('Data log spv gagal Masuk, Silahkan dicoba lagi')</script>;
+				<script>window.history.back()</script>";
+				exit();
+			}
+		}else{
+			echo "<script>window.alert('Proses Pengaktifan gagal, Silahkan dicoba lagi')</script>;
+			<script>window.history.back()</script>";
+			exit();
+		}
+	}
 	
 	//Kendaraan Batal Bayar
 	if($task=='Batal4'){
