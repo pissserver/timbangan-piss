@@ -45,6 +45,10 @@
 			<td style="width: 35%;">Komoditi</td>
 			<td style="width: 65%;">: <?php echo $commodity; ?></td>
 		</tr>
+		<tr>
+			<td style="width: 25%;">Keterangan</td>
+			<td>: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan</td>
+		</tr>
 	</table>
 	<br />
 	<table style="border: solid 1px black; border-collapse: collapse; margin-bottom: 5px;font-size:8pt; width:1050px; margin-right:0px;" id="tableNonkomoditi">
@@ -70,12 +74,12 @@
 			//select tonase berdasarkan komoditi
 			if($commodity=='Semua'){
 				$sql = "select weighing_id, merchant_id, checker_id, goods_id, date_in, laborer_sts, weighing_sts, 
-				weighing_sts2, weight_in, weight_out, noncommodity, rafaksi, netto, reffer, nopol, date_check	
+				weighing_sts2, weight_in, weight_out, noncommodity, rafaksi, netto, reffer, nopol, date_check, weighing_sts6	
 				from weighing where weighing_sts != 'Batal' and 
 				(date_check between '".$date1." 00:00:00' and '".$date2." 23:59:59')";
 			}else{
 				$sql = "select w.weighing_id, w.merchant_id, w.checker_id, w.goods_id, w.date_in, w.laborer_sts, w.weighing_sts, 
-				w.weighing_sts2, w.weight_in, w.weight_out, w.noncommodity, w.rafaksi, w.netto, W.reffer, W.nopol, w.date_check
+				w.weighing_sts2, w.weight_in, w.weight_out, w.noncommodity, w.rafaksi, w.netto, W.reffer, W.nopol, w.date_check, w.weighing_sts6
 				from weighing w, merchant m 
 				where w.merchant_id = m.merchant_id and 
 				weighing_sts != 'Batal' and 
@@ -91,33 +95,40 @@
 							where r.lapak_id = l.lapak_id and r.merchant_id = '".$r['merchant_id']."' 
 							and (r.rent_sts2 != 'Pindah' && r.rent_sts2 != 'Batal') limit 1");
 				$goods		= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
+
+				if($r['weighing_sts6'] == 'Ditangguhkan'){
+					$color = 'red';
+				}
+				else{
+					$color = 'black';
+				}
 				//$wid 		= sprintf("%07d", $r['weighing_id']);
 				//$rid 		= sprintf("%07d", $r['reffer']);
 				//$year1 		= executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$r['weighing_id']."'");
 				//$year2 		= executeScalar("select date_format(date_out, '%y') from weighing where weighing_id = '".$r['weighing_id']."'");
 		?>
 		<tr>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php 
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php 
 			if($r['reffer']=='null'||$r['reffer']==''){
 				echo 'TB'.$r['weighing_id'];
 			}else{
 				echo 'TB'.$r['reffer'];
 			} ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo $name; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $kategori; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $goods; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo $lapak; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $r['laborer_sts']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $r['weighing_sts2']; ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['weight_in']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['weight_out']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['noncommodity']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['rafaksi']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['netto']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: left;border: solid 1px black;"><?php echo $name; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $kategori; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $goods; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: left;border: solid 1px black;"><?php echo $lapak; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $r['laborer_sts']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $r['weighing_sts2']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['weight_in']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['weight_out']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['noncommodity']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['rafaksi']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['netto']); ?></td>
 		</tr>
 		<?php
 				$no++;

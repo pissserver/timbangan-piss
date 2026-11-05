@@ -24,6 +24,10 @@
 			<td style="width: 35%;">Komoditi</td>
 			<td style="width: 65%;">: <?php echo $commodity; ?></td>
 		</tr>
+		<tr>
+			<td style="width: 25%;">Keterangan</td>
+			<td>: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan</td>
+		</tr>
 	</table>
 	<br />
 	<table style="border: solid 1px black; border-collapse: collapse; margin-bottom: 5px; margin-left:-25px; font-size:8pt; width:100%; margin-right:0px;" id="tableOmzetHarianMitra">
@@ -56,6 +60,7 @@
 											(wm.cost_bagi_mitra + wm.cost_simpan_mitra) AS bagi_mitra,
 											(wm.cost_bagi_mandor + wm.cost_simpan_mandor) AS bagi_mandor,
 											wm.cost,
+											wm.weighing_sts6,
 											merchant_type
 									from 	weighing_mitra wm, 
 											merchant m 
@@ -76,6 +81,7 @@
 											(wm.cost_bagi_mitra + wm.cost_simpan_mitra) AS bagi_mitra,
 											(wm.cost_bagi_mandor + wm.cost_simpan_mandor) AS bagi_mandor,
 											wm.cost,
+											wm.weighing_sts6,
 											merchant_type
 									from 	weighing_mitra wm, 
 											merchant m 
@@ -92,21 +98,27 @@
 				$name			= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 				$kat_merchant	= executeScalar("select kat_merchant from merchant where merchant_id = '".$r['merchant_id']."'");
 				$goods			= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
+
+				if($r['weighing_sts6'] == 'Ditangguhkan') {
+					$color = 'red';
+				} else {
+					$color = 'black';
+				}
 				//$wid 			= sprintf("%07d", $r['weighing_id']);
 				//$year1 		= executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$r['weighing_id']."'");
 		?>
 		<tr>
-			<td style="text-align: center;border: solid 1px black;height: 5px;"> <?php echo $no; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo 'TG'.$r['weighing_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $r['nopol']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"> <?php echo $name; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $r['merchant_type']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $r['weighing_sts']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo format_no($r['netto']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['bagi_mitra']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['bagi_mandor']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;height: 5px;"> <?php echo $no; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo 'TG'.$r['weighing_id']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $r['nopol']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: left;border: solid 1px black;"> <?php echo $name; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $r['merchant_type']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $r['weighing_sts']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo format_no($r['netto']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['bagi_mitra']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['bagi_mandor']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost']); ?></td>
 		</tr>
 		<?php 
 			$no++;

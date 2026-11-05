@@ -21,6 +21,7 @@
                         w.netto, 
                         w.cost_bayar, 
                         w.cost, 
+                        w.weighing_sts6,
                         m.merchant_name as name,
                         m.merchant_type as jenis
                 from 	weighing_mitra w, merchant m 
@@ -43,6 +44,7 @@
                         w.netto, 
                         w.cost_bayar, 
                         w.cost, 
+                        w.weighing_sts6,
                         m.merchant_name as name,
                         m.merchant_type as jenis
                 from weighing_mitra w, merchant m 
@@ -136,6 +138,11 @@
         // Membuat format menjadi number
         $sheet->getStyle("H" . $row . ":I" . $row)->getNumberFormat()->setFormatCode('#,##0');
 
+        // Warna merah untuk tagihan yang ditangguhkan
+        if($data['weighing_sts6'] == 'Ditangguhkan'){
+            $sheet->getStyle("A" . $row . ":I" . $row)->getFont()->getColor()->setRGB('FF0000');
+        }
+
         // Perhitungan total
         // if ($data['weighing_sts'] != 'Batal' && $data['weighing_sts'] != 'Dipecah' && $data['weighing_sts'] != 'Digabung') {
         //     $weight_in += $data['weight_in'];
@@ -177,6 +184,12 @@
 
     // Menambahkan border pada seluruh tabel
     $sheet->getStyle("A6:I" . $row)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+    // Keterangan
+    $ketRow = $row + 2;
+    $sheet->mergeCells("A" . $ketRow . ":I" . $ketRow);
+    $sheet->setCellValue("A" . $ketRow, "Keterangan: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan");
+    $sheet->getStyle("A" . $ketRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
     // Set header untuk download file Excel
     header('Content-Type: application/vnd.ms-excel');

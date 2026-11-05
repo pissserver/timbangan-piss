@@ -1809,7 +1809,7 @@
 		}
 	}
 
-		//Penangguhan Tagihan/Nota
+	//Penangguhan Tagihan/Nota
 	if($task == 'Tangguhkan') {
 		$id		= $_GET['id'];
 		$reason = $_POST['reason'];
@@ -1819,8 +1819,12 @@
 		$tangguhkan 	= mysql_query("	update 	weighing 
 								set 	weighing_sts6		= 'Ditangguhkan'
 								where 	weighing_id 		= '".$id."'");
+
+		$mitraDitangguhkan 	= mysql_query("	update 	weighing_mitra 
+								set 	weighing_sts6		= 'Ditangguhkan'
+								where 	weighing_id 		= '".$id."'");
 		
-		if($tangguhkan){
+		if($tangguhkan && $mitraDitangguhkan){
 			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
 											spv_user, 
 											spv_action, 
@@ -1866,8 +1870,12 @@
 		$tangguhkan 	= mysql_query("	update 	weighing 
 								set 	weighing_sts6		= NULL
 								where 	weighing_id 		= '".$id."'");
+
+		$mitraDitangguhkan 	= mysql_query("	update 	weighing_mitra
+								set 	weighing_sts6		= NULL
+								where 	weighing_id 		= '".$id."'");
 		
-		if($tangguhkan){
+		if($tangguhkan && $mitraDitangguhkan){
 			$insert_spv = mysql_query("insert into spv_log (spv_log_id, 
 											spv_user, 
 											spv_action, 
