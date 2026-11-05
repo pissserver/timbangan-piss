@@ -22,6 +22,10 @@
 			<td style="width: 30%;">Tanggal Kerja Mitra</td>
 			<td style="width: 70%;">: <?php echo date("d M Y", strtotime($date)); ?></td>
 		</tr>
+		<tr>
+			<td style="width: 25%;">Keterangan</td>
+			<td>: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan</td>
+		</tr>
 	</table>
 	<br />
 	<div style="font-size: 12px; font-weight: bold; text-align: left; margin-bottom:10px;">
@@ -69,7 +73,8 @@
 			// 									date(laborer_fee_date) = '".$date."'");
 
 			// SELECT DATA BERDASARKAN TGL BAYAR
-			$query 	= mysql_query("	select 	lf.weighing_id, 
+			$query 	= mysql_query("	select 	lf.weighing_id,
+											wm.weighing_sts6,
 											B001,
 											B002,
 											B003,
@@ -103,38 +108,43 @@
 			$S001 = 0; $S002 = 0; $S003 = 0; $S004 = 0; $S005 = 0; $S006 = 0; $S007 = 0; $S008 = 0; $S009 = 0; $S010 = 0; $S011 = 0; $S012 = 0;
 			$M01 = 0; $M02 = 0; $M03 = 0; $M04 = 0;
 			$PISS = 0;
-
 			while($r= mysql_fetch_array($query)){
+
+			if ($r['weighing_sts6'] == 'Ditangguhkan') {
+				$color = 'red';
+			} else {
+				$color = 'black';
+			}
 		?>
 		<tr>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo "TG" . $r['weighing_id']; ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B001']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B002']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B003']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B004']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B005']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['B006']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo "TG" . $r['weighing_id']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B001']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B002']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B003']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B004']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B005']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['B006']); ?></td>
 
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S001']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S002']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S003']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S004']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S005']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S006']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S007']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S008']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S009']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S010']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S011']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['S012']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S001']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S002']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S003']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S004']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S005']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S006']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S007']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S008']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S009']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S010']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S011']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['S012']); ?></td>
 			
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['M01']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['M02']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['M03']); ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['M04']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['M01']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['M02']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['M03']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['M04']); ?></td>
 
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['pios_fee']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['pios_fee']); ?></td>
 		</tr>
 		<?php
 				$no++;

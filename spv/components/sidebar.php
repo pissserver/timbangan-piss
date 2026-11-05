@@ -920,11 +920,12 @@
 							</ul>
 						</li>
 
-						<li class="<?= isParentActive(['cancel1.php', 'cancel2.php', 'cancel3.php']); ?>"> 
+						<li class="<?= isParentActive(['cancel1.php', 'cancel2.php', 'cancel3.php', 'cancel4.php']); ?>"> 
 							<a href="#"><i class="fa fa-close fa-fw"></i> <span>Pembatalan</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a class="<?= isActive(['cancel1.php']); ?>" href="cancel1.php"><i class="fa fa-truck fa-fw"></i> Kendaraan Masuk </a></li>
 								<li><a class="<?= isActive(['cancel2.php']); ?>" href="cancel2.php"><i class="fa fa-truck fa-fw"></i> Kendaraan Keluar </a></li>
+								<li><a class="<?= isActive(['cancel4.php']); ?>" href="cancel4.php"><i class="fa fa-file-text fa-fw"></i> Tagihan/Nota </a></li>
 								<li><a class="<?= isActive(['cancel3.php']); ?>" href="cancel3.php"><i class="fa fa-money fa-fw"></i> Pembayaran </a></li>
 							</ul>
 						</li>
@@ -962,7 +963,7 @@
 							</ul>
 						</li>
 
-						<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php', 'report_tonase.php', 'report_tonase_merchant.php', 'report_tonase_block.php', 'report_tonase_comodity.php', 'report_merchant_comodity.php', 'report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php', 'report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php', 'report_revenue_tonase_mitra.php', 'report_revenue_merchant_tonase_mitra.php', 'report_revenue_unpaid_tonase_mitra.php', 'report_revenue_unpaid_merchant_tonase_mitra.php', 'report_kokm.php', 'report_kokm_mitra.php', 'report_outstanding_ko.php', 'report_outstanding_ko_mitra.php', 'report_mitra.php', 'report_mitra_year.php']);?>">
+						<li class="<?= isParentActive(['report_transaction.php', 'report_outstanding.php', 'report_cancel.php', 'report_tonase.php', 'report_tonase_merchant.php', 'report_tonase_block.php', 'report_tonase_comodity.php', 'report_merchant_comodity.php', 'report_deferred.php', 'report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php', 'report_revenue_mitra.php', 'report_revenue_merchant_mitra.php', 'report_revenue_unpaid_mitra.php', 'report_revenue_unpaid_merchant_mitra.php', 'report_revenue_tonase_mitra.php', 'report_revenue_merchant_tonase_mitra.php', 'report_revenue_unpaid_tonase_mitra.php', 'report_revenue_unpaid_merchant_tonase_mitra.php', 'report_kokm.php', 'report_kokm_mitra.php', 'report_outstanding_ko.php', 'report_outstanding_ko_mitra.php', 'report_mitra.php', 'report_mitra_year.php']);?>">
 							<a href="#"><i class="fa fa-clipboard fa-fw"></i> 
 							<span>Laporan</span>
 							<span class="fa arrow"></span></a>
@@ -979,6 +980,10 @@
 										</li>
 										<li><a class="<?= isActive(['report_cancel.php']); ?>" href="report_cancel.php"><i class="fa fa-close fa-fw"></i> Timbang Batal </a></li>
 									</ul>
+								</li>
+
+								<li>
+									<a class="<?= isActive(['report_deferred.php']); ?>" href="report_deferred.php"><i class="fa fa-file-text fa-fw"></i> Penangguhan Tagihan</a>
 								</li>
 
 								<li class="<?= isParentActive(['report_revenue.php', 'report_revenue_merchant.php', 'report_revenue_unpaid.php', 'report_revenue_unpaid_merchant.php']); ?>"><a href="#"><i class="fa fa-money fa-fw"></i> Tagihan Tonase<span class="fa arrow"></span></a>

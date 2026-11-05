@@ -25,8 +25,13 @@
 			<td style="width: 40%;">Tanggal Omzet</td>
 			<td style="width: 60%;">: <?php echo date("d M Y", strtotime($date1)); ?></td>
 		</tr>
+		<tr>
+			<td style="width: 25%;">Keterangan</td>
+			<td>: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan</td>
+		</tr>
 	</table>
 	<br />
+	
 	<table style="border: solid 1px black; border-collapse: collapse; margin-bottom: 5px; margin-left:-25px; font-size:8pt; width:1000px; margin-right:0px;" id="tableOmzetHarian">
 		<tr>
 			<th style="text-align: center;width: 3%; border: solid 1px black;">NO</th>
@@ -52,7 +57,8 @@
 												w.weighing_sts, 
 												w.netto, 
 												w.cost_tonase,
-												w.cost
+												w.cost,
+												w.weighing_sts6
 										from 	weighing w, 
 												merchant m 
 										where 	w.merchant_id = m.merchant_id and 
@@ -70,7 +76,8 @@
 												w.weighing_sts, 
 												w.netto,
 												w.cost_tonase, 
-												w.cost
+												w.cost,
+												w.weighing_sts6
 										from 	weighing w, 
 												merchant m 
 										where 	w.merchant_id = m.merchant_id and 
@@ -80,28 +87,35 @@
 			}
 
 			if ($query === false) {
-    die("<pre>MYSQL ERROR:\n" . mysql_error() . "</pre>");
-}
+    	die("<pre>MYSQL ERROR:\n" . mysql_error() . "</pre>");
+		}
 			
 			$no 	= 1;
 			while($r= mysql_fetch_array($query)){
 				$name			= executeScalar("select merchant_name from merchant where merchant_id = '".$r['merchant_id']."'");
 				$kat_merchant	= executeScalar("select kat_merchant from merchant where merchant_id = '".$r['merchant_id']."'");
 				$goods			= executeScalar("select goods_name from goods where goods_id = '".$r['goods_id']."'");
+
+				if($r['weighing_sts6'] == 'Ditangguhkan'){
+					$color = 'red';
+				}
+				else{
+					$color = 'black';
+				}
 				//$wid 			= sprintf("%07d", $r['weighing_id']);
 				//$year1 		= executeScalar("select date_format(date_in, '%y') from weighing where weighing_id = '".$r['weighing_id']."'");
 		?>
 		<tr>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $no; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo 'TG'.$r['weighing_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $r['nopol']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"> <?php echo $name; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $kat_merchant; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $goods; ?></td>
-			<td style="text-align: center;border: solid 1px black;"> <?php echo $r['weighing_sts']; ?></td>
-			<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['netto']); ?> </td>
-			<td style="text-align: right;border: solid 1px black;">  <?php echo format_no($r['cost_tonase']); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $no; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo 'TG'.$r['weighing_id']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $r['nopol']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: left;border: solid 1px black;"> <?php echo $name; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $kat_merchant; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $goods; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"> <?php echo $r['weighing_sts']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['netto']); ?> </td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;">  <?php echo format_no($r['cost_tonase']); ?></td>
 		</tr>
 		<?php 
 			$no++;
@@ -116,6 +130,7 @@
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"> <?php echo format_no($cost); ?></td>
 		</tr>
 	</table>
+
     <page_footer>
         <table style="width: 98%; border: 0px black; margin-top:10px; margin-left:5px; margin-right:5px; font-size:8pt;">
             <tr>

@@ -22,6 +22,7 @@
                                     (wm.cost_bagi_mitra + wm.cost_simpan_mitra) AS bagi_mitra,
                                     (wm.cost_bagi_mandor + wm.cost_simpan_mandor) AS bagi_mandor,
                                     wm.cost,
+                                    wm.weighing_sts6,
                                     merchant_type
                             from 	weighing_mitra wm, 
                                     merchant m 
@@ -42,6 +43,7 @@
                                     (wm.cost_bagi_mitra + wm.cost_simpan_mitra) AS bagi_mitra,
                                     (wm.cost_bagi_mandor + wm.cost_simpan_mandor) AS bagi_mandor,
                                     wm.cost,
+                                    wm.weighing_sts6,
                                     merchant_type
                             from 	weighing_mitra wm, 
                                     merchant m 
@@ -130,6 +132,11 @@
         // Membuat format menjadi number
         $sheet->getStyle("H" . $row . ":K" . $row)->getNumberFormat()->setFormatCode('#,##0');
 
+        // Warna merah untuk tagihan yang ditangguhkan
+        if($data['weighing_sts6'] == 'Ditangguhkan'){
+            $sheet->getStyle("A" . $row . ":K" . $row)->getFont()->getColor()->setRGB('FF0000');
+        }
+
         // Perhitungan total
         // if ($data['weighing_sts'] != 'Batal' && $data['weighing_sts'] != 'Dipecah' && $data['weighing_sts'] != 'Digabung') {
         //     $weight_in += $data['weight_in'];
@@ -175,6 +182,12 @@
 
     // Menambahkan border pada seluruh tabel
     $sheet->getStyle("A6:K" . $row)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+    // Keterangan
+    $ketRow = $row + 2;
+    $sheet->mergeCells("A" . $ketRow . ":K" . $ketRow);
+    $sheet->setCellValue("A" . $ketRow, "Keterangan: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan");
+    $sheet->getStyle("A" . $ketRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
     // Set header untuk download file Excel
     header('Content-Type: application/vnd.ms-excel');

@@ -11,12 +11,12 @@
     // Query untuk mengambil data
     if($commodity=='Semua'){
         $sql = "select weighing_id, merchant_id, checker_id, goods_id, date_in, laborer_sts, weighing_sts, 
-                weighing_sts2, weight_in, weight_out, noncommodity, rafaksi, netto, reffer, nopol, date_check	
+                weighing_sts2, weight_in, weight_out, noncommodity, rafaksi, netto, reffer, nopol, date_check, weighing_sts6	
                 from weighing where weighing_sts != 'Batal' and 
                 (date_check between '".$date1." 00:00:00' and '".$date2." 23:59:59')";
     }else{
         $sql = "select w.weighing_id, w.merchant_id, w.checker_id, w.goods_id, w.date_in, w.laborer_sts, w.weighing_sts, 
-                w.weighing_sts2, w.weight_in, w.weight_out, w.noncommodity, w.rafaksi, w.netto, W.reffer, W.nopol, w.date_check
+                w.weighing_sts2, w.weight_in, w.weight_out, w.noncommodity, w.rafaksi, w.netto, W.reffer, W.nopol, w.date_check, w.weighing_sts6
                 from weighing w, merchant m 
                 where w.merchant_id = m.merchant_id and 
                 weighing_sts != 'Batal' and 
@@ -122,6 +122,11 @@
         // Membuat format menjadi number
         $sheet->getStyle("L" . $row . ":P" . $row)->getNumberFormat()->setFormatCode('#,##0');
 
+        // Warna merah untuk tagihan yang ditangguhkan
+        if($data['weighing_sts6'] == 'Ditangguhkan'){
+            $sheet->getStyle("A" . $row . ":P" . $row)->getFont()->getColor()->setRGB('FF0000');
+        }
+
         // Perhitungan total
         // if ($data['weighing_sts'] != 'Batal' && $data['weighing_sts'] != 'Dipecah' && $data['weighing_sts'] != 'Digabung') {
         //     $weight_in += $data['weight_in'];
@@ -169,6 +174,12 @@
 
     // Menambahkan border pada seluruh tabel
     $sheet->getStyle("A6:P" . $row)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+    // Keterangan
+    $ketRow = $row + 2;
+    $sheet->mergeCells("A" . $ketRow . ":P" . $ketRow);
+    $sheet->setCellValue("A" . $ketRow, "Keterangan: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan");
+    $sheet->getStyle("A" . $ketRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
     // Set header untuk download file Excel
     header('Content-Type: application/vnd.ms-excel');

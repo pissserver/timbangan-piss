@@ -10,103 +10,536 @@
 ?>
 
 <style>
+	/* ===== MERCHANT CARD — modern, compact, responsive ===== */
+	.merchant-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+		gap: 14px;
+		padding: 12px;
+	}
+
+	.merchant-card {
+		min-width: 0;
+		animation: mcFadeIn 0.3s ease both;
+	}
+
+	@keyframes mcFadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.merchant-card { animation: none; }
+		.card-box { transition: none; }
+	}
+
 	.card-box {
 		position: relative;
-		background: #fff;
-		border-radius: 10px;
-		padding: 18px;
-		box-shadow: 0 0 10px rgba(0,0,0,0.12);
-		margin-bottom: 20px;
-		border-left: 5px solid #007bff;
-		transition: 0.2s;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding: 14px;
+		background:
+			radial-gradient(120% 80% at 100% 0%, rgba(99,102,241,0.06), transparent 55%),
+			linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+		border: 1px solid #e6ebf3;
+		border-radius: 14px;
+		box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+		overflow: hidden;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	}
+
+	.card-box::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #6366f1, #8b5cf6 55%, #06b6d4);
+		opacity: 0.85;
+	}
+
 	.card-box:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+		border-color: #d3dbf0;
+		box-shadow: 0 14px 30px rgba(79,70,229,0.12);
 	}
 
-	.toggle-row {
+	.mc-head {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.mc-avatar {
+		position: relative;
+		flex: 0 0 auto;
+		width: 36px;
+		height: 36px;
 		display: flex;
 		align-items: center;
-		margin-top: 10px;
-	}
-
-	.toggle-col {
-		width: 60px; /* lebih besar agar tidak turun */
-		display: flex;
 		justify-content: center;
+		border-radius: 11px;
+		background: linear-gradient(135deg, #6366f1, #8b5cf6);
+		color: #fff;
+		font-size: 15px;
+		font-weight: 700;
+		box-shadow: 0 6px 14px rgba(99,102,241,0.28);
+		transition: transform 0.2s ease;
 	}
 
-	.btn-col {
-		flex: 1;
-		margin-left: 10px;
+	.card-box:hover .mc-avatar {
+		transform: scale(1.06);
 	}
 
+	.mc-no {
+		position: absolute;
+		top: -6px;
+		right: -6px;
+		min-width: 18px;
+		height: 18px;
+		padding: 0 4px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 20px;
+		background: #fff;
+		color: #4f46e5;
+		font-size: 10px;
+		font-weight: 700;
+		box-shadow: 0 2px 6px rgba(16,24,40,0.18);
+	}
+
+	.mc-title {
+		flex: 1 1 auto;
+		min-width: 0;
+		padding-top: 1px;
+	}
+
+	.mc-name {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		font-size: 13px;
+		font-weight: 700;
+		color: #111827;
+		line-height: 1.35;
+	}
+
+	.mc-lapak {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-top: 3px;
+		font-size: 11px;
+		color: #94a3b8;
+		line-height: 1.3;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.mc-lapak i {
+		font-size: 9px;
+		color: #a5b4fc;
+	}
+
+	.mc-del {
+		flex: 0 0 auto;
+		width: 28px;
+		height: 28px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		border-radius: 9px;
+		background: #fee2e2;
+		color: #dc2626;
+		opacity: 1;
+		transition: background 0.18s, color 0.18s;
+	}
+
+	.mc-del:hover,
+	.mc-del:focus {
+		background: #dc2626;
+		color: #fff;
+		outline: none;
+	}
+
+	.mc-goods {
+		margin-top: 12px;
+	}
+
+	.mc-goods-label {
+		display: block;
+		margin-bottom: 4px;
+		font-size: 9.5px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #9aa4b5;
+	}
+
+	.mc-goods select {
+		width: 100%;
+		height: 32px;
+		padding: 2px 8px;
+		font-size: 11.5px;
+		font-weight: 500;
+		color: #334155;
+		background-color: #f4f6fb;
+		border: 1px solid #e3e8f2;
+		border-radius: 9px;
+		box-shadow: none;
+		transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+	}
+
+	.mc-goods select:hover {
+		background-color: #eef1f9;
+	}
+
+	.mc-goods select:focus {
+		background-color: #fff;
+		border-color: #a5b4fc;
+		box-shadow: 0 0 0 3px rgba(99,102,241,0.14);
+	}
+
+	.mc-status {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 10px;
+		padding: 7px 10px;
+		background: #f8fafc;
+		border: 1px solid #eef1f6;
+		border-radius: 9px;
+	}
+
+	.mc-status-text {
+		font-size: 11px;
+		font-weight: 500;
+		color: #64748b;
+	}
+
+	.mc-actions {
+		margin-top: auto;
+		padding-top: 10px;
+	}
+
+	.mc-btn {
+		width: 100%;
+	}
+
+	.mc-btn .btn {
+		display: block;
+		width: 100%;
+		height: 36px;
+		padding: 0 12px;
+		border: none;
+		border-radius: 10px;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 36px;
+		text-align: center;
+		transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+	}
+
+	.mc-btn .btn-primary {
+		background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+		color: #fff;
+		box-shadow: 0 6px 14px rgba(79,70,229,0.28);
+	}
+
+	.mc-btn .btn-primary:hover,
+	.mc-btn .btn-primary:focus {
+		background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+		color: #fff;
+		box-shadow: 0 8px 18px rgba(79,70,229,0.35);
+		transform: translateY(-1px);
+	}
+
+	.mc-btn .btn-success {
+		background: #ecfdf5;
+		color: #047857;
+		border: 1px solid #a7f3d0;
+		box-shadow: none;
+		line-height: 34px;
+	}
+
+	/* ===== TOGGLE — compact ===== */
 	.toggle-wrapper {
 		display: flex;
 		align-items: center;
-		margin: 6px 0;
+		margin: 0;
 	}
 
-	/* Hide checkbox */
 	.toggle-switch {
-		display: none;
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		opacity: 0;
 	}
 
-	/* Toggle background */
 	.toggle-label {
-		width: 50px;
-		height: 26px;
-		background: #ccc;
-		border-radius: 50px;
 		position: relative;
+		display: block;
+		width: 36px;
+		height: 20px;
+		margin: 0;
+		background: #d7dce4;
+		border-radius: 20px;
 		cursor: pointer;
-		transition: background 0.25s ease-in-out;
-		transform: scale(1.2);
+		transition: background 0.2s ease;
 	}
 
-	/* Bulatan + ikon */
 	.toggle-icon {
-		width: 22px;
-		height: 22px;
-		background: white;
-		border-radius: 50%;
 		position: absolute;
 		top: 2px;
 		left: 2px;
-		font-size: 14px;
-		line-height: 22px;
-		text-align: center;
-		color: #dc3545; /* merah default */
-		transition: transform 0.25s, background 0.25s, color 0.25s;
+		width: 16px;
+		height: 16px;
+		background: #fff;
+		border-radius: 50%;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+		transition: transform 0.2s ease;
 	}
 
-	/* ON → IYA */
 	.toggle-switch:checked + .toggle-label {
-		background: #28a745;
+		background: linear-gradient(135deg, #22c55e, #10b981);
+		box-shadow: 0 2px 6px rgba(16,185,129,0.35);
 	}
 
-	/* Bulatan bergerak + ikon centang */
 	.toggle-switch:checked + .toggle-label .toggle-icon {
-		transform: translateX(24px);
-		color: #28a745;   /* warna ikon sama dengan background */
-		background: white;
+		transform: translateX(16px);
 	}
 
-	/* Ikon default: silang */
-	.toggle-label .toggle-icon::before {
-		content: "✖";
-	}
-
-	/* Jika aktif → ganti ke centang */
-	.toggle-switch:checked + .toggle-label .toggle-icon::before {
-		content: "✔";
+	.toggle-switch:focus-visible + .toggle-label {
+		box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
 	}
 
 	/* Disabled selected input */
 	.no-open[data-readonly="true"] {
 		pointer-events: none;
 		background-color: #e9ecef;
+	}
+
+	/* HEADER TOOLBAR — search + filter + total retail */
+	.header-toolbar {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 10px;
+	}
+
+	.header-toolbar .search-wrapper {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	.header-actions {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 10px;
+		flex: 0 0 auto;
+	}
+
+	@media (max-width: 767px) {
+		.header-toolbar {
+			flex-wrap: wrap;
+		}
+
+		.header-toolbar .search-wrapper {
+			flex: 1 1 100%;
+		}
+
+		.header-actions {
+			width: 100%;
+		}
+	}
+
+	.header-actions .btn-centeng-modern {
+		width: auto;
+		min-width: 132px;
+		height: 42px;
+		padding: 0 18px;
+		margin: 0;
+		border-radius: 30px;
+		font-size: 13px;
+		white-space: nowrap;
+	}
+
+	/* SORT — icon + dropdown */
+	.sort-wrap {
+		display: inline-block;
+		margin: 0;
+	}
+
+	.sort-btn {
+		position: relative;
+		width: 42px;
+		height: 42px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		border-radius: 50%;
+		background: linear-gradient(135deg, #6366f1, #8b5cf6);
+		color: #fff;
+		font-size: 15px;
+		box-shadow: 0 6px 16px rgba(99,102,241,0.32), inset 0 1px 0 rgba(255,255,255,0.25);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+	}
+
+	.sort-btn::before {
+		content: "";
+		position: absolute;
+		inset: -4px;
+		border: 2px solid rgba(99,102,241,0.16);
+		border-radius: 50%;
+		opacity: 0;
+		transition: opacity 0.2s, transform 0.2s;
+	}
+
+	.sort-btn:hover,
+	.sort-btn:focus {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 22px rgba(99,102,241,0.42);
+		filter: saturate(1.1);
+		outline: none;
+	}
+
+	.sort-btn:hover::before,
+	.sort-btn:focus::before {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+
+	.sort-btn:active {
+		transform: scale(0.95);
+	}
+
+	.sort-btn i {
+		transition: transform 0.25s ease;
+	}
+
+	.sort-wrap.open .sort-btn {
+		box-shadow: 0 0 0 4px rgba(99,102,241,0.15), 0 10px 22px rgba(99,102,241,0.38);
+	}
+
+	.sort-wrap.open .sort-btn i {
+		transform: rotate(180deg);
+	}
+
+	.sort-btn.is-active::after {
+		content: "";
+		position: absolute;
+		top: 2px;
+		right: 2px;
+		width: 9px;
+		height: 9px;
+		border: 2px solid #fff;
+		border-radius: 50%;
+		background: #22c55e;
+	}
+
+	.sort-wrap .sort-menu {
+		min-width: 232px;
+		margin-top: 10px;
+		padding: 7px;
+		border: 1px solid rgba(99,102,241,0.16);
+		border-radius: 16px;
+		background: rgba(255,255,255,0.98);
+		-webkit-backdrop-filter: blur(14px);
+		backdrop-filter: blur(14px);
+		box-shadow: 0 20px 45px rgba(16,24,40,0.18), inset 0 0 0 1px rgba(255,255,255,0.6);
+	}
+
+	.sort-wrap.open .sort-menu {
+		animation: sortMenuIn 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+	}
+
+	@keyframes sortMenuIn {
+		from {
+			opacity: 0;
+			transform: translateY(-8px) scale(0.96);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	.sort-wrap .sort-menu .dropdown-header {
+		padding: 7px 12px 8px;
+		font-size: 9.5px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #9aa4b5;
+	}
+
+	.sort-wrap .sort-menu > li > a {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 9px 12px;
+		border-radius: 10px;
+		font-size: 12.5px;
+		font-weight: 500;
+		color: #475569;
+		white-space: nowrap;
+		transition: background 0.15s, color 0.15s, transform 0.15s;
+	}
+
+	.sort-wrap .sort-menu > li > a:hover,
+	.sort-wrap .sort-menu > li > a:focus {
+		background: #f1f5ff;
+		color: #4338ca;
+		transform: translateX(2px);
+	}
+
+	.sort-wrap .sort-menu > li.active > a {
+		background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+		color: #4338ca;
+		font-weight: 600;
+	}
+
+	.sort-wrap .sort-menu > li.active > a::before {
+		content: "";
+		position: absolute;
+		left: 4px;
+		top: 50%;
+		width: 3px;
+		height: 16px;
+		border-radius: 3px;
+		background: linear-gradient(180deg, #6366f1, #8b5cf6);
+		transform: translateY(-50%);
+	}
+
+	.sort-wrap .sort-menu > li > a i {
+		width: 14px;
+		text-align: center;
+		color: #94a3b8;
+	}
+
+	.sort-wrap .sort-menu > li.active > a i {
+		color: #4f46e5;
+	}
+
+	.sort-wrap .sort-menu .sort-check {
+		display: none;
+		width: auto;
+		margin-left: auto;
+		font-size: 10px;
+		color: #4f46e5;
+	}
+
+	.sort-wrap .sort-menu > li.active .sort-check {
+		display: inline-block;
 	}
 
 	/* SEARCH */
@@ -600,18 +1033,51 @@
                             <i class="fa fa-users fa-fw"></i> Data Pedagang Retail
                         </div>
                         <div class="panel-body">
-							<div class="row" style="padding:10px;">
-								<div class="col-md-10">
-									<div class="search-wrapper">
-										<i class="fa fa-search"></i>
-										<input type="text"
-											id="searchMerchant"
-											class="form-control"
-											placeholder="Cari nama pedagang, atau lapak...">
-									</div>
+							<div class="header-toolbar">
+								<div class="search-wrapper">
+									<i class="fa fa-search"></i>
+									<input type="text"
+										id="searchMerchant"
+										class="form-control"
+										placeholder="Cari nama pedagang, atau lapak...">
 								</div>
 
-								<div class="col-md-2 text-right">
+								<div class="header-actions">
+									<div class="dropdown sort-wrap">
+										<button type="button"
+											id="sortLapakBtn"
+											class="sort-btn"
+											data-toggle="dropdown"
+											aria-haspopup="true"
+											aria-expanded="false"
+											title="Urutkan berdasarkan jumlah lapak"
+											aria-label="Urutkan berdasarkan jumlah lapak">
+											<i class="fa fa-filter"></i>
+										</button>
+
+										<ul class="dropdown-menu dropdown-menu-right sort-menu" aria-labelledby="sortLapakBtn">
+											<li class="dropdown-header">Urutkan</li>
+											<li class="active" data-sort="default">
+												<a href="javascript:void(0)">
+													<i class="fa fa-list-ul"></i> Default
+													<i class="fa fa-check sort-check"></i>
+												</a>
+											</li>
+											<li data-sort="desc">
+												<a href="javascript:void(0)">
+													<i class="fa fa-sort-amount-desc"></i> Lapak Terbanyak
+													<i class="fa fa-check sort-check"></i>
+												</a>
+											</li>
+											<li data-sort="asc">
+												<a href="javascript:void(0)">
+													<i class="fa fa-sort-amount-asc"></i> Lapak Tersedikit
+													<i class="fa fa-check sort-check"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+
 									<?php 
 										$totalRetail = executeScalar("SELECT COUNT(*) FROM merchant_retail");
 									?>
@@ -632,7 +1098,7 @@
 							</div>
 
 							<form action="../htmltopdf/nota_tagihan_retail.php?task=printAll" method="POST" target="_blank">
-								<div class="row" style="padding:10px;">
+								<div class="merchant-grid">
 
 								<?php 
 								$no = 0;
@@ -718,117 +1184,104 @@
 									}
 								?>
 
-								<div class="col-md-3 merchant-card" data-search="<?= strtolower($d['merchant_name'].' '.$d['merchant_nick'].' '.$lpk); ?>">
+								<div class="merchant-card"
+									data-search="<?= strtolower($d['merchant_name'].' '.$d['merchant_nick'].' '.$lpk); ?>"
+									data-lapak-count="<?= (int) $counter; ?>">
 									<div class="card-box">
-										<div class="label-body" style="position:absolute; top:-15px; right:-20px;">
-											<span style="
-												display:flex;
-												align-items:center;
-												justify-content:center;
-												width:45px;
-												height:45px;
-												background:#f0ad4e;
-												color:#fff;
-												border-radius:50%;
-												font-size:16px;
-												font-weight:bold;
-												box-shadow:0 2px 6px rgba(0,0,0,0.3);
-											">
-												<?php echo $no; ?>
-											</span>
+										<div class="mc-head">
+											<div class="mc-avatar">
+												<?php echo strtoupper(substr(trim($d['merchant_name']), 0, 1)); ?>
+												<span class="mc-no"><?php echo $no; ?></span>
+											</div>
+											<div class="mc-title">
+												<div class="mc-name" title="<?php echo htmlspecialchars($d['merchant_name']); ?>"><?php echo $d['merchant_name']; ?></div>
+												<div class="mc-lapak" title="<?php echo htmlspecialchars($lpk); ?>">
+													<i class="fa fa-map-marker"></i> <?php echo $lpk ? $lpk : 'Tanpa lapak'; ?>
+												</div>
+											</div>
+											<button type="button"
+												class="mc-del"
+												data-toggle="modal"
+												data-target="#deleteModal"
+												data-nama="<?php echo $d['merchant_name']; ?>"
+												data-lapak="<?php echo $lpk; ?>"
+												data-id="<?php echo $d['retail_id']; ?>"
+												title="Hapus dari retail"
+												aria-label="Hapus <?php echo htmlspecialchars($d['merchant_name']); ?> dari retail">
+												<i class="fa fa-trash"></i>
+											</button>
 										</div>
 
 										<input type="hidden" name="merchant[]" value="<?php echo $d['merchant_id']; ?>">
-										<input type="text" class="form-control"
-											value="<?php echo $d['merchant_name']; ?>" 
-											style="font-weight:bold; font-size:14px; text-align:center;"
-											readonly>
 
-										<input type="text" class="form-control"
-											value="<?php echo $lpk; ?>" 
-											style="font-weight: bold; font-size:12px; text-align:center; margin-top:10px; margin-bottom: 10px;"
-											readonly>
-										
-										<div class="form-group" style="margin-top:10px; margin-bottom: 10px;">
+										<div class="mc-goods">
+											<span class="mc-goods-label">Barang</span>
 											<select class="form-control no-open"
 												name="goods[]"
 												id="goods_<?= $d['merchant_id']; ?>"
-												style="text-align:center; display: none;"
 												required
 												<?php echo ($already > 0) ? 'data-readonly="true"' : ''; ?>>
+												<?php
+													// goods yang pernah dipilih merchant
+													$selectedGoods = executeScalar("
+														SELECT goods_id 
+														FROM merchant_retail 
+														WHERE merchant_id = '".$d['merchant_id']."' 
+														LIMIT 1
+													");
 
-											`	<?php
-												// goods yang pernah dipilih merchant
-												$selectedGoods = executeScalar("
-													SELECT goods_id 
-													FROM merchant_retail 
-													WHERE merchant_id = '".$d['merchant_id']."' 
-													LIMIT 1
-												");
+													// daftar goods
+													$sql2 = mysql_query("
+														SELECT goods_id, goods_name 
+														FROM goods 
+														WHERE goods_id IN ('79','41') 
+														ORDER BY goods_name
+													");
 
-												// daftar goods
-												$sql2 = mysql_query("
-													SELECT goods_id, goods_name 
-													FROM goods 
-													WHERE goods_id IN ('79','41') 
-													ORDER BY goods_name
-												");
-
-												while ($d2 = mysql_fetch_array($sql2)) {
-													$selected = ($d2['goods_id'] == $selectedGoods) ? 'selected' : '';
-												?>
-													<option value="<?= $d2['goods_id']; ?>" <?= $selected; ?>>
-														<?= $d2['goods_name']; ?>
-													</option>
-												<?php } ?>`
+													while ($d2 = mysql_fetch_array($sql2)) {
+														$selected = ($d2['goods_id'] == $selectedGoods) ? 'selected' : '';
+													?>
+														<option value="<?= $d2['goods_id']; ?>" <?= $selected; ?>>
+															<?= $d2['goods_name']; ?>
+														</option>
+													<?php } ?>
 											</select>
 										</div>
 
-										<div class="toggle-row">
-											<div class="toggle-col">
-												<div class="toggle-wrapper" style="margin-top: 10px;">
-													<input type="checkbox"
-														class="toggle-switch"
-														id="cetak_<?= $d['merchant_id'] ?>"
-														name="cetak[<?= $d['merchant_id'] ?>]"
-														value="iya"
-														<?= ($d['print_status'] == 'iya') ? 'checked' : '' ?>>
+										<div class="mc-status">
+											<span class="mc-status-text">Cetak nota</span>
+											<div class="toggle-wrapper" title="Status cetak">
+												<input type="checkbox"
+													class="toggle-switch"
+													id="cetak_<?= $d['merchant_id'] ?>"
+													name="cetak[<?= $d['merchant_id'] ?>]"
+													value="iya"
+													<?= ($d['print_status'] == 'iya') ? 'checked' : '' ?>>
 
-													<label for="cetak_<?= $d['merchant_id'] ?>" class="toggle-label">
-														<span class="toggle-icon"></span>
-													</label>
-												</div>
+												<label for="cetak_<?= $d['merchant_id'] ?>" class="toggle-label">
+													<span class="toggle-icon"></span>
+												</label>
 											</div>
+										</div>
 
-											<div class="btn-col">
+										<div class="mc-actions">
+											<div class="mc-btn">
 												<?php if ($already > 0) { ?>
 													<button type="button"
-														class="btn btn-success btn-block btn-sm"
-														style="opacity:0.9; cursor:not-allowed; border-radius:20px;"
+														class="btn btn-success"
+														title="Periode <?= date('d', strtotime($periodStartDate)) . ' - ' . date('d M', strtotime($periodEndDate)); ?> sudah terbuat"
 														disabled>
-														<?= date('d', strtotime($periodStartDate)) . ' - ' . date('d M', strtotime($periodEndDate)); ?> Terbuat&nbsp;&nbsp;<i class="fa fa-check-circle"></i>
+														Terbuat <i class="fa fa-check-circle"></i>
 													</button>
 												<?php } else { ?>
-													<a  href="javascript:void(0)"
-														target="_blank"
-														class="btn btn-primary btn-block btn-sm"
-														style="border-radius:20px;"
+													<a href="javascript:void(0)"
+														class="btn btn-primary"
 														onclick="printNota('<?= $d['merchant_id']; ?>'); return false;">
-														Buat Tagihan&nbsp;&nbsp;<i class="fa fa-print"></i>
+														Buat Tagihan <i class="fa fa-print"></i>
 													</a>
 												<?php } ?>
 											</div>
 										</div>
-
-										<button style="margin-top: 10px;" type="button" 
-											class="btn btn-danger btn-block"
-											data-toggle="modal" 
-											data-target="#deleteModal"
-											data-nama="<?php echo $d['merchant_name']; ?>" 
-											data-lapak="<?php echo $lpk; ?>"
-											data-id="<?php echo $d['retail_id']; ?>">
-											Hapus Dari Retail &nbsp;<i class="fa fa-trash"></i>
-										</button>
 									</div>
 								</div>
 
@@ -1101,16 +1554,6 @@
 		}
 	</script>
 	
-	<!-- Radio Button -->
-	<script>
-		document.querySelectorAll('.toggle-switch').forEach(sw => {
-			sw.addEventListener('change', function() {
-				let text = this.closest('.toggle-wrapper').querySelector('.toggle-text');
-				text.textContent = this.checked ? 'Iya' : 'Tidak';
-			});
-		});
-	</script>
-	
 	<!-- Display none btnCetalAll -->
 	<script>
 		function checkAllToggles() {
@@ -1201,6 +1644,46 @@
 			// EMPTY STATE
 			document.getElementById('emptyState').style.display = (found === 0) ? 'block' : 'none';
 		});
+	</script>
+
+	<!-- Sort by jumlah lapak -->
+	<script>
+		(function () {
+			var grid = document.querySelector('.merchant-grid');
+			var wrap = document.querySelector('.sort-wrap');
+			var btn = document.getElementById('sortLapakBtn');
+			if (!grid || !wrap || !btn) return;
+
+			var items = Array.prototype.slice.call(wrap.querySelectorAll('[data-sort]'));
+			var cards = Array.prototype.slice.call(grid.querySelectorAll('.merchant-card'));
+
+			items.forEach(function (item) {
+				item.addEventListener('click', function (e) {
+					e.preventDefault();
+
+					var mode = this.getAttribute('data-sort');
+					var sorted = cards.slice();
+
+					items.forEach(function (i) {
+						i.classList.remove('active');
+					});
+					this.classList.add('active');
+					btn.classList.toggle('is-active', mode !== 'default');
+					wrap.classList.remove('open');
+
+					if (mode === 'desc' || mode === 'asc') {
+						sorted.sort(function (a, b) {
+							var diff = parseInt(b.dataset.lapakCount, 10) - parseInt(a.dataset.lapakCount, 10);
+							return mode === 'desc' ? diff : -diff;
+						});
+					}
+
+					sorted.forEach(function (card) {
+						grid.appendChild(card);
+					});
+				});
+			});
+		})();
 	</script>
 
 	<script>

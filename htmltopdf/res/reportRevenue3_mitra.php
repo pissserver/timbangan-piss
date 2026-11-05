@@ -69,7 +69,8 @@
 								w.nopol, 
 								w.netto, 
 								w.cost_bayar, 
-								w.cost, 
+								w.cost,
+								w.weighing_sts6, 
 								m.merchant_name as name,
 								m.merchant_type as jenis
 						from 	weighing_mitra w, merchant m 
@@ -91,7 +92,8 @@
 								w.nopol, 
 								w.netto, 
 								w.cost_bayar, 
-								w.cost, 
+								w.cost,
+								w.weighing_sts6, 
 								m.merchant_name as name,
 								m.merchant_type as jenis
 						from weighing_mitra w, merchant m 
@@ -116,27 +118,34 @@
 				$date3 		= new DateTime(date("Y-m-d", strtotime($r['date_check'])));
 				$date4 		= new DateTime(date("Y-m-d", strtotime($date2)));
 				$diff 		= $date4->diff($date3)->format("%a");
+
+				if($r['weighing_sts6'] == 'Ditangguhkan'){
+					$color = 'red';
+				}
+				else{
+					$color = 'black';
+				}
 		?>
 		<tr>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $no; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo date("d M Y", strtotime($r['date_check'])); ?></td>
 			<!-- <td style="text-align: center;border: solid 1px black;"><?php 
 			if($r['reffer']=='null'||$r['reffer']==''||$r['reffer']=='0'){
 				echo 'TB'.$r['weighing_id'];
 			}else{
 				echo 'TB'.$r['reffer'];
 			} ?></td> -->
-			<td style="text-align: center;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $diff; ?> Hari</td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
-			<td style="text-align: left;border: solid 1px black;"><?php echo $r['name']; ?></td>
-			<td style="text-align: center;border: solid 1px black;"><?php echo $r['jenis']; ?></td>
-			<td style="text-align: right;border: solid 1px black;"><?php echo format_no($r['netto']); ?> </td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo 'TG'.$r['weighing_id']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $diff; ?> Hari</td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $r['nopol']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: left;border: solid 1px black;"><?php echo $r['name']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: center;border: solid 1px black;"><?php echo $r['jenis']; ?></td>
+			<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"><?php echo format_no($r['netto']); ?> </td>
 			<?php 
 				if ($r['jenis'] == 'Buah') { ?>
-					<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost_bayar']); ?></td>
+					<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost_bayar']); ?></td>
 				<?php } else { ?>
-					<td style="text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost']); ?></td>
+					<td style="color: <?php echo $color; ?>; text-align: right;border: solid 1px black;"> <?php echo format_no($r['cost']); ?></td>
 				<?php }
 			?>
 		</tr>
@@ -156,5 +165,5 @@
 			<td style="text-align: right;border: solid 1px black;font-weight:bold;"> <?php echo format_no($cost); ?></td>
 		</tr>
 	</table>
-	<br />Keterangan:
+	<br />Keterangan: Data berwarna merah menandakan tagihan telah ditangguhkan, cek pada laporan penangguhan tagihan
 </page>
