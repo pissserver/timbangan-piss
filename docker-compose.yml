@@ -20,6 +20,8 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
             MYSQL_DATABASE: db_piss
+        ports:
+            - "3307:3306"
         volumes:
             - db_data:/var/lib/mysql
         healthcheck:
@@ -41,7 +43,7 @@ services:
         environment:
             PMA_HOST: db
             PMA_PORT: 3306
-            PMA_ARBITRARY: 0
+            PMA_ARBITRARY: 1
             UPLOAD_LIMIT: 256M
             MAX_EXECUTION_TIME: 600
             MEMORY_LIMIT: 512M
