@@ -1,8 +1,8 @@
 <?php
-	$server 	= "localhost";
-	$username 	= "root";
-	$password 	= "";
-	$database 	= "db_piss";
+	$server 	= getenv('DB_HOST') ?: "localhost";
+	$username 	= getenv('DB_USERNAME') ?: "root";
+	$password 	= getenv('DB_PASSWORD') ?: "";
+	$database 	= getenv('DB_DATABASE') ?: "db_piss";
 	
 	// $server 		= "192.168.100.250";
 	// $username 	= "timbanganmasuksdtp";
